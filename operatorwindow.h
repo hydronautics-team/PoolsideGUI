@@ -4,7 +4,7 @@
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class OperatorWIndow; }
+namespace Ui { class OperatorWindow; }
 QT_END_NAMESPACE
 
 class OperatorWindow : public QWidget
@@ -16,6 +16,6 @@ public:
     ~OperatorWindow();
 
 private:
-    Ui::OperatorWIndow *ui;
+    Ui::OperatorWindow *ui;
 };
 #endif // OPERATORWINDOW_H

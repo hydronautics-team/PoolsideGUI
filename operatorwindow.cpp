@@ -3,7 +3,7 @@
 
 OperatorWindow::OperatorWindow(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::OperatorWIndow)
+    , ui(new Ui::OperatorWindow)
 {
     ui->setupUi(this);
 }
