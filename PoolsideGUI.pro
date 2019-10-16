@@ -17,13 +17,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    operatorwindow.cpp
+    operatorwindow.cpp \
+    settingswindow.cpp
 
 HEADERS += \
-    operatorwindow.h
+    operatorwindow.h \
+    settingswindow.h
 
 FORMS += \
-    operatorwindow.ui
+    operatorwindow.ui \
+    settingswindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
