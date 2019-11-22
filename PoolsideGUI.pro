@@ -16,15 +16,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    controlConfig/controlconfig.cpp \
+    equipmentConfig/equipmentconfig.cpp \
     main.cpp \
+    mainwindow.cpp \
     operatorwindow.cpp \
     settingswindow.cpp
 
 HEADERS += \
+    controlConfig/controlconfig.h \
+    equipmentConfig/equipmentconfig.h \
+    mainwindow.h \
     operatorwindow.h \
     settingswindow.h
 
 FORMS += \
+    controlConfig/controlconfig.ui \
+    equipmentConfig/equipmentconfig.ui \
+    mainwindow.ui \
     operatorwindow.ui \
     settingswindow.ui
 

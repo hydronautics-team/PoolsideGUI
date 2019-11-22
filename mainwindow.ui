@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>849</width>
+    <height>554</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="OperatorWindow" name="centralwidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>849</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuBarControlBox">
+    <property name="title">
+     <string>Пульт</string>
+    </property>
+    <addaction name="action_config_controls"/>
+    <addaction name="action_config_view"/>
+   </widget>
+   <widget class="QMenu" name="menuBarOther">
+    <property name="title">
+     <string>Прочее</string>
+    </property>
+    <addaction name="action"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuBarVehicle">
+    <property name="title">
+     <string>Аппарат</string>
+    </property>
+    <addaction name="action_config_com"/>
+    <addaction name="action_config_thrusters"/>
+    <addaction name="action_config_coef"/>
+   </widget>
+   <widget class="QMenu" name="menuBarConfiguration">
+    <property name="title">
+     <string>Конфигурация</string>
+    </property>
+    <addaction name="action_enable_remote"/>
+    <addaction name="action_enable_autonomous"/>
+   </widget>
+   <addaction name="menuBarConfiguration"/>
+   <addaction name="menuBarVehicle"/>
+   <addaction name="menuBarControlBox"/>
+   <addaction name="menuBarOther"/>
+  </widget>
+  <action name="action_config_com">
+   <property name="text">
+    <string>Связь</string>
+   </property>
+  </action>
+  <action name="action_config_thrusters">
+   <property name="text">
+    <string>Винтомоторы</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>Управление</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>Управление</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>Оформление</string>
+   </property>
+  </action>
+  <action name="action_config_coef">
+   <property name="text">
+    <string>Стабилизация</string>
+   </property>
+  </action>
+  <action name="action_10">
+   <property name="text">
+    <string>Телеуправляемый</string>
+   </property>
+  </action>
+  <action name="action_11">
+   <property name="text">
+    <string>Автономный</string>
+   </property>
+  </action>
+  <action name="action_enable_remote">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Телеуправляемый</string>
+   </property>
+  </action>
+  <action name="action_enable_autonomous">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Автономный</string>
+   </property>
+  </action>
+  <action name="action_config_controls">
+   <property name="text">
+    <string>Управление</string>
+   </property>
+  </action>
+  <action name="action_config_view">
+   <property name="text">
+    <string>Вид</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>О программе</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OperatorWindow</class>
+   <extends>QWidget</extends>
+   <header>operatorwindow.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
