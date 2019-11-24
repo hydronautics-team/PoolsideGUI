@@ -16,26 +16,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    controlConfig/controlconfig.cpp \
-    equipmentConfig/equipmentconfig.cpp \
+    AUVModeForm/auvmodeform.cpp \
+    ROVModeForm/rovmodeform.cpp \
     main.cpp \
     mainwindow.cpp \
-    operatorwindow.cpp \
-    settingswindow.cpp
+    SettingsWindow/settingswindow.cpp
 
 HEADERS += \
-    controlConfig/controlconfig.h \
-    equipmentConfig/equipmentconfig.h \
+    AUVModeForm/auvmodeform.h \
+    ROVModeForm/rovmodeform.h \
     mainwindow.h \
-    operatorwindow.h \
-    settingswindow.h
+    SettingsWindow/settingswindow.h
 
 FORMS += \
-    controlConfig/controlconfig.ui \
-    equipmentConfig/equipmentconfig.ui \
+    AUVModeForm/auvmodeform.ui \
+    ROVModeForm/rovmodeform.ui \
     mainwindow.ui \
-    operatorwindow.ui \
-    settingswindow.ui
+    SettingsWindow/settingswindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

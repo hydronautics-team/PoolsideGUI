@@ -9,6 +9,10 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+
+private slots:
+    void enableAUVMode();
+    void enableROVMode();
 };
 
 #endif // MAINWINDOW_H
