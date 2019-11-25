@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "ui_mainwindow.h"
+#include "SettingsWindow/settingswindow.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -10,9 +11,13 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
+private:
+    SettingsWindow settingsWindow;
+
 private slots:
     void enableAUVMode();
     void enableROVMode();
+    void showPageConfigThruster();
 };
 
 #endif // MAINWINDOW_H

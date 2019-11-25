@@ -5,3 +5,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
 {
     setupUi(this);
 }
+
+void SettingsWindow::showPageConfigThruster()
+{
+    stackedWidget->setCurrentWidget(pageConfigThruster);
+}

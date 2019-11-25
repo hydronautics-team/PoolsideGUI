@@ -23,10 +23,24 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pageConfigCommunication"/>
-     <widget class="QWidget" name="pageConfigThruster"/>
+     <widget class="QWidget" name="pageConfigThruster">
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>210</y>
+         <width>89</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>FUK UUU</string>
+       </property>
+      </widget>
+     </widget>
      <widget class="QWidget" name="pageConfigCoef"/>
     </widget>
    </item>
