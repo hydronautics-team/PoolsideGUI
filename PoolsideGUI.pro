@@ -16,11 +16,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    UV/uv_device.cpp \
+    UV/uv_stabilization.cpp \
+    UV/uv_state.cpp \
     main.cpp \
-    operatorwindow.cpp
+    messages.cpp \
+    operatorwindow.cpp \
+    serial.cpp
 
 HEADERS += \
-    operatorwindow.h
+    UV/uv_device.h \
+    UV/uv_stabilization.h \
+    UV/uv_state.h \
+    messages.h \
+    operatorwindow.h \
+    serial.h
 
 FORMS += \
     operatorwindow.ui

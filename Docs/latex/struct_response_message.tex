@@ -1,0 +1,115 @@
+\hypertarget{struct_response_message}{}\doxysection{Response\+Message Struct Reference}
+\label{struct_response_message}\index{ResponseMessage@{ResponseMessage}}
+
+
+Structure for storing and processing data from the S\+T\+M32 configuration response message protocol Shore send requests and S\+TM send responses.  
+
+
+
+
+{\ttfamily \#include $<$messages.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_response_message_aca1891a6af29ae0ed020cc9118fa8859}{Response\+Message}} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \mbox{\hyperlink{struct_response_message}{Response\+Message}}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{struct_response_message_a9a80aa9a804fc2344a2dd889bffd1207}{parse\+Vector}} (std\+::vector$<$ char $>$ \&input)
+\begin{DoxyCompactList}\small\item\em Parse string bitwise correctly into \mbox{\hyperlink{struct_response_message}{Response\+Message}} and check 16bit checksum. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_response_message_aeafa567a72b43be91fd8502ade1fff64}\label{struct_response_message_aeafa567a72b43be91fd8502ade1fff64}} 
+float {\bfseries roll}
+\item 
+\mbox{\Hypertarget{struct_response_message_ae4bfa3f669cbde144dc991bb3c7f9ad9}\label{struct_response_message_ae4bfa3f669cbde144dc991bb3c7f9ad9}} 
+float {\bfseries pitch}
+\item 
+\mbox{\Hypertarget{struct_response_message_a2cfaa81d176bb9ae55f703f48681a7b1}\label{struct_response_message_a2cfaa81d176bb9ae55f703f48681a7b1}} 
+float {\bfseries yaw}
+\item 
+\mbox{\Hypertarget{struct_response_message_a7937b54abe11cdaab73be13b3e97f949}\label{struct_response_message_a7937b54abe11cdaab73be13b3e97f949}} 
+float {\bfseries roll\+Speed}
+\item 
+\mbox{\Hypertarget{struct_response_message_ad04c2fc9ad54ea1a34ef0685a53695d8}\label{struct_response_message_ad04c2fc9ad54ea1a34ef0685a53695d8}} 
+float {\bfseries pitch\+Speed}
+\item 
+\mbox{\Hypertarget{struct_response_message_a686d955154009be16fb61d7a6b7c104c}\label{struct_response_message_a686d955154009be16fb61d7a6b7c104c}} 
+float {\bfseries yaw\+Speed}
+\item 
+\mbox{\Hypertarget{struct_response_message_a342d96ef0d8626cb5b7165839a9e005d}\label{struct_response_message_a342d96ef0d8626cb5b7165839a9e005d}} 
+float {\bfseries depth}
+\item 
+\mbox{\Hypertarget{struct_response_message_a113ad4fcf9573021909ac314e7d20307}\label{struct_response_message_a113ad4fcf9573021909ac314e7d20307}} 
+float {\bfseries in\+\_\+pressure}
+\item 
+\mbox{\Hypertarget{struct_response_message_a7900060285efa1013f759b7394240f02}\label{struct_response_message_a7900060285efa1013f759b7394240f02}} 
+uint8\+\_\+t {\bfseries dev\+\_\+state}
+\item 
+\mbox{\Hypertarget{struct_response_message_a7cf129a4e2588d9c59d9abf9293512fb}\label{struct_response_message_a7cf129a4e2588d9c59d9abf9293512fb}} 
+int16\+\_\+t {\bfseries leak\+\_\+data}
+\item 
+\mbox{\Hypertarget{struct_response_message_a1427df8df5d60c123029ef99ccde4df1}\label{struct_response_message_a1427df8df5d60c123029ef99ccde4df1}} 
+uint16\+\_\+t {\bfseries vma\+\_\+current} \mbox{[}Vma\+Amount\mbox{]}
+\item 
+\mbox{\Hypertarget{struct_response_message_a04fd5e84a979a2487e83d945687c1c2e}\label{struct_response_message_a04fd5e84a979a2487e83d945687c1c2e}} 
+uint16\+\_\+t {\bfseries dev\+\_\+current} \mbox{[}Dev\+Amount\mbox{]}
+\item 
+\mbox{\Hypertarget{struct_response_message_a794df0f338b7da86c02523c476870401}\label{struct_response_message_a794df0f338b7da86c02523c476870401}} 
+uint16\+\_\+t {\bfseries vma\+\_\+errors}
+\item 
+\mbox{\Hypertarget{struct_response_message_ab2550023a65ef060a59ccb277d1884b1}\label{struct_response_message_ab2550023a65ef060a59ccb277d1884b1}} 
+uint16\+\_\+t {\bfseries dev\+\_\+errors}
+\item 
+\mbox{\Hypertarget{struct_response_message_ac466f57bc0bec1d32866bf54ad96e2b6}\label{struct_response_message_ac466f57bc0bec1d32866bf54ad96e2b6}} 
+uint8\+\_\+t {\bfseries pc\+\_\+errors}
+\item 
+\mbox{\Hypertarget{struct_response_message_a52d574fbbae5eb8ec7aaa606ab6f5f08}\label{struct_response_message_a52d574fbbae5eb8ec7aaa606ab6f5f08}} 
+uint16\+\_\+t {\bfseries checksum}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_response_message_ad75ae471c8aa119b7a7e21aae6eafb71}\label{struct_response_message_ad75ae471c8aa119b7a7e21aae6eafb71}} 
+const static uint8\+\_\+t \mbox{\hyperlink{struct_response_message_ad75ae471c8aa119b7a7e21aae6eafb71}{length}} = 70
+\begin{DoxyCompactList}\small\item\em Length in bytes of the response message protocol. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Structure for storing and processing data from the S\+T\+M32 configuration response message protocol Shore send requests and S\+TM send responses. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{struct_response_message_aca1891a6af29ae0ed020cc9118fa8859}\label{struct_response_message_aca1891a6af29ae0ed020cc9118fa8859}} 
+\index{ResponseMessage@{ResponseMessage}!ResponseMessage@{ResponseMessage}}
+\index{ResponseMessage@{ResponseMessage}!ResponseMessage@{ResponseMessage}}
+\doxysubsubsection{\texorpdfstring{ResponseMessage()}{ResponseMessage()}}
+{\footnotesize\ttfamily Response\+Message\+::\+Response\+Message (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for \mbox{\hyperlink{struct_response_message}{Response\+Message}}. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{struct_response_message_a9a80aa9a804fc2344a2dd889bffd1207}\label{struct_response_message_a9a80aa9a804fc2344a2dd889bffd1207}} 
+\index{ResponseMessage@{ResponseMessage}!parseVector@{parseVector}}
+\index{parseVector@{parseVector}!ResponseMessage@{ResponseMessage}}
+\doxysubsubsection{\texorpdfstring{parseVector()}{parseVector()}}
+{\footnotesize\ttfamily bool Response\+Message\+::parse\+Vector (\begin{DoxyParamCaption}\item[{std\+::vector$<$ char $>$ \&}]{input }\end{DoxyParamCaption})}
+
+
+
+Parse string bitwise correctly into \mbox{\hyperlink{struct_response_message}{Response\+Message}} and check 16bit checksum. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em \&input} & String to parse. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+messages.\+h\item 
+messages.\+cpp\end{DoxyCompactItemize}

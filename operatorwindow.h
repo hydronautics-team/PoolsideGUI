@@ -1,21 +1,16 @@
 #ifndef OPERATORWINDOW_H
 #define OPERATORWINDOW_H
 
+#include "ui_operatorwindow.h"
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class OperatorWindow; }
-QT_END_NAMESPACE
 
-class OperatorWindow : public QWidget
+class OperatorWindow : public QWidget, private Ui::OperatorWindow
 {
     Q_OBJECT
 
 public:
-    OperatorWindow(QWidget *parent = nullptr);
-    ~OperatorWindow();
-
-private:
-    Ui::OperatorWindow *ui;
+    explicit OperatorWindow(QWidget *parent = nullptr);
 };
+
 #endif // OPERATORWINDOW_H

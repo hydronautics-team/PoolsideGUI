@@ -1,0 +1,310 @@
+\hypertarget{class_serial}{}\doxysection{Serial Class Reference}
+\label{class_serial}\index{Serial@{Serial}}
+
+
+\mbox{\hyperlink{class_serial}{Serial}} device class.  
+
+
+
+
+{\ttfamily \#include $<$serial.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_serial_a3667c3137f2df94716b5193f9fb736ab}{Serial}} ()
+\begin{DoxyCompactList}\small\item\em Default constructor of the class, does nothing. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_serial_a483ddb50d8692194a217a6218c61aa37}{Serial}} (std\+::string filename, int new\+\_\+baudrate=115200, int new\+\_\+databits=8, int new\+\_\+parity=P\+A\+R\+I\+T\+Y\+\_\+\+N\+O\+NE, int new\+\_\+stopbits=1)
+\begin{DoxyCompactList}\small\item\em Overloaded constructor of the class, opens and configures port. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_serial_a5b32c394c0ff923a4ef1c13cfb20a6ba}{$\sim$\+Serial}} ()
+\begin{DoxyCompactList}\small\item\em Class destructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_serial}{Serial}} \& \mbox{\hyperlink{class_serial_a06986b1e54dd7aadb839b49c0495c937}{operator$<$$<$}} (const std\+::string data)
+\begin{DoxyCompactList}\small\item\em Overloaded $<$$<$ operator, used to write strings to ports. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_serial}{Serial}} \& \mbox{\hyperlink{class_serial_af071c56f8a5a41e22c6dc5f91feb333e}{operator$<$$<$}} (const std\+::vector$<$ char $>$ data)
+\begin{DoxyCompactList}\small\item\em Overloaded $>$$>$ operator, used to read all available bytes to strings from ports. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_serial_a5d5422a25c561d9e9a25d548e1127328}\label{class_serial_a5d5422a25c561d9e9a25d548e1127328}} 
+\mbox{\hyperlink{class_serial}{Serial}} \& {\bfseries operator$>$$>$} (std\+::string \&data)
+\item 
+\mbox{\hyperlink{class_serial}{Serial}} \& \mbox{\hyperlink{class_serial_a842005de362d2a5609479b9bf6958181}{operator$>$$>$}} (std\+::vector$<$ char $>$ \&data)
+\begin{DoxyCompactList}\small\item\em Overloaded $>$$>$ operator, used to read all available bytes to strings from ports. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_serial_a9c6109174c8ac9c813c90d4348b6d35e}{open\+Port}} (std\+::string filename)
+\begin{DoxyCompactList}\small\item\em Maintaining port state. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_serial_a09f6c63968c3ff267f270e46ab25ae24}{close\+Port}} ()
+\begin{DoxyCompactList}\small\item\em Try to close device file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_serial_a9c4644f607f11058458f6bda6a95a353}{configure\+Port}} (int new\+\_\+baudrate=115200, int new\+\_\+databits=8, int new\+\_\+parity=P\+A\+R\+I\+T\+Y\+\_\+\+N\+O\+NE, int new\+\_\+stopbits=1)
+\begin{DoxyCompactList}\small\item\em Try to close device file. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_serial_a28825f0206ed125516e9edbdb686f846}{is\+Opened}} ()
+\begin{DoxyCompactList}\small\item\em Check is file opened. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_serial_afe47405c850f0f28c40ac586fd4fd691}{write\+Port}} (std\+::string data)
+\begin{DoxyCompactList}\small\item\em Communication. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_serial_a4e9ffca17498106753a6883ed76c3680}{write\+Port}} (std\+::vector$<$ char $>$ data)
+\begin{DoxyCompactList}\small\item\em Write string to port. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_serial_a064bb0bc80595a6ca1594348a31cdb51}{read\+Port}} (std\+::string \&data, size\+\_\+t bytes)
+\begin{DoxyCompactList}\small\item\em Read bytes from port. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_serial_a2fdc38e29c9d9a25976e57f6e248ec98}{read\+Port}} (std\+::vector$<$ char $>$ \&data, size\+\_\+t bytes)
+\begin{DoxyCompactList}\small\item\em Read bytes from port. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_serial_a2c6ed684c8938540379dbe5e76d61812}{flush}} ()
+\begin{DoxyCompactList}\small\item\em Flushes I/O buffers. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_serial_aa1227e8f7062e9fc596713e52ba64228}{bytes\+Available}} ()
+\begin{DoxyCompactList}\small\item\em Returns number of available bytes to read from buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_serial}{Serial}} device class. 
+
+This class providing basic functions for serial port, such as configurating and communicating. This class controls serial devices in non-\/blocking mode only. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_serial_a3667c3137f2df94716b5193f9fb736ab}\label{class_serial_a3667c3137f2df94716b5193f9fb736ab}} 
+\index{Serial@{Serial}!Serial@{Serial}}
+\index{Serial@{Serial}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{Serial()}{Serial()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Serial\+::\+Serial (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor of the class, does nothing. 
+
+This is the default constructor of the class, does nothing. \mbox{\Hypertarget{class_serial_a483ddb50d8692194a217a6218c61aa37}\label{class_serial_a483ddb50d8692194a217a6218c61aa37}} 
+\index{Serial@{Serial}!Serial@{Serial}}
+\index{Serial@{Serial}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{Serial()}{Serial()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Serial\+::\+Serial (\begin{DoxyParamCaption}\item[{std\+::string}]{filename,  }\item[{int}]{new\+\_\+baudrate = {\ttfamily 115200},  }\item[{int}]{new\+\_\+databits = {\ttfamily 8},  }\item[{int}]{new\+\_\+parity = {\ttfamily PARITY\+\_\+NONE},  }\item[{int}]{new\+\_\+stopbits = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Overloaded constructor of the class, opens and configures port. 
+
+This is the overloaded constructor of the class, opens and configures port. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em filename} & Name of the device file. \\
+\hline
+\mbox{\texttt{ in}}  & {\em new\+\_\+baudrate} & Baudrate of the data stream (use only standart values). \\
+\hline
+\mbox{\texttt{ in}}  & {\em new\+\_\+databits} & Number of the data bits (5-\/8). \\
+\hline
+\mbox{\texttt{ in}}  & {\em new\+\_\+parity} & No, odd or even parity (use P\+A\+R\+I\+T\+Y\+\_\+\+N\+O\+NE, P\+A\+R\+I\+T\+Y\+\_\+\+E\+V\+EN or P\+A\+R\+I\+T\+Y\+\_\+\+O\+DD). \\
+\hline
+\mbox{\texttt{ in}}  & {\em new\+\_\+stopbits} & Number of stop bits (1 or 2). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_serial_a5b32c394c0ff923a4ef1c13cfb20a6ba}\label{class_serial_a5b32c394c0ff923a4ef1c13cfb20a6ba}} 
+\index{Serial@{Serial}!````~Serial@{$\sim$Serial}}
+\index{````~Serial@{$\sim$Serial}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{$\sim$Serial()}{~Serial()}}
+{\footnotesize\ttfamily Serial\+::$\sim$\+Serial (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Class destructor. 
+
+This is the class destructor, it closes the port. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_serial_aa1227e8f7062e9fc596713e52ba64228}\label{class_serial_aa1227e8f7062e9fc596713e52ba64228}} 
+\index{Serial@{Serial}!bytesAvailable@{bytesAvailable}}
+\index{bytesAvailable@{bytesAvailable}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{bytesAvailable()}{bytesAvailable()}}
+{\footnotesize\ttfamily size\+\_\+t Serial\+::bytes\+Available (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns number of available bytes to read from buffer. 
+
+This function returns number of available bytes to read from buffer. \mbox{\Hypertarget{class_serial_a09f6c63968c3ff267f270e46ab25ae24}\label{class_serial_a09f6c63968c3ff267f270e46ab25ae24}} 
+\index{Serial@{Serial}!closePort@{closePort}}
+\index{closePort@{closePort}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{closePort()}{closePort()}}
+{\footnotesize\ttfamily bool Serial\+::close\+Port (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Try to close device file. 
+
+This function trying to close device file. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fd} & File descriptor of opened device file. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_serial_a9c4644f607f11058458f6bda6a95a353}\label{class_serial_a9c4644f607f11058458f6bda6a95a353}} 
+\index{Serial@{Serial}!configurePort@{configurePort}}
+\index{configurePort@{configurePort}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{configurePort()}{configurePort()}}
+{\footnotesize\ttfamily bool Serial\+::configure\+Port (\begin{DoxyParamCaption}\item[{int}]{new\+\_\+baudrate = {\ttfamily 115200},  }\item[{int}]{new\+\_\+databits = {\ttfamily 8},  }\item[{int}]{new\+\_\+parity = {\ttfamily PARITY\+\_\+NONE},  }\item[{int}]{new\+\_\+stopbits = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Try to close device file. 
+
+This function trying to close device file. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em new\+\_\+baudrate} & Baudrate of the data stream (use only standart values). \\
+\hline
+\mbox{\texttt{ in}}  & {\em new\+\_\+databits} & Number of the data bits (5-\/8). \\
+\hline
+\mbox{\texttt{ in}}  & {\em new\+\_\+parity} & No, odd or even parity (use P\+A\+R\+I\+T\+Y\+\_\+\+N\+O\+NE, P\+A\+R\+I\+T\+Y\+\_\+\+E\+V\+EN or P\+A\+R\+I\+T\+Y\+\_\+\+O\+DD). \\
+\hline
+\mbox{\texttt{ in}}  & {\em new\+\_\+stopbits} & Number of stop bits (1 or 2). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_serial_a2c6ed684c8938540379dbe5e76d61812}\label{class_serial_a2c6ed684c8938540379dbe5e76d61812}} 
+\index{Serial@{Serial}!flush@{flush}}
+\index{flush@{flush}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{flush()}{flush()}}
+{\footnotesize\ttfamily bool Serial\+::flush (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Flushes I/O buffers. 
+
+\mbox{\Hypertarget{class_serial_a28825f0206ed125516e9edbdb686f846}\label{class_serial_a28825f0206ed125516e9edbdb686f846}} 
+\index{Serial@{Serial}!isOpened@{isOpened}}
+\index{isOpened@{isOpened}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{isOpened()}{isOpened()}}
+{\footnotesize\ttfamily bool Serial\+::is\+Opened (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check is file opened. 
+
+This function checks is any device opened. \mbox{\Hypertarget{class_serial_a9c6109174c8ac9c813c90d4348b6d35e}\label{class_serial_a9c6109174c8ac9c813c90d4348b6d35e}} 
+\index{Serial@{Serial}!openPort@{openPort}}
+\index{openPort@{openPort}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{openPort()}{openPort()}}
+{\footnotesize\ttfamily bool Serial\+::open\+Port (\begin{DoxyParamCaption}\item[{std\+::string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Maintaining port state. 
+
+Try to open device file.
+
+This function trying to open device file. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em filename} & Name of the device file. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_serial_a06986b1e54dd7aadb839b49c0495c937}\label{class_serial_a06986b1e54dd7aadb839b49c0495c937}} 
+\index{Serial@{Serial}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_serial}{Serial}} \& Serial\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{const std\+::string}]{data }\end{DoxyParamCaption})}
+
+
+
+Overloaded $<$$<$ operator, used to write strings to ports. 
+
+This is the overloaded $<$$<$ operator, used to write strings to ports. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em data} & Data string which will be written to port. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_serial_af071c56f8a5a41e22c6dc5f91feb333e}\label{class_serial_af071c56f8a5a41e22c6dc5f91feb333e}} 
+\index{Serial@{Serial}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_serial}{Serial}} \& Serial\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ char $>$}]{data }\end{DoxyParamCaption})}
+
+
+
+Overloaded $>$$>$ operator, used to read all available bytes to strings from ports. 
+
+This is the overloaded $>$$>$ operator, used to read all available bytes to strings from ports. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em data} & Data string which will be written to port.\\
+\hline
+\end{DoxyParams}
+Overloaded $<$$<$ operator, used to write strings to ports.
+
+This is the overloaded $<$$<$ operator, used to write strings to ports. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em data} & Data string which will be written to port. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_serial_a842005de362d2a5609479b9bf6958181}\label{class_serial_a842005de362d2a5609479b9bf6958181}} 
+\index{Serial@{Serial}!operator$>$$>$@{operator$>$$>$}}
+\index{operator$>$$>$@{operator$>$$>$}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{operator$>$$>$()}{operator>>()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_serial}{Serial}} \& Serial\+::operator$>$$>$ (\begin{DoxyParamCaption}\item[{std\+::vector$<$ char $>$ \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Overloaded $>$$>$ operator, used to read all available bytes to strings from ports. 
+
+This is the overloaded $>$$>$ operator, used to read all available bytes to strings from ports. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em data} & Data string which will be written to port. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_serial_a064bb0bc80595a6ca1594348a31cdb51}\label{class_serial_a064bb0bc80595a6ca1594348a31cdb51}} 
+\index{Serial@{Serial}!readPort@{readPort}}
+\index{readPort@{readPort}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{readPort()}{readPort()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Serial\+::read\+Port (\begin{DoxyParamCaption}\item[{std\+::string \&}]{data,  }\item[{size\+\_\+t}]{bytes }\end{DoxyParamCaption})}
+
+
+
+Read bytes from port. 
+
+This function checks is any device opened. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em \&data} & Link to string in which will be placed data from port. \\
+\hline
+\mbox{\texttt{ in}}  & {\em bytes} & Number of bytes to read. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_serial_a2fdc38e29c9d9a25976e57f6e248ec98}\label{class_serial_a2fdc38e29c9d9a25976e57f6e248ec98}} 
+\index{Serial@{Serial}!readPort@{readPort}}
+\index{readPort@{readPort}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{readPort()}{readPort()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Serial\+::read\+Port (\begin{DoxyParamCaption}\item[{std\+::vector$<$ char $>$ \&}]{data,  }\item[{size\+\_\+t}]{bytes }\end{DoxyParamCaption})}
+
+
+
+Read bytes from port. 
+
+This function checks is any device opened. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em \&data} & Link to string in which will be placed data from port. \\
+\hline
+\mbox{\texttt{ in}}  & {\em bytes} & Number of bytes to read. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_serial_afe47405c850f0f28c40ac586fd4fd691}\label{class_serial_afe47405c850f0f28c40ac586fd4fd691}} 
+\index{Serial@{Serial}!writePort@{writePort}}
+\index{writePort@{writePort}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{writePort()}{writePort()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Serial\+::write\+Port (\begin{DoxyParamCaption}\item[{std\+::string}]{data }\end{DoxyParamCaption})}
+
+
+
+Communication. 
+
+Write string to port.
+
+This function writes string to port. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fd} & File descriptor of opened device file. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_serial_a4e9ffca17498106753a6883ed76c3680}\label{class_serial_a4e9ffca17498106753a6883ed76c3680}} 
+\index{Serial@{Serial}!writePort@{writePort}}
+\index{writePort@{writePort}!Serial@{Serial}}
+\doxysubsubsection{\texorpdfstring{writePort()}{writePort()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Serial\+::write\+Port (\begin{DoxyParamCaption}\item[{std\+::vector$<$ char $>$}]{data }\end{DoxyParamCaption})}
+
+
+
+Write string to port. 
+
+This function writes string to port. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em fd} & File descriptor of opened device file. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+serial.\+h\item 
+serial.\+cpp\end{DoxyCompactItemize}
