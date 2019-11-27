@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1004</width>
-    <height>600</height>
+    <width>1040</width>
+    <height>564</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,9 +22,9 @@
      <colorrole role="WindowText">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>211</red>
-        <green>215</green>
-        <blue>207</blue>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
@@ -85,18 +85,18 @@
      <colorrole role="BrightText">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>211</red>
-        <green>215</green>
-        <blue>207</blue>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="ButtonText">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>211</red>
-        <green>215</green>
-        <blue>207</blue>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
@@ -124,15 +124,6 @@
         <red>0</red>
         <green>0</green>
         <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="HighlightedText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>211</red>
-        <green>215</green>
-        <blue>207</blue>
        </color>
       </brush>
      </colorrole>
@@ -177,9 +168,9 @@
      <colorrole role="WindowText">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>211</red>
-        <green>215</green>
-        <blue>207</blue>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
@@ -240,18 +231,18 @@
      <colorrole role="BrightText">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>211</red>
-        <green>215</green>
-        <blue>207</blue>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="ButtonText">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>211</red>
-        <green>215</green>
-        <blue>207</blue>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
@@ -279,15 +270,6 @@
         <red>0</red>
         <green>0</green>
         <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="HighlightedText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>211</red>
-        <green>215</green>
-        <blue>207</blue>
        </color>
       </brush>
      </colorrole>
@@ -395,9 +377,9 @@
      <colorrole role="BrightText">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>211</red>
-        <green>215</green>
-        <blue>207</blue>
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
        </color>
       </brush>
      </colorrole>
@@ -434,15 +416,6 @@
         <red>0</red>
         <green>0</green>
         <blue>0</blue>
-       </color>
-      </brush>
-     </colorrole>
-     <colorrole role="HighlightedText">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>211</red>
-        <green>215</green>
-        <blue>207</blue>
        </color>
       </brush>
      </colorrole>
@@ -492,7 +465,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pageConfigCommunication">
       <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -599,6 +572,13 @@
           </layout>
          </item>
          <item>
+          <widget class="Line" name="line_4">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
           <layout class="QVBoxLayout" name="verticalLayout_8">
            <item>
             <widget class="QLabel" name="label_23">
@@ -695,6 +675,13 @@
           </layout>
          </item>
          <item>
+          <widget class="Line" name="line_3">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
           <layout class="QVBoxLayout" name="verticalLayout_12">
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -749,6 +736,13 @@
           </layout>
          </item>
          <item>
+          <widget class="Line" name="line_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
           <layout class="QVBoxLayout" name="verticalLayout_15">
            <item>
             <widget class="QLabel" name="label_26">
@@ -783,6 +777,13 @@
             </widget>
            </item>
           </layout>
+         </item>
+         <item>
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_Disconnect">
@@ -1264,18 +1265,189 @@
       </layout>
      </widget>
      <widget class="QWidget" name="pageConfigCoef">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>FUKKKKK</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>260</y>
+         <width>80</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>FUKKKKK</string>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>220</y>
+         <width>603</width>
+         <height>150</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string>Control button</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_21">
+            <item>
+             <widget class="QCheckBox" name="checkBoxStabilizeRoll">
+              <property name="text">
+               <string>Stabilize Roll</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxStabilizePitch">
+              <property name="text">
+               <string>Stabilize Pitch</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxStabilizeYaw">
+              <property name="text">
+               <string>Stabilize Yaw</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBoxStabilizeDepth">
+              <property name="text">
+               <string>Stabilize Depth</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_22">
+            <item>
+             <widget class="QPushButton" name="pushButtonJetsonOnOff">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Jetson ON</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonResetIMU">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Reset IMU</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonStartQualification">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Start qualification</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
      <widget class="QWidget" name="pageConfigControls">
-      <layout class="QVBoxLayout" name="verticalLayout_5"/>
+      <widget class="QGroupBox" name="groupBox_9">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>603</width>
+         <height>151</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Control device</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_17">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_18">
+          <item>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_sensitivity">
+            <property name="decimals">
+             <number>4</number>
+            </property>
+            <property name="maximum">
+             <double>1.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
+            <property name="value">
+             <double>1.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_Joystick">
+            <property name="text">
+             <string>X52 Joystick</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_Keyboard">
+            <property name="text">
+             <string>Keyboard</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_XBox">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>XBox joystick</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
      <widget class="QWidget" name="pageConfigView">
       <layout class="QVBoxLayout" name="verticalLayout_6">
