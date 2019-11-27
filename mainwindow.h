@@ -18,6 +18,12 @@ private slots:
     void enableAUVMode();
     void enableROVMode();
     void showPageConfigThruster();
+    void showPageConfigCommunication();
+    void showPageConfigCoef();
+    void showPageConfigControls();
+    void showPageConfigView();
+    void showPageAboutProgram();
+    void showPageOtherSettings();
 };
 
 #endif // MAINWINDOW_H

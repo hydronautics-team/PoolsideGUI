@@ -482,32 +482,43 @@
      <string>Пульт</string>
     </property>
     <addaction name="action_config_controls"/>
+    <addaction name="separator"/>
     <addaction name="action_config_view"/>
    </widget>
    <widget class="QMenu" name="menuBarOther">
     <property name="title">
      <string>Прочее</string>
     </property>
-    <addaction name="action"/>
+    <addaction name="action_about_program"/>
     <addaction name="separator"/>
+    <addaction name="action_other_settings"/>
    </widget>
-   <widget class="QMenu" name="menuBarVehicle">
+   <widget class="QMenu" name="menuBarVehicleName">
     <property name="title">
      <string>Аппарат</string>
     </property>
+    <widget class="QMenu" name="menuConfiguration">
+     <property name="title">
+      <string>Конфигурация</string>
+     </property>
+     <addaction name="action_enable_ROV"/>
+     <addaction name="action_enable_AUV"/>
+    </widget>
+    <widget class="QMenu" name="menuVehicleChoose">
+     <property name="title">
+      <string>Выбор аппарата</string>
+     </property>
+     <addaction name="action_enable_cousteau"/>
+     <addaction name="action_enable_upyr"/>
+    </widget>
+    <addaction name="menuVehicleChoose"/>
+    <addaction name="menuConfiguration"/>
+    <addaction name="separator"/>
     <addaction name="action_config_com"/>
     <addaction name="action_config_thrusters"/>
     <addaction name="action_config_coef"/>
    </widget>
-   <widget class="QMenu" name="menuBarConfiguration">
-    <property name="title">
-     <string>Конфигурация</string>
-    </property>
-    <addaction name="action_enable_ROV"/>
-    <addaction name="action_enable_AUV"/>
-   </widget>
-   <addaction name="menuBarConfiguration"/>
-   <addaction name="menuBarVehicle"/>
+   <addaction name="menuBarVehicleName"/>
    <addaction name="menuBarControlBox"/>
    <addaction name="menuBarOther"/>
   </widget>
@@ -580,9 +591,24 @@
     <string>Вид</string>
    </property>
   </action>
-  <action name="action">
+  <action name="action_about_program">
    <property name="text">
     <string>О программе</string>
+   </property>
+  </action>
+  <action name="action_enable_upyr">
+   <property name="text">
+    <string>УПЫРЬ</string>
+   </property>
+  </action>
+  <action name="action_enable_cousteau">
+   <property name="text">
+    <string>КУСТО III</string>
+   </property>
+  </action>
+  <action name="action_other_settings">
+   <property name="text">
+    <string>Настройки</string>
    </property>
   </action>
  </widget>
