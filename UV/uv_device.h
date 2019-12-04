@@ -3,6 +3,9 @@
 
 #include <string>
 
+/** \brief Base class for devices installed on underwater vehicle
+ * Usually we can control velocity (voltage) of the device, and receive current from it
+ */
 class UV_device
 {
 public:
