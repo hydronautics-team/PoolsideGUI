@@ -3,6 +3,7 @@
 
 #include "ui_mainwindow.h"
 #include "SettingsWindow/settingswindow.h"
+#include "CreateVehicleWizard/createvehiclewizard.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -13,15 +14,27 @@ public:
 
 private:
     SettingsWindow settingsWindow;
+    CreateVehicleWizard wizard;
 
 private slots:
+    // Menu actions:
+    // Vehicle:
+    //      New vehicle
+    void createVehicle();
+    //      Choose vehicle
+    void chooseVehicle();
+    //      Configuration
     void enableAUVMode();
     void enableROVMode();
+    //      Settings
     void showPageConfigThruster();
-    void showPageConfigCommunication();
+    void showPageConfigRS();
+    void showPageConfigSSH();
     void showPageConfigCoef();
+    // Surface control unit:
     void showPageConfigControls();
     void showPageConfigView();
+    // Other:
     void showPageAboutProgram();
     void showPageOtherSettings();
 };

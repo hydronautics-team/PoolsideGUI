@@ -4,6 +4,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+    //connect(btn_connect_SSH, SIGNAL(triggered()),this, SLOT(enableAUVMode()));
 }
 
 void SettingsWindow::showPageConfigThruster()
@@ -11,9 +12,14 @@ void SettingsWindow::showPageConfigThruster()
     stackedWidget->setCurrentWidget(pageConfigThruster);
 }
 
-void SettingsWindow::showPageConfigCommunication()
+void SettingsWindow::showPageConfigRS()
 {
-    stackedWidget->setCurrentWidget(pageConfigCommunication);
+    stackedWidget->setCurrentWidget(pageConfigRS);
+}
+
+void SettingsWindow::showPageConfigSSH()
+{
+    stackedWidget->setCurrentWidget(pageConfigSSH);
 }
 
 void SettingsWindow::showPageConfigCoef()
@@ -39,4 +45,9 @@ void SettingsWindow::showPageAboutProgram()
 void SettingsWindow::showPageOtherSettings()
 {
     stackedWidget->setCurrentWidget(pageOtherSettings);
+}
+
+void SettingsWindow::connectSSH()
+{
+    
 }

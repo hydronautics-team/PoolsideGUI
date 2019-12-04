@@ -2,6 +2,7 @@
 #define SETTINGSWINDOW_H
 
 #include "ui_settingswindow.h"
+#include "ssh.h"
 
 class SettingsWindow : public QWidget, private Ui::SettingsWindow
 {
@@ -9,13 +10,24 @@ class SettingsWindow : public QWidget, private Ui::SettingsWindow
 
 public:
     explicit SettingsWindow(QWidget *parent = nullptr);
+
     void showPageConfigThruster();
-    void showPageConfigCommunication();
+    void showPageConfigRS();
+    void showPageConfigSSH();
     void showPageConfigCoef();
     void showPageConfigControls();
     void showPageConfigView();
     void showPageAboutProgram();
     void showPageOtherSettings();
+
+private:
+    //Serial serial;
+    //Messages messages;
+    //SSH ssh;
+
+private slots:
+    void connectSSH();
+
 };
 
 #endif // SETTINGSWINDOW_H

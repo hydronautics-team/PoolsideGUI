@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>695</width>
-    <height>580</height>
+    <width>966</width>
+    <height>582</height>
    </rect>
   </property>
   <property name="palette">
@@ -462,8 +462,105 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="ROVModeForm" name="pageROVMode"/>
-      <widget class="AUVModeForm" name="pageAUVMode"/>
+      <widget class="QWidget" name="pageROVMode"/>
+      <widget class="QWidget" name="pageAUVMode">
+       <layout class="QVBoxLayout" name="verticalLayout_10">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QWidget" name="bottom_cam" native="true"/>
+          </item>
+          <item>
+           <widget class="QWidget" name="main_cam" native="true"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Jetson</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnON_2">
+                <property name="text">
+                 <string>ON</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnOFF_2">
+                <property name="text">
+                 <string>OFF</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="Line" name="line_7">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Camera</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnREC_2">
+                <property name="text">
+                 <string>REC</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btnGO_2">
+                <property name="text">
+                 <string>GO</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="Line" name="line_8">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -473,7 +570,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>695</width>
+     <width>966</width>
      <height>22</height>
     </rect>
    </property>
@@ -504,27 +601,29 @@
      <addaction name="action_enable_ROV"/>
      <addaction name="action_enable_AUV"/>
     </widget>
-    <widget class="QMenu" name="menuVehicleChoose">
+    <widget class="QMenu" name="menu_config_com">
      <property name="title">
-      <string>Выбор аппарата</string>
+      <string>Связь</string>
      </property>
-     <addaction name="action_enable_cousteau"/>
-     <addaction name="action_enable_upyr"/>
+     <addaction name="action_config_RS"/>
+     <addaction name="action_config_SSH"/>
     </widget>
-    <addaction name="menuVehicleChoose"/>
+    <addaction name="action_create_vehicle"/>
+    <addaction name="separator"/>
+    <addaction name="action_choose_vehicle"/>
     <addaction name="menuConfiguration"/>
     <addaction name="separator"/>
-    <addaction name="action_config_com"/>
     <addaction name="action_config_thrusters"/>
     <addaction name="action_config_coef"/>
+    <addaction name="menu_config_com"/>
    </widget>
    <addaction name="menuBarVehicleName"/>
    <addaction name="menuBarControlBox"/>
    <addaction name="menuBarOther"/>
   </widget>
-  <action name="action_config_com">
+  <action name="action_config_RS">
    <property name="text">
-    <string>Связь</string>
+    <string>RS485</string>
    </property>
   </action>
   <action name="action_config_thrusters">
@@ -611,21 +710,27 @@
     <string>Настройки</string>
    </property>
   </action>
+  <action name="action_create_vehicle">
+   <property name="text">
+    <string>Новый аппарат</string>
+   </property>
+  </action>
+  <action name="actionSSH">
+   <property name="text">
+    <string>SSH</string>
+   </property>
+  </action>
+  <action name="action_config_SSH">
+   <property name="text">
+    <string>SSH</string>
+   </property>
+  </action>
+  <action name="action_choose_vehicle">
+   <property name="text">
+    <string>Выбор аппарата</string>
+   </property>
+  </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>AUVModeForm</class>
-   <extends>QWidget</extends>
-   <header>AUVModeForm/auvmodeform.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ROVModeForm</class>
-   <extends>QWidget</extends>
-   <header>ROVModeForm/rovmodeform.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

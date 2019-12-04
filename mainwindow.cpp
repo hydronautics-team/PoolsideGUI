@@ -5,19 +5,38 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     setupUi(this);
 
-    // menu AUV/ROV
+    // Menu actions:
+    // Vehicle
+    //      New vehicle
+    connect(action_create_vehicle, SIGNAL(triggered()),this, SLOT(createVehicle()));
+    //      Choose vehicle
+    connect(action_choose_vehicle, SIGNAL(triggered()),this, SLOT(chooseVehicle()));
+    //      Configuration
     connect(action_enable_AUV, SIGNAL(triggered()),this, SLOT(enableAUVMode()));
     connect(action_enable_ROV, SIGNAL(triggered()),this, SLOT(enableROVMode()));
-    // menu Vehicle
-    connect(action_config_com, SIGNAL(triggered()),this, SLOT(showPageConfigCommunication()));
+
+    connect(action_config_RS, SIGNAL(triggered()),this, SLOT(showPageConfigRS()));
+    connect(action_config_SSH, SIGNAL(triggered()),this, SLOT(showPageConfigSSH()));
     connect(action_config_thrusters, SIGNAL(triggered()),this, SLOT(showPageConfigThruster()));
     connect(action_config_coef, SIGNAL(triggered()),this, SLOT(showPageConfigCoef()));
-    // menu Surface control unit
+
+    // Surface control unit
     connect(action_config_controls, SIGNAL(triggered()),this, SLOT(showPageConfigControls()));
     connect(action_config_view, SIGNAL(triggered()),this, SLOT(showPageConfigView()));
-    // menu Other
+
+    // Other
     connect(action_about_program, SIGNAL(triggered()),this, SLOT(showPageAboutProgram()));
     connect(action_other_settings, SIGNAL(triggered()),this, SLOT(showPageOtherSettings()));
+}
+
+void MainWindow::createVehicle()
+{
+    wizard.show();
+}
+
+void MainWindow::chooseVehicle()
+{
+
 }
 
 void MainWindow::enableAUVMode()
@@ -30,10 +49,16 @@ void MainWindow::enableROVMode()
     stackedWidget->setCurrentWidget(pageROVMode);
 }
 
-void MainWindow::showPageConfigCommunication()
+void MainWindow::showPageConfigRS()
 {
     settingsWindow.show();
-    settingsWindow.showPageConfigCommunication();
+    settingsWindow.showPageConfigRS();
+}
+
+void MainWindow::showPageConfigSSH()
+{
+    settingsWindow.show();
+    settingsWindow.showPageConfigSSH();
 }
 
 void MainWindow::showPageConfigThruster()

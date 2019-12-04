@@ -16,21 +16,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    AUVModeForm/auvmodeform.cpp \
-    ROVModeForm/rovmodeform.cpp \
+    CreateVehicleWizard/createvehiclewizard.cpp \
     main.cpp \
     mainwindow.cpp \
-    SettingsWindow/settingswindow.cpp
+    SettingsWindow/settingswindow.cpp \
 
 HEADERS += \
-    AUVModeForm/auvmodeform.h \
-    ROVModeForm/rovmodeform.h \
+    CreateVehicleWizard/createvehiclewizard.h \
     mainwindow.h \
-    SettingsWindow/settingswindow.h
+    SettingsWindow/settingswindow.h \
 
 FORMS += \
-    AUVModeForm/auvmodeform.ui \
-    ROVModeForm/rovmodeform.ui \
+    CreateVehicleWizard/createvehiclewizard.ui \
     mainwindow.ui \
     SettingsWindow/settingswindow.ui
 
@@ -38,3 +35,5 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+unix:!macx: LIBS += -lssh
