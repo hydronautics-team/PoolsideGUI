@@ -42,7 +42,10 @@ CreateVehicleWizard::CreateVehicleWizard(QWidget *parent) :
     stateMachine.addState(finish);
 
     stateMachine.setInitialState(idle);
-
+    //---------------------------------
+    connect(thrustersSpinBox, SIGNAL(valueChanged(int)), SLOT(updateThrustersCount()));
+    thrustersTable->setColumnCount(1);
+    //---------------------------------
     //qDebug () << QApplication::applicationDirPath();
     settingsFile = QApplication::applicationDirPath() + "/settings.ini";
 
@@ -80,10 +83,36 @@ void CreateVehicleWizard::finishWizard()
     settings.beginGroup("vehicle");
     settings.beginGroup(vehicleName->text());
     settings.setValue("name", vehicleName->text());
+
+    settings.beginGroup("configuration");
     settings.setValue("ROV", checkBoxROV->isChecked());
     settings.setValue("AUV", checkBoxAUV->isChecked());
+    settings.endGroup();
+
+    /*
+    settings.beginGroup("thrusters");
+    for (int i = 0; thrusters_count; i++){
+        QString number = QString::number(thrusters_count);
+        QString name = thrustersTable->item(i,0)->text();
+        if (name == "")
+            name = number;
+        else {
+            settings.beginGroup(number);
+            settings.setValue("name", name);
+            settings.endGroup();
+        }
+    }
+    settings.endGroup();
+    */
+
     settings.endGroup();
     settings.endGroup();
 
     this->close();
+}
+
+void CreateVehicleWizard::updateThrustersCount()
+{
+    thrusters_count = thrustersSpinBox->value();
+    thrustersTable->setRowCount(thrusters_count);
 }

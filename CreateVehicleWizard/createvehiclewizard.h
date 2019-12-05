@@ -23,13 +23,17 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private:
+    int thrusters_count;
+
     QString settingsFile;
+
     QStateMachine stateMachine;
     QState *idle, *setName, *setParameters;
     QFinalState *finish;
 
 private slots:
     void finishWizard();
+    void updateThrustersCount();
 };
 
 #endif // CREATEVEHICLEWIZARD_H
