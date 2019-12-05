@@ -2,7 +2,6 @@
 #define SETTINGSWINDOW_H
 
 #include "ui_settingswindow.h"
-#include "ssh.h"
 
 class SettingsWindow : public QWidget, private Ui::SettingsWindow
 {

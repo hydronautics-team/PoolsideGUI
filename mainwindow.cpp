@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::createVehicle()
 {
+    wizard.startStateMachine();
     wizard.show();
 }
 
