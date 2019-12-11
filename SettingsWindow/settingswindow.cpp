@@ -4,7 +4,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
-    //connect(btn_connect_SSH, SIGNAL(triggered()),this, SLOT(enableAUVMode()));
 }
 
 void SettingsWindow::showPageConfigThruster()

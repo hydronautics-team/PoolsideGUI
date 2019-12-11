@@ -16,18 +16,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    CreateVehicleWizard/createvehiclewizard.cpp \
+    ChooseVehicle/choosevehicle.cpp \
+    SettingsWindow/ThrusterSettings/thrustersettings.cpp \
+    VehicleWizard/vehiclewizard.cpp \
     main.cpp \
     mainwindow.cpp \
     SettingsWindow/settingswindow.cpp \
 
 HEADERS += \
-    CreateVehicleWizard/createvehiclewizard.h \
+    ChooseVehicle/choosevehicle.h \
+    SettingsWindow/ThrusterSettings/thrustersettings.h \
+    VehicleWizard/vehiclewizard.h \
     mainwindow.h \
     SettingsWindow/settingswindow.h \
 
 FORMS += \
-    CreateVehicleWizard/createvehiclewizard.ui \
+    ChooseVehicle/choosevehicle.ui \
+    SettingsWindow/ThrusterSettings/thrustersettings.ui \
+    VehicleWizard/vehiclewizard.ui \
     mainwindow.ui \
     SettingsWindow/settingswindow.ui
 

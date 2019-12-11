@@ -608,9 +608,14 @@
      <addaction name="action_config_RS"/>
      <addaction name="action_config_SSH"/>
     </widget>
+    <widget class="QMenu" name="menuChooseVehicle">
+     <property name="title">
+      <string>Выбор аппарата</string>
+     </property>
+    </widget>
     <addaction name="action_create_vehicle"/>
     <addaction name="separator"/>
-    <addaction name="action_choose_vehicle"/>
+    <addaction name="menuChooseVehicle"/>
     <addaction name="menuConfiguration"/>
     <addaction name="separator"/>
     <addaction name="action_config_thrusters"/>
@@ -725,9 +730,9 @@
     <string>SSH</string>
    </property>
   </action>
-  <action name="action_choose_vehicle">
+  <action name="actionsdf">
    <property name="text">
-    <string>Выбор аппарата</string>
+    <string>sdf</string>
    </property>
   </action>
  </widget>

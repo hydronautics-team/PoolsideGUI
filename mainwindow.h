@@ -3,20 +3,35 @@
 
 #include "ui_mainwindow.h"
 #include "SettingsWindow/settingswindow.h"
-#include "CreateVehicleWizard/createvehiclewizard.h"
+#include "VehicleWizard/vehiclewizard.h"
+#include <QAction>
+#include <QSettings>
+#include <QStringList>
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
     Q_OBJECT
+signals:
+    void updateVehiclesMenu();
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
+public slots:
+    void updateVehiclesList();
+
 private:
     SettingsWindow settingsWindow;
-    CreateVehicleWizard wizard;
+    VehicleWizard wizard;
+
+    QSettings *settings;
+    QString settingsFile;
+    QStringList vehiclesListString;
+    void checkFile(QString filename);
+
 
 private slots:
+    // TODO: УБРАТЬ ЭТО
     // Menu actions:
     // Vehicle:
     //      New vehicle

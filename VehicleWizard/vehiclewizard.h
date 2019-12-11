@@ -1,12 +1,12 @@
 #ifndef CREATEVEHICLEWIZARD_H
 #define CREATEVEHICLEWIZARD_H
 
-#include "ui_createvehiclewizard.h"
+#include "ui_vehiclewizard.h"
 #include <QStateMachine>
 #include <QFinalState>
 #include <QCloseEvent>
 
-class CreateVehicleWizard : public QWidget, private Ui::CreateVehicleWizard
+class VehicleWizard : public QWidget, private Ui::VehicleWizard
 {
     Q_OBJECT
 
@@ -14,9 +14,10 @@ signals:
     void nextPressed();
     void backPressed();
     void finishPressed();
+    void updateVehiclesMenu(); //
 
 public:
-    explicit CreateVehicleWizard(QWidget *parent = nullptr);
+    explicit VehicleWizard(QWidget *parent = nullptr);
     void startStateMachine();
 
 protected:
@@ -32,6 +33,8 @@ private:
     QFinalState *finish;
 
 private slots:
+    void enableButtonNext();
+    void enableButtonFinish();
     void finishWizard();
     void updateThrustersCount();
 };

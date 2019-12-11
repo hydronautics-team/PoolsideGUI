@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreateVehicleWizard</class>
- <widget class="QWidget" name="CreateVehicleWizard">
+ <class>VehicleWizard</class>
+ <widget class="QWidget" name="VehicleWizard">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pageWelcome">
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -85,7 +85,7 @@ p, li { white-space: pre-wrap; }
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>ывм</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -295,7 +295,7 @@ p, li { white-space: pre-wrap; }
      <item>
       <widget class="QPushButton" name="btnBack">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>Back</string>
@@ -304,6 +304,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item>
       <widget class="QPushButton" name="btnNext">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>Next</string>
        </property>

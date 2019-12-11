@@ -1,20 +1,24 @@
-#include "createvehiclewizard.h"
+#include "vehiclewizard.h"
 #include <QSettings>
 #include <QFileInfo>
 #include <QDebug>
+#include "mainwindow.h"
 
-CreateVehicleWizard::CreateVehicleWizard(QWidget *parent) :
+VehicleWizard::VehicleWizard(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+
+    connect(btnNext, SIGNAL(clicked()), SIGNAL(nextPressed()));
+    connect(btnBack, SIGNAL(clicked()), SIGNAL(backPressed()));
+
+    //---------------------------------
 
     idle = new QState();
     setName = new QState();
     setParameters = new QState();
     finish = new QFinalState();
 
-    connect(btnNext, SIGNAL(clicked()), SIGNAL(nextPressed()));
-    connect(btnBack, SIGNAL(clicked()), SIGNAL(backPressed()));
     connect(&stateMachine, SIGNAL(finished()), SLOT(finishWizard()));
 
     idle->addTransition(this, SIGNAL(nextPressed()), setName);
@@ -42,11 +46,14 @@ CreateVehicleWizard::CreateVehicleWizard(QWidget *parent) :
     stateMachine.addState(finish);
 
     stateMachine.setInitialState(idle);
+
     //---------------------------------
+
     connect(thrustersSpinBox, SIGNAL(valueChanged(int)), SLOT(updateThrustersCount()));
     thrustersTable->setColumnCount(1);
+
     //---------------------------------
-    //qDebug () << QApplication::applicationDirPath();
+
     settingsFile = QApplication::applicationDirPath() + "/settings.ini";
 
     QFile file(settingsFile);
@@ -66,21 +73,33 @@ CreateVehicleWizard::CreateVehicleWizard(QWidget *parent) :
     }
 }
 
-void CreateVehicleWizard::startStateMachine()
+void VehicleWizard::startStateMachine()
 {
     stateMachine.start();
 }
 
-void CreateVehicleWizard::closeEvent(QCloseEvent *event)
+void VehicleWizard::closeEvent(QCloseEvent *event)
 {
     stateMachine.stop();
     event->accept();
 }
 
-void CreateVehicleWizard::finishWizard()
+void VehicleWizard::enableButtonNext()
 {
+
+}
+
+void VehicleWizard::enableButtonFinish()
+{
+
+}
+
+void VehicleWizard::finishWizard()
+{
+    // save vehicle in settings.ini
     QSettings settings(settingsFile, QSettings::IniFormat);
     settings.beginGroup("vehicle");
+
     settings.beginGroup(vehicleName->text());
     settings.setValue("name", vehicleName->text());
 
@@ -89,29 +108,34 @@ void CreateVehicleWizard::finishWizard()
     settings.setValue("AUV", checkBoxAUV->isChecked());
     settings.endGroup();
 
-    /*
     settings.beginGroup("thrusters");
-    for (int i = 0; thrusters_count; i++){
-        QString number = QString::number(thrusters_count);
-        QString name = thrustersTable->item(i,0)->text();
-        if (name == "")
+    settings.setValue("count", thrusters_count);
+    for (int i = 0; i < thrusters_count; i++){
+        QString number = QString::number(i);
+        QString name;
+        if (!thrustersTable->item(i,0))
             name = number;
-        else {
-            settings.beginGroup(number);
-            settings.setValue("name", name);
-            settings.endGroup();
+        else if (thrustersTable->item(i,0)->text().isEmpty()) {
+            name = number;
         }
+        else
+            name = thrustersTable->item(i,0)->text();
+        settings.beginGroup(number);
+        settings.setValue("name", name);
+        settings.endGroup();
     }
     settings.endGroup();
-    */
 
     settings.endGroup();
     settings.endGroup();
+
+    // update chooseVehicle menu
+    emit updateVehiclesMenu();
 
     this->close();
 }
 
-void CreateVehicleWizard::updateThrustersCount()
+void VehicleWizard::updateThrustersCount()
 {
     thrusters_count = thrustersSpinBox->value();
     thrustersTable->setRowCount(thrusters_count);
