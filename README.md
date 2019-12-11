@@ -1,4 +1,4 @@
 # PoolsideGUI
-New GUI software for control box
+New GUI software for surface control unit
 
 `apt-get install libssh-dev`
