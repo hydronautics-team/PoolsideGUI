@@ -7,35 +7,48 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     setupUi(this);
 
-    // Menu actions:
+    // Menu:
     // Vehicle
     //      New vehicle
-    connect(action_create_vehicle, SIGNAL(triggered()), this, SLOT(createVehicle()));
-    //      Configuration
-    connect(action_enable_AUV, SIGNAL(triggered()), this, SLOT(enableAUVMode()));
-    connect(action_enable_ROV, SIGNAL(triggered()), this, SLOT(enableROVMode()));
-
-    connect(action_config_RS, SIGNAL(triggered()), this, SLOT(showPageConfigRS()));
-    connect(action_config_SSH, SIGNAL(triggered()), this, SLOT(showPageConfigSSH()));
-    connect(action_config_thrusters, SIGNAL(triggered()), this, SLOT(showPageConfigThruster()));
-    connect(action_config_coef, SIGNAL(triggered()), this, SLOT(showPageConfigCoef()));
-
+    connect(action_create_vehicle, SIGNAL(triggered()),
+            this, SLOT(createVehicle()));
+    //      Choose vehicle and configuration
+    connect(menu_choose_configuration,SIGNAL(triggered(QAction*)),
+            this, SLOT(chooseConfiguration(QAction*)));
+    connect(menu_choose_vehicle,SIGNAL(triggered(QAction*)),
+            this, SLOT(chooseVehicle(QAction*)));
+    //      Settings
+    connect(action_config_RS, SIGNAL(triggered()),
+            &settingsWindow, SLOT(showPageConfigRS()));
+    connect(action_config_SSH, SIGNAL(triggered()),
+            &settingsWindow, SLOT(showPageConfigSSH()));
+    connect(action_config_thrusters, SIGNAL(triggered()),
+            &settingsWindow, SLOT(showPageConfigThruster()));
+    connect(action_config_coef, SIGNAL(triggered()),
+            &settingsWindow, SLOT(showPageConfigCoef()));
     // Surface control unit
-    connect(action_config_controls, SIGNAL(triggered()), this, SLOT(showPageConfigControls()));
-    connect(action_config_view, SIGNAL(triggered()), this, SLOT(showPageConfigView()));
-
+    connect(action_config_controls, SIGNAL(triggered()),
+            &settingsWindow, SLOT(showPageConfigControls()));
+    connect(action_config_view, SIGNAL(triggered()),
+            &settingsWindow, SLOT(showPageConfigView()));
     // Other
-    connect(action_about_program, SIGNAL(triggered()), this, SLOT(showPageAboutProgram()));
-    connect(action_other_settings, SIGNAL(triggered()), this, SLOT(showPageOtherSettings()));
+    connect(action_about_program, SIGNAL(triggered()),
+            &settingsWindow, SLOT(showPageAboutProgram()));
+    connect(action_other_settings, SIGNAL(triggered()),
+            &settingsWindow, SLOT(showPageOtherSettings()));
+    // Wizard
+    connect(&wizard, SIGNAL(updateMainWindow()),
+            this, SLOT(updateVehiclesMenu()));
 
-    connect(&wizard, SIGNAL(updateVehiclesMenu()), this, SLOT(updateVehiclesList()));
-    connect(this, SIGNAL(updateVehiclesMenu()), this, SLOT(updateVehiclesList()));
+    settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // settings file path
+    checkFile(settingsFile); // check file existance
+    settings = new QSettings(settingsFile, QSettings::IniFormat); // QSettings object
 
-    settingsFile = QApplication::applicationDirPath() + "/settings.ini";
-    settings = new QSettings(settingsFile, QSettings::IniFormat);
-    checkFile(settingsFile);
+    currentVehicle = settings->value("currentVehicle").toString();
+    currentConfiguration = settings->value("currentConfiguration").toString();
 
-    emit updateVehiclesMenu();
+    updateVehiclesMenu(); // update vehicles list
+    updateVehicleConfigurationMenu(); // update vehicle configurations
 }
 
 void MainWindow::createVehicle()
@@ -44,9 +57,89 @@ void MainWindow::createVehicle()
     wizard.show();
 }
 
-void MainWindow::chooseVehicle()
+void MainWindow::chooseVehicle(QAction *action)
 {
+    currentVehicle = action->text();
+    settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
+    foreach (QString name, settings->childKeys()) {
+        if (settings->value(name).toBool()){
+            currentConfiguration = name;
+            break;
+        }
+    }
+    settings->endGroup();
 
+    settings->setValue("currentVehicle", currentVehicle);
+    settings->setValue("currentConfiguration", currentConfiguration);
+    updateVehiclesMenu(); // update vehicles list
+    updateVehicleConfigurationMenu(); // update vehicle configurations
+}
+
+void MainWindow::chooseConfiguration(QAction *action)
+{
+    currentConfiguration = action->text();
+    settings->setValue("currentConfiguration", currentConfiguration);
+    updateVehicleConfigurationMenu();
+}
+
+void MainWindow::updateVehiclesMenu()
+{
+    if (!currentVehicle.isEmpty()){
+        if (!menu_choose_vehicle->isEmpty())
+            menu_choose_vehicle->clear();
+        settings->beginGroup("vehicle");
+        foreach (QString name, settings->childGroups()) {
+            QAction *vehicle = new QAction(name);
+            if (name == currentVehicle){
+                QFont f = vehicle->font();
+                f.setBold(true);
+                vehicle->setFont(f);
+                menu_choose_vehicle->addAction(vehicle);
+            }
+            else
+                menu_choose_vehicle->addAction(vehicle);
+        }
+        settings->endGroup();
+    }
+    qDebug () << currentVehicle;
+}
+
+void MainWindow::updateVehicleConfigurationMenu()
+{
+    menu_choose_configuration->clear();
+    settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
+    foreach (QString name, settings->childKeys()) {
+        if (settings->value(name).toBool()){
+            QAction *configuration = new QAction(name);
+            if (name == currentConfiguration){
+                QFont f = configuration->font();
+                f.setBold(true);
+                configuration->setFont(f);
+                menu_choose_configuration->addAction(configuration);
+            }
+            else
+                menu_choose_configuration->addAction(configuration);
+        }
+    }
+    settings->endGroup();
+    qDebug () << currentConfiguration;
+}
+
+void MainWindow::checkFile(QString filename)
+{
+    QFile file(filename);
+    if(QFileInfo::exists(filename))
+    {
+        file.open(QIODevice::ReadWrite | QIODevice::Text);
+        qDebug()<<"file already created";
+        file.close();
+    }
+    else
+    {
+        file.open(QIODevice::ReadWrite | QIODevice::Text);
+        qDebug()<<"file created"<<endl;
+        file.close();
+    }
 }
 
 void MainWindow::enableAUVMode()
@@ -57,86 +150,4 @@ void MainWindow::enableAUVMode()
 void MainWindow::enableROVMode()
 {
     stackedWidget->setCurrentWidget(pageROVMode);
-}
-
-void MainWindow::showPageConfigRS()
-{
-    settingsWindow.show();
-    settingsWindow.showPageConfigRS();
-}
-
-void MainWindow::showPageConfigSSH()
-{
-    settingsWindow.show();
-    settingsWindow.showPageConfigSSH();
-}
-
-void MainWindow::showPageConfigThruster()
-{
-    settingsWindow.show();
-    settingsWindow.showPageConfigThruster();
-}
-
-void MainWindow::showPageConfigCoef()
-{
-    settingsWindow.show();
-    settingsWindow.showPageConfigCoef();
-}
-
-void MainWindow::showPageConfigControls()
-{
-    settingsWindow.show();
-    settingsWindow.showPageConfigControls();
-}
-
-void MainWindow::showPageConfigView()
-{
-    settingsWindow.show();
-    settingsWindow.showPageConfigView();
-}
-
-void MainWindow::showPageAboutProgram()
-{
-    settingsWindow.show();
-    settingsWindow.showPageAboutProgram();
-}
-
-void MainWindow::showPageOtherSettings()
-{
-    settingsWindow.show();
-    settingsWindow.showPageOtherSettings();
-}
-
-void MainWindow::updateVehiclesList()
-{
-    if (!menuChooseVehicle->isEmpty())
-        menuChooseVehicle->clear();
-    settings->beginGroup("vehicle");
-    vehiclesListString = settings->childGroups();
-    settings->endGroup();
-    qDebug () << vehiclesListString;
-    foreach (QString name, vehiclesListString) {
-        QAction *vehicle = new QAction(name);
-        menuChooseVehicle->addAction(vehicle);
-        qDebug () << name;
-    }
-}
-
-void MainWindow::checkFile(QString filename)
-{
-    QFile file(filename);
-    if(QFileInfo::exists(filename))
-    {
-        qDebug () << "file exists";
-        file.open(QIODevice::ReadWrite | QIODevice::Text);
-        qDebug()<<"file already created";
-        file.close();
-    }
-    else
-    {
-        qDebug () << "file does not exists";
-        file.open(QIODevice::ReadWrite | QIODevice::Text);
-        qDebug()<<"file created"<<endl;
-        file.close();
-    }
 }

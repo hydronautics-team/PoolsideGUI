@@ -14,7 +14,7 @@ signals:
     void nextPressed();
     void backPressed();
     void finishPressed();
-    void updateVehiclesMenu(); //
+    void updateMainWindow(); //
 
 public:
     explicit VehicleWizard(QWidget *parent = nullptr);

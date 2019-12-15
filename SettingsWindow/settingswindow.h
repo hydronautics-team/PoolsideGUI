@@ -10,6 +10,7 @@ class SettingsWindow : public QWidget, private Ui::SettingsWindow
 public:
     explicit SettingsWindow(QWidget *parent = nullptr);
 
+public slots:
     void showPageConfigThruster();
     void showPageConfigRS();
     void showPageConfigSSH();
@@ -22,10 +23,6 @@ public:
 private:
     //Serial serial;
     //Messages messages;
-    //SSH ssh;
-
-private slots:
-    void connectSSH();
 
 };
 

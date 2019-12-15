@@ -130,7 +130,7 @@ void VehicleWizard::finishWizard()
     settings.endGroup();
 
     // update chooseVehicle menu
-    emit updateVehiclesMenu();
+    emit updateMainWindow();
 
     this->close();
 }
