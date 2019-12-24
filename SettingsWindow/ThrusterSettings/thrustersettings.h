@@ -3,6 +3,7 @@
 
 #include <QSettings>
 #include <QPushButton>
+#include <QButtonGroup>
 #include "ui_thrustersettings.h"
 
 class ThrusterSettings : public QWidget, private Ui::ThrusterSettings
@@ -14,16 +15,28 @@ public:
 
 signals:
     void updateVehicle();
+    void flashVehicle();
 
 public slots:
-    void updateThrusterButtons();
+    void updateThrusterSettings();
 
 private:
     QString settingsFile;
     QSettings *settings;
     QString currentVehicle;
+    int currentThruster;
+    int thrustersCount;
+    QButtonGroup *thrusterButtonGroup;
 
-    void clearWidgets(QLayout * layout);
+private slots:
+    void thrusterButtonClicked(int value);
+    void thrusterIdChanged(int value);
+    void thrusterReverseEnabled(int state);
+    void thrusterVelocityChanged(int value);
+    void thrusterKForwardChanged(int value);
+    void thrusterKBackwardChanged(int value);
+    void thrusterForwardSaturationChanged(int value);
+    void thrusterBackwardSaturationChanged(int value);
 };
 
 #endif // THRUSTERSETTINGS_H

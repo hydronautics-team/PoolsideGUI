@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     setupUi(this);
+    qDebug () << " - MainWindow constructor";
 
     connect(this, SIGNAL(updateVehicle()),
             this, SLOT(updateVehiclesMenu()));

@@ -1,9 +1,11 @@
 #include "settingswindow.h"
+#include <QDebug>
 
 SettingsWindow::SettingsWindow(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+    qDebug () << " - SettingsWindow constructor";
 
     connect(this, SIGNAL(updateVehicle()), &thrusterSettings, SIGNAL(updateVehicle()));
 }
