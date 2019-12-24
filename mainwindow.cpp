@@ -7,6 +7,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     setupUi(this);
 
+    connect(this, SIGNAL(updateVehicle()),
+            this, SLOT(updateVehiclesMenu()));
+    connect(this, SIGNAL(updateVehicle()),
+            &settingsWindow, SIGNAL(updateVehicle()));
+
+
     // Menu:
     // Vehicle
     //      New vehicle
@@ -20,8 +26,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //      Settings
     connect(action_config_RS, SIGNAL(triggered()),
             &settingsWindow, SLOT(showPageConfigRS()));
-    connect(action_config_SSH, SIGNAL(triggered()),
-            &settingsWindow, SLOT(showPageConfigSSH()));
     connect(action_config_thrusters, SIGNAL(triggered()),
             &settingsWindow, SLOT(showPageConfigThruster()));
     connect(action_config_coef, SIGNAL(triggered()),
@@ -31,24 +35,22 @@ MainWindow::MainWindow(QWidget *parent) :
             &settingsWindow, SLOT(showPageConfigControls()));
     connect(action_config_view, SIGNAL(triggered()),
             &settingsWindow, SLOT(showPageConfigView()));
-    // Other
+    // Other settings
     connect(action_about_program, SIGNAL(triggered()),
             &settingsWindow, SLOT(showPageAboutProgram()));
     connect(action_other_settings, SIGNAL(triggered()),
             &settingsWindow, SLOT(showPageOtherSettings()));
     // Wizard
     connect(&wizard, SIGNAL(updateMainWindow()),
-            this, SLOT(updateVehiclesMenu()));
+            this, SIGNAL(updateVehicle()));
 
-    settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // settings file path
+    settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file
     checkFile(settingsFile); // check file existance
-    settings = new QSettings(settingsFile, QSettings::IniFormat); // QSettings object
+    settings = new QSettings(settingsFile, QSettings::IniFormat);
 
     currentVehicle = settings->value("currentVehicle").toString();
     currentConfiguration = settings->value("currentConfiguration").toString();
-
-    updateVehiclesMenu(); // update vehicles list
-    updateVehicleConfigurationMenu(); // update vehicle configurations
+    emit updateVehicle();
 }
 
 void MainWindow::createVehicle()
@@ -71,8 +73,7 @@ void MainWindow::chooseVehicle(QAction *action)
 
     settings->setValue("currentVehicle", currentVehicle);
     settings->setValue("currentConfiguration", currentConfiguration);
-    updateVehiclesMenu(); // update vehicles list
-    updateVehicleConfigurationMenu(); // update vehicle configurations
+    emit updateVehicle();
 }
 
 void MainWindow::chooseConfiguration(QAction *action)
@@ -101,7 +102,9 @@ void MainWindow::updateVehiclesMenu()
         }
         settings->endGroup();
     }
+    settings->sync();
     qDebug () << currentVehicle;
+    updateVehicleConfigurationMenu();
 }
 
 void MainWindow::updateVehicleConfigurationMenu()

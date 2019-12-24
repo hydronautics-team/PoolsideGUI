@@ -55,22 +55,6 @@ VehicleWizard::VehicleWizard(QWidget *parent) :
     //---------------------------------
 
     settingsFile = QApplication::applicationDirPath() + "/settings.ini";
-
-    QFile file(settingsFile);
-    if(QFileInfo::exists(settingsFile))
-    {
-        qDebug () << "file exists";
-        file.open(QIODevice::ReadWrite | QIODevice::Text);
-        qDebug()<<"file already created";
-        file.close();
-    }
-    else
-    {
-        qDebug () << "file does not exists";
-        file.open(QIODevice::ReadWrite | QIODevice::Text);
-        qDebug()<<"file created"<<endl;
-        file.close();
-    }
 }
 
 void VehicleWizard::startStateMachine()

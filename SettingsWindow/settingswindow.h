@@ -2,10 +2,14 @@
 #define SETTINGSWINDOW_H
 
 #include "ui_settingswindow.h"
+#include "ThrusterSettings/thrustersettings.h"
 
 class SettingsWindow : public QWidget, private Ui::SettingsWindow
 {
     Q_OBJECT
+
+signals:
+    void updateVehicle();
 
 public:
     explicit SettingsWindow(QWidget *parent = nullptr);
@@ -21,6 +25,7 @@ public slots:
     void showPageOtherSettings();
 
 private:
+    ThrusterSettings thrusterSettings;
     //Serial serial;
     //Messages messages;
 

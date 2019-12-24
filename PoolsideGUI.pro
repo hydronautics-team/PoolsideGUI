@@ -21,18 +21,21 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     SettingsWindow/settingswindow.cpp \
+    rovmodewidget.cpp
 
 HEADERS += \
     SettingsWindow/ThrusterSettings/thrustersettings.h \
     VehicleWizard/vehiclewizard.h \
     mainwindow.h \
     SettingsWindow/settingswindow.h \
+    rovmodewidget.h
 
 FORMS += \
     SettingsWindow/ThrusterSettings/thrustersettings.ui \
     VehicleWizard/vehiclewizard.ui \
     mainwindow.ui \
-    SettingsWindow/settingswindow.ui
+    SettingsWindow/settingswindow.ui \
+    rovmodewidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

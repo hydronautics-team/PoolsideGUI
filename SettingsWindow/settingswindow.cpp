@@ -4,6 +4,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
+
+    connect(this, SIGNAL(updateVehicle()), &thrusterSettings, SIGNAL(updateVehicle()));
 }
 
 void SettingsWindow::showPageConfigThruster()

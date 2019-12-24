@@ -12,13 +12,14 @@
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
     Q_OBJECT
+signals:
+    void updateVehicle();
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
-public slots:
+private slots:
     void updateVehiclesMenu();
-    void updateVehicleConfigurationMenu();
 
 private:
     SettingsWindow settingsWindow;
@@ -30,6 +31,7 @@ private:
     QString currentVehicle;
     QString currentConfiguration;
 
+    void updateVehicleConfigurationMenu();
     void checkFile(QString filename);
     void enableAUVMode();
     void enableROVMode();
