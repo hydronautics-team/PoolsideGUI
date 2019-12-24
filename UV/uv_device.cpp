@@ -13,18 +13,3 @@ UV_device::UV_device(std::string dev_name, unsigned int dev_id)
     control = 0;
     current = 0;
 }
-
-float UV_device::getControl() const
-{
-    return control;
-}
-
-void UV_device::setControl(float value)
-{
-    control = value;
-}
-
-float UV_device::getCurrent() const
-{
-    return current;
-}
