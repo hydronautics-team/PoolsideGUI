@@ -2,7 +2,6 @@
 #define SETTINGSWINDOW_H
 
 #include "ui_settingswindow.h"
-#include "ThrusterSettings/thrustersettings.h"
 
 class SettingsWindow : public QWidget, private Ui::SettingsWindow
 {
@@ -23,11 +22,6 @@ public slots:
     void showPageConfigView();
     void showPageAboutProgram();
     void showPageOtherSettings();
-
-private:
-    ThrusterSettings thrusterSettings;
-    //Serial serial;
-    //Messages messages;
 
 };
 

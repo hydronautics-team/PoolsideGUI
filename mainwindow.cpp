@@ -8,6 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
     setupUi(this);
     qDebug () << " - MainWindow constructor";
 
+    // update vehicle and all parameters
+    connect(&wizard, SIGNAL(updateMainWindow()),
+            this, SIGNAL(updateVehicle()));
     connect(this, SIGNAL(updateVehicle()),
             this, SLOT(updateVehiclesMenu()));
     connect(this, SIGNAL(updateVehicle()),
@@ -41,9 +44,6 @@ MainWindow::MainWindow(QWidget *parent) :
             &settingsWindow, SLOT(showPageAboutProgram()));
     connect(action_other_settings, SIGNAL(triggered()),
             &settingsWindow, SLOT(showPageOtherSettings()));
-    // Wizard
-    connect(&wizard, SIGNAL(updateMainWindow()),
-            this, SIGNAL(updateVehicle()));
 
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file
     checkFile(settingsFile); // check file existance

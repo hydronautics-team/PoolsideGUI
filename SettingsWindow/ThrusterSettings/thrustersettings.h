@@ -14,11 +14,10 @@ public:
     explicit ThrusterSettings(QWidget *parent = nullptr);
 
 signals:
-    void updateVehicle();
     void flashVehicle();
 
 public slots:
-    void updateThrusterSettings();
+    void updateVehicle();
 
 private:
     QString settingsFile;
@@ -29,9 +28,10 @@ private:
     QButtonGroup *thrusterButtonGroup;
 
 private slots:
+    void updateThrusterSettings();
     void thrusterButtonClicked(int value);
     void thrusterIdChanged(int value);
-    void thrusterReverseEnabled(int state);
+    void thrusterReverseChanged(int state);
     void thrusterVelocityChanged(int value);
     void thrusterKForwardChanged(int value);
     void thrusterKBackwardChanged(int value);

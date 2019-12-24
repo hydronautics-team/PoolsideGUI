@@ -24,10 +24,8 @@ private slots:
 private:
     SettingsWindow settingsWindow;
     VehicleWizard wizard;
-
     QString settingsFile;
     QSettings *settings;
-
     QString currentVehicle;
     QString currentConfiguration;
 

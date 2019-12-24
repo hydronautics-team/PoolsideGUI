@@ -8,9 +8,6 @@ ThrusterSettings::ThrusterSettings(QWidget *parent) :
     setupUi(this);
     qDebug () << " - ThrusterSettings constructor";
 
-    connect(this, SIGNAL(updateVehicle()),
-            this, SLOT(updateThrusterSettings()));
-
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file
     settings = new QSettings(settingsFile, QSettings::IniFormat);
     currentVehicle = settings->value("currentVehicle").toString();
@@ -26,13 +23,14 @@ ThrusterSettings::ThrusterSettings(QWidget *parent) :
     thrusterButtonGroup->addButton(thrusterBtn5, 5);
     thrusterButtonGroup->addButton(thrusterBtn6, 6);
     thrusterButtonGroup->addButton(thrusterBtn7, 7);
+
     connect(thrusterButtonGroup, SIGNAL(buttonClicked(int)),
             this, SLOT(thrusterButtonClicked(int))); // thruster button clicked
 
     connect(idSpinBox, SIGNAL(valueChanged(int)),
-            this, SLOT(thrusterKForwardChanged(int))); // thruster id
+            this, SLOT(thrusterIdChanged(int))); // thruster id
     connect(checkBoxReverse, SIGNAL(stateChanged(int)),
-            this, SLOT(thrusterReverseEnabled(int))); //thruster reverse
+            this, SLOT(thrusterReverseChanged(int))); //thruster reverse
 
     connect(verticalSliderVelocity, SIGNAL(valueChanged(int)),
             this, SLOT(thrusterVelocityChanged(int)));
@@ -44,103 +42,152 @@ ThrusterSettings::ThrusterSettings(QWidget *parent) :
             this, SLOT(thrusterForwardSaturationChanged(int)));
     connect(verticalSliderBackwardSaturation, SIGNAL(valueChanged(int)),
             this, SLOT(thrusterBackwardSaturationChanged(int)));
+
+    updateThrusterSettings();
 }
 
-void ThrusterSettings::updateThrusterSettings()
+void ThrusterSettings::updateVehicle()
 {
+    currentVehicle = settings->value("currentVehicle").toString();
+    currentThruster = 0;
+    //update buttons
     foreach (QAbstractButton *button, thrusterButtonGroup->buttons()) {
         button->hide();
     }
-    //update buttons
     for (int i = 0; i < thrustersCount; i++){
         thrusterButtonGroup->button(i)->show();
         thrusterButtonGroup->button(i)->setText(settings->value(
                                                     "vehicle/" +
                                                     currentVehicle +
                                                     "/thrusters/" +
-                                                    QString::number(i)).toString());
+                                                    QString::number(i) + "/name").toString());
     }
-    /*
-    idSpinBox->setValue(settings->value(
-                            "vehicle/" +
-                            currentVehicle +
-                            "/thrusters/" +
-                            QString::number(currentThruster) +
-                            "/id").toInt());
-    checkBoxReverse->setChecked();
-    verticalSliderVelocity->setValue(settings->thrusters_configs[settings->current_thrusters_numb].velocity);
-    verticalSliderForwardK->setValue(static_cast<int>(settings->thrusters_configs[settings->current_thrusters_numb].kForward*ui->verticalSliderForwardK->maximum()));
-    verticalSliderBackwardK->setValue(static_cast<int>(settings->thrusters_configs[settings->current_thrusters_numb].kBackward*ui->verticalSliderBackwardK->maximum()));
-    verticalSliderForwardSaturation->setValue(settings->thrusters_configs[settings->current_thrusters_numb].forward_saturation);
-    verticalSliderBackwardSaturation->setValue(settings->thrusters_configs[settings->current_thrusters_numb].backward_saturation);
-    */
+    updateThrusterSettings();
+}
 
-    qDebug () << currentVehicle + " (Thrusters)";
+void ThrusterSettings::updateThrusterSettings()
+{
+    idSpinBox->setValue(
+                settings->value("vehicle/" +
+                                currentVehicle +
+                                "/thrusters/" +
+                                QString::number(currentThruster) +
+                                "/id").toInt());
+    checkBoxReverse->setChecked(
+                settings->value("vehicle/" +
+                                currentVehicle +
+                                "/thrusters/" +
+                                QString::number(currentThruster) +
+                                "/reverse").toBool());
+    verticalSliderVelocity->setValue(
+                settings->value("vehicle/" +
+                                currentVehicle +
+                                "/thrusters/" +
+                                QString::number(currentThruster) +
+                                "/velocity").toInt());
+    verticalSliderForwardK->setValue(
+                settings->value("vehicle/" +
+                                currentVehicle +
+                                "/thrusters/" +
+                                QString::number(currentThruster) +
+                                "/forwardK").toInt() * verticalSliderForwardK->maximum());
+    verticalSliderBackwardK->setValue(
+                settings->value("vehicle/" +
+                                currentVehicle +
+                                "/thrusters/" +
+                                QString::number(currentThruster) +
+                                "/backwardK").toInt() * verticalSliderBackwardK->maximum());
+    verticalSliderForwardSaturation->setValue(
+                settings->value("vehicle/" +
+                                currentVehicle +
+                                "/thrusters/" +
+                                QString::number(currentThruster) +
+                                "/forwardSaturation").toInt());
+    verticalSliderBackwardSaturation->setValue(
+                settings->value("vehicle/" +
+                                currentVehicle +
+                                "/thrusters/" +
+                                QString::number(currentThruster) +
+                                "/backwardSaturation").toInt());
+    qDebug () << settings->value(
+                     "vehicle/" +
+                     currentVehicle +
+                     "/thrusters/" +
+                     QString::number(currentThruster) + "/name").toString() << "Thrusters updated";
 }
 
 void ThrusterSettings::thrusterButtonClicked(int value)
 {
-    emit flashVehicle();
+    currentThruster = value;
+    updateThrusterSettings();
 }
 
 void ThrusterSettings::thrusterIdChanged(int value)
 {
-    emit flashVehicle();
+    settings->setValue("vehicle/" +
+                       currentVehicle +
+                       "/thrusters/" +
+                       QString::number(currentThruster) +
+                       "/id", value);
 }
 
-void ThrusterSettings::thrusterReverseEnabled(int state)
+void ThrusterSettings::thrusterReverseChanged(int state)
 {
-    emit flashVehicle();
+    settings->setValue("vehicle/" +
+                       currentVehicle +
+                       "/thrusters/" +
+                       QString::number(currentThruster) +
+                       "/reverse", state);
 }
 
 void ThrusterSettings::thrusterVelocityChanged(int value)
 {
-    settings->beginGroup("vehicle/" + currentVehicle + "/thrusters/" + QString::number(currentThruster));
-    settings->setValue("thrusterVelocity", value);
-    settings->endGroup();
-
+    settings->setValue("vehicle/" +
+                       currentVehicle +
+                       "/thrusters/" +
+                       QString::number(currentThruster) +
+                       "/velocity", value);
     spinBoxVelocity->setValue(value);
-    emit flashVehicle();
 }
 
 void ThrusterSettings::thrusterKForwardChanged(int value)
 {
-    settings->beginGroup("vehicle/" + currentVehicle + "/thrusters/" + QString::number(currentThruster));
-    settings->setValue("ForwardK", value);
-    settings->endGroup();
-
-    spinBoxForwardK->setValue(value);
-    emit flashVehicle();
+    settings->setValue("vehicle/" +
+                       currentVehicle +
+                       "/thrusters/" +
+                       QString::number(currentThruster) +
+                       "/forwardK", value);
+    spinBoxForwardK->setValue(value/1000);
 }
 
 void ThrusterSettings::thrusterKBackwardChanged(int value)
 {
-    settings->beginGroup("vehicle/" + currentVehicle + "/thrusters/" + QString::number(currentThruster));
-    settings->setValue("BackwardK", value);
-    settings->endGroup();
-
-    spinBoxBackwardK->setValue(value);
-    emit flashVehicle();
+    settings->setValue("vehicle/" +
+                       currentVehicle +
+                       "/thrusters/" +
+                       QString::number(currentThruster) +
+                       "/backwardK", value);
+    spinBoxBackwardK->setValue(value/1000);
 }
 
 void ThrusterSettings::thrusterForwardSaturationChanged(int value)
 {
-    settings->beginGroup("vehicle/" + currentVehicle + "/thrusters/" + QString::number(currentThruster));
-    settings->setValue("ForwardSaturation", value);
-    settings->endGroup();
-
+    settings->setValue("vehicle/" +
+                       currentVehicle +
+                       "/thrusters/" +
+                       QString::number(currentThruster) +
+                       "/forwardSaturation", value);
     spinBoxForwardSaturation->setValue(value);
-    emit flashVehicle();
 }
 
 void ThrusterSettings::thrusterBackwardSaturationChanged(int value)
 {
-    settings->beginGroup("vehicle/" + currentVehicle + "/thrusters/" + QString::number(currentThruster));
-    settings->setValue("BackwardSaturation", value);
-    settings->endGroup();
-
+    settings->setValue("vehicle/" +
+                       currentVehicle +
+                       "/thrusters/" +
+                       QString::number(currentThruster) +
+                       "/backwardSaturation", value);
     spinBoxBackwardSaturation->setValue(value);
-    emit flashVehicle();
 }
 
 
