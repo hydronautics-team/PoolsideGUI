@@ -1,11 +1,10 @@
-#include "operatorwindow.h"
-
+#include "mainwindow.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    OperatorWindow w;
-    w.show();
+    MainWindow mainWindow;
+    mainWindow.show();
     return a.exec();
 }

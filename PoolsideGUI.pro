@@ -16,16 +16,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    SettingsWindow/ThrusterSettings/thrustersettings.cpp \
+    VehicleWizard/vehiclewizard.cpp \
     main.cpp \
-    operatorwindow.cpp
+    mainwindow.cpp \
+    SettingsWindow/settingswindow.cpp \
+    rovmodewidget.cpp
 
 HEADERS += \
-    operatorwindow.h
+    SettingsWindow/ThrusterSettings/thrustersettings.h \
+    VehicleWizard/vehiclewizard.h \
+    mainwindow.h \
+    SettingsWindow/settingswindow.h \
+    rovmodewidget.h
 
 FORMS += \
-    operatorwindow.ui
+    SettingsWindow/ThrusterSettings/thrustersettings.ui \
+    VehicleWizard/vehiclewizard.ui \
+    mainwindow.ui \
+    SettingsWindow/settingswindow.ui \
+    rovmodewidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+unix:!macx: LIBS += -lssh
