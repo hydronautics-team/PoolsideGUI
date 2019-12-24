@@ -17,12 +17,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     SettingsWindow/ThrusterSettings/thrustersettings.cpp \
+    UV/uv_thrusters.cpp \
     VehicleWizard/vehiclewizard.cpp \
     UV/ibasicdata.cpp \
     UV/iserverdata.cpp \
     UV/uv_device.cpp \
     UV/uv_stabilization.cpp \
     UV/uv_state.cpp \
+    global.cpp \
     main.cpp \
     com_server.cpp \
     mainwindow.cpp \
@@ -36,7 +38,9 @@ HEADERS += \
     UV/uv_stabilization.h \
     UV/uv_state.h \
     SettingsWindow/ThrusterSettings/thrustersettings.h \
+    UV/uv_thrusters.h \
     VehicleWizard/vehiclewizard.h \
+    global.h \
     mainwindow.h \
     com_server.h \
     SettingsWindow/settingswindow.h \

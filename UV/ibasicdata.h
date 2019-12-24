@@ -13,15 +13,15 @@ class IBasicData
 public:
     IBasicData(UV_State *target, QMutex *target_mutex);
 
-protected:
     void getData();
     UV_State* gainAccess();
     void closeAccess();
 
+    UV_State internal_state;
+
+protected:
     UV_State *state;
     QMutex *mutex;
-
-    UV_State internal_state;
 };
 
 #endif // IBASICDATA_H

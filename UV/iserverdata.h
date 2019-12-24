@@ -7,12 +7,6 @@
 #include "ibasicdata.h"
 #include "uv_state.h"
 
-enum e_MessageTypes {
-    MESSAGE_NORMAL = 0,
-    MESSAGE_CONFIG,
-    MESSAGE_DIRECT
-};
-
 enum e_messageErrors {
     MESSAGE_ERROR_ID_NOT_FOUND = 0
 };
@@ -22,8 +16,8 @@ class IServerData : public IBasicData
 public:
     IServerData(UV_State *target, QMutex *target_mutex);
 
-    QByteArray getMessage(e_MessageTypes message_type);
-    void passMessage(QByteArray message, e_MessageTypes message_type);
+    QByteArray getMessage(int message_type);
+    void passMessage(QByteArray message, int message_type);
 private:
     QDataStream *port;
 
@@ -31,7 +25,7 @@ private:
     static const uint8_t VmaAmount = 8;
 
     /// Number of the devs
-    static const uint8_t DevAmount = 6;
+    static const uint8_t DevAmount = 4;
 
     struct RequestNormalMessage
     {

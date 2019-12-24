@@ -9,6 +9,7 @@
 class UV_device
 {
 public:
+    UV_device();
     UV_device(std::string dev_name, unsigned int dev_id);
 
     static unsigned int devices_number;

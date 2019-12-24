@@ -1,24 +1,22 @@
 #include "com_server.h"
+#include "UV/iserverdata.h"
+#include "global.h"
 
 #include <QString>
 #include <QDebug>
 
-//const int MAX_COM_ID = 20;
+const int MAX_COM_ID = 20;
 
 COM_Server::COM_Server()
 {
+    timeoutTimer = new QTimer();
+    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
+    interface = new IServerData(&UVState, &UVMutex);
 }
 
-COM_Server::~COM_Server()
+bool COM_Server::portConnect(int port)
 {
-
-}
-
-bool COM_Server::connect(int port)
-{
-    //int isOpened = false;
-
     QString str;
     if (OS == "unix") {
         str = "/dev/ttyUSB";
@@ -30,32 +28,73 @@ bool COM_Server::connect(int port)
     str.append(QString::number(port));
 
     qDebug () << "COM_SERVER: Trying to open port " << str;
-/*
+
     serialPort = new QSerialPort(str);
-    serialPort->setBaudRate(settings->connection->baudRate, QSerialPort::AllDirections);
-    serialPort->setDataBits(settings->connection->dataBits);
-    serialPort->setParity(settings->connection->parity);
-    serialPort->setStopBits(settings->connection->stopBits);
-    serialPort->setFlowControl(settings->connection->flowControl);
+    serialPort->setPortName(str);
+    serialPort->setBaudRate(QSerialPort::BaudRate::Baud57600, QSerialPort::AllDirections);
+    serialPort->setDataBits(QSerialPort::DataBits::Data8);
+    serialPort->setParity(QSerialPort::Parity::NoParity);
+    serialPort->setStopBits(QSerialPort::StopBits::OneStop);
+    serialPort->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
 
-    try {
-        isOpened = newPort->open(QIODevice::ReadWrite);
-    } catch(...) {
-        std::cout << " serial port openning error" << std::endl;
-        emit info("Serial port openning error");
-        delete newPort;
+    if(serialPort->open(QIODevice::ReadWrite)) {
+        qDebug() << " successfully opened!";
+    }
+    else {
+        qDebug() << " serial port openning error";
+        qDebug() << serialPort->error();
+        delete serialPort;
         return false;
     }
-
-    if (isOpened) {
-        std::cout << " successfully opened!" << std::endl;
-        sendTimer->start(REQUEST_DELAY);
-    } else {
-        std::cout << ". Unable to open serial port" << std::endl;
-        emit info("Unable to open serial port");
-        delete newPort;
-        return false;
-    }
-*/
     return true;
 }
+
+void COM_Server::run()
+{
+    bool opened = false;
+    for(int i=0; i<MAX_COM_ID; i++) {
+        opened = portConnect(i);
+        if(opened) {
+            break;
+        }
+    }
+
+    if(opened) {
+        exec();
+    }
+}
+
+int COM_Server::exec()
+{
+    while(1)
+    {
+        QByteArray msg;
+        interface->getData();
+        msg = interface->getMessage(interface->internal_state.messageType);
+
+        qDebug() << "Sending message type " << interface->internal_state.messageType;
+        qDebug() << msg;
+
+        serialPort->write(msg, msg.size());
+
+        msleep(50);
+
+        long long bytesAvailible = serialPort->bytesAvailable();
+        if (bytesAvailible > 0) {
+            msg.clear();
+            msg.push_back(serialPort->readAll());
+
+            qDebug() << "Message received, type " << interface->internal_state.messageType;
+            qDebug() << msg;
+
+            interface->passMessage(msg, interface->internal_state.messageType);
+        }
+        else {
+            qDebug() << "Didn't receive answer for message " << interface->internal_state.messageType;
+            qDebug() << "Bytes available:" << bytesAvailible;
+            serialPort->readAll();
+        }
+    }
+}
+
+

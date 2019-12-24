@@ -2,6 +2,12 @@
 #include <QDebug>
 #include <QFileInfo>
 
+#include "com_server.h"
+
+#include <QApplication>
+#include <QThread>
+#include <QTimer>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -52,6 +58,9 @@ MainWindow::MainWindow(QWidget *parent) :
     currentVehicle = settings->value("currentVehicle").toString();
     currentConfiguration = settings->value("currentConfiguration").toString();
     emit updateVehicle();
+
+    COM_Server *server = new COM_Server();
+    server->start();
 }
 
 void MainWindow::createVehicle()
