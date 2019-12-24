@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui widgets serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,15 +18,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     SettingsWindow/ThrusterSettings/thrustersettings.cpp \
     VehicleWizard/vehiclewizard.cpp \
+    UV/ibasicdata.cpp \
+    UV/iserverdata.cpp \
+    UV/uv_device.cpp \
+    UV/uv_stabilization.cpp \
+    UV/uv_state.cpp \
     main.cpp \
+    com_server.cpp \
     mainwindow.cpp \
     SettingsWindow/settingswindow.cpp \
     rovmodewidget.cpp
 
 HEADERS += \
+    UV/ibasicdata.h \
+    UV/iserverdata.h \
+    UV/uv_device.h \
+    UV/uv_stabilization.h \
+    UV/uv_state.h \
     SettingsWindow/ThrusterSettings/thrustersettings.h \
     VehicleWizard/vehiclewizard.h \
     mainwindow.h \
+    com_server.h \
     SettingsWindow/settingswindow.h \
     rovmodewidget.h
 
@@ -42,4 +54,22 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-unix:!macx: LIBS += -lssh
+unix {
+    DEFINES += OS=\\\"unix\\\"
+    message("Unix build")
+    #INCLUDEPATH += $$PWD/SFML-linux/include
+    #DEPENDPATH += $$PWD/SFML-linux/include
+    #LIBS += -L$$PWD/SFML-linux/lib
+    #CONFIG(release, debug|release): LIBS += -lsfml-window
+    #CONFIG(debug, debug|release): LIBS += -lsfml-window
+}
+
+win32 {
+    DEFINES += OS=\\\"win32\\\"
+    message("Windows build")
+    #INCLUDEPATH += $$PWD/SFML-win32/include
+    #DEPENDPATH += $$PWD/SFML-win32/include
+    #LIBS += -L$$PWD/SFML-win32/lib
+    #CONFIG(release, debug|release): LIBS += -lsfml-window
+    #CONFIG(debug, debug|release): LIBS += -lsfml-window-d
+}
