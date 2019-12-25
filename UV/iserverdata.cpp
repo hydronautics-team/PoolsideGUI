@@ -13,7 +13,7 @@ IServerData::IServerData(UV_State *target, QMutex *target_mutex)
 
 }
 
-QByteArray IServerData::getMessage(e_MessageTypes message_type)
+QByteArray IServerData::getMessage(int message_type)
 {
     QByteArray formed;
     formed.clear();
@@ -32,7 +32,7 @@ QByteArray IServerData::getMessage(e_MessageTypes message_type)
     return formed;
 }
 
-void IServerData::passMessage(QByteArray message, e_MessageTypes message_type)
+void IServerData::passMessage(QByteArray message, int message_type)
 {
     switch(message_type) {
         case MESSAGE_NORMAL:
@@ -107,12 +107,71 @@ bool IServerData::parseNormalMessage(QByteArray msg)
 bool IServerData::parseConfigMessage(QByteArray msg)
 {
     ResponseConfigMessage res;
+
+    uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size()-2);
+
+    QDataStream stream(&msg, QIODevice::ReadOnly);
+
+    stream >> res.code;
+
+    stream >> res.roll;
+    stream >> res.pitch;
+    stream >> res.yaw;
+    stream >> res.raw_yaw;
+
+    stream >> res.rollSpeed;
+    stream >> res.pitchSpeed;
+    stream >> res.yawSpeed;
+
+    stream >> res.pressure;
+    stream >> res.in_pressure;
+
+    stream >> res.inputSignal;
+    stream >> res.speedSignal;
+    stream >> res.posSignal;
+
+    stream >> res.joyUnitCasted;
+    stream >> res.joy_iValue;
+    stream >> res.posError;
+    stream >> res.speedError;
+    stream >> res.dynSummator;
+    stream >> res.pidValue;
+    stream >> res.posErrorAmp;
+    stream >> res.speedFiltered;
+    stream >> res.posFiltered;
+    stream >> res.pid_iValue;
+    stream >> res.thrustersFiltered;
+    stream >> res.outputSignal;
+
+    stream >> res.checksum;
+
+    if(res.checksum != checksum_calc) {
+        return false;
+    }
+
+    pull(res);
     return true;
 }
 
 bool IServerData::parseDirectMessage(QByteArray msg)
 {
     ResponseDirectMessage res;
+
+    uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size()-2);
+
+    QDataStream stream(&msg, QIODevice::ReadOnly);
+
+    stream >> res.number;
+    stream >> res.connection;
+    stream >> res.current;
+
+    stream >> res.checksum;
+
+    if(res.checksum != checksum_calc) {
+        return false;
+    }
+
+    pull(res);
     return true;
 }
 
@@ -152,13 +211,75 @@ QByteArray IServerData::formNormalMessage()
 QByteArray IServerData::formConfigMessage()
 {
     QByteArray msg;
+    msg.clear();
+    QDataStream stream(&msg, QIODevice::Append);
+    stream.setByteOrder(QDataStream::LittleEndian);
+    stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+
+    RequestConfigMessage req;
+    fill(req);
+
+    stream << req.type;
+    stream << req.contour;
+    stream << req.march;
+    stream << req.lag;
+    stream << req.depth;
+    stream << req.roll;
+    stream << req.pitch;
+    stream << req.yaw;
+
+    stream << req.pJoyUnitCast;
+    stream << req.pSpeedDyn;
+    stream << req.pErrGain;
+
+    stream << req.posFilterT;
+    stream << req.posFilterK;
+    stream << req.speedFilterT;
+    stream << req.speedFilterK;
+
+    stream << req.pid_pGain;
+    stream << req.pid_iGain;
+    stream << req.pid_iMax;
+    stream << req.pid_iMin;
+
+    stream << req.pThrustersMin;
+    stream << req.pThrustersMax;
+
+    stream << req.thrustersFilterT;
+    stream << req.thrustersFilterK;
+
+    stream << req.sOutSummatorMax;
+    stream << req.sOutSummatorMin;
+
+    uint16_t checksum = getCheckSumm16b(msg.data(), msg.size());
+    stream << checksum;
 
     return msg;
 }
 
 QByteArray IServerData::formDirectMessage()
-{
+{ 
     QByteArray msg;
+    msg.clear();
+    QDataStream stream(&msg, QIODevice::Append);
+    stream.setByteOrder(QDataStream::LittleEndian);
+    stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+
+    RequestDirectMessage req;
+    fill(req);
+
+    stream << req.type;
+    stream << req.number;
+    stream << req.id;
+    stream << req.velocity;
+    stream << req.reverse;
+    stream << req.kForward;
+    stream << req.kBackward;
+    stream << req.sForward;
+    stream << req.sBackward;
+
+    uint16_t checksum = getCheckSumm16b(msg.data(), msg.size());
+    stream << checksum;
 
     return msg;
 }
@@ -210,22 +331,35 @@ void IServerData::pull(ResponseNormalMessage res)
 
 void IServerData::fill(RequestConfigMessage &req)
 {
-
+    req.lag = 0;
 }
 
 void IServerData::pull(ResponseConfigMessage res)
 {
-
+    res.yaw = 0;
 }
 
 void IServerData::fill(RequestDirectMessage &req)
 {
+    req.number = internal_state.ThrusterSelected;
+    req.id = static_cast<uint8_t>(internal_state.thrusters[req.number].id);
 
+    req.velocity = static_cast<int8_t>(internal_state.thrusters[req.number].velocity);
+
+    req.reverse = internal_state.thrusters[req.number].reverse;
+
+    req.kForward = static_cast<float>(internal_state.thrusters[req.number].kForward);
+    req.kBackward = static_cast<float>(internal_state.thrusters[req.number].kBackward);
+
+    req.sForward = static_cast<int8_t>(internal_state.thrusters[req.number].sForward);
+    req.sBackward = static_cast<int8_t>(internal_state.thrusters[req.number].sBackward);
 }
 
 void IServerData::pull(ResponseDirectMessage res)
 {
-
+//    res.number;
+//    res.connection;
+//    res.current;
 }
 
 int16_t resizeDoubleToInt16(double input, double border)

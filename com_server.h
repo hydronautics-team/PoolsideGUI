@@ -3,24 +3,29 @@
 
 #include <QThread>
 #include <QSerialPort>
+#include <QTimer>
 
-class COM_Server : public QObject
+#include "UV/iserverdata.h"
+
+class COM_Server : public QThread
 {
     Q_OBJECT
 
 public:
     COM_Server();
-    ~COM_Server();
 
-    void process();
+    void run();
+    int exec();
 
 signals:
     void error(QString err);
 
 private:
     QSerialPort *serialPort;
+    QTimer *timeoutTimer;
+    IServerData *interface;
 
-    bool connect(int port);
+    bool portConnect(int port);
 };
 
 #endif // COM_SERVER_H

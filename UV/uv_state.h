@@ -4,13 +4,24 @@
 #include "stdint.h"
 
 #include "uv_device.h"
+#include "uv_thrusters.h"
+
+enum e_MessageTypes {
+    MESSAGE_NORMAL = 0,
+    MESSAGE_CONFIG,
+    MESSAGE_DIRECT
+};
 
 class UV_State
 {
 public:
     UV_State();
 
-    const static unsigned int devices_amount = 2;
+    const static unsigned int devices_amount = 4;
+    const static unsigned int thrusters_amount = 8;
+
+    // Current message type
+    int messageType;
 
     // Control values
     // Linear movement
@@ -36,12 +47,16 @@ public:
     double sensors_inpressure;
 
     // Devices
-    UV_device *devices;
+    UV_device devices[devices_amount];
+    // Thrusters
+    UV_Thrusters thrusters[thrusters_amount];
     // Stabilization Contours
 
     uint8_t cameras;
     uint8_t pc_reset;
     uint16_t checksum;
+
+    uint8_t ThrusterSelected;
 };
 
 #endif // UV_STATE_H
