@@ -32,11 +32,17 @@ private slots:
     void thrusterButtonClicked(int value);
     void thrusterIdChanged(int value);
     void thrusterReverseChanged(int state);
-    void thrusterVelocityChanged(int value);
-    void thrusterKForwardChanged(int value);
-    void thrusterKBackwardChanged(int value);
-    void thrusterForwardSaturationChanged(int value);
-    void thrusterBackwardSaturationChanged(int value);
+    void flashButtonClicked();
+    void sliderVelocityChanged(int value);
+    void sliderKForwardChanged(int value);
+    void sliderKBackwardChanged(int value);
+    void sliderForwardSaturationChanged(int value);
+    void sliderBackwardSaturationChanged(int value);
+    void spinBoxVelocityChanged(int value);
+    void spinBoxKForwardChanged(double value);
+    void spinBoxKBackwardChanged(double value);
+    void spinBoxForwardSaturationChanged(int value);
+    void spinBoxBackwardSaturationChanged(int value);
 };
 
 #endif // THRUSTERSETTINGS_H
