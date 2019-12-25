@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     SettingsWindow/ThrusterSettings/thrustersettings.cpp \
+    UI_Tests/serverdata_test.cpp \
     UV/uv_thrusters.cpp \
     VehicleWizard/vehiclewizard.cpp \
     UV/ibasicdata.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
     rovmodewidget.cpp
 
 HEADERS += \
+    UI_Tests/serverdata_test.h \
     UV/ibasicdata.h \
     UV/iserverdata.h \
     UV/uv_device.h \
