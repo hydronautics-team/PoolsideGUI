@@ -89,6 +89,7 @@ int COM_Server::exec()
             qDebug() << msg;
 
             interface->passMessage(msg, interface->internal_state.messageType);
+            emit dataUpdated();
         }
         else {
             qDebug() << "Didn't receive answer for message " << interface->internal_state.messageType;

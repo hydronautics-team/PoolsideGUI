@@ -1,5 +1,7 @@
 #include "iserverdata.h"
 
+#include "rovmodewidget.h"
+
 int16_t resizeDoubleToInt16(double input, double border);
 int8_t resizeDoubleToInt8(double input, double border);
 
@@ -67,6 +69,8 @@ bool IServerData::parseNormalMessage(QByteArray msg)
     uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size()-2);
 
     QDataStream stream(&msg, QIODevice::ReadOnly);
+    stream.setByteOrder(QDataStream::LittleEndian);
+    stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
 
     stream >> res.roll;
     stream >> res.pitch;
@@ -97,7 +101,7 @@ bool IServerData::parseNormalMessage(QByteArray msg)
     stream >> res.checksum;
 
     if(res.checksum != checksum_calc) {
-        return false;
+        //return false;
     }
 
     pull(res);

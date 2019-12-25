@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
             pageROVMode, SLOT(updateVehicle()));
 
 
+
     // Menu:
     // Vehicle
     //      New vehicle
@@ -63,6 +64,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     COM_Server *server = new COM_Server();
     server->start();
+
+    connect(server, SIGNAL(dataUpdated()),
+            pageROVMode, SLOT(updateData()));
 }
 
 void MainWindow::createVehicle()

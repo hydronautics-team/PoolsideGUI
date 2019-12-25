@@ -14,6 +14,7 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) :
     currentConfiguration = settings->value("currentConfiguration").toString();
 
     connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
+    connect(checkBoxStabilizeRoll, SIGNAL(stateChanged(int)), this, SLOT(checkboxChecked(int)));
 
     // add bars in group to easily access
     thrusterBarGroup.append(thrusterBar0);
@@ -89,4 +90,18 @@ void ROVModeWidget::updateData()
     sensorsYawLabel->setText(QString::number(interface.internal_state.sensors_yaw));
     sensorsRollLabel->setText(QString::number(interface.internal_state.sensors_roll));
     emit updateCompass(interface.internal_state.sensors_yaw);
+}
+
+void ROVModeWidget::checkboxChecked(int i)
+{
+    UV_State *state;
+    IBasicData interface(&UVState, &UVMutex);
+    state = interface.gainAccess();
+    if(state->messageType == 0) {
+        state->messageType = 2;
+    }
+    else {
+        state->messageType = 0;
+    }
+    interface.closeAccess();
 }

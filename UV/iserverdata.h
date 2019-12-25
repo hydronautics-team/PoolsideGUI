@@ -18,6 +18,7 @@ public:
 
     QByteArray getMessage(int message_type);
     void passMessage(QByteArray message, int message_type);
+
 private:
     QDataStream *port;
 

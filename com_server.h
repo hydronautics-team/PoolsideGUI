@@ -19,6 +19,7 @@ public:
 
 signals:
     void error(QString err);
+    void dataUpdated();
 
 private:
     QSerialPort *serialPort;
