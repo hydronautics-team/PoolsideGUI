@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    SettingsWindow/CommunicationSettings/communicationsettings.cpp \
     SettingsWindow/ThrusterSettings/thrustersettings.cpp \
     VehicleWizard/vehiclewizard.cpp \
     UV/ibasicdata.cpp \
@@ -30,6 +31,7 @@ SOURCES += \
     rovmodewidget.cpp
 
 HEADERS += \
+    SettingsWindow/CommunicationSettings/communicationsettings.h \
     UV/ibasicdata.h \
     UV/iserverdata.h \
     UV/uv_device.h \
@@ -43,6 +45,7 @@ HEADERS += \
     rovmodewidget.h
 
 FORMS += \
+    SettingsWindow/CommunicationSettings/communicationsettings.ui \
     SettingsWindow/ThrusterSettings/thrustersettings.ui \
     VehicleWizard/vehiclewizard.ui \
     mainwindow.ui \

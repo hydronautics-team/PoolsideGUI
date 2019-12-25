@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(updateVehiclesMenu()));
     connect(this, SIGNAL(updateVehicle()),
             &settingsWindow, SIGNAL(updateVehicle()));
+    connect(this, SIGNAL(updateVehicle()),
+            pageROVMode, SLOT(updateVehicle()));
 
 
     // Menu:
@@ -28,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(menu_choose_vehicle,SIGNAL(triggered(QAction*)),
             this, SLOT(chooseVehicle(QAction*)));
     //      Settings
-    connect(action_config_RS, SIGNAL(triggered()),
+    connect(action_config_com, SIGNAL(triggered()),
             &settingsWindow, SLOT(showPageConfigRS()));
     connect(action_config_thrusters, SIGNAL(triggered()),
             &settingsWindow, SLOT(showPageConfigThruster()));

@@ -462,7 +462,7 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="pageROVMode"/>
+      <widget class="ROVModeWidget" name="pageROVMode"/>
       <widget class="QWidget" name="pageAUVMode">
        <layout class="QVBoxLayout" name="verticalLayout_10"/>
       </widget>
@@ -643,6 +643,14 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ROVModeWidget</class>
+   <extends>QWidget</extends>
+   <header>rovmodewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

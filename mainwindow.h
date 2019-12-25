@@ -3,9 +3,8 @@
 
 #include <QAction>
 #include <QSettings>
-#include <QStringList>
-
 #include "ui_mainwindow.h"
+#include "rovmodewidget.h"
 #include "SettingsWindow/settingswindow.h"
 #include "VehicleWizard/vehiclewizard.h"
 

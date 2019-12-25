@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_7">
+  <layout class="QVBoxLayout" name="verticalLayout_9">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
@@ -36,7 +36,7 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QProgressBar" name="progressBar">
+         <widget class="QProgressBar" name="depthBar">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -64,7 +64,7 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QWidget" name="widget" native="true"/>
+         <widget class="QWidget" name="compassWidget" native="true"/>
         </item>
        </layout>
       </widget>
@@ -82,7 +82,7 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
-         <widget class="QProgressBar" name="progressBar_10">
+         <widget class="QProgressBar" name="pitchBar">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -104,7 +104,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox">
+      <widget class="QGroupBox" name="barGroupBox">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -116,7 +116,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QProgressBar" name="progressBar_2">
+         <widget class="QProgressBar" name="thrusterBar0">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -129,7 +129,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="progressBar_3">
+         <widget class="QProgressBar" name="thrusterBar1">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -142,7 +142,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="progressBar_4">
+         <widget class="QProgressBar" name="thrusterBar2">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -155,7 +155,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="progressBar_5">
+         <widget class="QProgressBar" name="thrusterBar3">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -168,7 +168,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="progressBar_8">
+         <widget class="QProgressBar" name="thrusterBar4">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -181,7 +181,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="progressBar_7">
+         <widget class="QProgressBar" name="thrusterBar5">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -194,7 +194,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="progressBar_9">
+         <widget class="QProgressBar" name="thrusterBar6">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -207,7 +207,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="progressBar_6">
+         <widget class="QProgressBar" name="thrusterBar7">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -324,6 +324,79 @@
       </widget>
      </item>
      <item>
+      <widget class="QGroupBox" name="groupBox_9">
+       <property name="title">
+        <string>Impact</string>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>Roll</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>Pitch</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>Yaw</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Depth</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_22">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_23">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_24">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
       <widget class="QGroupBox" name="groupBox_6">
        <property name="title">
         <string>Telemetry</string>
@@ -334,28 +407,28 @@
           <item>
            <widget class="QLabel" name="label_9">
             <property name="text">
-             <string>TextLabel</string>
+             <string>Roll</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_10">
             <property name="text">
-             <string>TextLabel</string>
+             <string>Pitch</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_11">
             <property name="text">
-             <string>TextLabel</string>
+             <string>Yaw</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_12">
             <property name="text">
-             <string>TextLabel</string>
+             <string>Depth</string>
             </property>
            </widget>
           </item>
@@ -366,28 +439,28 @@
           <item>
            <widget class="QLabel" name="label_13">
             <property name="text">
-             <string>TextLabel</string>
+             <string>0</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_14">
             <property name="text">
-             <string>TextLabel</string>
+             <string>0</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_15">
             <property name="text">
-             <string>TextLabel</string>
+             <string>0</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_16">
             <property name="text">
-             <string>TextLabel</string>
+             <string>0</string>
             </property>
            </widget>
           </item>
@@ -407,28 +480,28 @@
           <item>
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>TextLabel</string>
+             <string>Grabber</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>TextLabel</string>
+             <string>Dropper</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>TextLabel</string>
+             <string>3</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_4">
             <property name="text">
-             <string>TextLabel</string>
+             <string>4</string>
             </property>
            </widget>
           </item>
@@ -439,28 +512,28 @@
           <item>
            <widget class="QLabel" name="label_5">
             <property name="text">
-             <string>TextLabel</string>
+             <string>0</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_6">
             <property name="text">
-             <string>TextLabel</string>
+             <string>0</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_7">
             <property name="text">
-             <string>TextLabel</string>
+             <string>0</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_8">
             <property name="text">
-             <string>TextLabel</string>
+             <string>0</string>
             </property>
            </widget>
           </item>
