@@ -348,8 +348,8 @@ void IServerData::fill(RequestDirectMessage &req)
 
     req.reverse = internal_state.thrusters[req.number].reverse;
 
-    req.kForward = static_cast<float>(internal_state.thrusters[req.number].kForward);
-    req.kBackward = static_cast<float>(internal_state.thrusters[req.number].kBackward);
+    req.kForward = 1;
+    req.kBackward = 1;
 
     req.sForward = static_cast<int8_t>(internal_state.thrusters[req.number].sForward);
     req.sBackward = static_cast<int8_t>(internal_state.thrusters[req.number].sBackward);
@@ -384,7 +384,6 @@ uint16_t getCheckSumm16b(char *pcBlock, int len)
     uint16_t crc = 0xFFFF;
     //int crc_fix = reinterpret_cast<int*>(&crc);
     uint8_t i;
-    len = len-2;
 
     while (len--) {
         crc ^= *pcBlock++ << 8;

@@ -1,4 +1,8 @@
 #include "thrustersettings.h"
+#include "UV/uv_state.h"
+#include "UV/ibasicdata.h"
+#include "global.h"
+
 #include <QDebug>
 #include <QFileInfo>
 
@@ -139,12 +143,24 @@ void ThrusterSettings::updateThrusterSettings()
 
 void ThrusterSettings::thrusterButtonClicked(int value)
 {
+    UV_State *state;
+    IBasicData interface(&UVState, &UVMutex);
+    state = interface.gainAccess();
+    state->ThrusterSelected = static_cast<uint8_t>(value);
+    interface.closeAccess();
+
     currentThruster = value;
     updateThrusterSettings();
 }
 
 void ThrusterSettings::thrusterIdChanged(int value)
 {
+    UV_State *state;
+    IBasicData interface(&UVState, &UVMutex);
+    state = interface.gainAccess();
+    state->thrusters[currentThruster].id = value;
+    interface.closeAccess();
+
     settings->setValue("vehicle/" +
                        currentVehicle +
                        "/thrusters/" +
@@ -154,6 +170,12 @@ void ThrusterSettings::thrusterIdChanged(int value)
 
 void ThrusterSettings::thrusterReverseChanged(int state)
 {
+    UV_State *cstate;
+    IBasicData interface(&UVState, &UVMutex);
+    cstate = interface.gainAccess();
+    cstate->thrusters[currentThruster].reverse = state;
+    interface.closeAccess();
+
     settings->setValue("vehicle/" +
                        currentVehicle +
                        "/thrusters/" +
@@ -168,6 +190,12 @@ void ThrusterSettings::flashButtonClicked()
 
 void ThrusterSettings::sliderVelocityChanged(int value)
 {
+    UV_State *cstate;
+    IBasicData interface(&UVState, &UVMutex);
+    cstate = interface.gainAccess();
+    cstate->thrusters[currentThruster].velocity = static_cast<int8_t>(value);
+    interface.closeAccess();
+
     settings->setValue("vehicle/" +
                        currentVehicle +
                        "/thrusters/" +
@@ -178,6 +206,12 @@ void ThrusterSettings::sliderVelocityChanged(int value)
 
 void ThrusterSettings::sliderKForwardChanged(int value)
 {
+    UV_State *cstate;
+    IBasicData interface(&UVState, &UVMutex);
+    cstate = interface.gainAccess();
+    cstate->thrusters[currentThruster].kForward = static_cast<int8_t>(value);
+    interface.closeAccess();
+
     double d_value = value / verticalSliderForwardK->maximum();
     settings->setValue("vehicle/" +
                        currentVehicle +
@@ -189,6 +223,12 @@ void ThrusterSettings::sliderKForwardChanged(int value)
 
 void ThrusterSettings::sliderKBackwardChanged(int value)
 {
+    UV_State *cstate;
+    IBasicData interface(&UVState, &UVMutex);
+    cstate = interface.gainAccess();
+    cstate->thrusters[currentThruster].kBackward = static_cast<int8_t>(value);
+    interface.closeAccess();
+
     double d_value = value / verticalSliderBackwardK->maximum();
     settings->setValue("vehicle/" +
                        currentVehicle +
@@ -200,6 +240,12 @@ void ThrusterSettings::sliderKBackwardChanged(int value)
 
 void ThrusterSettings::sliderForwardSaturationChanged(int value)
 {
+    UV_State *cstate;
+    IBasicData interface(&UVState, &UVMutex);
+    cstate = interface.gainAccess();
+    cstate->thrusters[currentThruster].sForward = static_cast<int8_t>(value);
+    interface.closeAccess();
+
     settings->setValue("vehicle/" +
                        currentVehicle +
                        "/thrusters/" +
@@ -210,6 +256,12 @@ void ThrusterSettings::sliderForwardSaturationChanged(int value)
 
 void ThrusterSettings::sliderBackwardSaturationChanged(int value)
 {
+    UV_State *cstate;
+    IBasicData interface(&UVState, &UVMutex);
+    cstate = interface.gainAccess();
+    cstate->thrusters[currentThruster].sBackward = static_cast<int8_t>(value);
+    interface.closeAccess();
+
     settings->setValue("vehicle/" +
                        currentVehicle +
                        "/thrusters/" +
@@ -220,6 +272,12 @@ void ThrusterSettings::sliderBackwardSaturationChanged(int value)
 
 void ThrusterSettings::spinBoxVelocityChanged(int value)
 {
+    UV_State *cstate;
+    IBasicData interface(&UVState, &UVMutex);
+    cstate = interface.gainAccess();
+    cstate->thrusters[currentThruster].velocity = static_cast<int8_t>(value);
+    interface.closeAccess();
+
     settings->setValue("vehicle/" +
                        currentVehicle +
                        "/thrusters/" +
