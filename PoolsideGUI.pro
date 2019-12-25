@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    PicFrame/picframe.cpp \
     SettingsWindow/CommunicationSettings/communicationsettings.cpp \
     SettingsWindow/ThrusterSettings/thrustersettings.cpp \
     UI_Tests/serverdata_test.cpp \
@@ -34,6 +35,7 @@ SOURCES += \
     rovmodewidget.cpp
 
 HEADERS += \
+    PicFrame/picframe.h \
     SettingsWindow/CommunicationSettings/communicationsettings.h \
     UI_Tests/serverdata_test.h \
     UV/ibasicdata.h \
@@ -51,6 +53,7 @@ HEADERS += \
     rovmodewidget.h
 
 FORMS += \
+    PicFrame/picframe.ui \
     SettingsWindow/CommunicationSettings/communicationsettings.ui \
     SettingsWindow/ThrusterSettings/thrustersettings.ui \
     VehicleWizard/vehiclewizard.ui \
@@ -82,3 +85,6 @@ win32 {
     #CONFIG(release, debug|release): LIBS += -lsfml-window
     #CONFIG(debug, debug|release): LIBS += -lsfml-window-d
 }
+
+RESOURCES += \
+    vehicles.qrc
