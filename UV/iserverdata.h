@@ -25,7 +25,7 @@ private:
     static const uint8_t VmaAmount = 8;
 
     /// Number of the devs
-    static const uint8_t DevAmount = 4;
+    static const uint8_t DevAmount = 6;
 
     struct RequestNormalMessage
     {

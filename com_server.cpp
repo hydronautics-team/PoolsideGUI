@@ -30,7 +30,7 @@ bool COM_Server::portConnect(int port)
     qDebug () << "COM_SERVER: Trying to open port " << str;
 
     serialPort = new QSerialPort(str);
-    serialPort->setPortName(str);
+    //serialPort->setPortName(str);
     serialPort->setBaudRate(QSerialPort::BaudRate::Baud57600, QSerialPort::AllDirections);
     serialPort->setDataBits(QSerialPort::DataBits::Data8);
     serialPort->setParity(QSerialPort::Parity::NoParity);
@@ -72,13 +72,14 @@ int COM_Server::exec()
         interface->getData();
         msg = interface->getMessage(interface->internal_state.messageType);
 
-        qDebug() << "Sending message type " << interface->internal_state.messageType;
+        qDebug() << "Sending message type " << interface->internal_state.messageType << "||" << msg.size();
         qDebug() << msg;
 
+        serialPort->clear();
         serialPort->write(msg, msg.size());
+        serialPort->flush();
 
-        msleep(50);
-
+        serialPort->waitForReadyRead(100);
         long long bytesAvailible = serialPort->bytesAvailable();
         if (bytesAvailible > 0) {
             msg.clear();
