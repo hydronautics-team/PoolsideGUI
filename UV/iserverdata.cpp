@@ -201,6 +201,8 @@ QByteArray IServerData::formNormalMessage()
     for(int i=0; i<DevAmount; i++) {
         stream << req.dev[i];
     }
+
+    stream << req.lag_error;
     stream << req.dev_flags;
     stream << req.stabilize_flags;
     stream << req.cameras;

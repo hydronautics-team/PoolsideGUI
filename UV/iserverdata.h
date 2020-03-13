@@ -40,6 +40,7 @@ private:
         int16_t pitch;
         int16_t yaw;
         int8_t dev[DevAmount];
+        uint32_t lag_error;
         uint8_t dev_flags;
         uint8_t stabilize_flags;
         uint8_t cameras;
