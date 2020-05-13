@@ -4,10 +4,10 @@
 /** \brief Base class for stabilization contour of the underwater vehicle
  * UV can receive configuration messages and send back debug informations about contour
  */
-class UV_stabilization
+class UV_Stabilization
 {
 public:
-    UV_stabilization();
+    UV_Stabilization();
 };
 
 #endif // UV_STABILIZATION_H

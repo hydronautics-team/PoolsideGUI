@@ -465,7 +465,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="CommunicationSettings" name="pageConfigRS"/>
      <widget class="ThrusterSettings" name="pageConfigThruster"/>

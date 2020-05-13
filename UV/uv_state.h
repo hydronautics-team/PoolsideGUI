@@ -4,12 +4,32 @@
 #include "stdint.h"
 
 #include "uv_device.h"
-#include "uv_thrusters.h"
+#include "uv_thruster.h"
+#include "uv_stabilization.h"
 
-enum e_MessageTypes {
-    MESSAGE_NORMAL = 0,
-    MESSAGE_CONFIG,
-    MESSAGE_DIRECT
+struct ImuData
+{
+    ImuData();
+
+    double roll;
+    double pitch;
+    double yaw;
+    double rollSpeed;
+    double pitchSpeed;
+    double yawSpeed;
+    double depth;
+};
+
+struct ControlData
+{
+    ControlData();
+
+    double march;
+    double lag;
+    double depth;
+    double roll;
+    double pitch;
+    double yaw;
 };
 
 class UV_State
@@ -17,46 +37,28 @@ class UV_State
 public:
     UV_State();
 
-    const static unsigned int devices_amount = 4;
+    // TODO: Replace this with dynamic arrays (later)
+    const static unsigned int devices_amount = 6;
     const static unsigned int thrusters_amount = 8;
-
-    // Current message type
-    int messageType;
+    const static unsigned int stabilization_contours_amount = 6;
 
     // Control values
-    // Linear movement
-    double march;
-    double lag;
-    double depth;
-    // Angular movement
-    double roll;
-    double pitch;
-    double yaw;
+    ControlData control;
 
     // IMU values
-    // Angular movement
-    double sensors_roll;
-    double sensors_pitch;
-    double sensors_yaw;
-    // Angular speed
-    double sensors_rollSpeed;
-    double sensors_pitchSpeed;
-    double sensors_yawSpeed;
-    // Depth
-    double sensors_depth;
-    double sensors_inpressure;
+    ImuData imu;
+
+    // Auxiliar state values
+    double aux_inpressure;
 
     // Devices
-    UV_device devices[devices_amount];
+    UV_Device device[devices_amount];
+
     // Thrusters
-    UV_Thrusters thrusters[thrusters_amount];
+    UV_Thruster thruster[thrusters_amount];
+
     // Stabilization Contours
-
-    uint8_t cameras;
-    uint8_t pc_reset;
-    uint16_t checksum;
-
-    uint8_t ThrusterSelected;
+    UV_Stabilization stabilization_contour[stabilization_contours_amount];
 };
 
 #endif // UV_STATE_H

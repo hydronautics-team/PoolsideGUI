@@ -1,6 +1,6 @@
-#include "uv_thrusters.h"
+#include "uv_thruster.h"
 
-UV_Thrusters::UV_Thrusters()
+UV_Thruster::UV_Thruster()
 {
     name = "THRUSTER";
 
@@ -13,4 +13,5 @@ UV_Thrusters::UV_Thrusters()
     sBackward = 100;
 
     velocity = 0;
+    current = 0;
 }

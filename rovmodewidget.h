@@ -9,7 +9,6 @@
 #include <QGraphicsTextItem>
 #include "UV/uv_state.h"
 #include "UV/ibasicdata.h"
-#include "global.h"
 #include "ui_rovmodewidget.h"
 #include "PicFrame/picframe.h"
 

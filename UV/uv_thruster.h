@@ -4,10 +4,10 @@
 #include <QString>
 
 
-class UV_Thrusters
+class UV_Thruster
 {
 public:
-    UV_Thrusters();
+    UV_Thruster();
 
     QString name;
 
@@ -22,7 +22,8 @@ public:
     int8_t sForward;
     int8_t sBackward;
 
-    int8_t velocity;
+    double velocity;
+    double current;
 };
 
 #endif // UV_THRUSTERS_H

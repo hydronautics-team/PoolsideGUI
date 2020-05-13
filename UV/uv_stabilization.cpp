@@ -1,6 +1,6 @@
 #include "uv_stabilization.h"
 
-UV_stabilization::UV_stabilization()
+UV_Stabilization::UV_Stabilization()
 {
 
 }

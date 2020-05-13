@@ -1,6 +1,5 @@
 #include "com_server.h"
 #include "UV/iserverdata.h"
-#include "global.h"
 
 #include <QString>
 #include <QDebug>
@@ -12,7 +11,7 @@ COM_Server::COM_Server()
     timeoutTimer = new QTimer();
     connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
-    interface = new IServerData(&UVState, &UVMutex);
+    interface = new IServerData();
 }
 
 bool COM_Server::portConnect(int port)
@@ -69,10 +68,9 @@ int COM_Server::exec()
     while(1)
     {
         QByteArray msg;
-        interface->getData();
-        msg = interface->getMessage(interface->internal_state.messageType);
+        msg = interface->generateMessage(MESSAGE_NORMAL);
 
-        qDebug() << "Sending message type " << interface->internal_state.messageType << "||" << msg.size();
+        qDebug() << "Sending message type " << MESSAGE_NORMAL << "||" << msg.size();
         qDebug() << msg;
 
         serialPort->clear();
@@ -80,20 +78,20 @@ int COM_Server::exec()
         serialPort->flush();
 
         serialPort->waitForReadyRead(100);
-        long long bytesAvailible = serialPort->bytesAvailable();
-        if (bytesAvailible > 0) {
+        long long bytesAvailiable = serialPort->bytesAvailable();
+        if (bytesAvailiable > 0) {
             msg.clear();
             msg.push_back(serialPort->readAll());
 
-            qDebug() << "Message received, type " << interface->internal_state.messageType;
-            qDebug() << msg;
+//            qDebug() << "Message received, type " << interface->internal_state.messageType;
+//            qDebug() << msg;
 
-            interface->passMessage(msg, interface->internal_state.messageType);
+            interface->parseMessage(msg, MESSAGE_NORMAL);
             emit dataUpdated();
         }
         else {
-            qDebug() << "Didn't receive answer for message " << interface->internal_state.messageType;
-            qDebug() << "Bytes available:" << bytesAvailible;
+            qDebug() << "Didn't receive answer for message " << MESSAGE_NORMAL;
+            qDebug() << "Bytes available:" << bytesAvailiable;
             serialPort->readAll();
         }
     }

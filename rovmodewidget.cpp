@@ -79,29 +79,29 @@ void ROVModeWidget::initializeData()
 
 void ROVModeWidget::updateData()
 {
-    IBasicData interface(&UVState, &UVMutex);
-    interface.getData();
-    depthBar->setValue(static_cast<int>(interface.internal_state.sensors_depth));   // bar
-    pitchBar->setValue(static_cast<int>(interface.internal_state.sensors_pitch));   // bar
-    depthLabel->setText(QString::number(interface.internal_state.sensors_depth));   // label under bar
-    pitchLabel->setText(QString::number(interface.internal_state.sensors_pitch));   // label under bar
-    sensorsDepthLabel->setText(QString::number(interface.internal_state.sensors_depth));
-    sensorsPitchLabel->setText(QString::number(interface.internal_state.sensors_pitch));
-    sensorsYawLabel->setText(QString::number(interface.internal_state.sensors_yaw));
-    sensorsRollLabel->setText(QString::number(interface.internal_state.sensors_roll));
-    emit updateCompass(interface.internal_state.sensors_yaw);
+//    IBasicData interface(&UVState, &UVMutex);
+//    interface.getData();
+//    depthBar->setValue(static_cast<int>(interface.internal_state.sensors_depth));   // bar
+//    pitchBar->setValue(static_cast<int>(interface.internal_state.sensors_pitch));   // bar
+//    depthLabel->setText(QString::number(interface.internal_state.sensors_depth));   // label under bar
+//    pitchLabel->setText(QString::number(interface.internal_state.sensors_pitch));   // label under bar
+//    sensorsDepthLabel->setText(QString::number(interface.internal_state.sensors_depth));
+//    sensorsPitchLabel->setText(QString::number(interface.internal_state.sensors_pitch));
+//    sensorsYawLabel->setText(QString::number(interface.internal_state.sensors_yaw));
+//    sensorsRollLabel->setText(QString::number(interface.internal_state.sensors_roll));
+//    emit updateCompass(interface.internal_state.sensors_yaw);
 }
 
 void ROVModeWidget::checkboxChecked(int i)
 {
-    UV_State *state;
-    IBasicData interface(&UVState, &UVMutex);
-    state = interface.gainAccess();
-    if(state->messageType == 0) {
-        state->messageType = 2;
-    }
-    else {
-        state->messageType = 0;
-    }
-    interface.closeAccess();
+//    UV_State *state;
+//    IBasicData interface(&UVState, &UVMutex);
+//    state = interface.gainAccess();
+//    if(state->messageType == 0) {
+//        state->messageType = 2;
+//    }
+//    else {
+//        state->messageType = 0;
+//    }
+//    interface.closeAccess();
 }
