@@ -1,8 +1,8 @@
 #include "uv_device.h"
 
-unsigned int UV_device::devices_number = 0;
+unsigned int UV_Device::devices_number = 0;
 
-UV_device::UV_device()
+UV_Device::UV_Device()
 {
     name = "dev_name";
     id = 0;
@@ -10,11 +10,11 @@ UV_device::UV_device()
     slot = devices_number;
     devices_number++;
 
-    control = 0;
+    velocity = 0;
     current = 0;
 }
 
-UV_device::UV_device(std::string dev_name, unsigned int dev_id)
+UV_Device::UV_Device(QString dev_name, unsigned int dev_id)
 {
     name = dev_name;
     id = dev_id;
@@ -22,6 +22,6 @@ UV_device::UV_device(std::string dev_name, unsigned int dev_id)
     slot = devices_number;
     devices_number++;
 
-    control = 0;
+    velocity = 0;
     current = 0;
 }

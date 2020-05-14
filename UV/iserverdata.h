@@ -5,29 +5,44 @@
 #include <QByteArray>
 
 #include "ibasicdata.h"
-#include "uv_state.h"
 
 enum e_messageErrors {
     MESSAGE_ERROR_ID_NOT_FOUND = 0
 };
 
+enum e_MessageTypes {
+    MESSAGE_NORMAL = 0,
+    MESSAGE_CONFIG,
+    MESSAGE_DIRECT
+};
+
+/** \brief Interface for accessing data in UV_State to form QByteArray messages
+ *
+ */
 class IServerData : public IBasicData
 {
 public:
-    IServerData(UV_State *target, QMutex *target_mutex);
+    IServerData();
 
-    QByteArray getMessage(int message_type);
-    void passMessage(QByteArray message, int message_type);
+    QByteArray generateMessage(int message_type);
+    void parseMessage(QByteArray message, int message_type);
+
+    void changeCurrentThruster(unsigned int slot);
 
 private:
     QDataStream *port;
+    unsigned int currentThruster;
 
-    /// Number of the thrusters
+    /// Number of the thrusters in transfer protocol
     static const uint8_t VmaAmount = 8;
 
-    /// Number of the devs
+    /// Number of the devs in transfer protocol
     static const uint8_t DevAmount = 6;
 
+    /** \brief Structure for storing and processing data from the STM32 normal request message protocol
+     * Normal request message contains vehicle movement control data, devices control values and various flags
+     * Shore send requests and STM send responses
+     */
     struct RequestNormalMessage
     {
         /// Type code for the normal message protocol
@@ -203,17 +218,17 @@ private:
     bool parseConfigMessage(QByteArray msg);
     bool parseDirectMessage(QByteArray msg);
 
-    QByteArray formNormalMessage();
-    QByteArray formConfigMessage();
-    QByteArray formDirectMessage();
+    QByteArray generateNormalMessage();
+    QByteArray generateConfigMessage();
+    QByteArray generateDirectMessage();
 
-    void fill(RequestNormalMessage &req);
-    void fill(RequestConfigMessage &req);
-    void fill(RequestDirectMessage &req);
+    void fillStructure(RequestNormalMessage &req);
+    void fillStructure(RequestConfigMessage &req);
+    void fillStructure(RequestDirectMessage &req);
 
-    void pull(ResponseNormalMessage res);
-    void pull(ResponseConfigMessage res);
-    void pull(ResponseDirectMessage res);
+    void pullFromStructure(ResponseNormalMessage res);
+    void pullFromStructure(ResponseConfigMessage res);
+    void pullFromStructure(ResponseDirectMessage res);
 };
 
 #endif // ISERVERDATA_H

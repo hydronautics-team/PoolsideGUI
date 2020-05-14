@@ -9,32 +9,206 @@ uint16_t getCheckSumm16b(char *pcBlock, int len);
 uint8_t isCheckSumm16bCorrect(char *pcBlock, int len);
 void addCheckSumm16b(char *pcBlock, int len);
 
-IServerData::IServerData(UV_State *target, QMutex *target_mutex)
-    : IBasicData(target, target_mutex)
+IServerData::IServerData()
+    : IBasicData()
 {
-
+    currentThruster = 0;
 }
 
-QByteArray IServerData::getMessage(int message_type)
+void IServerData::changeCurrentThruster(unsigned int slot)
+{
+    if(slot < UV_State::thrusters_amount) {
+        currentThruster = slot;
+    }
+    else {
+        std::string error = "Max thruster slot is: " +
+                            std::to_string(UV_State::thrusters_amount) +
+                            ", you are trying to change to:" +
+                            std::to_string(slot);
+        throw std::invalid_argument(error);
+    }
+}
+
+QByteArray IServerData::generateMessage(int message_type)
 {
     QByteArray formed;
     formed.clear();
-    getData();
     switch(message_type) {
         case MESSAGE_NORMAL:
-            formed = formNormalMessage();
+            formed = generateNormalMessage();
             break;
         case MESSAGE_CONFIG:
-            formed = formConfigMessage();
+            formed = generateConfigMessage();
             break;
         case MESSAGE_DIRECT:
-            formed = formDirectMessage();
+            formed = generateDirectMessage();
             break;
     }
     return formed;
 }
 
-void IServerData::passMessage(QByteArray message, int message_type)
+QByteArray IServerData::generateNormalMessage()
+{
+    QByteArray msg;
+    msg.clear();
+    QDataStream stream(&msg, QIODevice::Append);
+    stream.setByteOrder(QDataStream::LittleEndian);
+    stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+
+    RequestNormalMessage req;
+    fillStructure(req);
+
+    stream << req.type;
+    stream << req.flags;
+    stream << req.march;
+    stream << req.lag;
+    stream << req.depth;
+    stream << req.roll;
+    stream << req.pitch;
+    stream << req.yaw;
+    for(int i=0; i<DevAmount; i++) {
+        stream << req.dev[i];
+    }
+    stream << req.dev_flags;
+    stream << req.stabilize_flags;
+    stream << req.cameras;
+    stream << req.pc_reset;
+
+    uint16_t checksum = getCheckSumm16b(msg.data(), msg.size());
+    stream << checksum;
+
+    return msg;
+}
+
+void IServerData::fillStructure(RequestNormalMessage &req)
+{
+    req.flags = 0;
+
+    UVMutex.lock();
+
+    req.march = resizeDoubleToInt16(UVState.control.march, 10);
+    req.lag = resizeDoubleToInt16(UVState.control.lag, 10);
+    req.depth = resizeDoubleToInt16(UVState.control.depth, 10);
+
+    req.roll = resizeDoubleToInt16(UVState.control.roll, 10);
+    req.pitch = resizeDoubleToInt16(UVState.control.pitch, 10);
+    req.yaw = resizeDoubleToInt16(UVState.control.yaw, 10);
+
+    for(int i=0; i<DevAmount; i++) {
+        req.dev[i] = resizeDoubleToInt8(UVState.device[i].velocity, 10);
+    }
+
+    UVMutex.unlock();
+
+    req.dev_flags = 0;
+    req.stabilize_flags = 0;
+    req.cameras = 0;
+    req.pc_reset = 0;
+}
+
+QByteArray IServerData::generateConfigMessage()
+{
+    QByteArray msg;
+    msg.clear();
+    QDataStream stream(&msg, QIODevice::Append);
+    stream.setByteOrder(QDataStream::LittleEndian);
+    stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+
+    RequestConfigMessage req;
+    fillStructure(req);
+
+    stream << req.type;
+    stream << req.contour;
+    stream << req.march;
+    stream << req.lag;
+    stream << req.depth;
+    stream << req.roll;
+    stream << req.pitch;
+    stream << req.yaw;
+
+    stream << req.pJoyUnitCast;
+    stream << req.pSpeedDyn;
+    stream << req.pErrGain;
+
+    stream << req.posFilterT;
+    stream << req.posFilterK;
+    stream << req.speedFilterT;
+    stream << req.speedFilterK;
+
+    stream << req.pid_pGain;
+    stream << req.pid_iGain;
+    stream << req.pid_iMax;
+    stream << req.pid_iMin;
+
+    stream << req.pThrustersMin;
+    stream << req.pThrustersMax;
+
+    stream << req.thrustersFilterT;
+    stream << req.thrustersFilterK;
+
+    stream << req.sOutSummatorMax;
+    stream << req.sOutSummatorMin;
+
+    uint16_t checksum = getCheckSumm16b(msg.data(), msg.size());
+    stream << checksum;
+
+    return msg;
+}
+
+// TODO: deal with filling config message
+void IServerData::fillStructure(RequestConfigMessage &req)
+{
+    req.lag = 0;
+}
+
+QByteArray IServerData::generateDirectMessage()
+{
+    QByteArray msg;
+    msg.clear();
+    QDataStream stream(&msg, QIODevice::Append);
+    stream.setByteOrder(QDataStream::LittleEndian);
+    stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+
+    RequestDirectMessage req;
+    fillStructure(req);
+
+    stream << req.type;
+    stream << req.number;
+    stream << req.id;
+    stream << req.velocity;
+    stream << req.reverse;
+    stream << req.kForward;
+    stream << req.kBackward;
+    stream << req.sForward;
+    stream << req.sBackward;
+
+    uint16_t checksum = getCheckSumm16b(msg.data(), msg.size());
+    stream << checksum;
+
+    return msg;
+}
+
+void IServerData::fillStructure(RequestDirectMessage &req)
+{
+    UVMutex.lock();
+
+    req.number = currentThruster;
+    req.id = static_cast<uint8_t>(UVState.thruster[req.number].id);
+
+    req.velocity = static_cast<int8_t>(UVState.thruster[req.number].velocity);
+
+    req.reverse = UVState.thruster[req.number].reverse;
+
+    req.kForward = 1;
+    req.kBackward = 1;
+
+    req.sForward = static_cast<int8_t>(UVState.thruster[req.number].sForward);
+    req.sBackward = static_cast<int8_t>(UVState.thruster[req.number].sBackward);
+
+    UVMutex.unlock();
+}
+
+void IServerData::parseMessage(QByteArray message, int message_type)
 {
     switch(message_type) {
         case MESSAGE_NORMAL:
@@ -47,19 +221,6 @@ void IServerData::passMessage(QByteArray message, int message_type)
             parseDirectMessage(message);
             break;
     }
-
-    UV_State *ptr = gainAccess();
-    ptr->sensors_roll = internal_state.sensors_roll;
-    ptr->sensors_pitch = internal_state.sensors_pitch;
-    ptr->sensors_yaw = internal_state.sensors_yaw;
-    // Angular speed
-    ptr->sensors_rollSpeed = internal_state.sensors_rollSpeed;
-    ptr->sensors_pitchSpeed = internal_state.sensors_pitchSpeed;
-    ptr->sensors_yawSpeed = internal_state.sensors_yawSpeed;
-    // Depth
-    ptr->sensors_depth = internal_state.sensors_depth;
-    ptr->sensors_inpressure = internal_state.sensors_inpressure;
-    closeAccess();
 }
 
 bool IServerData::parseNormalMessage(QByteArray msg)
@@ -104,8 +265,36 @@ bool IServerData::parseNormalMessage(QByteArray msg)
         //return false;
     }
 
-    pull(res);
+    pullFromStructure(res);
     return true;
+}
+
+void IServerData::pullFromStructure(ResponseNormalMessage res)
+{
+    UVMutex.lock();
+
+    UVState.imu.roll = static_cast<double>(res.roll);
+    UVState.imu.pitch = static_cast<double>(res.pitch);
+    UVState.imu.yaw = static_cast<double>(res.yaw);
+
+    UVState.imu.rollSpeed = static_cast<double>(res.rollSpeed);
+    UVState.imu.pitchSpeed = static_cast<double>(res.pitchSpeed);
+    UVState.imu.yawSpeed = static_cast<double>(res.yawSpeed);
+
+    UVState.imu.depth = static_cast<double>(res.depth);
+    UVState.aux_inpressure = static_cast<double>(res.inpressure);
+
+    /*
+    uint8_t dev_state;
+    int16_t leak_data;
+
+    uint16_t vma_current[VmaAmount];
+    uint16_t dev_current[DevAmount];
+
+    uint16_t vma_errors;
+    uint16_t dev_errors;
+    uint8_t pc_errors;
+    */
 }
 
 bool IServerData::parseConfigMessage(QByteArray msg)
@@ -153,8 +342,14 @@ bool IServerData::parseConfigMessage(QByteArray msg)
         return false;
     }
 
-    pull(res);
+    pullFromStructure(res);
     return true;
+}
+
+// TODO finish responseconfigmessage structure pulling
+void IServerData::pullFromStructure(ResponseConfigMessage res)
+{
+    res.yaw = 0;
 }
 
 bool IServerData::parseDirectMessage(QByteArray msg)
@@ -175,193 +370,14 @@ bool IServerData::parseDirectMessage(QByteArray msg)
         return false;
     }
 
-    pull(res);
+    pullFromStructure(res);
     return true;
 }
 
-QByteArray IServerData::formNormalMessage()
+// TODO finish ResponseDirectMessage structure pulling
+void IServerData::pullFromStructure(ResponseDirectMessage res)
 {
-    QByteArray msg;
-    msg.clear();
-    QDataStream stream(&msg, QIODevice::Append);
-    stream.setByteOrder(QDataStream::LittleEndian);
-    stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
-
-    RequestNormalMessage req;
-    fill(req);
-
-    stream << req.type;
-    stream << req.flags;
-    stream << req.march;
-    stream << req.lag;
-    stream << req.depth;
-    stream << req.roll;
-    stream << req.pitch;
-    stream << req.yaw;
-    for(int i=0; i<DevAmount; i++) {
-        stream << req.dev[i];
-    }
-    stream << req.dev_flags;
-    stream << req.stabilize_flags;
-    stream << req.cameras;
-    stream << req.pc_reset;
-
-    uint16_t checksum = getCheckSumm16b(msg.data(), msg.size());
-    stream << checksum;
-
-    return msg;
-}
-
-QByteArray IServerData::formConfigMessage()
-{
-    QByteArray msg;
-    msg.clear();
-    QDataStream stream(&msg, QIODevice::Append);
-    stream.setByteOrder(QDataStream::LittleEndian);
-    stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
-
-    RequestConfigMessage req;
-    fill(req);
-
-    stream << req.type;
-    stream << req.contour;
-    stream << req.march;
-    stream << req.lag;
-    stream << req.depth;
-    stream << req.roll;
-    stream << req.pitch;
-    stream << req.yaw;
-
-    stream << req.pJoyUnitCast;
-    stream << req.pSpeedDyn;
-    stream << req.pErrGain;
-
-    stream << req.posFilterT;
-    stream << req.posFilterK;
-    stream << req.speedFilterT;
-    stream << req.speedFilterK;
-
-    stream << req.pid_pGain;
-    stream << req.pid_iGain;
-    stream << req.pid_iMax;
-    stream << req.pid_iMin;
-
-    stream << req.pThrustersMin;
-    stream << req.pThrustersMax;
-
-    stream << req.thrustersFilterT;
-    stream << req.thrustersFilterK;
-
-    stream << req.sOutSummatorMax;
-    stream << req.sOutSummatorMin;
-
-    uint16_t checksum = getCheckSumm16b(msg.data(), msg.size());
-    stream << checksum;
-
-    return msg;
-}
-
-QByteArray IServerData::formDirectMessage()
-{ 
-    QByteArray msg;
-    msg.clear();
-    QDataStream stream(&msg, QIODevice::Append);
-    stream.setByteOrder(QDataStream::LittleEndian);
-    stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
-
-    RequestDirectMessage req;
-    fill(req);
-
-    stream << req.type;
-    stream << req.number;
-    stream << req.id;
-    stream << req.velocity;
-    stream << req.reverse;
-    stream << req.kForward;
-    stream << req.kBackward;
-    stream << req.sForward;
-    stream << req.sBackward;
-
-    uint16_t checksum = getCheckSumm16b(msg.data(), msg.size());
-    stream << checksum;
-
-    return msg;
-}
-
-void IServerData::fill(RequestNormalMessage &req)
-{
-    req.flags = 0;
-    req.march = resizeDoubleToInt16(internal_state.march, 10);
-    req.lag = resizeDoubleToInt16(internal_state.lag, 10);
-    req.depth = resizeDoubleToInt16(internal_state.depth, 10);
-    req.roll = resizeDoubleToInt16(internal_state.roll, 10);
-    req.pitch = resizeDoubleToInt16(internal_state.pitch, 10);
-    req.yaw = resizeDoubleToInt16(internal_state.yaw, 10);
-    for(int i=0; i<DevAmount; i++) {
-        req.dev[i] = resizeDoubleToInt8(internal_state.devices[i].control, 10);
-    }
-
-    req.dev_flags = 0;
-    req.stabilize_flags = 0;
-    req.cameras = 0;
-    req.pc_reset = 0;
-}
-
-void IServerData::pull(ResponseNormalMessage res)
-{
-    internal_state.sensors_roll = static_cast<double>(res.roll);
-    internal_state.sensors_pitch = static_cast<double>(res.pitch);
-    internal_state.sensors_yaw = static_cast<double>(res.yaw);
-
-    internal_state.sensors_rollSpeed = static_cast<double>(res.rollSpeed);
-    internal_state.sensors_pitchSpeed = static_cast<double>(res.pitchSpeed);
-    internal_state.sensors_yawSpeed = static_cast<double>(res.yawSpeed);
-
-    internal_state.sensors_depth = static_cast<double>(res.depth);
-    internal_state.sensors_inpressure = static_cast<double>(res.inpressure);
-
-    /*
-    uint8_t dev_state;
-    int16_t leak_data;
-
-    uint16_t vma_current[VmaAmount];
-    uint16_t dev_current[DevAmount];
-
-    uint16_t vma_errors;
-    uint16_t dev_errors;
-    uint8_t pc_errors;
-    */
-}
-
-void IServerData::fill(RequestConfigMessage &req)
-{
-    req.lag = 0;
-}
-
-void IServerData::pull(ResponseConfigMessage res)
-{
-    res.yaw = 0;
-}
-
-void IServerData::fill(RequestDirectMessage &req)
-{
-    req.number = internal_state.ThrusterSelected;
-    req.id = static_cast<uint8_t>(internal_state.thrusters[req.number].id);
-
-    req.velocity = static_cast<int8_t>(internal_state.thrusters[req.number].velocity);
-
-    req.reverse = internal_state.thrusters[req.number].reverse;
-
-    req.kForward = 1;
-    req.kBackward = 1;
-
-    req.sForward = static_cast<int8_t>(internal_state.thrusters[req.number].sForward);
-    req.sBackward = static_cast<int8_t>(internal_state.thrusters[req.number].sBackward);
-}
-
-void IServerData::pull(ResponseDirectMessage res)
-{
-//    res.number;
+    res.number = 9;
 //    res.connection;
 //    res.current;
 }

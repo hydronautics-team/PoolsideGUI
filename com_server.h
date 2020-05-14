@@ -21,6 +21,9 @@ signals:
     void error(QString err);
     void dataUpdated();
 
+public slots:
+    void changeSelectedThruster(unsigned int slot);
+
 private:
     QSerialPort *serialPort;
     QTimer *timeoutTimer;

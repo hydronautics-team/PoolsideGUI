@@ -20,7 +20,9 @@ SOURCES += \
     SettingsWindow/CommunicationSettings/communicationsettings.cpp \
     SettingsWindow/ThrusterSettings/thrustersettings.cpp \
     UI_Tests/serverdata_test.cpp \
-    UV/uv_thrusters.cpp \
+    UV/ithrustertuningdata.cpp \
+    UV/iuserinterfacedata.cpp \
+    UV/uv_thruster.cpp \
     VehicleWizard/vehiclewizard.cpp \
     UV/ibasicdata.cpp \
     UV/iserverdata.cpp \
@@ -31,7 +33,6 @@ SOURCES += \
     com_server.cpp \
     mainwindow.cpp \
     SettingsWindow/settingswindow.cpp \
-    global.cpp \
     rovmodewidget.cpp
 
 HEADERS += \
@@ -40,16 +41,17 @@ HEADERS += \
     UI_Tests/serverdata_test.h \
     UV/ibasicdata.h \
     UV/iserverdata.h \
+    UV/ithrustertuningdata.h \
+    UV/iuserinterfacedata.h \
     UV/uv_device.h \
     UV/uv_stabilization.h \
     UV/uv_state.h \
-    UV/uv_thrusters.h \
     SettingsWindow/ThrusterSettings/thrustersettings.h \
+    UV/uv_thruster.h \
     VehicleWizard/vehiclewizard.h \
     mainwindow.h \
     com_server.h \
     SettingsWindow/settingswindow.h \
-    global.h \
     rovmodewidget.h
 
 FORMS += \
