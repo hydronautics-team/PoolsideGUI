@@ -12,7 +12,21 @@ void addCheckSumm16b(char *pcBlock, int len);
 IServerData::IServerData()
     : IBasicData()
 {
+    currentThruster = 0;
+}
 
+void IServerData::changeCurrentThruster(unsigned int slot)
+{
+    if(slot < UV_State::thrusters_amount) {
+        currentThruster = slot;
+    }
+    else {
+        std::string error = "Max thruster slot is: " +
+                            std::to_string(UV_State::thrusters_amount) +
+                            ", you are trying to change to:" +
+                            std::to_string(slot);
+        throw std::invalid_argument(error);
+    }
 }
 
 QByteArray IServerData::generateMessage(int message_type)
@@ -178,8 +192,7 @@ void IServerData::fillStructure(RequestDirectMessage &req)
 {
     UVMutex.lock();
 
-    // TODO don't think that ThrusterSelected should be in UVState
-    req.number = 0; //UVState.ThrusterSelected;
+    req.number = currentThruster;
     req.id = static_cast<uint8_t>(UVState.thruster[req.number].id);
 
     req.velocity = static_cast<int8_t>(UVState.thruster[req.number].velocity);

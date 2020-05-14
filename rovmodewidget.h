@@ -12,6 +12,8 @@
 #include "ui_rovmodewidget.h"
 #include "PicFrame/picframe.h"
 
+#include "UV/iuserinterfacedata.h"
+
 class ROVModeWidget : public QWidget, private Ui::ROVModeWidget
 {
     Q_OBJECT
@@ -38,6 +40,8 @@ private:
     QGraphicsPixmapItem *picROV;
     QGraphicsTextItem *txtCurrentYaw;
 
+    // Interface for accessing UVState object
+    IUserInterfaceData uv_interface;
 
     void initializeData();
 

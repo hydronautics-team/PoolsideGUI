@@ -1,5 +1,6 @@
 #include "com_server.h"
 #include "UV/iserverdata.h"
+#include "SettingsWindow/ThrusterSettings/thrustersettings.h"
 
 #include <QString>
 #include <QDebug>
@@ -95,6 +96,11 @@ int COM_Server::exec()
             serialPort->readAll();
         }
     }
+}
+
+void COM_Server::changeSelectedThruster(unsigned int slot)
+{
+    interface->changeCurrentThruster(slot);
 }
 
 

@@ -37,7 +37,7 @@ UV_Device IUserInterfaceData::getDeviceData(QString name)
         }
         else {
             std::string error = "There is no UV_device with the name: " + name.toStdString();
-            throw std::invalid_argument("There is no UV_device by this name");
+            throw std::invalid_argument(error);
         }
     }
 

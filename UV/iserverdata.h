@@ -27,8 +27,11 @@ public:
     QByteArray generateMessage(int message_type);
     void parseMessage(QByteArray message, int message_type);
 
+    void changeCurrentThruster(unsigned int slot);
+
 private:
     QDataStream *port;
+    unsigned int currentThruster;
 
     /// Number of the thrusters in transfer protocol
     static const uint8_t VmaAmount = 8;

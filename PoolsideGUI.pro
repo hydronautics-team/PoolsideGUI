@@ -20,6 +20,7 @@ SOURCES += \
     SettingsWindow/CommunicationSettings/communicationsettings.cpp \
     SettingsWindow/ThrusterSettings/thrustersettings.cpp \
     UI_Tests/serverdata_test.cpp \
+    UV/ithrustertuningdata.cpp \
     UV/iuserinterfacedata.cpp \
     UV/uv_thruster.cpp \
     VehicleWizard/vehiclewizard.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     UI_Tests/serverdata_test.h \
     UV/ibasicdata.h \
     UV/iserverdata.h \
+    UV/ithrustertuningdata.h \
     UV/iuserinterfacedata.h \
     UV/uv_device.h \
     UV/uv_stabilization.h \

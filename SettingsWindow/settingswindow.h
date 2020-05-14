@@ -3,7 +3,7 @@
 
 #include "ui_settingswindow.h"
 
-class SettingsWindow : public QWidget, private Ui::SettingsWindow
+class SettingsWindow : public QWidget, public Ui::SettingsWindow
 {
     Q_OBJECT
 
