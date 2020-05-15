@@ -214,9 +214,9 @@ private:
         uint16_t checksum;
     };
 
-    bool parseNormalMessage(QByteArray msg);
-    bool parseConfigMessage(QByteArray msg);
-    bool parseDirectMessage(QByteArray msg);
+    void parseNormalMessage(QByteArray msg);
+    void parseConfigMessage(QByteArray msg);
+    void parseDirectMessage(QByteArray msg);
 
     QByteArray generateNormalMessage();
     QByteArray generateConfigMessage();

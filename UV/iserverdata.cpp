@@ -1,6 +1,8 @@
 #include "iserverdata.h"
-
 #include "rovmodewidget.h"
+
+#include <string>
+#include <sstream>
 
 int16_t resizeDoubleToInt16(double input, double border);
 int8_t resizeDoubleToInt8(double input, double border);
@@ -211,19 +213,23 @@ void IServerData::fillStructure(RequestDirectMessage &req)
 void IServerData::parseMessage(QByteArray message, int message_type)
 {
     switch(message_type) {
-        case MESSAGE_NORMAL:
-            parseNormalMessage(message);
-            break;
-        case MESSAGE_CONFIG:
-            parseConfigMessage(message);
-            break;
-        case MESSAGE_DIRECT:
-            parseDirectMessage(message);
-            break;
+    case MESSAGE_NORMAL:
+        parseNormalMessage(message);
+        break;
+    case MESSAGE_CONFIG:
+        parseConfigMessage(message);
+        break;
+    case MESSAGE_DIRECT:
+        parseDirectMessage(message);
+        break;
+    default:
+        std::stringstream stream;
+        stream << "Incorrect message type: [" << message_type << "]";
+        throw std::invalid_argument(stream.str());
     }
 }
 
-bool IServerData::parseNormalMessage(QByteArray msg)
+void IServerData::parseNormalMessage(QByteArray msg)
 {
     ResponseNormalMessage res;
 
@@ -262,11 +268,15 @@ bool IServerData::parseNormalMessage(QByteArray msg)
     stream >> res.checksum;
 
     if(res.checksum != checksum_calc) {
-        //return false;
+        std::stringstream stream;
+        stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
+                            std::ios::hex << checksum_calc << "] " <<
+                            "Received: [" <<
+                            std::ios::hex << res.checksum << "]";
+        throw std::invalid_argument(stream.str());
     }
 
     pullFromStructure(res);
-    return true;
 }
 
 void IServerData::pullFromStructure(ResponseNormalMessage res)
@@ -297,7 +307,7 @@ void IServerData::pullFromStructure(ResponseNormalMessage res)
     */
 }
 
-bool IServerData::parseConfigMessage(QByteArray msg)
+void IServerData::parseConfigMessage(QByteArray msg)
 {
     ResponseConfigMessage res;
 
@@ -339,11 +349,15 @@ bool IServerData::parseConfigMessage(QByteArray msg)
     stream >> res.checksum;
 
     if(res.checksum != checksum_calc) {
-        return false;
+        std::stringstream stream;
+        stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
+                            std::ios::hex << checksum_calc << "] " <<
+                            "Received: [" <<
+                            std::ios::hex << res.checksum << "]";
+        throw std::invalid_argument(stream.str());
     }
 
     pullFromStructure(res);
-    return true;
 }
 
 // TODO finish responseconfigmessage structure pulling
@@ -352,7 +366,7 @@ void IServerData::pullFromStructure(ResponseConfigMessage res)
     res.yaw = 0;
 }
 
-bool IServerData::parseDirectMessage(QByteArray msg)
+void IServerData::parseDirectMessage(QByteArray msg)
 {
     ResponseDirectMessage res;
 
@@ -367,11 +381,15 @@ bool IServerData::parseDirectMessage(QByteArray msg)
     stream >> res.checksum;
 
     if(res.checksum != checksum_calc) {
-        return false;
+        std::stringstream stream;
+        stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
+                            std::ios::hex << checksum_calc << "] " <<
+                            "Received: [" <<
+                            std::ios::hex << res.checksum << "]";
+        throw std::invalid_argument(stream.str());
     }
 
     pullFromStructure(res);
-    return true;
 }
 
 // TODO finish ResponseDirectMessage structure pulling

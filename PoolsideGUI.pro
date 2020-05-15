@@ -1,4 +1,4 @@
-QT       += core gui widgets serialport testlib
+QT       += core gui widgets serialport testlib network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,6 +18,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     PicFrame/picframe.cpp \
     SettingsWindow/CommunicationSettings/communicationsettings.cpp \
+    SettingsWindow/CommunicationSettings/serial_settings.cpp \
+    SettingsWindow/CommunicationSettings/udp_settings.cpp \
     SettingsWindow/ThrusterSettings/thrustersettings.cpp \
     UI_Tests/serverdata_test.cpp \
     UV/ithrustertuningdata.cpp \
@@ -30,14 +32,17 @@ SOURCES += \
     UV/uv_stabilization.cpp \
     UV/uv_state.cpp \
     main.cpp \
-    com_server.cpp \
     mainwindow.cpp \
     SettingsWindow/settingswindow.cpp \
-    rovmodewidget.cpp
+    rovmodewidget.cpp \
+    serial_client.cpp \
+    udp_client.cpp
 
 HEADERS += \
     PicFrame/picframe.h \
     SettingsWindow/CommunicationSettings/communicationsettings.h \
+    SettingsWindow/CommunicationSettings/serial_settings.h \
+    SettingsWindow/CommunicationSettings/udp_settings.h \
     UI_Tests/serverdata_test.h \
     UV/ibasicdata.h \
     UV/iserverdata.h \
@@ -50,13 +55,16 @@ HEADERS += \
     UV/uv_thruster.h \
     VehicleWizard/vehiclewizard.h \
     mainwindow.h \
-    com_server.h \
     SettingsWindow/settingswindow.h \
-    rovmodewidget.h
+    rovmodewidget.h \
+    serial_client.h \
+    udp_client.h
 
 FORMS += \
     PicFrame/picframe.ui \
     SettingsWindow/CommunicationSettings/communicationsettings.ui \
+    SettingsWindow/CommunicationSettings/serial_settings.ui \
+    SettingsWindow/CommunicationSettings/udp_settings.ui \
     SettingsWindow/ThrusterSettings/thrustersettings.ui \
     VehicleWizard/vehiclewizard.ui \
     mainwindow.ui \

@@ -1,4 +1,4 @@
-#include "com_server.h"
+#include "serial_client.h"
 #include "UV/iserverdata.h"
 #include "SettingsWindow/ThrusterSettings/thrustersettings.h"
 
@@ -7,7 +7,7 @@
 
 const int MAX_COM_ID = 20;
 
-COM_Server::COM_Server()
+Serial_Client::Serial_Client()
 {
     timeoutTimer = new QTimer();
     connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
@@ -15,7 +15,7 @@ COM_Server::COM_Server()
     interface = new IServerData();
 }
 
-bool COM_Server::portConnect(int port)
+bool Serial_Client::portConnect(int port)
 {
     QString str;
     if (OS == "unix") {
@@ -49,7 +49,7 @@ bool COM_Server::portConnect(int port)
     return true;
 }
 
-void COM_Server::run()
+void Serial_Client::run()
 {
     bool opened = false;
     for(int i=0; i<MAX_COM_ID; i++) {
@@ -64,15 +64,16 @@ void COM_Server::run()
     }
 }
 
-int COM_Server::exec()
+int Serial_Client::exec()
 {
     while(1)
     {
-        QByteArray msg;
-        msg = interface->generateMessage(MESSAGE_NORMAL);
+        int messageType = MESSAGE_NORMAL;
 
-        qDebug() << "Sending message type " << MESSAGE_NORMAL << "||" << msg.size();
-        qDebug() << msg;
+        QByteArray msg;
+        msg = interface->generateMessage(messageType);
+
+        qDebug() << "[SERIAL_CLIENT] Sending message type " << messageType << "||" << msg.size();
 
         serialPort->clear();
         serialPort->write(msg, msg.size());
@@ -84,21 +85,29 @@ int COM_Server::exec()
             msg.clear();
             msg.push_back(serialPort->readAll());
 
-//            qDebug() << "Message received, type " << interface->internal_state.messageType;
-//            qDebug() << msg;
+            qDebug() << "[SERIAL_CLIENT] Message received. Bytes: " << msg.size();
 
-            interface->parseMessage(msg, MESSAGE_NORMAL);
-            emit dataUpdated();
+            bool exception_caught = false;
+            try {
+                interface->parseMessage(msg, messageType);
+            }
+            catch(const std::invalid_argument& error) {
+                qDebug() << "[SERIAL_CLIENT] Parsing error: " << error.what();
+                exception_caught = true;
+            }
+            if(!exception_caught) {
+                emit dataUpdated();
+            }
         }
         else {
-            qDebug() << "Didn't receive answer for message " << MESSAGE_NORMAL;
-            qDebug() << "Bytes available:" << bytesAvailiable;
+            qDebug() << "[SERIAL_CLIENT] Didn't receive answer for message " << messageType;
+            qDebug() << "[SERIAL_CLIENT] Bytes available:" << bytesAvailiable;
             serialPort->readAll();
         }
     }
 }
 
-void COM_Server::changeSelectedThruster(unsigned int slot)
+void Serial_Client::changeSelectedThruster(unsigned int slot)
 {
     interface->changeCurrentThruster(slot);
 }

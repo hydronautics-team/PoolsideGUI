@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "com_server.h"
+#include "serial_client.h"
 #include "UI_Tests/serverdata_test.h"
 
 #include <QApplication>

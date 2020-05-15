@@ -7,12 +7,12 @@
 
 #include "UV/iserverdata.h"
 
-class COM_Server : public QThread
+class Serial_Client : public QThread
 {
     Q_OBJECT
 
 public:
-    COM_Server();
+    Serial_Client();
 
     void run();
     int exec();

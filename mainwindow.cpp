@@ -2,7 +2,7 @@
 #include <QDebug>
 #include <QFileInfo>
 
-#include "com_server.h"
+#include "serial_client.h"
 #include "ui_settingswindow.h"
 
 #include <QApplication>
@@ -63,13 +63,13 @@ MainWindow::MainWindow(QWidget *parent) :
     currentConfiguration = settings->value("currentConfiguration").toString();
     emit updateVehicle();
 
-    COM_Server *Serial_Server = new COM_Server();
-    Serial_Server->start();
+    Serial_Client *serial_client = new Serial_Client();
+    serial_client->start();
 
-    connect(Serial_Server, SIGNAL(dataUpdated()),
+    connect(serial_client, SIGNAL(dataUpdated()),
             pageROVMode, SLOT(updateData()));
     connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(int)),
-            Serial_Server, SLOT(changeSelectedThruster(int)));
+            serial_client, SLOT(changeSelectedThruster(int)));
 }
 
 void MainWindow::createVehicle()
