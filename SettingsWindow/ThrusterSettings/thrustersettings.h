@@ -6,7 +6,7 @@
 #include <QButtonGroup>
 #include "ui_thrustersettings.h"
 
-#include "UV/ithrustertuningdata.h"
+#include "UV/ituningdata.h"
 
 class ThrusterSettings : public QWidget, private Ui::ThrusterSettings
 {
@@ -23,7 +23,7 @@ public slots:
     void updateVehicle();
 
 private:
-    IThrusterTuningData uv_interface;
+    ITuningData uv_interface;
     QString settingsFile;
     QSettings *settings;
     QString currentVehicle;

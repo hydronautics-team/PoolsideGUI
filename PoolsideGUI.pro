@@ -16,20 +16,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    KX_Pult/configdata.cpp \
+    KX_Pult/kx_protocol.cpp \
+    KX_Pult/qkx_coeffs.cpp \
+    KX_Pult/qpiconfig.cpp \
     PicFrame/picframe.cpp \
     SettingsWindow/CommunicationSettings/communicationsettings.cpp \
     SettingsWindow/CommunicationSettings/serial_settings.cpp \
     SettingsWindow/CommunicationSettings/udp_settings.cpp \
     SettingsWindow/ThrusterSettings/thrustersettings.cpp \
+    SettingsWindow/VehicleSettings/vehiclesettings.cpp \
     UI_Tests/serverdata_test.cpp \
-    UV/ithrustertuningdata.cpp \
+    UV/ituningdata.cpp \
     UV/iuserinterfacedata.cpp \
+    UV/uv_controlcontour.cpp \
     UV/uv_thruster.cpp \
     VehicleWizard/vehiclewizard.cpp \
     UV/ibasicdata.cpp \
     UV/iserverdata.cpp \
     UV/uv_device.cpp \
-    UV/uv_stabilization.cpp \
     UV/uv_state.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -39,17 +44,22 @@ SOURCES += \
     udp_client.cpp
 
 HEADERS += \
+    KX_Pult/configdata.h \
+    KX_Pult/kx_protocol.h \
+    KX_Pult/qkx_coeffs.h \
+    KX_Pult/qpiconfig.h \
     PicFrame/picframe.h \
     SettingsWindow/CommunicationSettings/communicationsettings.h \
     SettingsWindow/CommunicationSettings/serial_settings.h \
     SettingsWindow/CommunicationSettings/udp_settings.h \
+    SettingsWindow/VehicleSettings/vehiclesettings.h \
     UI_Tests/serverdata_test.h \
     UV/ibasicdata.h \
     UV/iserverdata.h \
-    UV/ithrustertuningdata.h \
+    UV/ituningdata.h \
     UV/iuserinterfacedata.h \
+    UV/uv_controlcontour.h \
     UV/uv_device.h \
-    UV/uv_stabilization.h \
     UV/uv_state.h \
     SettingsWindow/ThrusterSettings/thrustersettings.h \
     UV/uv_thruster.h \
@@ -66,6 +76,7 @@ FORMS += \
     SettingsWindow/CommunicationSettings/serial_settings.ui \
     SettingsWindow/CommunicationSettings/udp_settings.ui \
     SettingsWindow/ThrusterSettings/thrustersettings.ui \
+    SettingsWindow/VehicleSettings/vehiclesettings.ui \
     VehicleWizard/vehiclewizard.ui \
     mainwindow.ui \
     SettingsWindow/settingswindow.ui \
@@ -97,4 +108,8 @@ win32 {
 }
 
 RESOURCES += \
+    images.qrc \
     vehicles.qrc
+
+DISTFILES += \
+    KX_Pult/protocols.conf

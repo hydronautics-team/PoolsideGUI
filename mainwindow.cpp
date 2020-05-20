@@ -2,8 +2,10 @@
 #include <QDebug>
 #include <QFileInfo>
 
-#include "serial_client.h"
 #include "ui_settingswindow.h"
+
+#include "serial_client.h"
+#include "udp_client.h"
 
 #include <QApplication>
 #include <QThread>
@@ -16,16 +18,10 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug () << " - MainWindow constructor";
 
     // update vehicle and all parameters
-    connect(&wizard, SIGNAL(updateMainWindow()),
-            this, SIGNAL(updateVehicle()));
-    connect(this, SIGNAL(updateVehicle()),
-            this, SLOT(updateVehiclesMenu()));
-    connect(this, SIGNAL(updateVehicle()),
-            &settingsWindow, SIGNAL(updateVehicle()));
-    connect(this, SIGNAL(updateVehicle()),
-            pageROVMode, SLOT(updateVehicle()));
-
-
+    connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
+    connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehiclesMenu()));
+    connect(this, SIGNAL(updateVehicle()), &settingsWindow, SIGNAL(updateVehicle()));
+    connect(this, SIGNAL(updateVehicle()), pageROVMode, SLOT(updateVehicle()));
 
     // Menu:
     // Vehicle
@@ -63,13 +59,18 @@ MainWindow::MainWindow(QWidget *parent) :
     currentConfiguration = settings->value("currentConfiguration").toString();
     emit updateVehicle();
 
-    Serial_Client *serial_client = new Serial_Client();
-    serial_client->start();
+//    Serial_Client *serial_client = new Serial_Client();
+//    serial_client->start();
 
-    connect(serial_client, SIGNAL(dataUpdated()),
-            pageROVMode, SLOT(updateData()));
-    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(int)),
-            serial_client, SLOT(changeSelectedThruster(int)));
+//    connect(serial_client, SIGNAL(dataUpdated()),
+//            pageROVMode, SLOT(updateData()));
+//    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(int)),
+//            serial_client, SLOT(changeSelectedThruster(int)));
+    UDP_Client *udp_client = new UDP_Client();
+    udp_client->start();
+
+    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 }
 
 void MainWindow::createVehicle()

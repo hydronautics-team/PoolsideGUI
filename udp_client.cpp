@@ -51,7 +51,7 @@ int UDP_Client::exec()
         QNetworkDatagram datagram;
         datagram.setData(msg);
         udpSocket->writeDatagram(datagram);
-        sleep(100);
+        msleep(100);
     }
 }
 
@@ -69,6 +69,7 @@ void UDP_Client::readPendingDatagrams()
             exception_caught = true;
         }
         if(!exception_caught) {
+            qDebug() << "[UDP_CLIENT] Message parced " << messageType << "||" << msg.size();
             emit dataUpdated();
         }
     }

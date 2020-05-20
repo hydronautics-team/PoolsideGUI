@@ -34,8 +34,8 @@ void SettingsWindow::showPageConfigSSH()
 void SettingsWindow::showPageConfigCoef()
 {
     this->show();
-    stackedWidget->setCurrentWidget(pageConfigCoef);
-    this->setWindowTitle("Coefficients settings");
+    stackedWidget->setCurrentWidget(pageVehicleSettings);
+    this->setWindowTitle("Vehicle settings");
 }
 
 void SettingsWindow::showPageConfigControls()

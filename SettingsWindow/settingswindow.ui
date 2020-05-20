@@ -465,86 +465,11 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="CommunicationSettings" name="pageConfigRS"/>
      <widget class="ThrusterSettings" name="pageConfigThruster"/>
-     <widget class="QWidget" name="pageConfigCoef">
-      <widget class="QGroupBox" name="groupBox_2">
-       <property name="geometry">
-        <rect>
-         <x>100</x>
-         <y>370</y>
-         <width>603</width>
-         <height>150</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="title">
-        <string>Control button</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_21">
-            <item>
-             <widget class="QCheckBox" name="checkBoxStabilizeRoll">
-              <property name="text">
-               <string>Stabilize Roll</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="checkBoxStabilizePitch">
-              <property name="text">
-               <string>Stabilize Pitch</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="checkBoxStabilizeYaw">
-              <property name="text">
-               <string>Stabilize Yaw</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="checkBoxStabilizeDepth">
-              <property name="text">
-               <string>Stabilize Depth</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_22">
-            <item>
-             <widget class="QPushButton" name="pushButtonResetIMU">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Reset IMU</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </widget>
-     </widget>
+     <widget class="VehicleSettings" name="pageVehicleSettings"/>
      <widget class="QWidget" name="pageConfigSSH">
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
@@ -778,6 +703,12 @@
    <class>CommunicationSettings</class>
    <extends>QWidget</extends>
    <header>SettingsWindow/CommunicationSettings/communicationsettings.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VehicleSettings</class>
+   <extends>QWidget</extends>
+   <header>SettingsWindow/VehicleSettings/vehiclesettings.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
