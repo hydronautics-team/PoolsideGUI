@@ -27,6 +27,7 @@ SOURCES += \
     SettingsWindow/ThrusterSettings/thrustersettings.cpp \
     SettingsWindow/VehicleSettings/vehiclesettings.cpp \
     UI_Tests/serverdata_test.cpp \
+    UV/icontroldata.cpp \
     UV/ituningdata.cpp \
     UV/iuserinterfacedata.cpp \
     UV/uv_controlcontour.cpp \
@@ -55,6 +56,7 @@ HEADERS += \
     SettingsWindow/VehicleSettings/vehiclesettings.h \
     UI_Tests/serverdata_test.h \
     UV/ibasicdata.h \
+    UV/icontroldata.h \
     UV/iserverdata.h \
     UV/ituningdata.h \
     UV/iuserinterfacedata.h \
