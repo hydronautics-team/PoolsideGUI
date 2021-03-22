@@ -4,6 +4,15 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 
+# SFML
+
+win32:CONFIG(release, debug|release):       LIBS += -L$$PWD/External/SFML/lib/      -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
+else:win32:CONFIG(debug, debug|release):    LIBS += -L$$PWD/External/SFML/lib/      -lsfml-audio-d -lsfml-graphics-d -lsfml-network-d -lsfml-window-d -lsfml-system-d
+else:unix:                                  LIBS += -L$$PWD/External/SFML/lib/      -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
+
+INCLUDEPATH += $$PWD/External/SFML/include
+DEPENDPATH += $$PWD/External/SFML/include
+
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -16,6 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Drivers/joystick.cpp \
+    Drivers/keyboard.cpp \
     KX_Pult/configdata.cpp \
     KX_Pult/kx_protocol.cpp \
     KX_Pult/qkx_coeffs.cpp \
@@ -45,6 +56,8 @@ SOURCES += \
     udp_client.cpp
 
 HEADERS += \
+    Drivers/joystick.h \
+    Drivers/keyboard.h \
     KX_Pult/configdata.h \
     KX_Pult/kx_protocol.h \
     KX_Pult/qkx_coeffs.h \

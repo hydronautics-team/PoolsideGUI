@@ -59,18 +59,19 @@ MainWindow::MainWindow(QWidget *parent) :
     currentConfiguration = settings->value("currentConfiguration").toString();
     emit updateVehicle();
 
-//    Serial_Client *serial_client = new Serial_Client();
-//    serial_client->start();
+    Serial_Client *serial_client = new Serial_Client();
+    serial_client->start();
 
-//    connect(serial_client, SIGNAL(dataUpdated()),
-//            pageROVMode, SLOT(updateData()));
-//    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(int)),
-//            serial_client, SLOT(changeSelectedThruster(int)));
-    UDP_Client *udp_client = new UDP_Client();
-    udp_client->start();
+    connect(serial_client, SIGNAL(dataUpdated()),
+            pageROVMode, SLOT(updateData()));
+    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(int)),
+            serial_client, SLOT(changeSelectedThruster(int)));
 
-    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
-    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
+//    UDP_Client *udp_client = new UDP_Client();
+//    udp_client->start();
+
+//    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+//    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 }
 
 void MainWindow::createVehicle()
