@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1040</width>
-    <height>564</height>
+    <height>838</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -465,7 +465,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>4</number>
      </property>
      <widget class="CommunicationSettings" name="pageConfigRS"/>
      <widget class="ThrusterSettings" name="pageConfigThruster"/>
@@ -662,7 +662,7 @@
          <x>630</x>
          <y>10</y>
          <width>371</width>
-         <height>531</height>
+         <height>801</height>
         </rect>
        </property>
        <property name="title">
@@ -675,7 +675,7 @@
          <x>20</x>
          <y>170</y>
          <width>591</width>
-         <height>371</height>
+         <height>641</height>
         </rect>
        </property>
        <property name="title">

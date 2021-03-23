@@ -2,6 +2,8 @@
 #define SETTINGSWINDOW_H
 
 #include "ui_settingswindow.h"
+#include <QTimer>
+#include <QGamepad>
 
 class SettingsWindow : public QWidget, public Ui::SettingsWindow
 {
@@ -22,7 +24,14 @@ public slots:
     void showPageConfigView();
     void showPageAboutProgram();
     void showPageOtherSettings();
+    void timerTickEvent();
 
+private:
+    QTimer *timer;
+
+    QTableWidget *table;
+
+    QGamepad gamepad;
 };
 
 #endif // SETTINGSWINDOW_H
