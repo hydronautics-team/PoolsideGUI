@@ -3,6 +3,7 @@
 
 #include "ui_settingswindow.h"
 #include <QTimer>
+#include <QVector>
 
 class SettingsWindow : public QWidget, public Ui::SettingsWindow
 {
@@ -24,11 +25,14 @@ public slots:
     void showPageAboutProgram();
     void showPageOtherSettings();
     void timerTickEvent();
+    void changeDevice(int device_id);
 
 private:
     QTimer *timer;
-
     QTableWidget *table;
+    QVector<unsigned int> joystick_list;
+    int current_device;
+    int current_joystick;
 };
 
 #endif // SETTINGSWINDOW_H
