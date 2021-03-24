@@ -3,7 +3,6 @@
 
 #include "ui_settingswindow.h"
 #include <QTimer>
-#include <QGamepad>
 
 class SettingsWindow : public QWidget, public Ui::SettingsWindow
 {
@@ -30,8 +29,6 @@ private:
     QTimer *timer;
 
     QTableWidget *table;
-
-    QGamepad gamepad;
 };
 
 #endif // SETTINGSWINDOW_H

@@ -1,6 +1,6 @@
 #include "settingswindow.h"
 #include <QDebug>
-#include <QDesktopWidget>
+#include "SFML/Window.hpp"
 
 SettingsWindow::SettingsWindow(QWidget *parent) :
     QWidget(parent)
@@ -26,30 +26,19 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     horizontalLabels.append("Value");
     table->setHorizontalHeaderLabels(horizontalLabels);
 
-    table->setItem(0, 0, new QTableWidgetItem("Name"));
-    table->setItem(1, 0, new QTableWidgetItem("ID"));
-    table->setItem(2, 0, new QTableWidgetItem("axisLeftX"));
-    table->setItem(3, 0, new QTableWidgetItem("axisLeftY"));
-    table->setItem(4, 0, new QTableWidgetItem("axisRightX"));
-    table->setItem(5, 0, new QTableWidgetItem("axisRightY"));
-    table->setItem(6, 0, new QTableWidgetItem("buttonL1"));
-    table->setItem(7, 0, new QTableWidgetItem("buttonL2"));
-    table->setItem(8, 0, new QTableWidgetItem("buttonL3"));
-    table->setItem(9, 0, new QTableWidgetItem("buttonR1"));
-    table->setItem(10, 0, new QTableWidgetItem("buttonR2"));
-    table->setItem(11, 0, new QTableWidgetItem("buttonR3"));
-    table->setItem(12, 0, new QTableWidgetItem("buttonA"));
-    table->setItem(13, 0, new QTableWidgetItem("buttonB"));
-    table->setItem(14, 0, new QTableWidgetItem("buttonCenter"));
-    table->setItem(15, 0, new QTableWidgetItem("buttonDown"));
-    table->setItem(16, 0, new QTableWidgetItem("buttonGuide"));
-    table->setItem(17, 0, new QTableWidgetItem("buttonLeft"));
-    table->setItem(18, 0, new QTableWidgetItem("buttonRight"));
-    table->setItem(19, 0, new QTableWidgetItem("buttonSelect"));
-    table->setItem(20, 0, new QTableWidgetItem("buttonStart"));
-    table->setItem(21, 0, new QTableWidgetItem("buttonUp"));
-    table->setItem(22, 0, new QTableWidgetItem("buttonX"));
-    table->setItem(23, 0, new QTableWidgetItem("buttonY"));
+    table->setItem(0, 0, new QTableWidgetItem("isConnected"));
+    table->setItem(1, 0, new QTableWidgetItem("Name"));
+    table->setItem(2, 0, new QTableWidgetItem("vendorID"));
+    table->setItem(3, 0, new QTableWidgetItem("productID"));
+    table->setItem(4, 0, new QTableWidgetItem("ButtonCount"));
+    table->setItem(5, 0, new QTableWidgetItem("Axises"));
+    table->setItem(6, 0, new QTableWidgetItem("Buttons Pressed"));
+    table->setItem(7, 0, new QTableWidgetItem("AxisX Position"));
+    table->setItem(8, 0, new QTableWidgetItem("AxisY Position"));
+    table->setItem(9, 0, new QTableWidgetItem("AxisZ Position"));
+    table->setItem(10, 0, new QTableWidgetItem("AxisR Position"));
+    table->setItem(11, 0, new QTableWidgetItem("AxisU Position"));
+    table->setItem(12, 0, new QTableWidgetItem("AxisV Position"));
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTickEvent()));
@@ -117,32 +106,39 @@ void SettingsWindow::showPageOtherSettings()
 
 void SettingsWindow::timerTickEvent()
 {
-    auto gamepads = QGamepadManager::instance()->connectedGamepads();
-    qDebug() << "Gamepads:" << gamepads.size();
-    gamepad.setDeviceId(gamepads[0]);
+    unsigned int joystick_id = 0;
+    QString buttons_list, axis_list;
 
-    table->setItem(0, 1, new QTableWidgetItem(gamepad.name()));
-    table->setItem(1, 1, new QTableWidgetItem(QString::number(gamepad.deviceId())));
-    table->setItem(2, 1, new QTableWidgetItem(QString::number(gamepad.axisLeftX())));
-    table->setItem(3, 1, new QTableWidgetItem(QString::number(gamepad.axisLeftY())));
-    table->setItem(4, 1, new QTableWidgetItem(QString::number(gamepad.axisRightX())));
-    table->setItem(5, 1, new QTableWidgetItem(QString::number(gamepad.axisRightY())));
-    table->setItem(6, 1, new QTableWidgetItem(QString::number(gamepad.buttonL1())));
-    table->setItem(7, 1, new QTableWidgetItem(QString::number(gamepad.buttonL2())));
-    table->setItem(8, 1, new QTableWidgetItem(QString::number(gamepad.buttonL3())));
-    table->setItem(9, 1, new QTableWidgetItem(QString::number(gamepad.buttonR1())));
-    table->setItem(10, 1, new QTableWidgetItem(QString::number(gamepad.buttonR2())));
-    table->setItem(11, 1, new QTableWidgetItem(QString::number(gamepad.buttonR3())));
-    table->setItem(12, 1, new QTableWidgetItem(QString::number(gamepad.buttonA())));
-    table->setItem(13, 1, new QTableWidgetItem(QString::number(gamepad.buttonB())));
-    table->setItem(14, 1, new QTableWidgetItem(QString::number(gamepad.buttonCenter())));
-    table->setItem(15, 1, new QTableWidgetItem(QString::number(gamepad.buttonDown())));
-    table->setItem(16, 1, new QTableWidgetItem(QString::number(gamepad.buttonGuide())));
-    table->setItem(17, 1, new QTableWidgetItem(QString::number(gamepad.buttonLeft())));
-    table->setItem(18, 1, new QTableWidgetItem(QString::number(gamepad.buttonRight())));
-    table->setItem(19, 1, new QTableWidgetItem(QString::number(gamepad.buttonSelect())));
-    table->setItem(20, 1, new QTableWidgetItem(QString::number(gamepad.buttonStart())));
-    table->setItem(21, 1, new QTableWidgetItem(QString::number(gamepad.buttonUp())));
-    table->setItem(22, 1, new QTableWidgetItem(QString::number(gamepad.buttonX())));
-    table->setItem(23, 1, new QTableWidgetItem(QString::number(gamepad.buttonY())));
+//    sf::Joystick::update();
+
+//    for (unsigned int i = 0; i<=sf::Joystick::ButtonCount; i++) {
+//        if (sf::Joystick::isButtonPressed(joystick_id, i)) {
+//            buttons_list += QString::number(i) + ", ";
+//        }
+//    }
+
+//    for (unsigned int i = 0; i<=sf::Joystick::AxisCount; i++) {
+//        if (sf::Joystick::hasAxis(joystick_id, static_cast<sf::Joystick::Axis>(i))) {
+//            axis_list += QString::number(i) + ", ";
+//        }
+//    }
+
+//    sf::Joystick::Identification identification = sf::Joystick::getIdentification(joystick_id);
+
+//    //std::string name = identification.name;
+//    //QString qname = QString::fromStdString(name);
+
+//    table->setItem(0, 0, new QTableWidgetItem(QString::number(sf::Joystick::isConnected(joystick_id))));
+//    //table->setItem(1, 0, new QTableWidgetItem(qname));
+//    table->setItem(2, 0, new QTableWidgetItem(QString::number(identification.vendorId)));
+//    table->setItem(3, 0, new QTableWidgetItem(QString::number(identification.productId)));
+//    table->setItem(4, 0, new QTableWidgetItem(QString::number(sf::Joystick::getButtonCount(joystick_id))));
+//    table->setItem(5, 0, new QTableWidgetItem(axis_list));
+//    table->setItem(6, 0, new QTableWidgetItem(buttons_list));
+//    table->setItem(7, 0, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::X))));
+//    table->setItem(8, 0, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::Y))));
+//    table->setItem(9, 0, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::Z))));
+//    table->setItem(10, 0, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::R))));
+//    table->setItem(11, 0, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::U))));
+//    table->setItem(12, 0, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::V))));
 }
