@@ -1,11 +1,48 @@
 #ifndef CONTROLBASE_H
 #define CONTROLBASE_H
 
+#include <QTimer>
+#include "UV/icontroldata.h"
 
-class ControlBase
+class ControlBase :
+        public QObject
 {
+    Q_OBJECT
+
 public:
-    ControlBase();
+    ControlBase(QString name, int update_time);
+
+protected:
+    QString device_name;
+
+    enum e_actionTypes {
+        SET_MARCH = 0,
+        SET_LAG,
+        SET_DEPTH,
+        SET_ROLL,
+        SET_PITCH,
+        SET_YAW,
+        CLENCH_GRAB,
+        UNCLENCH_GRAB,
+        ROTATE_GRAB_RIGHT,
+        ROTATE_GRAB_LEFT
+    };
+
+    void sendAction(e_actionTypes type, double value);
+
+    void setMarch(double value);
+    void setLag(double value);
+    void setDepth(double value);
+    void setRoll(double value);
+    void setPitch(double value);
+    void setYaw(double value);
+    void clenchGrab(double value);
+    void unclenchGrab(double value);
+    void rotateGrabRight(double value);
+    void rotateGrabLeft(double value);
+
+private:
+    IControlData interface;
 };
 
 #endif // CONTROLBASE_H

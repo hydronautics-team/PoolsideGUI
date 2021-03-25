@@ -39,6 +39,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     table->setItem(10, 0, new QTableWidgetItem("AxisR Position"));
     table->setItem(11, 0, new QTableWidgetItem("AxisU Position"));
     table->setItem(12, 0, new QTableWidgetItem("AxisV Position"));
+    table->setItem(13, 0, new QTableWidgetItem("PovX Position"));
+    table->setItem(14, 0, new QTableWidgetItem("PovY Position"));
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTickEvent()));
@@ -142,6 +144,13 @@ void SettingsWindow::changeDevice(int device_id)
         // Joystick / Gamepad
         current_device = 2;
         current_joystick = joystick_list[device_id - 2];
+
+        sf::Joystick::Identification identification = sf::Joystick::getIdentification(current_joystick);
+
+        std::string name = identification.name;
+        QString qname = QString::fromStdString(name);
+
+        emit controllerChanged(current_joystick, qname);
     }
 }
 
@@ -182,6 +191,8 @@ void SettingsWindow::timerTickEvent()
     table->setItem(10, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::R))));
     table->setItem(11, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::U))));
     table->setItem(12, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::V))));
+    table->setItem(13, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::PovX))));
+    table->setItem(14, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::PovY))));
 
     qDebug() << buttons_list;
 }

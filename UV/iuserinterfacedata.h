@@ -12,6 +12,8 @@ public:
     ImuData getImuData();
     UV_Device getDeviceData(QString name);
     UV_Thruster getThrusterData(QString name);
+
+    double getDeviceVelocity(int slot);
 };
 
 #endif // IUSERINTERFACEDATA_H

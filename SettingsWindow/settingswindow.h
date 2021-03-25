@@ -27,6 +27,9 @@ public slots:
     void timerTickEvent();
     void changeDevice(int device_id);
 
+signals:
+    void controllerChanged(unsigned int id, QString name);
+
 private:
     QTimer *timer;
     QTableWidget *table;

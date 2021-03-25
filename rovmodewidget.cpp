@@ -97,6 +97,17 @@ void ROVModeWidget::updateData()
 
     // Update drawing of a compass
     emit updateCompass(sensors.yaw);
+
+    ControlData control = uv_interface.getControlData();
+
+    label_march->setText(QString::number(control.march));
+    label_lag->setText(QString::number(control.lag));
+    label_depth->setText(QString::number(control.depth));
+    label_yaw->setText(QString::number(control.yaw));
+
+    label_grabber->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB)));
+    label_grabber_rotation->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE)));
+    label_tilt->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_TILT)));
 }
 
 // TODO это больше не нужно

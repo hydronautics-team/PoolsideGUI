@@ -63,3 +63,19 @@ UV_Thruster IUserInterfaceData::getThrusterData(QString name)
     UVMutex.unlock();
     return data;
 }
+
+double IUserInterfaceData::getDeviceVelocity(int slot)
+{
+    if(static_cast<unsigned int>(slot) >= sizeof(UVState.device)/sizeof(UVState.device[0])) {
+        return 0;
+    }
+
+    double data = 0;
+
+    UVMutex.lock();
+
+    data = UVState.device[slot].velocity;
+
+    UVMutex.unlock();
+    return data;
+}

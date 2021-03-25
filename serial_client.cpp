@@ -74,6 +74,7 @@ int Serial_Client::exec()
         msg = interface->generateMessage(messageType);
 
         qDebug() << "[SERIAL_CLIENT] Sending message type " << messageType << "||" << msg.size();
+        qDebug() << msg;
 
         serialPort->clear();
         serialPort->write(msg, msg.size());
@@ -96,7 +97,7 @@ int Serial_Client::exec()
                 exception_caught = true;
             }
             if(!exception_caught) {
-                emit dataUpdated();
+                //emit dataUpdated();
             }
         }
         else {
@@ -104,6 +105,8 @@ int Serial_Client::exec()
             qDebug() << "[SERIAL_CLIENT] Bytes available:" << bytesAvailiable;
             serialPort->readAll();
         }
+
+        emit dataUpdated();
     }
 }
 

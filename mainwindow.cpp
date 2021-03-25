@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(updateVehicle()), &settingsWindow, SIGNAL(updateVehicle()));
     connect(this, SIGNAL(updateVehicle()), pageROVMode, SLOT(updateVehicle()));
 
+    // Controller Changed
+    connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
+
     // Menu:
     // Vehicle
     //      New vehicle
@@ -72,6 +75,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
 //    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
+
+    controller = new Joystick("null_joy", 10, 0);
 }
 
 void MainWindow::createVehicle()
@@ -174,4 +179,13 @@ void MainWindow::enableAUVMode()
 void MainWindow::enableROVMode()
 {
     stackedWidget->setCurrentWidget(pageROVMode);
+}
+
+void MainWindow::changeController(unsigned int id, QString name)
+{
+    if(controller != nullptr) {
+        delete controller;
+    }
+
+    controller = new Joystick(name, 10, id);
 }
