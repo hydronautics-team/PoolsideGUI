@@ -13,10 +13,10 @@ axial u - глубина
 */
 
 const Joystick::control_axis Joystick::axis_table[] = {
-    {sf::Joystick::R, 1, SET_YAW},
-    {sf::Joystick::Y, 1, SET_MARCH},
-    {sf::Joystick::X, 1, SET_LAG},
-    {sf::Joystick::U, 1, SET_DEPTH}
+    {sf::Joystick::R, 320, SET_YAW},
+    {sf::Joystick::Y, 320, SET_MARCH},
+    {sf::Joystick::X, 320, SET_LAG},
+    {sf::Joystick::U, 320, SET_DEPTH}
 };
 
 const Joystick::control_buttons Joystick::buttons_table[] = {
