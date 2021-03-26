@@ -23,7 +23,9 @@ const Joystick::control_buttons Joystick::buttons_table[] = {
     {0, 127, CLENCH_GRAB, 1},
     {1, 127, UNCLENCH_GRAB, 0},
     {2, 127, ROTATE_GRAB_LEFT, 3},
-    {3, 127, ROTATE_GRAB_RIGHT, 2}
+    {3, 127, ROTATE_GRAB_RIGHT, 2},
+    {4, 127, ROTATE_TILT_UP, 5},
+    {5, 127, ROTATE_TILT_DOWN, 4}
 };
 
 Joystick::Joystick(QString name, int update_time, unsigned int joy_id) :

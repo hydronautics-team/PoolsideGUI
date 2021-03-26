@@ -4,8 +4,8 @@
 #include <string>
 #include <sstream>
 
-int16_t resizeDoubleToInt16(double input, double border);
-int8_t resizeDoubleToInt8(double input, double border);
+int16_t resizeDoubleToInt16(double input);
+int8_t resizeDoubleToInt8(double input);
 
 uint16_t getCheckSumm16b(char *pcBlock, int len);
 uint8_t isCheckSumm16bCorrect(char *pcBlock, int len);
@@ -88,16 +88,16 @@ void IServerData::fillStructure(RequestNormalMessage &req)
 
     UVMutex.lock();
 
-    req.march = resizeDoubleToInt16(UVState.control.march, 10);
-    req.lag = resizeDoubleToInt16(UVState.control.lag, 10);
-    req.depth = resizeDoubleToInt16(UVState.control.depth, 10);
+    req.march = resizeDoubleToInt16(UVState.control.march);
+    req.lag = resizeDoubleToInt16(UVState.control.lag);
+    req.depth = resizeDoubleToInt16(UVState.control.depth);
 
-    req.roll = resizeDoubleToInt16(UVState.control.roll, 10);
-    req.pitch = resizeDoubleToInt16(UVState.control.pitch, 10);
-    req.yaw = resizeDoubleToInt16(UVState.control.yaw, 10);
+    req.roll = resizeDoubleToInt16(UVState.control.roll);
+    req.pitch = resizeDoubleToInt16(UVState.control.pitch);
+    req.yaw = resizeDoubleToInt16(UVState.control.yaw);
 
     for(int i=0; i<DevAmount; i++) {
-        req.dev[i] = resizeDoubleToInt8(UVState.device[i].velocity, 10);
+        req.dev[i] = resizeDoubleToInt8(UVState.device[i].velocity);
     }
 
     UVMutex.unlock();
@@ -400,19 +400,17 @@ void IServerData::pullFromStructure(ResponseDirectMessage res)
 //    res.current;
 }
 
-int16_t resizeDoubleToInt16(double input, double border)
+int16_t resizeDoubleToInt16(double input)
 {
     int16_t output = 0;
-    double k = 32767/border;
-    output = static_cast<int16_t>(input*k);
+    output = static_cast<int16_t>(input);
     return output;
 }
 
-int8_t resizeDoubleToInt8(double input, double border)
+int8_t resizeDoubleToInt8(double input)
 {
     int16_t output = 0;
-    double k = 255/border;
-    output = static_cast<int8_t>(input*k);
+    output = static_cast<int8_t>(input);
     return output;
 }
 
