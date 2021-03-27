@@ -73,6 +73,7 @@ QByteArray IServerData::generateNormalMessage()
     for(int i=0; i<DevAmount; i++) {
         stream << req.dev[i];
     }
+    stream << req.lag_error;
     stream << req.dev_flags;
     stream << req.stabilize_flags;
     stream << req.cameras;
@@ -101,6 +102,8 @@ void IServerData::fillStructure(RequestNormalMessage &req)
     for(int i=0; i<DevAmount; i++) {
         req.dev[i] = resizeDoubleToInt8(UVState.device[i].velocity);
     }
+
+    req.lag_error = 0;
 
     req.dev_flags = 0;
 
