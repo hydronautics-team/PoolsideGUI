@@ -313,6 +313,8 @@ void IServerData::pullFromStructure(ResponseNormalMessage res)
     uint16_t dev_errors;
     uint8_t pc_errors;
     */
+
+    UVMutex.unlock();
 }
 
 void IServerData::parseConfigMessage(QByteArray msg)
