@@ -28,6 +28,8 @@ public slots:
     void updateVehicle();
     void updateData();
     void checkboxChecked(int i);
+    void resetImu();
+    void clearResetImu();
 
 private:
     QString settingsFile;

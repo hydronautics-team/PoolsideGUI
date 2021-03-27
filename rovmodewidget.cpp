@@ -15,6 +15,8 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) :
 
     connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
     connect(checkBoxStabilizeRoll, SIGNAL(stateChanged(int)), this, SLOT(checkboxChecked(int)));
+    connect(pushButtonResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
+    connect(pushButtonResetIMU, SIGNAL(released()), this, SLOT(clearResetImu()));
 
     // add bars in group to easily access
     thrusterBarGroup.append(thrusterBar0);
@@ -123,4 +125,16 @@ void ROVModeWidget::checkboxChecked(int i)
 //        state->messageType = 0;
 //    }
 //    interface.closeAccess();
+}
+
+void ROVModeWidget::resetImu()
+{
+    IUserInterfaceData interface;
+    interface.setResetImuValue(true);
+}
+
+void ROVModeWidget::clearResetImu()
+{
+    IUserInterfaceData interface;
+    interface.setResetImuValue(false);
 }

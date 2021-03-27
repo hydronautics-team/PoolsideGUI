@@ -59,6 +59,9 @@ public:
 
     // Stabilization Contours
     UV_ControlContour ControlContour[control_counters_amount];
+
+    // Flags
+    bool resetImu;
 };
 
 #endif // UV_STATE_H

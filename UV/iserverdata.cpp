@@ -11,6 +11,8 @@ uint16_t getCheckSumm16b(char *pcBlock, int len);
 uint8_t isCheckSumm16bCorrect(char *pcBlock, int len);
 void addCheckSumm16b(char *pcBlock, int len);
 
+void set_bit(uint8_t &byte, uint8_t bit, bool state);
+
 IServerData::IServerData()
     : IBasicData()
 {
@@ -100,12 +102,15 @@ void IServerData::fillStructure(RequestNormalMessage &req)
         req.dev[i] = resizeDoubleToInt8(UVState.device[i].velocity);
     }
 
-    UVMutex.unlock();
-
     req.dev_flags = 0;
+
     req.stabilize_flags = 0;
+    set_bit(req.stabilize_flags, 6, UVState.resetImu);
+
     req.cameras = 0;
     req.pc_reset = 0;
+
+    UVMutex.unlock();
 }
 
 QByteArray IServerData::generateConfigMessage()
@@ -450,6 +455,17 @@ void addCheckSumm16b(char *pcBlock, int len)
     uint16_t crc = getCheckSumm16b(pcBlock, len);
     uint16_t *crc_pointer = reinterpret_cast<uint16_t*>(&pcBlock[len-2]);
     *crc_pointer = crc;
+}
+
+void set_bit(uint8_t &byte, uint8_t bit, bool state)
+{
+    uint8_t value = 1;
+    if(state) {
+        byte = byte | (value << bit);
+    }
+    else {
+        byte = byte & ~(value << bit);
+    }
 }
 
 

@@ -14,6 +14,8 @@ public:
     UV_Thruster getThrusterData(QString name);
 
     double getDeviceVelocity(int slot);
+
+    void setResetImuValue(bool value);
 };
 
 #endif // IUSERINTERFACEDATA_H

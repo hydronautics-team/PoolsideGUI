@@ -79,3 +79,12 @@ double IUserInterfaceData::getDeviceVelocity(int slot)
     UVMutex.unlock();
     return data;
 }
+
+void IUserInterfaceData::setResetImuValue(bool value)
+{
+    UVMutex.lock();
+
+    UVState.resetImu = value;
+
+    UVMutex.unlock();
+}

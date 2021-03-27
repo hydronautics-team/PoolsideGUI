@@ -40,4 +40,6 @@ UV_State::UV_State()
 
     device[UV_Device::DEVICE_TILT].name = "Tilt";
     device[UV_Device::DEVICE_TILT].slot = UV_Device::DEVICE_TILT;
+
+    resetImu = false;
 }
