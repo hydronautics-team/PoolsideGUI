@@ -88,28 +88,28 @@ void ROVModeWidget::updateData()
     depthBar->setValue(static_cast<int>(sensors.depth));   // bar
     pitchBar->setValue(static_cast<int>(sensors.pitch));   // bar
 
-    depthLabel->setText(QString::number(sensors.depth));   // label under bar
-    pitchLabel->setText(QString::number(sensors.pitch));   // label under bar
+    depthLabel->setText(QString::number(sensors.depth, 'f', 2));   // label under bar
+    pitchLabel->setText(QString::number(sensors.pitch, 'f', 2));   // label under bar
 
-    sensorsDepthLabel->setText(QString::number(sensors.depth));
-    sensorsPitchLabel->setText(QString::number(sensors.pitch));
+    sensorsDepthLabel->setText(QString::number(sensors.depth, 'f', 2));
+    sensorsPitchLabel->setText(QString::number(sensors.pitch, 'f', 2));
 
-    sensorsYawLabel->setText(QString::number(sensors.yaw));
-    sensorsRollLabel->setText(QString::number(sensors.roll));
+    sensorsYawLabel->setText(QString::number(sensors.yaw, 'f', 2));
+    sensorsRollLabel->setText(QString::number(sensors.roll, 'f', 2));
 
     // Update drawing of a compass
     emit updateCompass(sensors.yaw);
 
     ControlData control = uv_interface.getControlData();
 
-    label_march->setText(QString::number(control.march));
-    label_lag->setText(QString::number(control.lag));
-    label_depth->setText(QString::number(control.depth));
-    label_yaw->setText(QString::number(control.yaw));
+    label_march->setText(QString::number(control.march, 'f', 2));
+    label_lag->setText(QString::number(control.lag, 'f', 2));
+    label_depth->setText(QString::number(control.depth, 'f', 2));
+    label_yaw->setText(QString::number(control.yaw, 'f', 2));
 
-    label_grabber->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB)));
-    label_grabber_rotation->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE)));
-    label_tilt->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_TILT)));
+    label_grabber->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB), 'f', 2));
+    label_grabber_rotation->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE), 'f', 2));
+    label_tilt->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_TILT), 'f', 2));
 }
 
 // TODO это больше не нужно
