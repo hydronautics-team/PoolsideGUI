@@ -85,13 +85,13 @@ void ROVModeWidget::updateData()
     ImuData sensors = uv_interface.getImuData();
 
     // Update user interface
-    depthBar->setValue(static_cast<int>(sensors.depth));   // bar
+    depthBar->setValue(static_cast<int>(sensors.depth*depthLin + depthOffset));   // bar
     pitchBar->setValue(static_cast<int>(sensors.pitch));   // bar
 
-    depthLabel->setText(QString::number(sensors.depth, 'f', 2));   // label under bar
+    depthLabel->setText(QString::number(sensors.depth *depthLin + depthOffset , 'f', 2));   // label under bar
     pitchLabel->setText(QString::number(sensors.pitch, 'f', 2));   // label under bar
 
-    sensorsDepthLabel->setText(QString::number(sensors.depth, 'f', 2));
+    sensorsDepthLabel->setText(QString::number(sensors.depth*depthLin + depthOffset, 'f', 2));
     sensorsPitchLabel->setText(QString::number(sensors.pitch, 'f', 2));
 
     sensorsYawLabel->setText(QString::number(sensors.yaw, 'f', 2));

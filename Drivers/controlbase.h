@@ -3,7 +3,7 @@
 
 #include <QTimer>
 #include "UV/icontroldata.h"
-
+#include "qmath.h"
 class ControlBase :
         public QObject
 {
@@ -22,13 +22,12 @@ protected:
         SET_ROLL,
         SET_PITCH,
         SET_YAW,
+        SET_TILT,
         CLENCH_GRAB,
         UNCLENCH_GRAB,
         ROTATE_GRAB_RIGHT,
         ROTATE_GRAB_LEFT,
-        ROTATE_TILT_UP,
-        ROTATE_TILT_DOWN
-    };
+        };
 
     void sendAction(e_actionTypes type, double value);
 
@@ -38,13 +37,13 @@ protected:
     void setRoll(double value);
     void setPitch(double value);
     void setYaw(double value);
+    void setTilt(double value);
     void clenchGrab(double value);
     void unclenchGrab(double value);
     void rotateGrabRight(double value);
     void rotateGrabLeft(double value);
-    void rotateTiltUp(double value);
-    void rotateTiltDown(double value);
-
+    double Sensitivity(double value, double deadZone, double maxValue);
+    double Sensitivity(double value, double deadZone,double pointX,double pointY, double maxValue);
 private:
     IControlData interface;
 };

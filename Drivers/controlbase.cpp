@@ -32,6 +32,10 @@ void ControlBase::sendAction(e_actionTypes type, double value)
         setYaw(value);
         break;
 
+    case SET_TILT:
+        setTilt(value);
+        break;
+
     case CLENCH_GRAB:
         clenchGrab(value);
         break;
@@ -47,30 +51,22 @@ void ControlBase::sendAction(e_actionTypes type, double value)
     case ROTATE_GRAB_LEFT:
         rotateGrabLeft(value);
         break;
-
-    case ROTATE_TILT_UP:
-        rotateTiltUp(value);
-        break;
-
-    case ROTATE_TILT_DOWN:
-        rotateTiltDown(value);
-        break;
     }
 }
 
 void ControlBase::setMarch(double value)
 {
-    interface.setMarch(value);
+    interface.setMarch(Sensitivity(value,8,60,0,100));
 }
 
 void ControlBase::setLag(double value)
 {
-    interface.setLag(value);
+    interface.setLag(Sensitivity(value,10,60,0,100));
 }
 
 void ControlBase::setDepth(double value)
 {
-    interface.setDepth(value);
+    interface.setDepth(Sensitivity(value,10,60,0,100));
 }
 
 void ControlBase::setRoll(double value)
@@ -85,7 +81,12 @@ void ControlBase::setPitch(double value)
 
 void ControlBase::setYaw(double value)
 {
-    interface.setYaw(value);
+    interface.setYaw(Sensitivity(value,8,60,0,70));
+}
+
+void ControlBase::setTilt(double value)
+{
+    interface.setDeviceVelocity(UV_Device::DEVICE_TILT, -value/2.5);
 }
 
 void ControlBase::clenchGrab(double value)
@@ -108,12 +109,31 @@ void ControlBase::rotateGrabLeft(double value)
     interface.setDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE, -value);
 }
 
-void ControlBase::rotateTiltUp(double value)
+double ControlBase::Sensitivity(double value, double deadZone, double maxValue)
 {
-    interface.setDeviceVelocity(UV_Device::DEVICE_TILT, value);
+   double result = 0;
+   if ((abs(value)<deadZone)||(abs(value)>100)) {result = 0;}
+   else {
+       result = ((maxValue)/(100-deadZone))*(abs(value)-deadZone);
+       if(value < 0) {result =-result;}
+   }
+   return result*320;
 }
 
-void ControlBase::rotateTiltDown(double value)
+double ControlBase::Sensitivity(double value, double deadZone,double pointX,double pointY, double maxValue)
 {
-    interface.setDeviceVelocity(UV_Device::DEVICE_TILT, -value);
+   double result = 0;
+   double x = value;
+   double x1 = deadZone;
+   double x2 = pointX;
+   double x3 = 100;
+
+   if ((abs(value)<deadZone)||(abs(value)>100)) {result = 0;}
+   else {
+       double t = (-qSqrt(abs(x)*x1-2*abs(x)*x2+abs(x)*x3-x1*x3+x2*x2)-x1+x2)/(-x1+2*x2-x3);
+       result = (1-t)*(1-t)*0 + 2*(1-t)*t*pointY + t*t*maxValue;
+       if(value < 0) {result =-result;}
+   }
+   return result*320;
 }
+

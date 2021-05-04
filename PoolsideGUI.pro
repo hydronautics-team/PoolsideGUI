@@ -38,6 +38,8 @@ SOURCES += \
     Drivers/controlbase.cpp \
     Drivers/joystick.cpp \
     Drivers/keyboard.cpp \
+    Drivers/mouse_3d.cpp \
+    Drivers/hid.c \
     KX_Pult/configdata.cpp \
     KX_Pult/kx_protocol.cpp \
     KX_Pult/qkx_coeffs.cpp \
@@ -70,6 +72,8 @@ HEADERS += \
     Drivers/controlbase.h \
     Drivers/joystick.h \
     Drivers/keyboard.h \
+    Drivers/mouse_3d.h \
+    Drivers/hidapi.h \
     KX_Pult/configdata.h \
     KX_Pult/kx_protocol.h \
     KX_Pult/qkx_coeffs.h \
