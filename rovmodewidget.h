@@ -9,9 +9,10 @@
 #include <QGraphicsTextItem>
 #include "UV/uv_state.h"
 #include "UV/ibasicdata.h"
-#include "global.h"
 #include "ui_rovmodewidget.h"
 #include "PicFrame/picframe.h"
+
+#include "UV/iuserinterfacedata.h"
 
 class ROVModeWidget : public QWidget, private Ui::ROVModeWidget
 {
@@ -27,6 +28,8 @@ public slots:
     void updateVehicle();
     void updateData();
     void checkboxChecked(int i);
+    void resetImu();
+    void clearResetImu();
 
 private:
     QString settingsFile;
@@ -39,6 +42,8 @@ private:
     QGraphicsPixmapItem *picROV;
     QGraphicsTextItem *txtCurrentYaw;
 
+    // Interface for accessing UVState object
+    IUserInterfaceData uv_interface;
 
     void initializeData();
 

@@ -15,6 +15,8 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) :
 
     connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
     connect(checkBoxStabilizeRoll, SIGNAL(stateChanged(int)), this, SLOT(checkboxChecked(int)));
+    connect(pushButtonResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
+    connect(pushButtonResetIMU, SIGNAL(released()), this, SLOT(clearResetImu()));
 
     // add bars in group to easily access
     thrusterBarGroup.append(thrusterBar0);
@@ -79,29 +81,60 @@ void ROVModeWidget::initializeData()
 
 void ROVModeWidget::updateData()
 {
-    IBasicData interface(&UVState, &UVMutex);
-    interface.getData();
-    depthBar->setValue(static_cast<int>(interface.internal_state.sensors_depth));   // bar
-    pitchBar->setValue(static_cast<int>(interface.internal_state.sensors_pitch));   // bar
-    depthLabel->setText(QString::number(interface.internal_state.sensors_depth));   // label under bar
-    pitchLabel->setText(QString::number(interface.internal_state.sensors_pitch));   // label under bar
-    sensorsDepthLabel->setText(QString::number(interface.internal_state.sensors_depth));
-    sensorsPitchLabel->setText(QString::number(interface.internal_state.sensors_pitch));
-    sensorsYawLabel->setText(QString::number(interface.internal_state.sensors_yaw));
-    sensorsRollLabel->setText(QString::number(interface.internal_state.sensors_roll));
-    emit updateCompass(interface.internal_state.sensors_yaw);
+    // Get data from UVState object
+    ImuData sensors = uv_interface.getImuData();
+
+    // Update user interface
+    depthBar->setValue(static_cast<int>(sensors.depth));   // bar
+    pitchBar->setValue(static_cast<int>(sensors.pitch));   // bar
+
+    depthLabel->setText(QString::number(sensors.depth, 'f', 2));   // label under bar
+    pitchLabel->setText(QString::number(sensors.pitch, 'f', 2));   // label under bar
+
+    sensorsDepthLabel->setText(QString::number(sensors.depth, 'f', 2));
+    sensorsPitchLabel->setText(QString::number(sensors.pitch, 'f', 2));
+
+    sensorsYawLabel->setText(QString::number(sensors.yaw, 'f', 2));
+    sensorsRollLabel->setText(QString::number(sensors.roll, 'f', 2));
+
+    // Update drawing of a compass
+    emit updateCompass(sensors.yaw);
+
+    ControlData control = uv_interface.getControlData();
+
+    label_march->setText(QString::number(control.march, 'f', 2));
+    label_lag->setText(QString::number(control.lag, 'f', 2));
+    label_depth->setText(QString::number(control.depth, 'f', 2));
+    label_yaw->setText(QString::number(control.yaw, 'f', 2));
+
+    label_grabber->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB), 'f', 2));
+    label_grabber_rotation->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE), 'f', 2));
+    label_tilt->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_TILT), 'f', 2));
 }
 
+// TODO это больше не нужно
 void ROVModeWidget::checkboxChecked(int i)
 {
-    UV_State *state;
-    IBasicData interface(&UVState, &UVMutex);
-    state = interface.gainAccess();
-    if(state->messageType == 0) {
-        state->messageType = 2;
-    }
-    else {
-        state->messageType = 0;
-    }
-    interface.closeAccess();
+//    UV_State *state;
+//    IBasicData interface(&UVState, &UVMutex);
+//    state = interface.gainAccess();
+//    if(state->messageType == 0) {
+//        state->messageType = 2;
+//    }
+//    else {
+//        state->messageType = 0;
+//    }
+//    interface.closeAccess();
+}
+
+void ROVModeWidget::resetImu()
+{
+    IUserInterfaceData interface;
+    interface.setResetImuValue(true);
+}
+
+void ROVModeWidget::clearResetImu()
+{
+    IUserInterfaceData interface;
+    interface.setResetImuValue(false);
 }

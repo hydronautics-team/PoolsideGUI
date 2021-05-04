@@ -2,7 +2,10 @@
 #include <QDebug>
 #include <QFileInfo>
 
-#include "com_server.h"
+#include "ui_settingswindow.h"
+
+#include "serial_client.h"
+#include "udp_client.h"
 
 #include <QApplication>
 #include <QThread>
@@ -15,16 +18,13 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug () << " - MainWindow constructor";
 
     // update vehicle and all parameters
-    connect(&wizard, SIGNAL(updateMainWindow()),
-            this, SIGNAL(updateVehicle()));
-    connect(this, SIGNAL(updateVehicle()),
-            this, SLOT(updateVehiclesMenu()));
-    connect(this, SIGNAL(updateVehicle()),
-            &settingsWindow, SIGNAL(updateVehicle()));
-    connect(this, SIGNAL(updateVehicle()),
-            pageROVMode, SLOT(updateVehicle()));
+    connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
+    connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehiclesMenu()));
+    connect(this, SIGNAL(updateVehicle()), &settingsWindow, SIGNAL(updateVehicle()));
+    connect(this, SIGNAL(updateVehicle()), pageROVMode, SLOT(updateVehicle()));
 
-
+    // Controller Changed
+    connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
 
     // Menu:
     // Vehicle
@@ -62,11 +62,21 @@ MainWindow::MainWindow(QWidget *parent) :
     currentConfiguration = settings->value("currentConfiguration").toString();
     emit updateVehicle();
 
-    COM_Server *server = new COM_Server();
-    server->start();
+    Serial_Client *serial_client = new Serial_Client();
+    serial_client->start();
 
-    connect(server, SIGNAL(dataUpdated()),
+    connect(serial_client, SIGNAL(dataUpdated()),
             pageROVMode, SLOT(updateData()));
+    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(int)),
+            serial_client, SLOT(changeSelectedThruster(int)));
+
+//    UDP_Client *udp_client = new UDP_Client();
+//    udp_client->start();
+
+//    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+//    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
+
+    controller = new Joystick("null_joy", 10, 0);
 }
 
 void MainWindow::createVehicle()
@@ -169,4 +179,13 @@ void MainWindow::enableAUVMode()
 void MainWindow::enableROVMode()
 {
     stackedWidget->setCurrentWidget(pageROVMode);
+}
+
+void MainWindow::changeController(unsigned int id, QString name)
+{
+    if(controller != nullptr) {
+        delete controller;
+    }
+
+    controller = new Joystick(name, 10, id);
 }
