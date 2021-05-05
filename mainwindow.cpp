@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(updateVehicle()), pageROVMode, SLOT(updateVehicle()));
 
     // Controller Changed
-    connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
+    connect(&settingsWindow, SIGNAL(controllerChanged(unit, QString)), this, SLOT(changeController(unsigned int, QString)));
 
     // Menu:
     // Vehicle
@@ -77,6 +77,15 @@ MainWindow::MainWindow(QWidget *parent) :
 //    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 
     controller = new Joystick("null_joy", 10, 0);
+
+    qDebug()<<"MainWindow changeController**********************1"<<endl;
+    if(controller != nullptr) {
+        delete controller;
+    }
+    qDebug()<<"MainWindow changeController***********************************2"<<endl;
+
+    controller = new Mouse3d("3dMouse", 5);
+    qDebug()<<"MainWindow changeController***************************3"<<endl;
 }
 
 void MainWindow::createVehicle()
@@ -186,6 +195,7 @@ void MainWindow::changeController(unsigned int id, QString name)
     if(controller != nullptr) {
         delete controller;
     }
+    qDebug()<<"MainWindow changeController"<<endl;
 
-    controller = new Joystick(name, 10, id);
+    controller = new Mouse3d(name, 5);
 }

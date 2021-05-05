@@ -10,6 +10,7 @@
 #include "SettingsWindow/settingswindow.h"
 #include "VehicleWizard/vehiclewizard.h"
 #include "Drivers/joystick.h"
+#include "Drivers/mouse_3d.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {

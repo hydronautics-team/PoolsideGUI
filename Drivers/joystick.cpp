@@ -54,7 +54,7 @@ void Joystick::updateDevice()
     if (yawTrim > 100) {yawTrim = 100;}
     if (yawTrim < -100) {yawTrim = -100;}
     sendAction(axis_table[0].action, (yawTrim));
-    QVector<int> ignore_press;
+    QVector<unsigned int> ignore_press;
     ignore_press.clear();
     //if(sf::Joystick::isButtonPressed(id, ignoreAxisID)){ignoreAxis = ignoreAxis - ignoreAxis; }
     for(unsigned int i=0; i<sizeof(buttons_table)/sizeof(buttons_table[0]); i++) {

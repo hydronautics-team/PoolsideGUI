@@ -5,16 +5,17 @@
 #include <QTimer>
 #include <QtDebug>
 #include <QObject>
-#include <iostream>
+//#include <iostream>
 
+#include "controlbase.h"
 #include "hidapi.h"
 
-class Mouse3d : public QObject
+class Mouse3d  : public ControlBase
 {
     Q_OBJECT
 
 public:
-    Mouse3d();
+    Mouse3d(QString name, int update_time);
     hid_device *handle;
     unsigned char buf[7];
 
@@ -23,14 +24,22 @@ public:
         bool b1 = 0;
         bool b2 = 0;
     };
-    mouseData* mouse;
+    mouseData mouseDta;
 
     void connect3dMouse();
-    void parceCoordinate(unsigned char*, short int &);
+    void parceCoordinate(unsigned char*, short int *);
     void parceAll(unsigned char*, mouseData*);
 
 private:
     QTimer *update_timer;
+
+    struct control_axis {
+        int axis;
+        double multiplier;
+        e_actionTypes action;
+    };
+
+    const static control_axis axis_table[];
 
 public slots:
     void updateDevice();

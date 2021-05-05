@@ -106,6 +106,7 @@ void ROVModeWidget::updateData()
     label_lag->setText(QString::number(control.lag, 'f', 2));
     label_depth->setText(QString::number(control.depth, 'f', 2));
     label_yaw->setText(QString::number(control.yaw, 'f', 2));
+    label_roll->setText(QString::number(control.roll, 'f', 2));
 
     label_grabber->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB), 'f', 2));
     label_grabber_rotation->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE), 'f', 2));

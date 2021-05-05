@@ -12,6 +12,7 @@ unix {
 win32 {
     DEFINES += OS=\\\"win32\\\"
     message("Windows build")
+    LIBS += -lhid -lsetupapi -mwindows
 }
 
 # SFML
@@ -72,8 +73,8 @@ HEADERS += \
     Drivers/controlbase.h \
     Drivers/joystick.h \
     Drivers/keyboard.h \
-    Drivers/mouse_3d.h \
     Drivers/hidapi.h \
+    Drivers/mouse_3d.h \
     KX_Pult/configdata.h \
     KX_Pult/kx_protocol.h \
     KX_Pult/qkx_coeffs.h \
@@ -112,6 +113,8 @@ FORMS += \
     mainwindow.ui \
     SettingsWindow/settingswindow.ui \
     rovmodewidget.ui
+
+LIBS += -mwindows -lsetupapi
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -56,17 +56,17 @@ void ControlBase::sendAction(e_actionTypes type, double value)
 
 void ControlBase::setMarch(double value)
 {
-    interface.setMarch(Sensitivity(value,8,60,0,100));
+    interface.setMarch(value);
 }
 
 void ControlBase::setLag(double value)
 {
-    interface.setLag(Sensitivity(value,10,60,0,100));
+    interface.setLag(value);
 }
 
 void ControlBase::setDepth(double value)
 {
-    interface.setDepth(Sensitivity(value,10,60,0,100));
+    interface.setDepth(value);
 }
 
 void ControlBase::setRoll(double value)
@@ -81,7 +81,7 @@ void ControlBase::setPitch(double value)
 
 void ControlBase::setYaw(double value)
 {
-    interface.setYaw(Sensitivity(value,8,60,0,70));
+    interface.setYaw(value);
 }
 
 void ControlBase::setTilt(double value)
