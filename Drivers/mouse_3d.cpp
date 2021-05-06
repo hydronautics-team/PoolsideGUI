@@ -16,10 +16,6 @@ Mouse3d::Mouse3d(QString name, int update_time) :
     handle = hid_open(0x256f, 0xc635, NULL);
     hid_set_nonblocking(handle, 1);
 
-//    int *a = 0;
-//    short b = 0;
-//    short c = 0;
-
     qDebug () <<"3dmouse connected" << endl;
 
     update_timer = new QTimer(this);
@@ -33,31 +29,14 @@ void Mouse3d::updateDevice() {
     if (handle) {
         hid_read(handle, buf, 7);
 
-/*//        DATA_IN = QByteArray(reinterpret_cast<char*>(buf), 7); //DATA_IN is the received data
-        std::cout << "3D CONNEXIO ";
-        for(int i = 0; i < 7; i++) {
-//            std::cout << static_cast<short int>(buf[i]) << ' ';
-//            qDebug() << static_cast<short int>(buf[i]) << ' ';
-
-
-        }
-//        MainWindow::parceCoordinate(&buf[1], a);
-//        std::cout << a << ' ';
-//        a = &buf[1]; */
-
-        Mouse3d::parceAll(buf, &mouseDta);
-
-        for (int i = 0; i < 6; i++) {
-            qDebug () << mouseDta.coords[i] << i;
-        }
-        qDebug () << "*****************" << endl;
+        Mouse3d::parseAll(buf, &mouseDta);
         for(unsigned int i=0; i<sizeof(axis_table)/sizeof(axis_table[0]); i++) {
             sendAction(axis_table[i].action, (mouseDta.coords[i] * axis_table[i].multiplier));
         }
     }
 }
 
-void Mouse3d::parceCoordinate(unsigned char* buf, short int *coordPosition) {
+void Mouse3d::parseCoordinate(unsigned char* buf, short int *coordPosition) {
     if (static_cast<short int>(buf[1]) == 0) {
         *coordPosition = static_cast<short int>(buf[0]);
     }
@@ -72,16 +51,16 @@ void Mouse3d::parceCoordinate(unsigned char* buf, short int *coordPosition) {
     }
 }
 
-void Mouse3d::parceAll(unsigned char* buf, mouseData* mouse)
+void Mouse3d::parseAll(unsigned char* buf, mouseData* mouse)
 {
     if (static_cast<short int>(buf[0]) == 1) {
         for (int i = 0; i < 3; i++) {
-            Mouse3d::parceCoordinate(&buf[2 * i + 1], &mouse->coords[i]);
+            Mouse3d::parseCoordinate(&buf[2 * i + 1], &mouse->coords[i]);
         }
     }
     else if (static_cast<short int>(buf[0]) == 2) {
         for (int i = 0; i < 3; i++) {
-            Mouse3d::parceCoordinate(&buf[2 * i + 1], &mouse->coords[i + 3]);
+            Mouse3d::parseCoordinate(&buf[2 * i + 1], &mouse->coords[i + 3]);
         }
     }
     else if (static_cast<short int>(buf[0]) == 3) {
@@ -102,5 +81,4 @@ void Mouse3d::parceAll(unsigned char* buf, mouseData* mouse)
             mouse->b2 = 1;
         }
     }
-
 }
