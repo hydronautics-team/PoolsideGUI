@@ -13,7 +13,10 @@ public:
     Joystick(QString name, int update_time, unsigned int joy_id);
 
     int getID();
-
+    float marchTrim, yawTrim;
+    float marchYawTrim = -0.2;
+    bool ignoreAxis = false;
+    int ignoreAxisID = 6;
 public slots:
     void updateDevice();
 

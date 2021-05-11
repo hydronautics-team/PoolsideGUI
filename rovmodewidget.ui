@@ -410,6 +410,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QLabel" name="label_roll_static">
+            <property name="text">
+             <string>Roll</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -437,6 +444,13 @@
           </item>
           <item>
            <widget class="QLabel" name="label_yaw">
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_roll">
             <property name="text">
              <string>0</string>
             </property>

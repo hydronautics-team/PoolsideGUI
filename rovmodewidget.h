@@ -23,7 +23,8 @@ signals:
 
 public:
     explicit ROVModeWidget(QWidget *parent = nullptr);
-
+    float depthLin = 9.9546;
+    float depthOffset = 0;
 public slots:
     void updateVehicle();
     void updateData();

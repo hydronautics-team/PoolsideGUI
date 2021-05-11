@@ -85,13 +85,13 @@ void ROVModeWidget::updateData()
     ImuData sensors = uv_interface.getImuData();
 
     // Update user interface
-    depthBar->setValue(static_cast<int>(sensors.depth));   // bar
+    depthBar->setValue(static_cast<int>(sensors.depth*depthLin + depthOffset));   // bar
     pitchBar->setValue(static_cast<int>(sensors.pitch));   // bar
 
-    depthLabel->setText(QString::number(sensors.depth, 'f', 2));   // label under bar
+    depthLabel->setText(QString::number(sensors.depth *depthLin + depthOffset , 'f', 2));   // label under bar
     pitchLabel->setText(QString::number(sensors.pitch, 'f', 2));   // label under bar
 
-    sensorsDepthLabel->setText(QString::number(sensors.depth, 'f', 2));
+    sensorsDepthLabel->setText(QString::number(sensors.depth*depthLin + depthOffset, 'f', 2));
     sensorsPitchLabel->setText(QString::number(sensors.pitch, 'f', 2));
 
     sensorsYawLabel->setText(QString::number(sensors.yaw, 'f', 2));
@@ -106,6 +106,7 @@ void ROVModeWidget::updateData()
     label_lag->setText(QString::number(control.lag, 'f', 2));
     label_depth->setText(QString::number(control.depth, 'f', 2));
     label_yaw->setText(QString::number(control.yaw, 'f', 2));
+    label_roll->setText(QString::number(control.roll, 'f', 2));
 
     label_grabber->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB), 'f', 2));
     label_grabber_rotation->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE), 'f', 2));
