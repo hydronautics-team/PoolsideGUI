@@ -6,6 +6,8 @@ CONFIG += c++11
 
 unix {
     DEFINES += OS=\\\"unix\\\"
+    LIBS += -L/usr/lib/x86_64-linux-gnu/SFML/lib/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
+    LIBS += -L/usr/local/lib -lhidapi-libusb
     message("Unix build")
 }
 
@@ -13,13 +15,8 @@ win32 {
     DEFINES += OS=\\\"win32\\\"
     message("Windows build")
     LIBS += -lhid -lsetupapi -mwindows
+    LIBS += -L$$PWD/SFML/lib/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 }
-
-# SFML
-# WINDOWS ONLY
-
-win32: LIBS += -L$$PWD/SFML/lib/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
-else:unix: LIBS += -L$$PWD/SFML/lib/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 
 INCLUDEPATH += $$PWD/SFML/include
 DEPENDPATH += $$PWD/SFML/include
@@ -40,7 +37,6 @@ SOURCES += \
     Drivers/joystick.cpp \
     Drivers/keyboard.cpp \
     Drivers/mouse_3d.cpp \
-    Drivers/hid.c \
     KX_Pult/configdata.cpp \
     KX_Pult/kx_protocol.cpp \
     KX_Pult/qkx_coeffs.cpp \
@@ -73,7 +69,6 @@ HEADERS += \
     Drivers/controlbase.h \
     Drivers/joystick.h \
     Drivers/keyboard.h \
-    Drivers/hidapi.h \
     Drivers/mouse_3d.h \
     KX_Pult/configdata.h \
     KX_Pult/kx_protocol.h \
@@ -113,8 +108,6 @@ FORMS += \
     mainwindow.ui \
     SettingsWindow/settingswindow.ui \
     rovmodewidget.ui
-
-LIBS += -mwindows -lsetupapi
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

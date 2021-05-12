@@ -7,7 +7,7 @@
 #include <QObject>
 
 #include "controlbase.h"
-#include "hidapi.h"
+#include <hidapi/hidapi.h>
 
 class Mouse3d  : public ControlBase
 {

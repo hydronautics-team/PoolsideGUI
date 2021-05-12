@@ -14,14 +14,15 @@ Mouse3d::Mouse3d(QString name, int update_time) :
     ControlBase(name, update_time)
 {
     handle = hid_open(0x256f, 0xc635, NULL);
-    hid_set_nonblocking(handle, 1);
+    if (handle) {
+        hid_set_nonblocking(handle, 1);
 
-    qDebug () <<"3dmouse connected" << endl;
+        qDebug () <<"3dmouse connected" << endl;
 
-    update_timer = new QTimer(this);
-    connect(update_timer, SIGNAL(timeout()), this, SLOT(updateDevice()));
-    update_timer -> start(update_time);
-
+        update_timer = new QTimer(this);
+        connect(update_timer, SIGNAL(timeout()), this, SLOT(updateDevice()));
+        update_timer -> start(update_time);
+    }
 }
 
 
