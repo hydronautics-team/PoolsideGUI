@@ -27,6 +27,8 @@ protected:
         UNCLENCH_GRAB,
         ROTATE_GRAB_RIGHT,
         ROTATE_GRAB_LEFT,
+        ROTATE_TILT_UP,
+        ROTATE_TILT_DOWN
         };
 
     void sendAction(e_actionTypes type, double value);
@@ -42,6 +44,8 @@ protected:
     void unclenchGrab(double value);
     void rotateGrabRight(double value);
     void rotateGrabLeft(double value);
+    void rotateTiltUp(double value);
+    void rotateTiltDown(double value);
     double Sensitivity(double value, double deadZone, double maxValue);
     double Sensitivity(double value, double deadZone,double pointX,double pointY, double maxValue);
 private:

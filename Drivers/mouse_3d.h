@@ -7,7 +7,8 @@
 #include <QObject>
 
 #include "controlbase.h"
-#include <hidapi/hidapi.h>
+#include "SFML/Window.hpp"
+#include "hidapi.h"
 
 class Mouse3d  : public ControlBase
 {
@@ -25,23 +26,33 @@ public:
     };
     mouseData mouseDta;
 
+    bool keyboardData[4] = {0, 0, 0, 0};
+
     void connect3dMouse();
     void parseCoordinate(unsigned char*, short int *); // парсит 2 байта из buf
-    void parseAll(unsigned char*, mouseData*); // парсит все координаты и кнопки
+    void parseMouse(unsigned char*, mouseData*); // парсит все координаты и кнопки
 
 private:
     QTimer *update_timer;
 
     struct control_axis {
-        int axis;
         double multiplier;
         e_actionTypes action;
     };
 
+    struct control_buttons {
+        sf::Keyboard::Key Key;
+        int antagonist;
+        double setterValue;
+        e_actionTypes action;
+    };
+
     const static control_axis axis_table[];
+    const static control_buttons buttons_table[];
 
 public slots:
     void updateDevice();
+    void updateKeyboardOnly();
 
 };
 

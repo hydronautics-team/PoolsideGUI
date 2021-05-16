@@ -62,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
     currentConfiguration = settings->value("currentConfiguration").toString();
     emit updateVehicle();
 
+
     Serial_Client *serial_client = new Serial_Client();
     serial_client->start();
 
@@ -69,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
             pageROVMode, SLOT(updateData()));
     connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(int)),
             serial_client, SLOT(changeSelectedThruster(int)));
+
 
 //    UDP_Client *udp_client = new UDP_Client();
 //    udp_client->start();
@@ -78,14 +80,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     controller = new Joystick("null_joy", 10, 0);
 
-    qDebug()<<"MainWindow changeController**********************1"<<endl;
     if(controller != nullptr) {
         delete controller;
     }
-    qDebug()<<"MainWindow changeController***********************************2"<<endl;
-
-    controller = new Mouse3d("3dMouse", 5);
-    qDebug()<<"MainWindow changeController***************************3"<<endl;
+    controller = new Mouse3d("3dMouse", 10);
 }
 
 void MainWindow::createVehicle()

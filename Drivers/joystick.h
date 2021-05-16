@@ -17,6 +17,7 @@ public:
     float marchYawTrim = -0.2;
     bool ignoreAxis = false;
     int ignoreAxisID = 6;
+
 public slots:
     void updateDevice();
 

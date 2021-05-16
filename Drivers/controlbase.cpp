@@ -51,6 +51,14 @@ void ControlBase::sendAction(e_actionTypes type, double value)
     case ROTATE_GRAB_LEFT:
         rotateGrabLeft(value);
         break;
+
+    case ROTATE_TILT_UP:
+        rotateTiltUp(value);
+        break;
+
+    case ROTATE_TILT_DOWN:
+        rotateTiltDown(value);
+        break;
     }
 }
 
@@ -107,6 +115,16 @@ void ControlBase::rotateGrabRight(double value)
 void ControlBase::rotateGrabLeft(double value)
 {
     interface.setDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE, -value);
+}
+
+void ControlBase::rotateTiltUp(double value)
+{
+    interface.setDeviceVelocity(UV_Device::DEVICE_TILT, value);
+}
+
+void ControlBase::rotateTiltDown(double value)
+{
+    interface.setDeviceVelocity(UV_Device::DEVICE_TILT, -value);
 }
 
 double ControlBase::Sensitivity(double value, double deadZone, double maxValue)
