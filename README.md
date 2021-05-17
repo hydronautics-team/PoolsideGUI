@@ -4,6 +4,7 @@ GUI software for surface control unit
 Documentation is here: https://github.com/hidronautics/PoolsideGUI_docs
 
 ## Requirements: 
+ - Ubuntu 20.04 
  - qt5
  - hidapi - https://github.com/libusb/hidapi
  - SFML for joysticks
