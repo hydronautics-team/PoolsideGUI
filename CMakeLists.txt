@@ -122,7 +122,7 @@ else ()
     endif ()
 endif ()
 
-target_link_libraries(${PROJECT_NAME} PRIVATE ${SFML_LIBRARIES}
+target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system
         /usr/local/lib/libhidapi-libusb.so
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Core
