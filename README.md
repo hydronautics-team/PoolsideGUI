@@ -1,11 +1,28 @@
 # PoolsideGUI
-New GUI software for surface control unit
+GUI software for surface control unit
 
 Documentation is here: https://github.com/hidronautics/PoolsideGUI_docs
 
 ## Requirements: 
+ - qt5
+ - hidapi - https://github.com/libusb/hidapi
+ - SFML for joysticks
 
-https://github.com/libusb/hidapi
+## Install and run: 
+### Linux:
 
-Linux:
-`apt-get install -y libudev-dev libusb-1.0-0-dev libfox-1.6-dev autotools-dev autoconf automake libtool libsfml*`
+`sudo apt install -y gcc g++ make git cmake cmake-gui qt5-qmake qt5-default`
+
+`sudo apt install -y libudev-dev libusb-1.0-0-dev libfox-1.6-dev autotools-dev autoconf automake libtool libsfml*`
+
+`git clone https://github.com/libusb/hidapi.git`
+
+`cd hidapi`
+
+`./bootstrap`
+
+`./configure`
+
+`make`
+
+`sudo make install`
