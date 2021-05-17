@@ -1,18 +1,30 @@
-cmake_minimum_required(VERSION 3.19)
-project(PoolsideGUI)
+cmake_minimum_required(VERSION 3.5)
+project(PoolsideGUI VERSION 0.1.0)
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(QT_VERSION 5)
-set(REQUIRED_LIBS Core Gui Widgets SerialPort Network Test)
-set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets Qt5::SerialPort Qt5::Network Qt5::Test)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
-set(SOURCES
+set(CMAKE_PREFIX_PATH "$ENV{QTDIR}")
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
+
+#look for SFML and add it
+set(CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules/")
+find_package(SFML 2.4 REQUIRED COMPONENTS
+        graphics window system audio)
+include_directories(${SFML_INCLUDE_DIR})
+
+include_directories(/usr/local/include/hidapi/)
+
+set(PROJECT_SOURCES
+        main.cpp
         Drivers/controlbase.cpp
         Drivers/joystick.cpp
         Drivers/keyboard.cpp
@@ -38,15 +50,11 @@ set(SOURCES
         UV/iserverdata.cpp
         UV/uv_device.cpp
         UV/uv_state.cpp
-        main.cpp
         mainwindow.cpp
         SettingsWindow/settingswindow.cpp
         rovmodewidget.cpp
         serial_client.cpp
         udp_client.cpp
-        )
-
-set(HEADERS
         Drivers/controlbase.h
         Drivers/joystick.h
         Drivers/keyboard.h
@@ -77,9 +85,6 @@ set(HEADERS
         rovmodewidget.h
         serial_client.h
         udp_client.h
-        )
-
-set(FORMS
         PicFrame/picframe.ui
         SettingsWindow/CommunicationSettings/communicationsettings.ui
         SettingsWindow/CommunicationSettings/serial_settings.ui
@@ -92,17 +97,37 @@ set(FORMS
         rovmodewidget.ui
         )
 
-set(RESOURCES
-        images.qrc
-        vehicles.qrc
+set(CMAKE_AUTOUIC_SEARCH_PATHS
+        SettingsWindow
+        SettingsWindow/VehicleSettings
+        SettingsWindow/ThrusterSettings
+        SettingsWindow/CommunicationSettings
+        VehicleWizard
+        PicFrame
         )
 
-include_directories(
-        ./SettingsWindow
-)
+if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(${PROJECT_NAME}
+            ${PROJECT_SOURCES}
+            )
+else ()
+    if (ANDROID)
+        add_library(${PROJECT_NAME} SHARED
+                ${PROJECT_SOURCES}
+                )
+    else ()
+        add_executable(${PROJECT_NAME}
+                ${PROJECT_SOURCES}
+                )
+    endif ()
+endif ()
 
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${FORMS} ${RESOURCES})
-
-find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
-target_link_libraries(${PROJECT_NAME} ${REQUIRED_LIBS_QUALIFIED})
-
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SFML_LIBRARIES}
+        /usr/local/lib/libhidapi-libusb.so
+        Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Gui
+        Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::SerialPort
+        Qt${QT_VERSION_MAJOR}::Network
+        Qt${QT_VERSION_MAJOR}::Test)

@@ -18,12 +18,11 @@ Serial_Client::Serial_Client()
 bool Serial_Client::portConnect(int port)
 {
     QString str;
-    if (OS == "unix") {
-        str = "/dev/ttyUSB";
-    }
-    else if (OS == "win32") {
-        str = "COM";
-    }
+#ifdef unix
+    str = "/dev/ttyUSB";
+#else
+    str = "COM";
+#endif
 
     str.append(QString::number(port));
 
