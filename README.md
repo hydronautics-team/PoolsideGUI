@@ -27,3 +27,13 @@ Documentation is here: https://github.com/hidronautics/PoolsideGUI_docs
 `make`
 
 `sudo make install`
+
+`cd ../`
+
+`cmake`
+
+`make -j8`
+
+`make install`
+
+Install binary path $source_dir/install/bin/PoolsideGUI
