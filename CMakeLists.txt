@@ -2,26 +2,40 @@ cmake_minimum_required(VERSION 3.5)
 project(PoolsideGUI VERSION 0.1.0)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
+SET(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/install")
+set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 set(CMAKE_PREFIX_PATH "$ENV{QTDIR}")
+add_compile_options(-Wall -Wextra)
+
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
 
-#look for SFML and add it
+include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow")
+include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/VehicleSettings")
+include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/ThrusterSettings")
+include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/CommunicationSettings")
+include_directories("${PROJECT_SOURCE_DIR}/VehicleWizard")
+include_directories("${PROJECT_SOURCE_DIR}/PicFrame")
+
+#SFML
 set(CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules/")
 find_package(SFML 2.4 REQUIRED COMPONENTS
         graphics window system audio)
 include_directories(${SFML_INCLUDE_DIR})
-
-include_directories(/usr/local/include/hidapi/)
+#HIDAPI
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules;${CMAKE_MODULE_PATH}")
+#include_directories(/usr/local/include/hidapi/)
+include_directories(${HIDAPI_INCLUDE_DIR})
 
 set(PROJECT_SOURCES
         main.cpp
@@ -122,8 +136,8 @@ else ()
     endif ()
 endif ()
 
-target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system
-        /usr/local/lib/libhidapi-libusb.so
+target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system
+        hidapi-libusb
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
@@ -131,3 +145,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-sys
         Qt${QT_VERSION_MAJOR}::SerialPort
         Qt${QT_VERSION_MAJOR}::Network
         Qt${QT_VERSION_MAJOR}::Test)
+
+install(FILES
+        settings.ini
+        DESTINATION ./)
+
+install(TARGETS ${PROJECT_NAME}
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib)
