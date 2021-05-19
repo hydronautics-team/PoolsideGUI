@@ -111,6 +111,10 @@ set(PROJECT_SOURCES
         rovmodewidget.ui
         )
 
+set(QRC_FILES
+        images.qrc
+        vehicles.qrc)
+
 set(CMAKE_AUTOUIC_SEARCH_PATHS
         SettingsWindow
         SettingsWindow/VehicleSettings
@@ -125,18 +129,13 @@ if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
             ${PROJECT_SOURCES}
             )
 else ()
-    if (ANDROID)
-        add_library(${PROJECT_NAME} SHARED
-                ${PROJECT_SOURCES}
-                )
-    else ()
-        add_executable(${PROJECT_NAME}
-                ${PROJECT_SOURCES}
-                )
-    endif ()
+    add_executable(${PROJECT_NAME}
+            ${PROJECT_SOURCES}
+            ${QRC_FILES})
 endif ()
 
-target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system
+target_link_libraries(${PROJECT_NAME}
+        sfml-graphics sfml-window sfml-system
         hidapi-libusb
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Core
