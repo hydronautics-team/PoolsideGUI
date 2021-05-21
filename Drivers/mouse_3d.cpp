@@ -24,8 +24,6 @@ Mouse3d::Mouse3d(QString name, int update_time) :
 {
     handle = hid_open(0x256f, 0xc635, NULL);
     if (handle) {
-        qDebug () <<"3dmouse connected" << endl;
-
         hid_set_nonblocking(handle, 1);
 
         update_timer = new QTimer(this);
@@ -36,6 +34,8 @@ Mouse3d::Mouse3d(QString name, int update_time) :
         update_timer = new QTimer(this);
         connect(update_timer, SIGNAL(timeout()), this, SLOT(updateKeyboardOnly()));
         update_timer -> start(update_time);
+
+        qDebug () <<"can't connect 3Dmouse" << endl;
     }
 }
 
@@ -71,7 +71,6 @@ void Mouse3d::updateDevice() {
     for(unsigned int i=2; i<sizeof(buttons_table)/sizeof(buttons_table[0]); i++) {
         if(sf::Keyboard::isKeyPressed(buttons_table[i].Key)) {
             sendAction(buttons_table[i].action, buttons_table[i].setterValue);
-            qDebug () << buttons_table[i].Key;
             ignore_press.append(buttons_table[i].antagonist);
         }
         else {
@@ -97,7 +96,6 @@ void Mouse3d::updateKeyboardOnly()
     for(unsigned int i=0; i<sizeof(buttons_table)/sizeof(buttons_table[0]); i++) {
         if(sf::Keyboard::isKeyPressed(buttons_table[i].Key)) {
             sendAction(buttons_table[i].action, buttons_table[i].setterValue);
-            qDebug () << buttons_table[i].Key;
             ignore_press.append(buttons_table[i].antagonist);
         }
         else {

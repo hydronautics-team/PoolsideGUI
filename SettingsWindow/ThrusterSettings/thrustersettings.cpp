@@ -130,11 +130,11 @@ void ThrusterSettings::updateThrusterSettings()
                                 QString::number(currentThruster) +
                                 "/backwardSaturation").toInt());
 
-    qDebug () << settings->value(
-                     "vehicle/" +
-                     currentVehicle +
-                     "/thrusters/" +
-                     QString::number(currentThruster) + "/name").toString() << "Thrusters updated";
+//    qDebug () << settings->value(
+//                     "vehicle/" +
+//                     currentVehicle +
+//                     "/thrusters/" +
+//                     QString::number(currentThruster) + "/name").toString() << "Thrusters updated";
 }
 
 void ThrusterSettings::thrusterButtonClicked(int value)

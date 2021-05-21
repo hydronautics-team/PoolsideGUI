@@ -194,5 +194,5 @@ void SettingsWindow::timerTickEvent()
     table->setItem(13, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::PovX))));
     table->setItem(14, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::PovY))));
 
-    qDebug() << buttons_list;
+//    qDebug() << buttons_list;
 }
