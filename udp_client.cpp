@@ -46,7 +46,7 @@ int UDP_Client::exec()
         QByteArray msg;
         msg = uv_interface->generateMessage(messageType);
 
-        qDebug() << "[UDP_CLIENT] Sending message type " << messageType << "||" << msg.size();
+//        qDebug() << "[UDP_CLIENT] Sending message type " << messageType << "||" << msg.size();
 
         QNetworkDatagram datagram;
         datagram.setData(msg);
@@ -65,11 +65,11 @@ void UDP_Client::readPendingDatagrams()
             uv_interface->parseMessage(msg, messageType);
         }
         catch(const std::invalid_argument& error) {
-            qDebug() << "[UDP_CLIENT_ERROR] " << error.what();
+//            qDebug() << "[UDP_CLIENT_ERROR] " << error.what();
             exception_caught = true;
         }
         if(!exception_caught) {
-            qDebug() << "[UDP_CLIENT] Message parced " << messageType << "||" << msg.size();
+//            qDebug() << "[UDP_CLIENT] Message parced " << messageType << "||" << msg.size();
             emit dataUpdated();
         }
     }

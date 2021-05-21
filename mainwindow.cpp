@@ -72,11 +72,11 @@ MainWindow::MainWindow(QWidget *parent) :
             serial_client, SLOT(changeSelectedThruster(int)));
 
 
-//    UDP_Client *udp_client = new UDP_Client();
-//    udp_client->start();
+    UDP_Client *udp_client = new UDP_Client();
+    udp_client->start();
 
-//    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
-//    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
+    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 
     controller = new Joystick("null_joy", 10, 0);
 
@@ -167,13 +167,11 @@ void MainWindow::checkFile(QString filename)
     if(QFileInfo::exists(filename))
     {
         file.open(QIODevice::ReadWrite | QIODevice::Text);
-        qDebug()<<"file already created";
         file.close();
     }
     else
     {
         file.open(QIODevice::ReadWrite | QIODevice::Text);
-        qDebug()<<"file created"<<endl;
         file.close();
     }
 }

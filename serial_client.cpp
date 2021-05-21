@@ -26,10 +26,9 @@ bool Serial_Client::portConnect(int port)
 
     str.append(QString::number(port));
 
-    qDebug () << "COM_SERVER: Trying to open port " << str;
+//    qDebug () << "COM_SERVER: Trying to open port " << str;
 
     serialPort = new QSerialPort(str);
-    //serialPort->setPortName(str);
     serialPort->setBaudRate(QSerialPort::BaudRate::Baud57600, QSerialPort::AllDirections);
     serialPort->setDataBits(QSerialPort::DataBits::Data8);
     serialPort->setParity(QSerialPort::Parity::NoParity);
@@ -37,11 +36,11 @@ bool Serial_Client::portConnect(int port)
     serialPort->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
 
     if(serialPort->open(QIODevice::ReadWrite)) {
-        qDebug() << " successfully opened!";
+        qDebug() << "COM_SERVER: port" << str << "successfully opened!";
     }
     else {
-        qDebug() << " serial port openning error";
-        qDebug() << serialPort->error();
+//        qDebug() << " serial port openning error";
+//        qDebug() << serialPort->error();
         delete serialPort;
         return false;
     }
@@ -72,8 +71,8 @@ int Serial_Client::exec()
         QByteArray msg;
         msg = interface->generateMessage(messageType);
 
-        qDebug() << "[SERIAL_CLIENT] Sending message type " << messageType << "||" << msg.size();
-        qDebug() << msg;
+//        qDebug() << "[SERIAL_CLIENT] Sending message type " << messageType << "||" << msg.size();
+//        qDebug() << msg;
 
         serialPort->clear();
         serialPort->write(msg, msg.size());
@@ -85,14 +84,14 @@ int Serial_Client::exec()
             msg.clear();
             msg.push_back(serialPort->readAll());
 
-            qDebug() << "[SERIAL_CLIENT] Message received. Bytes: " << msg.size();
+//            qDebug() << "[SERIAL_CLIENT] Message received. Bytes: " << msg.size();
 
             bool exception_caught = false;
             try {
                 interface->parseMessage(msg, messageType);
             }
             catch(const std::invalid_argument& error) {
-                qDebug() << "[SERIAL_CLIENT] Parsing error: " << error.what();
+//                qDebug() << "[SERIAL_CLIENT] Parsing error: " << error.what();
                 exception_caught = true;
             }
             if(!exception_caught) {
@@ -100,8 +99,8 @@ int Serial_Client::exec()
             }
         }
         else {
-            qDebug() << "[SERIAL_CLIENT] Didn't receive answer for message " << messageType;
-            qDebug() << "[SERIAL_CLIENT] Bytes available:" << bytesAvailiable;
+//            qDebug() << "[SERIAL_CLIENT] Didn't receive answer for message " << messageType;
+//            qDebug() << "[SERIAL_CLIENT] Bytes available:" << bytesAvailiable;
             serialPort->readAll();
         }
 
