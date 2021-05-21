@@ -23,20 +23,17 @@ Mouse3d::Mouse3d(QString name, int update_time) :
     ControlBase(name, update_time)
 {
     handle = hid_open(0x256f, 0xc635, NULL);
+    update_timer = new QTimer(this);
+
     if (handle) {
         hid_set_nonblocking(handle, 1);
-
-        update_timer = new QTimer(this);
         connect(update_timer, SIGNAL(timeout()), this, SLOT(updateDevice()));
-        update_timer -> start(update_time);
     }
     else {
-        update_timer = new QTimer(this);
         connect(update_timer, SIGNAL(timeout()), this, SLOT(updateKeyboardOnly()));
-        update_timer -> start(update_time);
-
         qDebug () <<"can't connect 3Dmouse" << endl;
     }
+    update_timer -> start(update_time);
 }
 
 void Mouse3d::updateDevice() {
