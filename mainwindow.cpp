@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(updateVehicle()), pageROVMode, SLOT(updateVehicle()));
 
     // Controller Changed
-    connect(&settingsWindow, SIGNAL(controllerChanged(unit, QString)), this, SLOT(changeController(unsigned int, QString)));
+    connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
 
     // Menu:
     // Vehicle
@@ -68,8 +68,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(serial_client, SIGNAL(dataUpdated()),
             pageROVMode, SLOT(updateData()));
-    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(int)),
-            serial_client, SLOT(changeSelectedThruster(int)));
+    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)),
+            serial_client, SLOT(changeSelectedThruster(unsigned int)));
 
 
     UDP_Client *udp_client = new UDP_Client();
