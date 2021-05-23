@@ -16,6 +16,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 set(CMAKE_PREFIX_PATH "$ENV{QTDIR}")
 add_compile_options(-Wall -Wextra)
+add_link_options(-ludev)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
@@ -26,6 +27,8 @@ include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/ThrusterSettings")
 include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/CommunicationSettings")
 include_directories("${PROJECT_SOURCE_DIR}/VehicleWizard")
 include_directories("${PROJECT_SOURCE_DIR}/PicFrame")
+include_directories("${PROJECT_SOURCE_DIR}/Drivers")
+include_directories("${PROJECT_SOURCE_DIR}/hidapi")
 
 #SFML
 set(CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules/")
@@ -43,6 +46,7 @@ set(PROJECT_SOURCES
         Drivers/joystick.cpp
         Drivers/keyboard.cpp
         Drivers/mouse_3d.cpp
+        Drivers/hid.c
         KX_Pult/configdata.cpp
         KX_Pult/kx_protocol.cpp
         KX_Pult/qkx_coeffs.cpp
@@ -73,6 +77,7 @@ set(PROJECT_SOURCES
         Drivers/joystick.h
         Drivers/keyboard.h
         Drivers/mouse_3d.h
+        Drivers/hidapi.h
         KX_Pult/configdata.h
         KX_Pult/kx_protocol.h
         KX_Pult/qkx_coeffs.h
