@@ -14,8 +14,13 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
+SET(GCC_COVERAGE_LINK_FLAGS  "-lusb-1.0")
+target_link_libraries(project libusb-1.0)
+
+
 set(CMAKE_PREFIX_PATH "$ENV{QTDIR}")
-add_compile_options(-Wall -Wextra -ludev)
+add_compile_options(-Wall -Wextra -pthread -lusb)
+add_link_options(-pthread -lusb)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
@@ -28,8 +33,6 @@ include_directories("${PROJECT_SOURCE_DIR}/VehicleWizard")
 include_directories("${PROJECT_SOURCE_DIR}/PicFrame")
 include_directories("${PROJECT_SOURCE_DIR}/Drivers")
 include_directories("${PROJECT_SOURCE_DIR}/hidapi")
-include_directories(/usr/include)
-include_directories(/usr/lib)
 
 #SFML
 set(CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules/")
@@ -40,6 +43,7 @@ include_directories(${SFML_INCLUDE_DIR})
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules;${CMAKE_MODULE_PATH}")
 #include_directories(/usr/local/include/hidapi/)
 include_directories(${HIDAPI_INCLUDE_DIR})
+include_directories("usr/include/libusb-1.0")
 
 set(PROJECT_SOURCES
         main.cpp
@@ -80,6 +84,7 @@ set(PROJECT_SOURCES
         Drivers/mouse_3d.h
         Drivers/hidapi.h
         Drivers/libudev.h
+        Drivers/libusb.h
         KX_Pult/configdata.h
         KX_Pult/kx_protocol.h
         KX_Pult/qkx_coeffs.h
