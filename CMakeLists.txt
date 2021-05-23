@@ -15,8 +15,7 @@ set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 set(CMAKE_PREFIX_PATH "$ENV{QTDIR}")
-add_compile_options(-Wall -Wextra)
-add_link_options(-ludev)
+add_compile_options(-Wall -Wextra -ludev)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
@@ -29,6 +28,8 @@ include_directories("${PROJECT_SOURCE_DIR}/VehicleWizard")
 include_directories("${PROJECT_SOURCE_DIR}/PicFrame")
 include_directories("${PROJECT_SOURCE_DIR}/Drivers")
 include_directories("${PROJECT_SOURCE_DIR}/hidapi")
+include_directories(/usr/include)
+include_directories(/usr/lib)
 
 #SFML
 set(CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules/")
@@ -78,6 +79,7 @@ set(PROJECT_SOURCES
         Drivers/keyboard.h
         Drivers/mouse_3d.h
         Drivers/hidapi.h
+        Drivers/libudev.h
         KX_Pult/configdata.h
         KX_Pult/kx_protocol.h
         KX_Pult/qkx_coeffs.h
