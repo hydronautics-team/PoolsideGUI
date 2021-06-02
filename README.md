@@ -11,10 +11,32 @@ Documentation is here: https://github.com/hidronautics/PoolsideGUI_docs
 
 ## Install and run:
 
-`./install_dependencies.sh`
+```
+./install_dependencies.sh
+```
 
 Install binary path $source_dir/install/bin/PoolsideGUI
 
 **If you want to recompile project, run:**
 
-`./compile_PoolsideGUI.sh`
+```
+./compile_PoolsideGUI.sh
+```
+
+## Development in Clion
+
+Press **Ctrl+Alt+S** to open **Settings**. 
+
+Go to **Build, Execution, Deployment**, then to **CMake**
+
+Add to **CMake options**:
+
+```
+-DCMAKE_PREFIX_PATH=PATH_TO_YOUR_QT_INSTALLATION/QT_VERSION/COMPILER/lib/cmake
+```
+
+Then go to **Run->Edit Configurations** and add to **Environmental variables**:
+
+```
+LD_LIBRARY_PATH=PATH_TO_YOUR_QT_INSTALLATION/QT_VERSION/COMPILER/lib
+```
