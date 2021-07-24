@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
     setupUi(this);
     qDebug () << " - MainWindow constructor";
 
+    initLogger("D:/Hydro");
+
     // update vehicle and all parameters
     connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
     connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehiclesMenu()));

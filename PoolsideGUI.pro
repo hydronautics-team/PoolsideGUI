@@ -59,6 +59,8 @@ SOURCES += \
     UV/iserverdata.cpp \
     UV/uv_device.cpp \
     UV/uv_state.cpp \
+    Logger/logger.cpp \
+    Logger/LoggingCategories.cpp \
     main.cpp \
     mainwindow.cpp \
     SettingsWindow/settingswindow.cpp \
@@ -93,6 +95,8 @@ HEADERS += \
     SettingsWindow/ThrusterSettings/thrustersettings.h \
     UV/uv_thruster.h \
     VehicleWizard/vehiclewizard.h \
+    Logger/logger.h \
+    Logger/LoggingCategories.h \
     mainwindow.h \
     SettingsWindow/settingswindow.h \
     rovmodewidget.h \

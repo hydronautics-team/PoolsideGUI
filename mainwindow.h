@@ -11,6 +11,7 @@
 #include "VehicleWizard/vehiclewizard.h"
 #include "Drivers/joystick.h"
 #include "Drivers/mouse_3d.h"
+#include "Logger/logger.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
