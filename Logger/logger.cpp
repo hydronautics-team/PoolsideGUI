@@ -1,11 +1,27 @@
-#include "logger.h"
+#include "mainwindow.h"
+#include <QApplication>
+#include <QFile>
+#include <QDir>
+#include <QScopedPointer>
+#include <QTextStream>
+#include <QDateTime>
+#include <QLoggingCategory>
+#include <QString>
+
+#include "LoggingCategories.h"
 
 QScopedPointer<QFile>   m_logFile;
 
+//void initLogger(QString logfile_way);
+void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+
+
+
 void initLogger(QString logfile_way)
 {
-    QString full_way = logfile_way + "/" + "logFile_" + QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss") + ".txt";
+    QString full_way = logfile_way + "/" + "logFile_" + QDateTime::currentDateTime().toString("yyyy-MM-dd__hh-mm-ss") + ".txt";
     qDebug()<<full_way;
+
     m_logFile.reset(new QFile(full_way));
     // Открываем файл логирования
     qDebug()<<full_way;
@@ -17,7 +33,7 @@ void initLogger(QString logfile_way)
 
 }
 
-void messageHandler(QtMsgType type, const QString &msg)
+void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     // Открываем поток записи в файл
     QTextStream out(m_logFile.data());

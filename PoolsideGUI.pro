@@ -95,7 +95,7 @@ HEADERS += \
     SettingsWindow/ThrusterSettings/thrustersettings.h \
     UV/uv_thruster.h \
     VehicleWizard/vehiclewizard.h \
-    Logger/logger.h \
+#    Logger/logger.h \
     Logger/LoggingCategories.h \
     mainwindow.h \
     SettingsWindow/settingswindow.h \
