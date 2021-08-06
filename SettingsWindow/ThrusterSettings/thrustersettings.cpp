@@ -9,7 +9,6 @@ ThrusterSettings::ThrusterSettings(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
-    qDebug () << " - ThrusterSettings constructor";
 
     // QSettings initialization
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file

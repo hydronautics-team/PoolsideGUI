@@ -18,7 +18,6 @@ VehicleSettings::VehicleSettings(QWidget *parent) :
 //    connect(mainWindow, &MainWindow::stabilize_depth_toggled,
 //            server, &Server::set_stabilize_depth);
     setupUi(this);
-    qDebug () << " - VehicleSettings constructor";
 
     uv_interface = new ITuningData();
 

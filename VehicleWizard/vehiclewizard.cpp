@@ -8,7 +8,6 @@ VehicleWizard::VehicleWizard(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
-    qDebug () << " - VehicleWizard constructor";
 
     connect(btnNext, SIGNAL(clicked()), SIGNAL(nextPressed()));
     connect(btnBack, SIGNAL(clicked()), SIGNAL(backPressed()));
