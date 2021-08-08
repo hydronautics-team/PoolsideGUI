@@ -3,6 +3,7 @@
 
 #include <QAction>
 #include <QSettings>
+#include <QByteArray>
 
 #include "ui_mainwindow.h"
 
@@ -20,7 +21,7 @@ signals:
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-
+    void updatePixmap(const QByteArray& array);
 public slots:
     void changeController(unsigned int id, QString name);
 

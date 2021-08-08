@@ -1,5 +1,7 @@
 #include "rovmodewidget.h"
 #include <QDebug>
+#include <QDataStream>
+#include <iostream>
 
 ROVModeWidget::ROVModeWidget(QWidget *parent) :
     QWidget(parent)
@@ -29,14 +31,24 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) :
 
     scene = new QGraphicsScene(vehiclePic);
     vehiclePic->setScene(scene);
-    vehiclePic->setStyleSheet("background: transparent");
-    vehiclePic->setRenderHint(QPainter::Antialiasing);
+    //vehiclePic->setStyleSheet("background: transparent");
+    //vehiclePic->setRenderHint(QPainter::Antialiasing);
 
     initializeData();
     updateData();
 
     picROV = scene->addPixmap(QPixmap(":/images/Cousteau III.png"));
     picROV->setTransform(QTransform::fromScale(0.2, 0.2));
+}
+
+void ROVModeWidget::updatePixmap(const QByteArray& array) {
+    bool flag = true;
+    QDataStream in(array);
+    QImage img;
+    in >> img >> flag;
+    if (flag) {
+        picROV->setPixmap(QPixmap::fromImage(img)); //doesn't work
+    }
 }
 
 void ROVModeWidget::updateVehicle()

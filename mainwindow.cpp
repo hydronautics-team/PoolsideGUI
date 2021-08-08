@@ -194,3 +194,7 @@ void MainWindow::changeController(unsigned int id, QString name)
 
     controller = new Mouse3d(name, 5);
 }
+
+void MainWindow::updatePixmap(const QByteArray &array) {
+    pageROVMode->updatePixmap(array);
+}

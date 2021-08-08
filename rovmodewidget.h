@@ -7,6 +7,8 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsTextItem>
+#include <QImage>
+#include <QByteArray>
 #include "UV/uv_state.h"
 #include "UV/ibasicdata.h"
 #include "ui_rovmodewidget.h"
@@ -23,6 +25,7 @@ signals:
 
 public:
     explicit ROVModeWidget(QWidget *parent = nullptr);
+    void updatePixmap(const QByteArray& array);
     float depthLin = 9.9546;
     float depthOffset = 0;
 public slots:

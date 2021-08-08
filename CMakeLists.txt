@@ -27,6 +27,14 @@ include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/CommunicationSettings"
 include_directories("${PROJECT_SOURCE_DIR}/VehicleWizard")
 include_directories("${PROJECT_SOURCE_DIR}/PicFrame")
 
+#Multi-threading
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
+#Boost
+find_package(Boost  REQUIRED)
+include_directories(${Boost_INCLUDE_DIR})
+
 #SFML
 set(CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules/")
 find_package(SFML 2.4 REQUIRED COMPONENTS
@@ -39,6 +47,7 @@ include_directories(${HIDAPI_INCLUDE_DIR})
 
 set(PROJECT_SOURCES
         main.cpp
+        tcp_server.cpp
         Drivers/controlbase.cpp
         Drivers/joystick.cpp
         Drivers/keyboard.cpp
@@ -143,7 +152,8 @@ target_link_libraries(${PROJECT_NAME}
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::SerialPort
         Qt${QT_VERSION_MAJOR}::Network
-        Qt${QT_VERSION_MAJOR}::Test)
+        Qt${QT_VERSION_MAJOR}::Test
+        Threads::Threads)
 
 install(FILES
         settings.ini
