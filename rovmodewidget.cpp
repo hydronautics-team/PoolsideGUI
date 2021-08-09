@@ -31,23 +31,36 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) :
 
     scene = new QGraphicsScene(vehiclePic);
     vehiclePic->setScene(scene);
-    //vehiclePic->setStyleSheet("background: transparent");
-    //vehiclePic->setRenderHint(QPainter::Antialiasing);
+    vehiclePic->setStyleSheet("background: transparent");
+    vehiclePic->setRenderHint(QPainter::Antialiasing);
 
     initializeData();
     updateData();
 
+
     picROV = scene->addPixmap(QPixmap(":/images/Cousteau III.png"));
-    picROV->setTransform(QTransform::fromScale(0.2, 0.2));
+
+    tmr = new QTimer;
+    tmr->setInterval(1);
+    connect(tmr, SIGNAL(timeout()), this, SLOT(updatePixmap()));
+    tmr->start();
 }
 
-void ROVModeWidget::updatePixmap(const QByteArray& array) {
+void ROVModeWidget::updateArray(const QByteArray &array) {
+    array_ = array;
+}
+
+void ROVModeWidget::updatePixmap() {
+    if (array_.isEmpty()) {
+        return;
+    }
     bool flag = true;
-    QDataStream in(array);
+    QDataStream in(array_);
     QImage img;
     in >> img >> flag;
     if (flag) {
-        picROV->setPixmap(QPixmap::fromImage(img)); //doesn't work
+        picROV->setPixmap(QPixmap::fromImage(img));
+        array_.clear();
     }
 }
 

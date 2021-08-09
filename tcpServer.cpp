@@ -1,4 +1,4 @@
-#include "tcp_server.h"
+#include "tcpServer.h"
 #include <QByteArray>
 
 Server::Server(boost::asio::io_service &io_service, MainWindow &window) : acceptor_(io_service,
@@ -16,6 +16,6 @@ void Server::get_message() {
         return;
     }
     QByteArray arr(str_data.c_str(), static_cast<int>(str_data.size()));
-    MainWindow_.updatePixmap(arr);
+    MainWindow_.updateArray(arr);
 }
 

@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "serial_client.h"
 #include "UI_Tests/serverdata_test.h"
-#include "tcp_server.h"
+#include "tcpServer.h"
 
 #include <QApplication>
 #include <QThread>

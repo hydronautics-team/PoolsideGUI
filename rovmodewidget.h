@@ -9,6 +9,8 @@
 #include <QGraphicsTextItem>
 #include <QImage>
 #include <QByteArray>
+#include <QTimer>
+#include <QTime>
 #include "UV/uv_state.h"
 #include "UV/ibasicdata.h"
 #include "ui_rovmodewidget.h"
@@ -25,7 +27,7 @@ signals:
 
 public:
     explicit ROVModeWidget(QWidget *parent = nullptr);
-    void updatePixmap(const QByteArray& array);
+    void updateArray(const QByteArray& array);
     float depthLin = 9.9546;
     float depthOffset = 0;
 public slots:
@@ -34,6 +36,9 @@ public slots:
     void checkboxChecked(int i);
     void resetImu();
     void clearResetImu();
+
+private slots:
+    void updatePixmap();
 
 private:
     QString settingsFile;
@@ -45,7 +50,8 @@ private:
     QGraphicsScene *scene;
     QGraphicsPixmapItem *picROV;
     QGraphicsTextItem *txtCurrentYaw;
-
+    QByteArray array_;
+    QTimer *tmr;
     // Interface for accessing UVState object
     IUserInterfaceData uv_interface;
 

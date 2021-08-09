@@ -47,7 +47,7 @@ include_directories(${HIDAPI_INCLUDE_DIR})
 
 set(PROJECT_SOURCES
         main.cpp
-        tcp_server.cpp
+        tcpServer.cpp
         Drivers/controlbase.cpp
         Drivers/joystick.cpp
         Drivers/keyboard.cpp

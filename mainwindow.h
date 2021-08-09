@@ -21,7 +21,7 @@ signals:
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    void updatePixmap(const QByteArray& array);
+    void updateArray(const QByteArray& array);
 public slots:
     void changeController(unsigned int id, QString name);
 

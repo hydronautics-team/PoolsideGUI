@@ -1,5 +1,5 @@
-#ifndef POOLSIDEGUI_TCP_SERVER_H
-#define POOLSIDEGUI_TCP_SERVER_H
+#ifndef POOLSIDEGUI_TCPSERVER_H
+#define POOLSIDEGUI_TCPSERVER_H
 
 #include <boost/asio.hpp>
 #include <boost/asio.hpp>
@@ -19,4 +19,4 @@ public:
     void get_message();
 };
 
-#endif //POOLSIDEGUI_TCP_SERVER_H
+#endif //POOLSIDEGUI_TCPSERVER_H
