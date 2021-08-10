@@ -1,4 +1,7 @@
-QT       += core gui widgets serialport testlib network
+QT += core gui widgets testlib network
+QT += serialport
+
+greaterThan(QT_MAJOR_VERSION, 6): QT += statemachine
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -6,20 +9,19 @@ CONFIG += c++11
 
 unix {
     DEFINES += OS=\\\"unix\\\"
-    LIBS += -L/usr/lib/x86_64-linux-gnu/SFML/lib/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
-    LIBS += -L/usr/local/lib -lhidapi-libusb
     message("Unix build")
+    LIBS += -L/usr/lib/x86_64-linux-gnu/SFML/lib/ -lsfml-window
+    LIBS += -L/usr/local/lib -lhidapi-libusb
 }
-
 win32 {
     DEFINES += OS=\\\"win32\\\"
     message("Windows build")
+    LIBS += -L$$PWD/SFML/SFML-build/lib/ -lsfml-window -lsfml-system
     LIBS += -lhid -lsetupapi -mwindows
-    LIBS += -L$$PWD/SFML/lib/ -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-window -lsfml-system
 }
 
-INCLUDEPATH += $$PWD/SFML/include
-DEPENDPATH += $$PWD/SFML/include
+INCLUDEPATH += $$PWD/SFML/SFML/include
+DEPENDPATH += $$PWD/SFML/SFML/include
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
