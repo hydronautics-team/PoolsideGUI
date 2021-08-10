@@ -16,12 +16,12 @@ unix {
 win32 {
     DEFINES += OS=\\\"win32\\\"
     message("Windows build")
-    LIBS += -L$$PWD/SFML/SFML-build/lib/ -lsfml-window -lsfml-system
+    LIBS += -L$$PWD/sfml/SFML-build/lib/ -lsfml-window -lsfml-system
     LIBS += -lhid -lsetupapi -mwindows
 }
 
-INCLUDEPATH += $$PWD/SFML/SFML/include
-DEPENDPATH += $$PWD/SFML/SFML/include
+INCLUDEPATH += $$PWD/sfml/SFML/include
+DEPENDPATH += $$PWD/sfml/SFML/include
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
