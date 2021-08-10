@@ -5,6 +5,7 @@
 #include <QUdpSocket>
 #include <QTime>
 #include <QTimer>
+#include <QElapsedTimer>
 #include "qpiconfig.h"
 
 
@@ -97,7 +98,7 @@ private:
     int port_k, port_pult;
     QStringList formulas;
     QByteArray k_content, k_tmp;
-    QTime tm;
+    QElapsedTimer tm;
     QTimer *timer;
 
 private slots:
