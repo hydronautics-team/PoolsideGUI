@@ -5,11 +5,11 @@ Documentation is here: https://github.com/hidronautics/PoolsideGUI_docs
 
 ## Requirements: 
  - Ubuntu 20.04 and greater
- - Qt 5.12 and greater
+ - Qt 5.12 and greater (except versions 6.0 and 6.1)
  - HIDAPI lib (https://github.com/libusb/hidapi)
  - SFML lib
 
-## Install and run:
+## Install and run on UNIX:
 
 ```
 ./install_dependencies.sh
