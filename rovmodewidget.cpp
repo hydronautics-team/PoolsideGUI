@@ -1,10 +1,8 @@
 #include "rovmodewidget.h"
 #include <QDebug>
-#include <QDataStream>
 #include <iostream>
 
-ROVModeWidget::ROVModeWidget(QWidget *parent) :
-    QWidget(parent)
+ROVModeWidget::ROVModeWidget(QWidget *parent) : QWidget(parent)
 {
     setupUi(this);
 
@@ -39,28 +37,15 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) :
 
 
     picROV = scene->addPixmap(QPixmap(":/images/Cousteau III.png"));
-
-    tmr = new QTimer;
-    tmr->setInterval(1);
-    connect(tmr, SIGNAL(timeout()), this, SLOT(updatePixmap()));
-    tmr->start();
 }
 
-void ROVModeWidget::updateArray(const QByteArray &array) {
-    array_ = array;
-}
-
-void ROVModeWidget::updatePixmap() {
-    if (array_.isEmpty()) {
-        return;
-    }
+void ROVModeWidget::updatePixmap(const QByteArray& array_) {
     bool flag = true;
     QDataStream in(array_);
     QImage img;
     in >> img >> flag;
     if (flag) {
         picROV->setPixmap(QPixmap::fromImage(img));
-        array_.clear();
     }
 }
 

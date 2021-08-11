@@ -1,13 +1,19 @@
 #include "tcpServer.h"
+#include <iostream>
 #include <QByteArray>
 
-Server::Server(boost::asio::io_service &io_service, MainWindow &window) : acceptor_(io_service,
-                                                                                tcp::endpoint(tcp::v4(), 2001)),
-                                                                                socket_(io_service), MainWindow_(window) {
+tcpServer::tcpServer(boost::asio::io_service &io_service) : acceptor_(io_service,
+                                                                      tcp::endpoint(tcp::v4(), 2001)),
+                                                            socket_(io_service) {}
+
+void tcpServer::Accept() {
     acceptor_.accept(socket_);
+    while (true) {
+        GetMessage();
+    }
 }
 
-void Server::get_message() {
+void tcpServer::GetMessage() {
     boost::asio::streambuf data_;
     boost::asio::read_until(socket_, data_, "end");
     std::string str_data((std::istreambuf_iterator<char>(&data_)), std::istreambuf_iterator<char>());
@@ -15,7 +21,6 @@ void Server::get_message() {
     if (str_data.empty()) {
         return;
     }
-    QByteArray arr(str_data.c_str(), static_cast<int>(str_data.size()));
-    MainWindow_.updateArray(arr);
+    QByteArray arr(str_data.c_str(), str_data.size());
+    emit readyUpdatePixmap(arr);
 }
-

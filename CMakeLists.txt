@@ -7,7 +7,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS} -pthread")
 
 SET(CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/install")
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -26,10 +26,6 @@ include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/ThrusterSettings")
 include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/CommunicationSettings")
 include_directories("${PROJECT_SOURCE_DIR}/VehicleWizard")
 include_directories("${PROJECT_SOURCE_DIR}/PicFrame")
-
-#Multi-threading
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
 
 #Boost
 find_package(Boost  REQUIRED)
@@ -152,8 +148,7 @@ target_link_libraries(${PROJECT_NAME}
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::SerialPort
         Qt${QT_VERSION_MAJOR}::Network
-        Qt${QT_VERSION_MAJOR}::Test
-        Threads::Threads)
+        Qt${QT_VERSION_MAJOR}::Test)
 
 install(FILES
         settings.ini

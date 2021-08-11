@@ -8,12 +8,10 @@
 #include "udp_client.h"
 
 #include <QApplication>
-#include <QThread>
-#include <QTimer>
+#include <QByteArray>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
-{
+MainWindow::MainWindow(boost::asio::io_service& io, QWidget *parent) :
+QMainWindow(parent) {
     setupUi(this);
 
     // update vehicle and all parameters
@@ -23,7 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(updateVehicle()), pageROVMode, SLOT(updateVehicle()));
 
     // Controller Changed
-    connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
+    connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this,
+            SLOT(changeController(unsigned int, QString)));
 
     // Menu:
     // Vehicle
@@ -31,10 +30,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(action_create_vehicle, SIGNAL(triggered()),
             this, SLOT(createVehicle()));
     //      Choose vehicle and configuration
-    connect(menu_choose_configuration,SIGNAL(triggered(QAction*)),
-            this, SLOT(chooseConfiguration(QAction*)));
-    connect(menu_choose_vehicle,SIGNAL(triggered(QAction*)),
-            this, SLOT(chooseVehicle(QAction*)));
+    connect(menu_choose_configuration, SIGNAL(triggered(QAction * )),
+            this, SLOT(chooseConfiguration(QAction * )));
+    connect(menu_choose_vehicle, SIGNAL(triggered(QAction * )),
+            this, SLOT(chooseVehicle(QAction * )));
     //      Settings
     connect(action_config_com, SIGNAL(triggered()),
             &settingsWindow, SLOT(showPageConfigRS()));
@@ -79,28 +78,33 @@ MainWindow::MainWindow(QWidget *parent) :
 
     controller = new Joystick("null_joy", 10, 0);
 
-    if(controller != nullptr) {
+    if (controller != nullptr) {
         delete controller;
     }
     controller = new Mouse3d("3dMouse", 10);
+
+    server = new tcpServer(io);
+    connect(server, &tcpServer::readyUpdatePixmap, pageROVMode, &ROVModeWidget::updatePixmap);
+    connect(&thread1, &QThread::started, server, &tcpServer::Accept);
+    server->moveToThread(&thread1);
+    thread1.start();
 }
 
-void MainWindow::createVehicle()
-{
+
+void MainWindow::createVehicle() {
     wizard.startStateMachine();
     wizard.show();
 }
 
-void MainWindow::chooseVehicle(QAction *action)
-{
+void MainWindow::chooseVehicle(QAction *action) {
     currentVehicle = action->text();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
-    foreach (QString name, settings->childKeys()) {
-        if (settings->value(name).toBool()){
-            currentConfiguration = name;
-            break;
+            foreach (QString name, settings->childKeys()) {
+            if (settings->value(name).toBool()) {
+                currentConfiguration = name;
+                break;
+            }
         }
-    }
     settings->endGroup();
 
     settings->setValue("currentVehicle", currentVehicle);
@@ -108,93 +112,77 @@ void MainWindow::chooseVehicle(QAction *action)
     emit updateVehicle();
 }
 
-void MainWindow::chooseConfiguration(QAction *action)
-{
+void MainWindow::chooseConfiguration(QAction *action) {
     currentConfiguration = action->text();
     settings->setValue("currentConfiguration", currentConfiguration);
     updateVehicleConfigurationMenu();
 }
 
-void MainWindow::updateVehiclesMenu()
-{
-    if (!currentVehicle.isEmpty()){
+void MainWindow::updateVehiclesMenu() {
+    if (!currentVehicle.isEmpty()) {
         if (!menu_choose_vehicle->isEmpty())
             menu_choose_vehicle->clear();
         settings->beginGroup("vehicle");
-        foreach (QString name, settings->childGroups()) {
-            QAction *vehicle = new QAction(name);
-            if (name == currentVehicle){
-                QFont f = vehicle->font();
-                f.setBold(true);
-                vehicle->setFont(f);
-                menu_choose_vehicle->addAction(vehicle);
+                foreach (QString name, settings->childGroups()) {
+                QAction *vehicle = new QAction(name);
+                if (name == currentVehicle) {
+                    QFont f = vehicle->font();
+                    f.setBold(true);
+                    vehicle->setFont(f);
+                    menu_choose_vehicle->addAction(vehicle);
+                } else
+                    menu_choose_vehicle->addAction(vehicle);
             }
-            else
-                menu_choose_vehicle->addAction(vehicle);
-        }
         settings->endGroup();
     }
     settings->sync();
-    qDebug () << currentVehicle;
+    qDebug() << currentVehicle;
     updateVehicleConfigurationMenu();
 }
 
-void MainWindow::updateVehicleConfigurationMenu()
-{
+void MainWindow::updateVehicleConfigurationMenu() {
     menu_choose_configuration->clear();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
-    foreach (QString name, settings->childKeys()) {
-        if (settings->value(name).toBool()){
-            QAction *configuration = new QAction(name);
-            if (name == currentConfiguration){
-                QFont f = configuration->font();
-                f.setBold(true);
-                configuration->setFont(f);
-                menu_choose_configuration->addAction(configuration);
+            foreach (QString name, settings->childKeys()) {
+            if (settings->value(name).toBool()) {
+                QAction *configuration = new QAction(name);
+                if (name == currentConfiguration) {
+                    QFont f = configuration->font();
+                    f.setBold(true);
+                    configuration->setFont(f);
+                    menu_choose_configuration->addAction(configuration);
+                } else
+                    menu_choose_configuration->addAction(configuration);
             }
-            else
-                menu_choose_configuration->addAction(configuration);
         }
-    }
     settings->endGroup();
-    qDebug () << currentConfiguration;
+    qDebug() << currentConfiguration;
 }
 
-void MainWindow::checkFile(QString filename)
-{
+void MainWindow::checkFile(QString filename) {
     QFile file(filename);
-    if(QFileInfo::exists(filename))
-    {
+    if (QFileInfo::exists(filename)) {
         file.open(QIODevice::ReadWrite | QIODevice::Text);
         file.close();
-    }
-    else
-    {
+    } else {
         file.open(QIODevice::ReadWrite | QIODevice::Text);
         file.close();
     }
 }
 
-void MainWindow::enableAUVMode()
-{
+void MainWindow::enableAUVMode() {
     stackedWidget->setCurrentWidget(pageAUVMode);
 }
 
-void MainWindow::enableROVMode()
-{
+void MainWindow::enableROVMode() {
     stackedWidget->setCurrentWidget(pageROVMode);
 }
 
-void MainWindow::changeController(unsigned int id, QString name)
-{
-    if(controller != nullptr) {
+void MainWindow::changeController(unsigned int id, QString name) {
+    if (controller != nullptr) {
         delete controller;
     }
-    qDebug()<<"MainWindow changeController"<<endl;
+    qDebug() << "MainWindow changeController" << endl;
 
     controller = new Mouse3d(name, 5);
-}
-
-void MainWindow::updateArray(const QByteArray &array) {
-    pageROVMode->updateArray(array);
 }

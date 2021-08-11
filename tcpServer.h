@@ -1,22 +1,24 @@
 #ifndef POOLSIDEGUI_TCPSERVER_H
 #define POOLSIDEGUI_TCPSERVER_H
 
+#include <QObject>
+#include <QByteArray>
 #include <boost/asio.hpp>
-#include <boost/asio.hpp>
-#include "mainwindow.h"
 
 using boost::asio::ip::tcp;
 
-class Server {
+class tcpServer : public QObject{
+    Q_OBJECT
 private:
     tcp::acceptor acceptor_;
     tcp::socket socket_;
-    MainWindow& MainWindow_;
-
+signals:
+    void readyUpdatePixmap(const QByteArray& array);
 public:
-    explicit Server(boost::asio::io_service &io_service, MainWindow& window);
-
-    void get_message();
+    explicit tcpServer(boost::asio::io_service &io_service);
+    void GetMessage();
+public slots:
+    void Accept();
 };
 
 #endif //POOLSIDEGUI_TCPSERVER_H

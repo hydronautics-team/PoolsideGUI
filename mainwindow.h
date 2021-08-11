@@ -3,7 +3,7 @@
 
 #include <QAction>
 #include <QSettings>
-#include <QByteArray>
+#include <QThread>
 
 #include "ui_mainwindow.h"
 
@@ -13,6 +13,8 @@
 #include "Drivers/joystick.h"
 #include "Drivers/mouse_3d.h"
 
+#include "tcpServer.h"
+
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
     Q_OBJECT
@@ -20,11 +22,9 @@ signals:
     void updateVehicle();
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    void updateArray(const QByteArray& array);
+    explicit MainWindow(boost::asio::io_service& io, QWidget *parent = nullptr);
 public slots:
     void changeController(unsigned int id, QString name);
-
 private slots:
     void updateVehiclesMenu();
 
@@ -35,7 +35,8 @@ private:
     QSettings *settings;
     QString currentVehicle;
     QString currentConfiguration;
-
+    tcpServer *server;
+    QThread thread1;
     void updateVehicleConfigurationMenu();
     void checkFile(QString filename);
     void enableAUVMode();
