@@ -1,5 +1,5 @@
 # PoolsideGUI
-GUI software for surface control unit
+Cross-platform GUI software for surface control unit
 
 Documentation is here: https://github.com/hidronautics/PoolsideGUI_docs
 

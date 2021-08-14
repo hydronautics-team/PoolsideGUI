@@ -476,7 +476,7 @@
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuBarControlBox">
@@ -494,6 +494,8 @@
     <addaction name="action_about_program"/>
     <addaction name="separator"/>
     <addaction name="action_other_settings"/>
+    <addaction name="separator"/>
+    <addaction name="action_full_screen"/>
    </widget>
    <widget class="QMenu" name="menuBarVehicleName">
     <property name="title">
@@ -640,6 +642,11 @@
   <action name="action_config_com">
    <property name="text">
     <string>Связь</string>
+   </property>
+  </action>
+  <action name="action_full_screen">
+   <property name="text">
+    <string>Полноэкранный режим</string>
    </property>
   </action>
  </widget>

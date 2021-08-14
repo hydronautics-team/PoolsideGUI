@@ -42,21 +42,14 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) :
 void ROVModeWidget::updateVehicle()
 {
     currentVehicle = settings->value("currentVehicle").toString();
-    thrustersCount = settings->value("vehicle/" +
-                                     currentVehicle +
-                                     "/thrusters/count").toInt();
+    thrustersCount = settings->value("vehicle/" + currentVehicle + "/thrusters/count").toInt();
     //update bars
     foreach (QProgressBar *bar, thrusterBarGroup) {
         bar->hide();
     }
     for (int i = 0; i < thrustersCount; i++){
         thrusterBarGroup[i]->show();
-        thrusterBarGroup[i]->setFormat(settings->value(
-                                           "vehicle/" +
-                                           currentVehicle +
-                                           "/thrusters/" +
-                                           QString::number(i) +
-                                           "/name").toString());
+        thrusterBarGroup[i]->setFormat(settings->value("vehicle/" + currentVehicle + "/thrusters/" + QString::number(i) + "/name").toString());
     }
     initializeData();
     updateData();

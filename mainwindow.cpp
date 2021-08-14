@@ -7,14 +7,18 @@
 #include "serial_client.h"
 #include "udp_client.h"
 
+#include <QShortcut>
 #include <QApplication>
 #include <QThread>
 #include <QTimer>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
 {
     setupUi(this);
+    //start in full screen format
+    QMainWindow::showFullScreen();
+    QMainWindow::menuBar()->setVisible(false);
+
 
     // update vehicle and all parameters
     connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
@@ -22,36 +26,32 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(updateVehicle()), &settingsWindow, SIGNAL(updateVehicle()));
     connect(this, SIGNAL(updateVehicle()), pageROVMode, SLOT(updateVehicle()));
 
+    // Reading the key combination of turning the window to the full screen and back
+    QShortcut *keyCtrlF = new QShortcut(this);
+    keyCtrlF->setKey(Qt::CTRL+Qt::Key_F);
+    connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::noFullScreenKey);
+
     // Controller Changed
     connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
 
     // Menu:
     // Vehicle
-    //      New vehicle
-    connect(action_create_vehicle, SIGNAL(triggered()),
-            this, SLOT(createVehicle()));
-    //      Choose vehicle and configuration
-    connect(menu_choose_configuration,SIGNAL(triggered(QAction*)),
-            this, SLOT(chooseConfiguration(QAction*)));
-    connect(menu_choose_vehicle,SIGNAL(triggered(QAction*)),
-            this, SLOT(chooseVehicle(QAction*)));
-    //      Settings
-    connect(action_config_com, SIGNAL(triggered()),
-            &settingsWindow, SLOT(showPageConfigRS()));
-    connect(action_config_thrusters, SIGNAL(triggered()),
-            &settingsWindow, SLOT(showPageConfigThruster()));
-    connect(action_config_coef, SIGNAL(triggered()),
-            &settingsWindow, SLOT(showPageConfigCoef()));
+    // New vehicle
+    connect(action_create_vehicle, SIGNAL(triggered()), this, SLOT(createVehicle()));
+    // Choose vehicle and configuration
+    connect(menu_choose_configuration,SIGNAL(triggered(QAction*)), this, SLOT(chooseConfiguration(QAction*)));
+    connect(menu_choose_vehicle, SIGNAL(triggered(QAction*)), this, SLOT(chooseVehicle(QAction*)));
+    // Settings
+    connect(action_config_com, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigRS()));
+    connect(action_config_thrusters, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigThruster()));
+    connect(action_config_coef, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigCoef()));
     // Surface control unit
-    connect(action_config_controls, SIGNAL(triggered()),
-            &settingsWindow, SLOT(showPageConfigControls()));
-    connect(action_config_view, SIGNAL(triggered()),
-            &settingsWindow, SLOT(showPageConfigView()));
+    connect(action_config_controls, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigControls()));
+    connect(action_config_view, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigView()));
     // Other settings
-    connect(action_about_program, SIGNAL(triggered()),
-            &settingsWindow, SLOT(showPageAboutProgram()));
-    connect(action_other_settings, SIGNAL(triggered()),
-            &settingsWindow, SLOT(showPageOtherSettings()));
+    connect(action_about_program, SIGNAL(triggered()), &settingsWindow, SLOT(showPageAboutProgram()));
+    connect(action_other_settings, SIGNAL(triggered()), &settingsWindow, SLOT(showPageOtherSettings()));
+    connect(action_full_screen, &QAction::triggered, this, &MainWindow::fullScreen);
 
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file
     checkFile(settingsFile); // check file existance
@@ -65,10 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
     Serial_Client *serial_client = new Serial_Client();
     serial_client->start();
 
-    connect(serial_client, SIGNAL(dataUpdated()),
-            pageROVMode, SLOT(updateData()));
-    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)),
-            serial_client, SLOT(changeSelectedThruster(unsigned int)));
+    connect(serial_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client, SLOT(changeSelectedThruster(unsigned int)));
 
 
     UDP_Client *udp_client = new UDP_Client();
@@ -114,6 +112,22 @@ void MainWindow::chooseConfiguration(QAction *action)
     settings->setValue("currentConfiguration", currentConfiguration);
     updateVehicleConfigurationMenu();
 }
+
+void MainWindow::fullScreen()
+{
+    QMainWindow::showFullScreen();
+    QMainWindow::menuBar()->setVisible(false);
+}
+
+void MainWindow::noFullScreenKey()
+{
+    if(QMainWindow::windowState() == Qt::WindowFullScreen){
+        QMainWindow::showNormal();
+        QMainWindow::menuBar()->setVisible(true);
+    }
+}
+
+
 
 void MainWindow::updateVehiclesMenu()
 {

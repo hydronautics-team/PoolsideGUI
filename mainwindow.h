@@ -42,11 +42,16 @@ private:
 
     ControlBase *controller;
 
+
 private slots:
     // menu actions
     void createVehicle();
     void chooseVehicle(QAction *action);
     void chooseConfiguration(QAction *action);
+    // full screen key combination
+    void noFullScreenKey();
+    void fullScreen();
+
 };
 
 #endif // MAINWINDOW_H
