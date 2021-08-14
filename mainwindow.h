@@ -5,7 +5,7 @@
 #include <QSettings>
 
 #include "ui_mainwindow.h"
-
+#include "ui_settingswindow.h"
 #include "rovmodewidget.h"
 #include "SettingsWindow/settingswindow.h"
 #include "VehicleWizard/vehiclewizard.h"
@@ -15,17 +15,8 @@
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
     Q_OBJECT
-signals:
-    void updateVehicle();
-
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-
-public slots:
-    void changeController(unsigned int id, QString name);
-
-private slots:
-    void updateVehiclesMenu();
 
 private:
     SettingsWindow settingsWindow;
@@ -42,11 +33,20 @@ private:
 
     ControlBase *controller;
 
+signals:
+    void updateVehicle();
+
 private slots:
+    void updateVehiclesMenu();
     // menu actions
     void createVehicle();
     void chooseVehicle(QAction *action);
     void chooseConfiguration(QAction *action);
+    // full screen key combination
+    void fullScreenKey();
+
+public slots:
+    void changeController(unsigned int id, QString name);
 };
 
 #endif // MAINWINDOW_H
