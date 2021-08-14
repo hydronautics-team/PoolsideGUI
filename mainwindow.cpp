@@ -2,8 +2,11 @@
 #include <QDebug>
 #include <QFileInfo>
 
+#include "ui_settingswindow.h"
+
 #include "serial_client.h"
 #include "udp_client.h"
+
 #include <QShortcut>
 #include <QApplication>
 #include <QThread>
@@ -188,12 +191,12 @@ void MainWindow::checkFile(QString filename)
 
 void MainWindow::enableAUVMode()
 {
-    //stackedWidget->setCurrentWidget(pageAUVMode);
+    stackedWidget->setCurrentWidget(pageAUVMode);
 }
 
 void MainWindow::enableROVMode()
 {
-    //stackedWidget->setCurrentWidget(pageROVMode);
+    stackedWidget->setCurrentWidget(pageROVMode);
 }
 
 void MainWindow::changeController(unsigned int id, QString name)
