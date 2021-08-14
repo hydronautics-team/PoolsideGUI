@@ -646,7 +646,7 @@
   </action>
   <action name="action_full_screen">
    <property name="text">
-    <string>Развернуть на полный экран</string>
+    <string>Полноэкранный режим</string>
    </property>
   </action>
  </widget>

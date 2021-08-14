@@ -43,7 +43,8 @@ private slots:
     void chooseVehicle(QAction *action);
     void chooseConfiguration(QAction *action);
     // full screen key combination
-    void fullScreenKey();
+    void noFullScreenKey();
+    void fullScreen();
 
 public slots:
     void changeController(unsigned int id, QString name);
