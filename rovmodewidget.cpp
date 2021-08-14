@@ -5,7 +5,6 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
-    qDebug () << " - ROVModeWidget constructor";
 
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file
     settings = new QSettings(settingsFile, QSettings::IniFormat);

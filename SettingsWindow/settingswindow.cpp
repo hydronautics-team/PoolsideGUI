@@ -6,7 +6,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
-    qDebug () << " - SettingsWindow constructor";
+
     connect(this, SIGNAL(updateVehicle()),
             pageConfigThruster, SLOT(updateVehicle()));
 

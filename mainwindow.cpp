@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     //start in full screen format
     QMainWindow::showFullScreen();
     QMainWindow::menuBar()->setVisible(false);
-    qDebug () << " - MainWindow constructor";
+
 
     // update vehicle and all parameters
     connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
