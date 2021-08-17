@@ -10,24 +10,20 @@
 
 #include "LoggingCategories.h"
 
+//логгер запускается в main.cpp-------------------
+
 QScopedPointer<QFile>   m_logFile;
 
-//void initLogger(QString logfile_way);
 void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
-
-
 
 void initLogger(QString logfile_way)
 {
     QString full_way = logfile_way + "/" + "logFile_" + QDateTime::currentDateTime().toString("yyyy-MM-dd__hh-mm-ss") + ".txt";
-    qDebug()<<full_way;
 
     m_logFile.reset(new QFile(full_way));
     // Открываем файл логирования
-    qDebug()<<full_way;
     m_logFile.data()->open(QFile::Append | QFile::Text);
     // Устанавливаем обработчик
-    qDebug()<<full_way;
     qInstallMessageHandler(messageHandler);
     qDebug()<<full_way;
 
