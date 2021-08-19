@@ -35,7 +35,7 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) :
     initializeData();
     updateData();
 
-    picROV = scene->addPixmap(QPixmap(":/images/Cousteau III.png"));
+    picROV = scene->addPixmap(QPixmap(":/images/Cousteau_2A.png"));
     picROV->setTransform(QTransform::fromScale(0.2, 0.2));
 }
 
