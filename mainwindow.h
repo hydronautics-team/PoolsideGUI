@@ -22,7 +22,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
 
 public slots:
-    void changeController(unsigned int id, QString name);
+    void changeController(ControlBase *controller);
 
 private slots:
     void updateVehiclesMenu();

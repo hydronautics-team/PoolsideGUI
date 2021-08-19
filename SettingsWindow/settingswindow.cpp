@@ -1,6 +1,7 @@
 #include "settingswindow.h"
 #include <QDebug>
 #include "SFML/Window.hpp"
+#include "mainwindow.h"
 
 SettingsWindow::SettingsWindow(QWidget *parent) :
     QWidget(parent)
@@ -85,7 +86,9 @@ void SettingsWindow::showPageConfigControls()
     joystick_list.clear();
 
     comboBox_device->addItem("Keyboard");
-    comboBox_device->addItem("3D Mouse");
+    comboBox_device->addItem("3D Mouse + mini Keyboard");
+    comboBox_device->addItem("Joystick");
+
 
     sf::Joystick::update();
 
@@ -135,22 +138,28 @@ void SettingsWindow::changeDevice(int device_id)
     if(device_id == 0) {
         // Keyboard
         current_device = 0;
+        qDebug() << "0";
     }
     else if(device_id == 1) {
-        // 3D Mouse
+        // 3D Mouse + mini Keyboard
         current_device = 1;
+        qDebug() << "1";
+        controller = new Mouse3d("3dMouse", 5);
     }
     else if(device_id > 1) {
-        // Joystick / Gamepad
+        // Joystick
         current_device = 2;
-        current_joystick = joystick_list[device_id - 2];
+        qDebug() << "2";
+        controller = new Joystick("null_joy", 10, 0);
 
-        sf::Joystick::Identification identification = sf::Joystick::getIdentification(current_joystick);
+//        current_joystick = joystick_list[device_id - 2];
 
-        std::string name = identification.name;
-        QString qname = QString::fromStdString(name);
+//        sf::Joystick::Identification identification = sf::Joystick::getIdentification(current_joystick);
 
-        emit controllerChanged(current_joystick, qname);
+//        std::string name = identification.name;
+//        QString qname = QString::fromStdString(name);
+
+        emit controllerChanged(controller);
     }
 }
 

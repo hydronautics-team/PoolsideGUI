@@ -50,7 +50,7 @@ bool Serial_Client::portConnect(int port)
 void Serial_Client::run()
 {
     bool opened = false;
-    for(int i=0; i<MAX_COM_ID; i++) {
+    for(int i=7; i<MAX_COM_ID; i++) {
         opened = portConnect(i);
         if(opened) {
             break;

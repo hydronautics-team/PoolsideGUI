@@ -32,7 +32,8 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::noFullScreenKey);
 
     // Controller Changed
-    connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
+//    controller = new Mouse3d("3dMouse", 5);
+    connect(&settingsWindow, SIGNAL(controllerChanged(ControlBase *controller)), this, SLOT(changeController(ControlBase *controller)));
 
     // Menu:
     // Vehicle
@@ -75,12 +76,13 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
     connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 
-    controller = new Joystick("null_joy", 10, 0);
+//    controller = new Joystick("null_joy", 10, 0);
 
-    if(controller != nullptr) {
-        delete controller;
-    }
-    controller = new Mouse3d("3dMouse", 10);
+//    if(controller != nullptr) {
+//        delete controller;
+//    }
+
+//    controller = new Mouse3d("3dMouse", 10);
 }
 
 void MainWindow::createVehicle()
@@ -126,8 +128,6 @@ void MainWindow::noFullScreenKey()
         QMainWindow::menuBar()->setVisible(true);
     }
 }
-
-
 
 void MainWindow::updateVehiclesMenu()
 {
@@ -199,12 +199,7 @@ void MainWindow::enableROVMode()
     stackedWidget->setCurrentWidget(pageROVMode);
 }
 
-void MainWindow::changeController(unsigned int id, QString name)
+void MainWindow::changeController(ControlBase *controller)
 {
-    if(controller != nullptr) {
-        delete controller;
-    }
-    qDebug()<<"MainWindow changeController"<<endl;
 
-    controller = new Mouse3d(name, 5);
 }

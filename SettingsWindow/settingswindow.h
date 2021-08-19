@@ -5,6 +5,9 @@
 #include <QTimer>
 #include <QVector>
 
+#include "Drivers/joystick.h"
+#include "Drivers/mouse_3d.h"
+
 class SettingsWindow : public QWidget, public Ui::SettingsWindow
 {
     Q_OBJECT
@@ -28,7 +31,7 @@ public slots:
     void changeDevice(int device_id);
 
 signals:
-    void controllerChanged(unsigned int id, QString name);
+    void controllerChanged(ControlBase *controller);
 
 private:
     QTimer *timer;
@@ -36,6 +39,7 @@ private:
     QVector<unsigned int> joystick_list;
     int current_device;
     int current_joystick;
+    ControlBase *controller;
 };
 
 #endif // SETTINGSWINDOW_H
