@@ -144,22 +144,30 @@ void SettingsWindow::changeDevice(int device_id)
         // 3D Mouse + mini Keyboard
         current_device = 1;
         qDebug() << "1";
+
+        if(controller != nullptr) {
+            delete controller;
+        }
         controller = new Mouse3d("3dMouse", 5);
     }
     else if(device_id > 1) {
         // Joystick
         current_device = 2;
         qDebug() << "2";
+
+        if(controller != nullptr) {
+            delete controller;
+        }
         controller = new Joystick("null_joy", 10, 0);
 
 //        current_joystick = joystick_list[device_id - 2];
 
-//        sf::Joystick::Identification identification = sf::Joystick::getIdentification(current_joystick);
+        sf::Joystick::Identification identification = sf::Joystick::getIdentification(current_joystick);
 
 //        std::string name = identification.name;
 //        QString qname = QString::fromStdString(name);
 
-        emit controllerChanged(controller);
+//        emit controllerChanged(controller);
     }
 }
 

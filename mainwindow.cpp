@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
 
     // Controller Changed
 //    controller = new Mouse3d("3dMouse", 5);
-    connect(&settingsWindow, SIGNAL(controllerChanged(ControlBase *controller)), this, SLOT(changeController(ControlBase *controller)));
+//    connect(&settingsWindow, SIGNAL(controllerChanged(ControlBase *controller)), this, SLOT(changeController(ControlBase *controller)));
 
     // Menu:
     // Vehicle
@@ -76,11 +76,11 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
     connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 
-//    controller = new Joystick("null_joy", 10, 0);
+    controller = new Joystick("null_joy", 10, 0);
 
-//    if(controller != nullptr) {
-//        delete controller;
-//    }
+    //    if(controller != nullptr) {
+    //        delete controller;
+    //    }
 
 //    controller = new Mouse3d("3dMouse", 10);
 }
