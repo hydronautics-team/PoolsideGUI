@@ -31,7 +31,7 @@ public slots:
     void changeDevice(int device_id);
 
 signals:
-    void controllerChanged(ControlBase *controller);
+    void controllerChanged(unsigned int id, QString name);
 
 private:
     QTimer *timer;

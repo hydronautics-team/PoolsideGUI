@@ -47,7 +47,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTickEvent()));
     timer->start(100);
 
-    current_device = 0;
+    current_device = 1; // default device
     current_joystick = 0;
     connect(comboBox_device, SIGNAL(currentIndexChanged(int)), this, SLOT(changeDevice(int)));
 }
@@ -89,21 +89,6 @@ void SettingsWindow::showPageConfigControls()
     comboBox_device->addItem("3D Mouse + mini Keyboard");
     comboBox_device->addItem("Joystick");
 
-
-    sf::Joystick::update();
-
-    for (unsigned int i = 0; i<8; i++) {
-        if (sf::Joystick::isConnected(i)) {
-            sf::Joystick::Identification identification = sf::Joystick::getIdentification(i);
-            std::string name = identification.name;
-            QString qname = QString::fromStdString(name);
-
-            comboBox_device->addItem(qname);
-            joystick_list.append(i);
-        }
-    }
-
-
     this->show();
     stackedWidget->setCurrentWidget(pageConfigControls);
 
@@ -138,36 +123,20 @@ void SettingsWindow::changeDevice(int device_id)
     if(device_id == 0) {
         // Keyboard
         current_device = 0;
-        qDebug() << "0";
+        qDebug() << "current_device 0";
+        emit controllerChanged(current_device, "Keyboard");
     }
     else if(device_id == 1) {
         // 3D Mouse + mini Keyboard
         current_device = 1;
-        qDebug() << "1";
-
-        if(controller != nullptr) {
-            delete controller;
-        }
-        controller = new Mouse3d("3dMouse", 5);
+        qDebug() << "current_device 1";
+        emit controllerChanged(current_device, "3dMouse");
     }
     else if(device_id > 1) {
-        // Joystick
+        // Joystick Logitech
         current_device = 2;
-        qDebug() << "2";
-
-        if(controller != nullptr) {
-            delete controller;
-        }
-        controller = new Joystick("null_joy", 10, 0);
-
-//        current_joystick = joystick_list[device_id - 2];
-
-        sf::Joystick::Identification identification = sf::Joystick::getIdentification(current_joystick);
-
-//        std::string name = identification.name;
-//        QString qname = QString::fromStdString(name);
-
-//        emit controllerChanged(controller);
+        qDebug() << "current_device 2";
+        emit controllerChanged(current_device, "Joystick Logitech");
     }
 }
 
