@@ -27,9 +27,10 @@ include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/CommunicationSettings"
 include_directories("${PROJECT_SOURCE_DIR}/VehicleWizard")
 include_directories("${PROJECT_SOURCE_DIR}/PicFrame")
 
-#Boost
-find_package(Boost  REQUIRED)
-include_directories(${Boost_INCLUDE_DIR})
+#For server
+find_package(cppzmq)
+
+find_package( OpenCV REQUIRED )
 
 #SFML
 set(CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules/")
@@ -58,6 +59,7 @@ set(PROJECT_SOURCES
         SettingsWindow/CommunicationSettings/udp_settings.cpp
         SettingsWindow/ThrusterSettings/thrustersettings.cpp
         SettingsWindow/VehicleSettings/vehiclesettings.cpp
+        SettingsWindow/CommunicationSettings/tcpSettings.cpp
         UI_Tests/serverdata_test.cpp
         UV/icontroldata.cpp
         UV/ituningdata.cpp
@@ -87,6 +89,7 @@ set(PROJECT_SOURCES
         SettingsWindow/CommunicationSettings/serial_settings.h
         SettingsWindow/CommunicationSettings/udp_settings.h
         SettingsWindow/VehicleSettings/vehiclesettings.h
+        SettingsWindow/CommunicationSettings/tcpSettings.h
         UI_Tests/serverdata_test.h
         UV/ibasicdata.h
         UV/icontroldata.h
@@ -142,13 +145,14 @@ endif ()
 target_link_libraries(${PROJECT_NAME}
         sfml-graphics sfml-window sfml-system
         hidapi-libusb
+        cppzmq
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
-        Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::SerialPort
         Qt${QT_VERSION_MAJOR}::Network
-        Qt${QT_VERSION_MAJOR}::Test)
+        Qt${QT_VERSION_MAJOR}::Test
+        ${OpenCV_LIBS})
 
 install(FILES
         settings.ini

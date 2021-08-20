@@ -1,6 +1,5 @@
 #include "rovmodewidget.h"
 #include <QDebug>
-#include <iostream>
 
 ROVModeWidget::ROVModeWidget(QWidget *parent) : QWidget(parent)
 {
@@ -37,16 +36,11 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) : QWidget(parent)
 
 
     picROV = scene->addPixmap(QPixmap(":/images/Cousteau III.png"));
+    picROV->setTransform(QTransform::fromScale(0.7, 0.7));
 }
 
-void ROVModeWidget::updatePixmap(const QByteArray& array_) {
-    bool flag = true;
-    QDataStream in(array_);
-    QImage img;
-    in >> img >> flag;
-    if (flag) {
-        picROV->setPixmap(QPixmap::fromImage(img));
-    }
+void ROVModeWidget::updatePixmap(const QImage& img) {
+    picROV->setPixmap(QPixmap::fromImage(img));
 }
 
 void ROVModeWidget::updateVehicle()

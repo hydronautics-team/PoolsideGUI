@@ -10,8 +10,8 @@
 #include <QApplication>
 #include <QByteArray>
 
-MainWindow::MainWindow(boost::asio::io_service& io, QWidget *parent) :
-QMainWindow(parent) {
+MainWindow::MainWindow(QWidget *parent) :
+        QMainWindow(parent) {
     setupUi(this);
 
     // update vehicle and all parameters
@@ -41,6 +41,7 @@ QMainWindow(parent) {
             &settingsWindow, SLOT(showPageConfigThruster()));
     connect(action_config_coef, SIGNAL(triggered()),
             &settingsWindow, SLOT(showPageConfigCoef()));
+    connect(action_config_tcp, SIGNAL(triggered()), &settingsWindow, SLOT(showPageTcpSettings()));
     // Surface control unit
     connect(action_config_controls, SIGNAL(triggered()),
             &settingsWindow, SLOT(showPageConfigControls()));
@@ -83,13 +84,31 @@ QMainWindow(parent) {
     }
     controller = new Mouse3d("3dMouse", 10);
 
-    server = new tcpServer(io);
-    connect(server, &tcpServer::readyUpdatePixmap, pageROVMode, &ROVModeWidget::updatePixmap);
-    connect(&thread1, &QThread::started, server, &tcpServer::Accept);
-    server->moveToThread(&thread1);
-    thread1.start();
+    thread = new QThread;
+    server = new tcpServer;
+    connect(server, SIGNAL(readyUpdatePixmap(const QImage&)), pageROVMode, SLOT(updatePixmap(const QImage&)));
+    connect(settingsWindow.pageTcpSettings, SIGNAL(start(int)), server, SLOT(start(int)));
+    connect(server, SIGNAL(checkRunState(bool*)), settingsWindow.pageTcpSettings, SLOT(returnRunState(bool*)));
+    connect(server, SIGNAL(checkCompressionState(int*)), settingsWindow.pageTcpSettings, SLOT(returnCompressionState(int*)));
+    connect(server, SIGNAL(updateFPS(int)), settingsWindow.pageTcpSettings, SLOT(setFPS(int)));
+    server->moveToThread(thread);
+    thread->start();
+
+    connect(settingsWindow.pageTcpSettings, SIGNAL(rebuildServer()), this, SLOT(rebuildTcpServer()));
 }
 
+void MainWindow::rebuildTcpServer() {
+    thread->exit(0);
+    delete server;
+    server = new tcpServer;
+    connect(server, SIGNAL(readyUpdatePixmap(const QImage&)), pageROVMode, SLOT(updatePixmap(const QImage&)));
+    connect(settingsWindow.pageTcpSettings, SIGNAL(start(int)), server, SLOT(start(int)));
+    connect(server, SIGNAL(checkRunState(bool*)), settingsWindow.pageTcpSettings, SLOT(returnRunState(bool*)));
+    connect(server, SIGNAL(checkCompressionState(int*)), settingsWindow.pageTcpSettings, SLOT(returnCompressionState(int*)));
+    connect(server, SIGNAL(updateFPS(int)), settingsWindow.pageTcpSettings, SLOT(setFPS(int)));
+    server->moveToThread(thread);
+    thread->start();
+}
 
 void MainWindow::createVehicle() {
     wizard.startStateMachine();

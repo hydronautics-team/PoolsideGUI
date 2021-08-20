@@ -7,7 +7,7 @@
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsTextItem>
-#include <QByteArray>
+#include <QImage>
 #include "UV/uv_state.h"
 #include "UV/ibasicdata.h"
 #include "ui_rovmodewidget.h"
@@ -32,7 +32,7 @@ public slots:
     void checkboxChecked(int i);
     void resetImu();
     void clearResetImu();
-    void updatePixmap(const QByteArray& array_);
+    void updatePixmap(const QImage& img);
 
 private:
     QString settingsFile;

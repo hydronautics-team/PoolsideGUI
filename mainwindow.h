@@ -22,12 +22,12 @@ signals:
     void updateVehicle();
 
 public:
-    explicit MainWindow(boost::asio::io_service& io, QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
 public slots:
     void changeController(unsigned int id, QString name);
 private slots:
     void updateVehiclesMenu();
-
+    void rebuildTcpServer();
 private:
     SettingsWindow settingsWindow;
     VehicleWizard wizard;
@@ -36,12 +36,11 @@ private:
     QString currentVehicle;
     QString currentConfiguration;
     tcpServer *server;
-    QThread thread1;
+    QThread *thread;
     void updateVehicleConfigurationMenu();
     void checkFile(QString filename);
     void enableAUVMode();
     void enableROVMode();
-
     ControlBase *controller;
 
 private slots:

@@ -24,6 +24,7 @@ public slots:
     void showPageConfigView();
     void showPageAboutProgram();
     void showPageOtherSettings();
+    void showPageTcpSettings();
     void timerTickEvent();
     void changeDevice(int device_id);
 

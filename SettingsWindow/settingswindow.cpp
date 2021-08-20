@@ -130,6 +130,12 @@ void SettingsWindow::showPageOtherSettings()
     this->setWindowTitle("Other settings");
 }
 
+void SettingsWindow::showPageTcpSettings() {
+    show();
+    stackedWidget->setCurrentWidget(pageTcpSettings);
+    setWindowTitle("Tcp settings");
+}
+
 void SettingsWindow::changeDevice(int device_id)
 {
     if(device_id == 0) {

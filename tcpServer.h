@@ -2,23 +2,31 @@
 #define POOLSIDEGUI_TCPSERVER_H
 
 #include <QObject>
-#include <QByteArray>
-#include <boost/asio.hpp>
-
-using boost::asio::ip::tcp;
+#include <QImage>
+#include <string>
+#include <chrono>
+#include <zmq.hpp>
 
 class tcpServer : public QObject{
     Q_OBJECT
 private:
-    tcp::acceptor acceptor_;
-    tcp::socket socket_;
+    zmq::context_t context_;
+    zmq::socket_t *socket_;
+    std::string compression_;
+    int cmp_;
+    int port_;
+    std::chrono::time_point<std::chrono::high_resolution_clock> last_fps_;
+    bool getMessage();
 signals:
-    void readyUpdatePixmap(const QByteArray& array);
+    void readyUpdatePixmap(const QImage& img);
+    void checkRunState(bool *state);
+    void checkCompressionState(int *cmp);
+    void updateFPS(int fps);
 public:
-    explicit tcpServer(boost::asio::io_service &io_service);
-    void GetMessage();
+    explicit tcpServer();
+    ~tcpServer() noexcept;
 public slots:
-    void Accept();
+    void start(int port);
 };
 
 #endif //POOLSIDEGUI_TCPSERVER_H
