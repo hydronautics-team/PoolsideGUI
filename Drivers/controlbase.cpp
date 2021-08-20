@@ -1,4 +1,5 @@
 #include "controlbase.h"
+#include <QDebug>
 
 ControlBase::ControlBase(QString name, int update_time)
 {
@@ -65,6 +66,7 @@ void ControlBase::sendAction(e_actionTypes type, double value)
 void ControlBase::setMarch(double value)
 {
     interface.setMarch(value);
+//    qDebug() << "setMarch" << value;
 }
 
 void ControlBase::setLag(double value)

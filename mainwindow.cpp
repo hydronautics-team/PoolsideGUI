@@ -16,8 +16,8 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
 {
     setupUi(this);
     //start in full screen format
-    QMainWindow::showFullScreen();
-    QMainWindow::menuBar()->setVisible(false);
+//    QMainWindow::showFullScreen();
+//    QMainWindow::menuBar()->setVisible(false);
 
 
     // update vehicle and all parameters
@@ -200,13 +200,13 @@ void MainWindow::changeController(unsigned int current_device, QString name)
     switch (current_device) {
     case 0:
         qDebug() << "no Keyboard -> 3Dmouse connected";
-        controller = new Mouse3d("3dMouse", 20);
+        controller = new Mouse3d("3dMouse", 5);
         break;
     case 1:
-        controller = new Mouse3d("3dMouse", 20);
+        controller = new Mouse3d("3dMouse", 5);
         break;
     case 2:
-        controller = new Joystick(name, 30, 0); //default id = 0;
+        controller = new Joystick(name, 10, 0); //default id = 0;
         break;
     }
 }
