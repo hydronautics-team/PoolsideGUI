@@ -36,7 +36,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     Drivers/controlbase.cpp \
-    Drivers/controlselection.cpp \
     Drivers/joystick.cpp \
     Drivers/keyboard.cpp \
     Drivers/mouse_3d.cpp \
@@ -71,7 +70,6 @@ SOURCES += \
 
 HEADERS += \
     Drivers/controlbase.h \
-    Drivers/controlselection.h \
     Drivers/joystick.h \
     Drivers/keyboard.h \
     Drivers/mouse_3d.h \
