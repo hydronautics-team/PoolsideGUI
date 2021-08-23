@@ -68,6 +68,7 @@ endif()
 set(PROJECT_SOURCES
         main.cpp
         Drivers/controlbase.cpp
+        Drivers/controlselection.cpp
         Drivers/joystick.cpp
         Drivers/keyboard.cpp
         Drivers/mouse_3d.cpp
@@ -101,6 +102,7 @@ set(PROJECT_SOURCES
         Drivers/joystick.h
         Drivers/keyboard.h
         Drivers/mouse_3d.h
+        Drivers/controlselection.h
         KX_Pult/configdata.h
         KX_Pult/kx_protocol.h
         KX_Pult/qkx_coeffs.h
