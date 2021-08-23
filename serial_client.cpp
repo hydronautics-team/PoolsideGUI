@@ -26,7 +26,7 @@ bool Serial_Client::portConnect(int port)
 
     str.append(QString::number(port));
 
-    qDebug () << "COM_SERVER: Trying to open port " << str;
+//    qDebug () << "COM_SERVER: Trying to open port " << str;
 
     serialPort = new QSerialPort(str);
     serialPort->setBaudRate(QSerialPort::BaudRate::Baud57600, QSerialPort::AllDirections);
@@ -80,6 +80,7 @@ int Serial_Client::exec()
 
         serialPort->waitForReadyRead(100); //из-за этой строчки у Гриши появляется
         // ASSERT: "bytesTransferred == writeChunkBuffer.size()" in file qserialport_win.cpp, line 503
+        // !!!!!!!!!!!!!это было из-за включенного Bluethuse на ноуте!!!!!!!!!!!___________
 
         long long bytesAvailiable = serialPort->bytesAvailable();
         if (bytesAvailiable > 0) {

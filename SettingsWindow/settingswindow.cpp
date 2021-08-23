@@ -43,9 +43,9 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     table->setItem(13, 0, new QTableWidgetItem("PovX Position"));
     table->setItem(14, 0, new QTableWidgetItem("PovY Position"));
 
-//    timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(timerTickEvent()));
-//    timer->start(100);
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(timerTickEvent()));
+    timer->start(100);
 
     current_device = 1; // default device
     current_joystick = 0;
@@ -140,7 +140,7 @@ void SettingsWindow::changeDevice(int device_id)
     }
 }
 
-void SettingsWindow::timerTickEvent()
+void SettingsWindow::timerTickEvent() // при подключенной мыши выводит с нее мусор
 {
     unsigned int joystick_id = current_joystick;
     QString buttons_list, axis_list;
