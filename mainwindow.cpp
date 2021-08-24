@@ -16,8 +16,8 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
 {
     setupUi(this);
     //start in full screen format
-    QMainWindow::showFullScreen();
-    QMainWindow::menuBar()->setVisible(false);
+//    QMainWindow::showFullScreen();
+//    QMainWindow::menuBar()->setVisible(false);
 
 
     // update vehicle and all parameters
@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::noFullScreenKey);
 
     // Controller Changed
+    controller = new Mouse3d("3dMouse", 5);
     connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
 
     // Menu:
@@ -74,13 +75,6 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
 
     connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
     connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
-
-    controller = new Joystick("null_joy", 10, 0);
-
-    if(controller != nullptr) {
-        delete controller;
-    }
-    controller = new Mouse3d("3dMouse", 10);
 }
 
 void MainWindow::createVehicle()
@@ -126,8 +120,6 @@ void MainWindow::noFullScreenKey()
         QMainWindow::menuBar()->setVisible(true);
     }
 }
-
-
 
 void MainWindow::updateVehiclesMenu()
 {
@@ -199,12 +191,22 @@ void MainWindow::enableROVMode()
     stackedWidget->setCurrentWidget(pageROVMode);
 }
 
-void MainWindow::changeController(unsigned int id, QString name)
+void MainWindow::changeController(unsigned int current_device, QString name)
 {
     if(controller != nullptr) {
         delete controller;
+        qDebug() << "delete controller";
     }
-    qDebug()<<"MainWindow changeController"<<endl;
-
-    controller = new Mouse3d(name, 5);
+    switch (current_device) {
+    case 0:
+        qDebug() << "no Keyboard -> 3Dmouse connected";
+        controller = new Mouse3d("3dMouse", 5);
+        break;
+    case 1:
+        controller = new Mouse3d("3dMouse", 5);
+        break;
+    case 2:
+        controller = new Joystick(name, 10, 0); //default id = 0;
+        break;
+    }
 }

@@ -9,8 +9,8 @@ const int MAX_COM_ID = 20;
 
 Serial_Client::Serial_Client()
 {
-//    timeoutTimer = new QTimer();
-//    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
+    timeoutTimer = new QTimer();
+    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
     interface = new IServerData();
 }
@@ -50,7 +50,7 @@ bool Serial_Client::portConnect(int port)
 void Serial_Client::run()
 {
     bool opened = false;
-    for(int i=0; i<MAX_COM_ID; i++) {
+    for(int i=1; i<MAX_COM_ID; i++) {
         opened = portConnect(i);
         if(opened) {
             break;
@@ -78,7 +78,10 @@ int Serial_Client::exec()
         serialPort->write(msg, msg.size());
         serialPort->flush();
 
-        serialPort->waitForReadyRead(100);
+        serialPort->waitForReadyRead(100); //из-за этой строчки у Гриши появляется
+        // ASSERT: "bytesTransferred == writeChunkBuffer.size()" in file qserialport_win.cpp, line 503
+        // !!!!!!!!!!!!!это было из-за включенного Bluethuse на ноуте!!!!!!!!!!!___________
+
         long long bytesAvailiable = serialPort->bytesAvailable();
         if (bytesAvailiable > 0) {
             msg.clear();

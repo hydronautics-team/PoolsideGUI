@@ -4,6 +4,7 @@
 #include "controlbase.h"
 #include "SFML/Window.hpp"
 #include <QVector>
+#include <QDebug>
 
 class Joystick : public ControlBase
 {
