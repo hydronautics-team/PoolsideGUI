@@ -16,8 +16,8 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
 {
     setupUi(this);
     //start in full screen format
-//    QMainWindow::showFullScreen();
-//    QMainWindow::menuBar()->setVisible(false);
+    QMainWindow::showFullScreen();
+    QMainWindow::menuBar()->setVisible(false);
 
 
     // update vehicle and all parameters

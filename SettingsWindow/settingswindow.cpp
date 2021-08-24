@@ -1,7 +1,6 @@
 #include "settingswindow.h"
 #include <QDebug>
 #include "SFML/Window.hpp"
-#include "mainwindow.h"
 
 SettingsWindow::SettingsWindow(QWidget *parent) :
     QWidget(parent)
