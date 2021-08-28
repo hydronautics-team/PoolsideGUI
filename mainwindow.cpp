@@ -75,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
     connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 
-    connect(pushButtonReconnectROV, SIGNAL(pressed()), this, SLOT(reconnectROV()));
+//    connect(pushButtonReconnectROV, SIGNAL(pressed()), this, SLOT(reconnectROV()));
 
 }
 
@@ -233,3 +233,9 @@ void MainWindow::changeController(unsigned int current_device, QString name)
         break;
     }
 }
+
+void MainWindow::on_pushButtonReconnectROV_clicked()
+{
+    emit reconnectROV();
+}
+
