@@ -16,8 +16,8 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
 {
     setupUi(this);
     //start in full screen format
-    QMainWindow::showFullScreen();
-    QMainWindow::menuBar()->setVisible(false);
+//    QMainWindow::showFullScreen();
+//    QMainWindow::menuBar()->setVisible(false);
 
 
     // update vehicle and all parameters
@@ -69,6 +69,29 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     connect(serial_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
     connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client, SLOT(changeSelectedThruster(unsigned int)));
 
+    UDP_Client *udp_client = new UDP_Client();
+    udp_client->start();
+
+    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
+
+    connect(pushButtonReconnectROV, SIGNAL(pressed()), this, SLOT(reconnectROV()));
+
+}
+
+void MainWindow::reconnectROV()
+{
+//    if  (serial_client != nullptr){
+//        delete serial_client;
+//        qDebug() << "delete serial_client in reconnectROV";
+//    }
+    qDebug() << "reconnectROV";
+
+    Serial_Client *serial_client = new Serial_Client();
+    serial_client->start();
+
+    connect(serial_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client, SLOT(changeSelectedThruster(unsigned int)));
 
     UDP_Client *udp_client = new UDP_Client();
     udp_client->start();

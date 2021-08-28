@@ -460,12 +460,19 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="ROVModeWidget" name="pageROVMode"/>
       <widget class="QWidget" name="pageAUVMode">
        <layout class="QVBoxLayout" name="verticalLayout_10"/>
       </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButtonReconnectROV">
+      <property name="text">
+       <string>ReconnectROV</string>
+      </property>
      </widget>
     </item>
    </layout>
@@ -476,7 +483,7 @@
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuBarControlBox">

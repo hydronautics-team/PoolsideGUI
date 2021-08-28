@@ -23,6 +23,7 @@ public:
 
 public slots:
     void changeController(unsigned int current_device, QString name);
+    void reconnectROV();
 
 private slots:
     void updateVehiclesMenu();
