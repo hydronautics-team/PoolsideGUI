@@ -53,7 +53,7 @@ private slots:
     void noFullScreenKey();
     void fullScreen();
 
-    void on_pushButtonReconnectROV_clicked();
+//    void on_pushButtonReconnectROV_clicked();
 };
 
 #endif // MAINWINDOW_H
