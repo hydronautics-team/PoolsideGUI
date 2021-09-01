@@ -26,7 +26,7 @@ bool Serial_Client::portConnect(int port)
 
     str.append(QString::number(port));
 
-    qDebug () << "COM_SERVER: Trying to open port " << str;
+//    qDebug () << "COM_SERVER: Trying to open port " << str;
 
     serialPort = new QSerialPort(str);
     serialPort->setBaudRate(QSerialPort::BaudRate::Baud57600, QSerialPort::AllDirections);
