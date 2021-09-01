@@ -17,7 +17,7 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) :
     connect(pushButtonResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
     connect(pushButtonResetIMU, SIGNAL(released()), this, SLOT(clearResetImu()));
 
-//    connect(pushButtonReconnectROV, SIGNAL(pressed()), this, SLOT(reconnectROVpressed()));
+//    connect(pushButtonReconnectRвфвфывфывйцуйOV, SIGNAL(pressed()), this, SLOT(reconnectROVpressed()));
 
     // add bars in group to easily access
     thrusterBarGroup.append(thrusterBar0);

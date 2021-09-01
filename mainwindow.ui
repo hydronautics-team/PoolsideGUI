@@ -468,13 +468,6 @@
       </widget>
      </widget>
     </item>
-    <item>
-     <widget class="QPushButton" name="pushButtonReconnectROV">
-      <property name="text">
-       <string>ReconnectROV</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">

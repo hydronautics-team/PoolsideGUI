@@ -236,6 +236,9 @@ void MainWindow::changeController(unsigned int current_device, QString name)
 
 void MainWindow::on_pushButtonReconnectROV_clicked()
 {
+    qDebug() << "on_pushButtonReconnectROV_clicked";
+    changeController(1, "name");
+
     emit reconnectROV();
 }
 
