@@ -20,12 +20,12 @@ class ROVModeWidget : public QWidget, private Ui::ROVModeWidget
 
 signals:
     void updateCompass(double yaw);
-    void reconnectROV();
 
 public:
     explicit ROVModeWidget(QWidget *parent = nullptr);
     float depthLin = 9.9546;
     float depthOffset = 0;
+    QPushButton* getPushButtonReconnectROV();
 
 public slots:
     void updateVehicle();
@@ -33,7 +33,6 @@ public slots:
     void checkboxChecked(int i);
     void resetImu();
     void clearResetImu();
-    void reconnectROVpressed();
 
 private:
     QString settingsFile;

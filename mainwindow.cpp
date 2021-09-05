@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     controller = new Mouse3d("3dMouse", 5);
     connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
 
+    connect(pageROVMode->getPushButtonReconnectROV(), SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
+
     // Menu:
     // Vehicle
     // New vehicle
