@@ -6,7 +6,8 @@
 
 #include "ui_mainwindow.h"
 
-#include "rovmodewidget.h"
+//#include "rovmodewidget.h"
+#include "UV/iuserinterfacedata.h"
 #include "SettingsWindow/settingswindow.h"
 #include "VehicleWizard/vehiclewizard.h"
 #include "Drivers/joystick.h"
