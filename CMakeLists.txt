@@ -94,7 +94,7 @@ set(PROJECT_SOURCES
         UV/uv_state.cpp
         mainwindow.cpp
         SettingsWindow/settingswindow.cpp
-        rovmodewidget.cpp
+        #rovmodewidget.cpp
         serial_client.cpp
         udp_client.cpp
         Drivers/controlbase.h
@@ -124,7 +124,7 @@ set(PROJECT_SOURCES
         VehicleWizard/vehiclewizard.h
         mainwindow.h
         SettingsWindow/settingswindow.h
-        rovmodewidget.h
+        #rovmodewidget.h
         serial_client.h
         udp_client.h
         PicFrame/picframe.ui
@@ -136,7 +136,7 @@ set(PROJECT_SOURCES
         VehicleWizard/vehiclewizard.ui
         mainwindow.ui
         SettingsWindow/settingswindow.ui
-        rovmodewidget.ui
+        #rovmodewidget.ui
         )
 
 set(QRC_FILES

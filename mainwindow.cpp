@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
     connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehiclesMenu()));
     connect(this, SIGNAL(updateVehicle()), &settingsWindow, SIGNAL(updateVehicle()));
-    connect(this, SIGNAL(updateVehicle()), pageROVMode, SLOT(updateVehicle()));
+    connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehicle2()));
 
     // Reading the key combination of turning the window to the full screen and back
     QShortcut *keyCtrlF = new QShortcut(this);
@@ -66,14 +66,14 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     Serial_Client *serial_client = new Serial_Client();
     serial_client->start();
 
-    connect(serial_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    //connect(serial_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
     connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client, SLOT(changeSelectedThruster(unsigned int)));
 
 
     UDP_Client *udp_client = new UDP_Client();
     udp_client->start();
 
-    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    //connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
     connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 }
 
@@ -163,7 +163,7 @@ void MainWindow::updateVehicleConfigurationMenu()
         }
     }
     settings->endGroup();
-    qDebug () << currentConfiguration;
+    qDebug() << currentConfiguration;
 }
 
 void MainWindow::checkFile(QString filename)
@@ -181,15 +181,110 @@ void MainWindow::checkFile(QString filename)
     }
 }
 
-void MainWindow::enableAUVMode()
+//void MainWindow::enableAUVMode()
+//{
+//    stackedWidget->setCurrentWidget(pageAUVMode);
+//}
+
+//void MainWindow::enableROVMode()
+//{
+//    stackedWidget->setCurrentWidget(pageROVMode);
+//}
+
+void MainWindow::updateVehicleUi()
 {
-    stackedWidget->setCurrentWidget(pageAUVMode);
+    currentVehicle = settings->value("currentVehicle").toString();
+    thrustersCount = settings->value("vehicle/" + currentVehicle + "/thrusters/count").toInt();
+    //update bars
+    foreach (QProgressBar *bar, thrusterBarGroup) {
+        bar->hide();
+    }
+    for (int i = 0; i < thrustersCount; i++){
+        thrusterBarGroup[i]->show();
+        thrusterBarGroup[i]->setFormat(settings->value("vehicle/" + currentVehicle + "/thrusters/" + QString::number(i) + "/name").toString());
+    }
+    initializeData();
+    updateDataUi();
 }
 
-void MainWindow::enableROVMode()
+void MainWindow::initializeData()
 {
-    stackedWidget->setCurrentWidget(pageROVMode);
+    foreach (QProgressBar *bar, thrusterBarGroup) {
+        bar->setValue(0);
+    }
+    pitchBar->setValue(0);
+    depthBar->setValue(0);
+    depthLabel->setText("0");   // label under bar
+    pitchLabel->setText("0");   // label under bar
+    sensorsDepthLabel->setText("0");
+    sensorsPitchLabel->setText("0");
+    sensorsYawLabel->setText("0");
+    sensorsRollLabel->setText("0");
+    emit updateCompass(0);
 }
+
+void MainWindow::updateDataUi()
+{
+    // Get data from UVState object
+    ImuData sensors = uv_interface.getImuData();
+
+    // Update user interface
+    depthBar->setValue(static_cast<int>(sensors.depth*depthLin + depthOffset));   // bar
+    pitchBar->setValue(static_cast<int>(sensors.pitch));   // bar
+
+    depthLabel->setText(QString::number(sensors.depth *depthLin + depthOffset , 'f', 2));   // label under bar
+    pitchLabel->setText(QString::number(sensors.pitch, 'f', 2));   // label under bar
+
+    sensorsDepthLabel->setText(QString::number(sensors.depth*depthLin + depthOffset, 'f', 2));
+    sensorsPitchLabel->setText(QString::number(sensors.pitch, 'f', 2));
+
+    sensorsYawLabel->setText(QString::number(sensors.yaw, 'f', 2));
+    sensorsRollLabel->setText(QString::number(sensors.roll, 'f', 2));
+
+    // Update drawing of a compass
+    emit updateCompass(sensors.yaw);
+
+    ControlData control = uv_interface.getControlData();
+
+    label_march->setText(QString::number(control.march, 'f', 2));
+    label_lag->setText(QString::number(control.lag, 'f', 2));
+    label_depth->setText(QString::number(control.depth, 'f', 2));
+    label_yaw->setText(QString::number(control.yaw, 'f', 2));
+    label_roll->setText(QString::number(control.roll, 'f', 2));
+
+    label_grabber->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB), 'f', 2));
+    label_grabber_rotation->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE), 'f', 2));
+    label_tilt->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_TILT), 'f', 2));
+//    qDebug() << "updateData";
+}
+
+// TODO это больше не нужно
+void MainWindow::checkboxChecked(int i)
+{
+//    UV_State *state;
+//    IBasicData interface(&UVState, &UVMutex);
+//    state = interface.gainAccess();
+//    if(state->messageType == 0) {
+//        state->messageType = 2;
+//    }
+//    else {
+//        state->messageType = 0;
+//    }
+//    interface.closeAccess();
+}
+
+void MainWindow::resetImu()
+{
+    IUserInterfaceData interface;
+    interface.setResetImuValue(true);
+}
+
+void MainWindow::clearResetImu()
+{
+    IUserInterfaceData interface;
+    interface.setResetImuValue(false);
+}
+
 
 void MainWindow::changeController(unsigned int current_device, QString name)
 {

@@ -17,15 +17,26 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
     Q_OBJECT
 signals:
     void updateVehicle();
+    void updateCompass(double yaw);
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    //import from old interface
+    float depthLin = 9.9546;
+    float depthOffset = 0;
 
 public slots:
     void changeController(unsigned int current_device, QString name);
 
 private slots:
     void updateVehiclesMenu();
+
+    //import from old interface
+    void updateVehicleUi();
+    void updateDataUi();
+    void checkboxChecked(int i);
+    void resetImu();
+    void clearResetImu();
 
 private:
     SettingsWindow settingsWindow;
@@ -37,11 +48,20 @@ private:
 
     void updateVehicleConfigurationMenu();
     void checkFile(QString filename);
-    void enableAUVMode();
-    void enableROVMode();
-
+//    void enableAUVMode();
+//    void enableROVMode();
+    void initializeData();
     ControlBase *controller;
 
+    //import from old interface
+    int thrustersCount;
+    QList<QProgressBar *> thrusterBarGroup;
+    QGraphicsScene *scene;
+    //QGraphicsPixmapItem *picROV;
+    //QGraphicsTextItem *txtCurrentYaw;
+
+    // Interface for accessing UVState object
+    IUserInterfaceData uv_interface;
 
 private slots:
     // menu actions
