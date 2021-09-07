@@ -64,6 +64,12 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     emit updateVehicle();
 
     emit reconnectROV();
+
+    udp_client = new UDP_Client();
+    udp_client->start();
+
+    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 }
 
 void MainWindow::reconnectROV()
@@ -73,12 +79,6 @@ void MainWindow::reconnectROV()
 
     connect(serial_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
     connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client, SLOT(changeSelectedThruster(unsigned int)));
-
-    UDP_Client *udp_client = new UDP_Client();
-    udp_client->start();
-
-    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
-    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 }
 
 void MainWindow::createVehicle()
@@ -213,7 +213,7 @@ void MainWindow::changeController(unsigned int current_device, QString name)
     }
 }
 
-void MainWindow::on_pushButtonReconnectROV_clicked()
+void MainWindow::reconnectcROVclick()
 {
     changeController(1, "name");
 

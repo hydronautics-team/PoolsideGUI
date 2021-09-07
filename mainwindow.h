@@ -11,6 +11,8 @@
 #include "VehicleWizard/vehiclewizard.h"
 #include "Drivers/joystick.h"
 #include "Drivers/mouse_3d.h"
+#include "serial_client.h"
+#include "udp_client.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -42,6 +44,8 @@ private:
     void enableROVMode();
 
     ControlBase *controller;
+    Serial_Client *serial_client;
+    UDP_Client *udp_client;
 
 
 private slots:
