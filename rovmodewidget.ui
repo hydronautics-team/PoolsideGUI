@@ -364,6 +364,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QPushButton" name="pushButtonReconnectROV">
+              <property name="text">
+               <string>Reconnect ROV</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>

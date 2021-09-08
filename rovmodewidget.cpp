@@ -39,6 +39,11 @@ ROVModeWidget::ROVModeWidget(QWidget *parent) :
     picROV->setTransform(QTransform::fromScale(0.2, 0.2));
 }
 
+QPushButton *ROVModeWidget::getPushButtonReconnectROV()
+{
+    return pushButtonReconnectROV;
+}
+
 void ROVModeWidget::updateVehicle()
 {
     currentVehicle = settings->value("currentVehicle").toString();

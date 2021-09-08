@@ -19,7 +19,6 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     QMainWindow::showFullScreen();
     QMainWindow::menuBar()->setVisible(false);
 
-
     // update vehicle and all parameters
     connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
     connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehiclesMenu()));
@@ -34,6 +33,8 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     // Controller Changed
     controller = new Mouse3d("3dMouse", 5);
     connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
+
+    connect(pageROVMode->getPushButtonReconnectROV(), SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
     // Menu:
     // Vehicle
@@ -62,19 +63,22 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     currentConfiguration = settings->value("currentConfiguration").toString();
     emit updateVehicle();
 
+    emit reconnectROV();
 
+    udp_client = new UDP_Client();
+    udp_client->start();
+
+    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
+}
+
+void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew Serial_Client
+{
     Serial_Client *serial_client = new Serial_Client();
     serial_client->start();
 
     connect(serial_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
     connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client, SLOT(changeSelectedThruster(unsigned int)));
-
-
-    UDP_Client *udp_client = new UDP_Client();
-    udp_client->start();
-
-    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
-    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 }
 
 void MainWindow::createVehicle()
@@ -195,11 +199,9 @@ void MainWindow::changeController(unsigned int current_device, QString name)
 {
     if(controller != nullptr) {
         delete controller;
-        qDebug() << "delete controller";
     }
     switch (current_device) {
     case 0:
-        qDebug() << "no Keyboard -> 3Dmouse connected";
         controller = new Mouse3d("3dMouse", 5);
         break;
     case 1:
@@ -210,3 +212,11 @@ void MainWindow::changeController(unsigned int current_device, QString name)
         break;
     }
 }
+
+void MainWindow::reconnectcROVclick()
+{
+    changeController(1, "name");
+
+    emit reconnectROV();
+}
+
