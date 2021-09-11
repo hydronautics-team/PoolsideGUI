@@ -3,6 +3,10 @@
 
 #include <QAction>
 #include <QSettings>
+#include <QList>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 
 #include "ui_mainwindow.h"
 
@@ -18,6 +22,7 @@ class MainWindow : public QMainWindow, private Ui::MainWindow
     Q_OBJECT
 signals:
     void updateVehicle();
+    //import from old interface
     void updateCompass(double yaw);
 
 public:
@@ -51,10 +56,10 @@ private:
     void checkFile(QString filename);
 //    void enableAUVMode();
 //    void enableROVMode();
-    void initializeData();
     ControlBase *controller;
 
     //import from old interface
+    void initializeDataUi();
     int thrustersCount;
     QList<QProgressBar *> thrusterBarGroup;
     QGraphicsScene *scene;

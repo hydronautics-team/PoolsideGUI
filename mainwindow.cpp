@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
     connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehiclesMenu()));
     connect(this, SIGNAL(updateVehicle()), &settingsWindow, SIGNAL(updateVehicle()));
-    connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehicle2()));
+    connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehicleUi()));
 
     // Reading the key combination of turning the window to the full screen and back
     QShortcut *keyCtrlF = new QShortcut(this);
@@ -66,15 +66,30 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     Serial_Client *serial_client = new Serial_Client();
     serial_client->start();
 
-    //connect(serial_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateDataUi()));
     connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client, SLOT(changeSelectedThruster(unsigned int)));
 
 
     UDP_Client *udp_client = new UDP_Client();
     udp_client->start();
 
-    //connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    connect(udp_client, SIGNAL(dataUpdated()), this, SLOT(updateDataUi()));
     connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
+
+    connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
+    connect(checkBoxStabilizeRoll, SIGNAL(stateChanged(int)), this, SLOT(checkboxChecked(int)));
+    connect(pushButtonResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
+    connect(pushButtonResetIMU, SIGNAL(released()), this, SLOT(clearResetImu()));
+
+    //load image
+    vehiclePic->setScene(new QGraphicsScene(vehiclePic));
+    vehiclePic->setStyleSheet("background: transparent");
+    vehiclePic->setRenderHint(QPainter::Antialiasing);
+    vehiclePic->scene()->addPixmap(QPixmap(":/images/Cousteau_2A.png"))->setTransform(QTransform::fromScale(0.2, 0.2));
+
+    initializeDataUi();
+    updateDataUi();
+
 }
 
 void MainWindow::createVehicle()
@@ -203,11 +218,11 @@ void MainWindow::updateVehicleUi()
         thrusterBarGroup[i]->show();
         thrusterBarGroup[i]->setFormat(settings->value("vehicle/" + currentVehicle + "/thrusters/" + QString::number(i) + "/name").toString());
     }
-    initializeData();
+    initializeDataUi();
     updateDataUi();
 }
 
-void MainWindow::initializeData()
+void MainWindow::initializeDataUi()
 {
     foreach (QProgressBar *bar, thrusterBarGroup) {
         bar->setValue(0);
