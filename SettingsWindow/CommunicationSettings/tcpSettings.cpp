@@ -21,13 +21,13 @@ tcpSettings::tcpSettings(QWidget *parent) : QWidget(parent), qvbox_(new QVBoxLay
 
     portSlider_->setMinimum(1);
     portSlider_->setMaximum(65536);
-    portSlider_->setValue(5555);
+    portSlider_->setValue(10000);
     portSlider_->setSingleStep(1);
     portSlider_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     portSpinBox_->setMinimum(1);
     portSpinBox_->setMaximum(65536);
-    portSpinBox_->setValue(5555);
+    portSpinBox_->setValue(10000);
     portSpinBox_->setSingleStep(1);
 
     qvboxLeft_->addWidget(portLabel_);
