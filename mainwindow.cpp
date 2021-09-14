@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     controller = new Mouse3d("3dMouse", 5);
     connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
 
-    connect(PushButtonReconnectROV(), SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
+    connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
     // Menu:
     // Vehicle
@@ -98,7 +98,7 @@ void MainWindow::reconnectROV() // TODO: присутствует утечка �
     UDP_Client *udp_client = new UDP_Client();
     udp_client->start();
 
-    connect(udp_client, SIGNAL(dataUpdated()), pageROVMode, SLOT(updateData()));
+    connect(udp_client, SIGNAL(dataUpdated()), this, SLOT(updateData()));
     connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 }
 
