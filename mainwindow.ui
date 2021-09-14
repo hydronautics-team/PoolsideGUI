@@ -800,6 +800,13 @@
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonReconnectROV">
+               <property name="text">
+                <string>Reconnect ROV</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
           </layout>
@@ -1150,6 +1157,25 @@
     <string>Автономный</string>
    </property>
   </action>
+  <action name="action_enable_ROV">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Телеуправляемый</string>
+   </property>
+  </action>
+  <action name="action_enable_AUV">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Автономный</string>
+   </property>
+  </action>
   <action name="action_config_controls">
    <property name="text">
     <string>Управление</string>
@@ -1216,9 +1242,10 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PicFrame</class>
+   <class>ROVModeWidget</class>
    <extends>QWidget</extends>
-   <header>picframe.h</header>
+   <header>rovmodewidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

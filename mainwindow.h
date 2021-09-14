@@ -16,6 +16,8 @@
 #include "VehicleWizard/vehiclewizard.h"
 #include "Drivers/joystick.h"
 #include "Drivers/mouse_3d.h"
+#include "serial_client.h"
+#include "udp_client.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow
 {
@@ -33,6 +35,7 @@ public:
 
 public slots:
     void changeController(unsigned int current_device, QString name);
+    void reconnectROV();
 
 private slots:
     void updateVehiclesMenu();
@@ -57,6 +60,8 @@ private:
 //    void enableAUVMode();
 //    void enableROVMode();
     ControlBase *controller;
+    Serial_Client *serial_client;
+    UDP_Client *udp_client;
 
     //import from old interface
     void initializeDataUi();
@@ -77,6 +82,7 @@ private slots:
     // full screen key combination
     void noFullScreenKey();
     void fullScreen();
+    void reconnectcROVclick();
 
 };
 
