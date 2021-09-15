@@ -105,9 +105,9 @@ void MainWindow::chooseVehicle(QAction *action)
 {
     currentVehicle = action->text();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
-    foreach (QString name, settings->childKeys()) {
-        if (settings->value(name).toBool()){
-            currentConfiguration = name;
+    for(qsizetype i = 0; i < settings->childKeys().size(); i++) {
+        if (settings->value(settings->childKeys().at(i)).toBool()){
+            currentConfiguration = settings->childKeys().at(i);
             break;
         }
     }
@@ -145,9 +145,9 @@ void MainWindow::updateVehiclesMenu()
         if (!menu_choose_vehicle->isEmpty())
             menu_choose_vehicle->clear();
         settings->beginGroup("vehicle");
-        foreach (QString name, settings->childGroups()) {
-            QAction *vehicle = new QAction(name);
-            if (name == currentVehicle){
+        for (qsizetype i = 0; i < settings->childGroups().size(); i++) {
+            QAction *vehicle = new QAction(settings->childGroups().at(i));
+            if (settings->childGroups().at(i) == currentVehicle){
                 QFont f = vehicle->font();
                 f.setBold(true);
                 vehicle->setFont(f);
@@ -167,10 +167,10 @@ void MainWindow::updateVehicleConfigurationMenu()
 {
     menu_choose_configuration->clear();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
-    foreach (QString name, settings->childKeys()) {
-        if (settings->value(name).toBool()){
-            QAction *configuration = new QAction(name);
-            if (name == currentConfiguration){
+    for (qsizetype i = 0; i < settings->childKeys().size(); i++) {
+        if (settings->value(settings->childKeys().at(i)).toBool()){
+            QAction *configuration = new QAction(settings->childKeys().at(i));
+            if (settings->childKeys().at(i) == currentConfiguration){
                 QFont f = configuration->font();
                 f.setBold(true);
                 configuration->setFont(f);
