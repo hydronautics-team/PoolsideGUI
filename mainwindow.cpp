@@ -320,8 +320,6 @@ void MainWindow::changeController(unsigned int current_device, QString name)
 
 void MainWindow::reconnectcROVclick()
 {
-    changeController(1, "name");
-
     emit reconnectROV();
 }
 
