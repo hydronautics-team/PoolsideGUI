@@ -16,8 +16,11 @@ class Mouse3d  : public ControlBase
 
 public:
     Mouse3d(QString name, int update_time);
+
+private:
     hid_device *handle;
     unsigned char buf[7]; // представляет из себя 7 байт: 1-й байт определяет что будет приходит (поступательное движение, вращательное или кнопки)
+    QTimer *update_timer;
 
     struct mouseData {
         short int coords[6] = {0, 0, 0, 0, 0, 0}; // x, y, z, x rotation, y rotation, z rotation
@@ -26,14 +29,8 @@ public:
     };
     mouseData mouseDta;
 
-    bool keyboardData[4] = {0, 0, 0, 0};
-
-    void connect3dMouse();
     void parseCoordinate(unsigned char*, short int *); // парсит 2 байта из buf
     void parseMouse(unsigned char*, mouseData*); // парсит все координаты и кнопки
-
-private:
-    QTimer *update_timer;
 
     struct control_axis {
         double multiplier;
@@ -50,10 +47,9 @@ private:
     const static control_axis axis_table[];
     const static control_buttons buttons_table[];
 
-public slots:
+private slots:
     void updateDevice();
     void updateKeyboardOnly();
-
 };
 
 
