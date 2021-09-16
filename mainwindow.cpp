@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // Reading the key combination of turning the window to the full screen and back
     QShortcut *keyCtrlF = new QShortcut(this);
     keyCtrlF->setKey(Qt::CTRL + Qt::Key_F);
-    connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::noFullScreenKey);
+    connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::fullScreenKey);
 
     // Controller Changed
     controller = new Mouse3d("3dMouse", 5);
@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // Other settings
     connect(action_about_program, SIGNAL(triggered()), &settingsWindow, SLOT(showPageAboutProgram()));
     connect(action_other_settings, SIGNAL(triggered()), &settingsWindow, SLOT(showPageOtherSettings()));
-    connect(action_full_screen, &QAction::triggered, this, &MainWindow::fullScreen);
+    connect(action_full_screen, &QAction::triggered, this, &MainWindow::fullScreenKey);
 
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file
     checkFile(settingsFile); // check file existance
@@ -130,15 +130,14 @@ void MainWindow::chooseConfiguration(QAction *action) {
     updateVehicleConfigurationMenu();
 }
 
-void MainWindow::fullScreen() {
-    QMainWindow::showFullScreen();
-    QMainWindow::menuBar()->setVisible(false);
-}
-
-void MainWindow::noFullScreenKey() {
+void MainWindow::fullScreenKey() {
     if (QMainWindow::windowState() == Qt::WindowFullScreen) {
         QMainWindow::showNormal();
         QMainWindow::menuBar()->setVisible(true);
+    }
+    else{
+        QMainWindow::showFullScreen();
+        QMainWindow::menuBar()->setVisible(false);
     }
 }
 

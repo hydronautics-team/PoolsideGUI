@@ -94,9 +94,7 @@ private slots:
     void chooseConfiguration(QAction *action);
 
     // full screen key combination
-    void noFullScreenKey();
-
-    void fullScreen();
+    void fullScreenKey();
 
     void reconnectcROVclick();
 
