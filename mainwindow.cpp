@@ -12,8 +12,7 @@
 #include <QThread>
 #include <QTimer>
 
-MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
-{
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setupUi(this);
     //start in full screen format
     QMainWindow::showFullScreen();
@@ -23,16 +22,16 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
     connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehiclesMenu()));
     connect(this, SIGNAL(updateVehicle()), &settingsWindow, SIGNAL(updateVehicle()));
-    connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehicle()));
 
     // Reading the key combination of turning the window to the full screen and back
     QShortcut *keyCtrlF = new QShortcut(this);
-    keyCtrlF->setKey(Qt::CTRL+Qt::Key_F);
+    keyCtrlF->setKey(Qt::CTRL + Qt::Key_F);
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::noFullScreenKey);
 
     // Controller Changed
     controller = new Mouse3d("3dMouse", 5);
-    connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
+    connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this,
+            SLOT(changeController(unsigned int, QString)));
 
     connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
@@ -41,8 +40,8 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     // New vehicle
     connect(action_create_vehicle, SIGNAL(triggered()), this, SLOT(createVehicle()));
     // Choose vehicle and configuration
-    connect(menu_choose_configuration,SIGNAL(triggered(QAction*)), this, SLOT(chooseConfiguration(QAction*)));
-    connect(menu_choose_vehicle, SIGNAL(triggered(QAction*)), this, SLOT(chooseVehicle(QAction*)));
+    connect(menu_choose_configuration, SIGNAL(triggered(QAction * )), this, SLOT(chooseConfiguration(QAction * )));
+    connect(menu_choose_vehicle, SIGNAL(triggered(QAction * )), this, SLOT(chooseVehicle(QAction * )));
     // Settings
     connect(action_config_com, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigRS()));
     connect(action_config_thrusters, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigThruster()));
@@ -86,27 +85,35 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     updateUi();
 }
 
+
+/*!
+ * @brief Reconnect rov
+ */
 void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew Serial_Client
 {
     Serial_Client *serial_client = new Serial_Client();
     serial_client->start();
 
     connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));
-    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client, SLOT(changeSelectedThruster(unsigned int)));
+    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client,
+            SLOT(changeSelectedThruster(unsigned int)));
 }
 
-void MainWindow::createVehicle()
-{
+void MainWindow::createVehicle() {
     wizard.startStateMachine();
     wizard.show();
 }
 
-void MainWindow::chooseVehicle(QAction *action)
-{
+
+/*!
+ * @brief
+ * @param action
+ */
+void MainWindow::chooseVehicle(QAction *action) {
     currentVehicle = action->text();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
-    for(qsizetype i = 0; i < settings->childKeys().size(); i++) {
-        if (settings->value(settings->childKeys().at(i)).toBool()){
+    for (qsizetype i = 0; i < settings->childKeys().size(); i++) {
+        if (settings->value(settings->childKeys().at(i)).toBool()) {
             currentConfiguration = settings->childKeys().at(i);
             break;
         }
@@ -118,108 +125,96 @@ void MainWindow::chooseVehicle(QAction *action)
     emit updateVehicle();
 }
 
-void MainWindow::chooseConfiguration(QAction *action)
-{
+void MainWindow::chooseConfiguration(QAction *action) {
     currentConfiguration = action->text();
     settings->setValue("currentConfiguration", currentConfiguration);
     updateVehicleConfigurationMenu();
 }
 
-void MainWindow::fullScreen()
-{
+void MainWindow::fullScreen() {
     QMainWindow::showFullScreen();
     QMainWindow::menuBar()->setVisible(false);
 }
 
-void MainWindow::noFullScreenKey()
-{
-    if(QMainWindow::windowState() == Qt::WindowFullScreen){
+void MainWindow::noFullScreenKey() {
+    if (QMainWindow::windowState() == Qt::WindowFullScreen) {
         QMainWindow::showNormal();
         QMainWindow::menuBar()->setVisible(true);
     }
 }
 
-void MainWindow::updateVehiclesMenu()
-{
-    if (!currentVehicle.isEmpty()){
+void MainWindow::updateVehiclesMenu() {
+    if (!currentVehicle.isEmpty()) {
         if (!menu_choose_vehicle->isEmpty())
             menu_choose_vehicle->clear();
         settings->beginGroup("vehicle");
-        for (qsizetype i = 0; i < settings->childGroups().size(); i++) {
-            QAction *vehicle = new QAction(settings->childGroups().at(i));
-            if (settings->childGroups().at(i) == currentVehicle){
+        for (auto &key: settings->childGroups()) {
+            auto *vehicle = new QAction(key);
+            if (key == currentVehicle) {
                 QFont f = vehicle->font();
                 f.setBold(true);
                 vehicle->setFont(f);
                 menu_choose_vehicle->addAction(vehicle);
-            }
-            else
+            } else
                 menu_choose_vehicle->addAction(vehicle);
         }
         settings->endGroup();
     }
     settings->sync();
-    qDebug () << currentVehicle;
+    qDebug() << currentVehicle;
     updateVehicleConfigurationMenu();
 }
 
-void MainWindow::updateVehicleConfigurationMenu()
-{
+void MainWindow::updateVehicleConfigurationMenu() {
     menu_choose_configuration->clear();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
     for (qsizetype i = 0; i < settings->childKeys().size(); i++) {
-        if (settings->value(settings->childKeys().at(i)).toBool()){
+        if (settings->value(settings->childKeys().at(i)).toBool()) {
             QAction *configuration = new QAction(settings->childKeys().at(i));
-            if (settings->childKeys().at(i) == currentConfiguration){
+            if (settings->childKeys().at(i) == currentConfiguration) {
                 QFont f = configuration->font();
                 f.setBold(true);
                 configuration->setFont(f);
                 menu_choose_configuration->addAction(configuration);
-            }
-            else
+            } else
                 menu_choose_configuration->addAction(configuration);
         }
     }
     settings->endGroup();
-    qDebug () << currentConfiguration;
+    qDebug() << currentConfiguration;
 }
 
-void MainWindow::checkFile(QString filename)
-{
+void MainWindow::checkFile(QString filename) {
     QFile file(filename);
-    if(QFileInfo::exists(filename))
-    {
+    if (QFileInfo::exists(filename)) {
         file.open(QIODevice::ReadWrite | QIODevice::Text);
         file.close();
-    }
-    else
-    {
+    } else {
         file.open(QIODevice::ReadWrite | QIODevice::Text);
         file.close();
     }
 }
 
-void MainWindow::updateVehicleUi()
-{
+void MainWindow::updateVehicleUi() {
     currentVehicle = settings->value("currentVehicle").toString();
     thrustersCount = settings->value("vehicle/" + currentVehicle + "/thrusters/count").toInt();
     //update bars
-    foreach (QProgressBar *bar, thrusterBarGroup) {
-        bar->hide();
-    }
-    for (int i = 0; i < thrustersCount; i++){
+            foreach (QProgressBar *bar, thrusterBarGroup) {
+            bar->hide();
+        }
+    for (int i = 0; i < thrustersCount; i++) {
         thrusterBarGroup[i]->show();
-        thrusterBarGroup[i]->setFormat(settings->value("vehicle/" + currentVehicle + "/thrusters/" + QString::number(i) + "/name").toString());
+        thrusterBarGroup[i]->setFormat(
+                settings->value("vehicle/" + currentVehicle + "/thrusters/" + QString::number(i) + "/name").toString());
     }
     initializeDataUi();
     updateUi();
 }
 
-void MainWindow::initializeDataUi()
-{
-    foreach (QProgressBar *bar, thrusterBarGroup) {
-        bar->setValue(0);
-    }
+void MainWindow::initializeDataUi() {
+            foreach (QProgressBar *bar, thrusterBarGroup) {
+            bar->setValue(0);
+        }
     pitchBar->setValue(0);
     depthBar->setValue(0);
     depthLabel->setText("0");   // label under bar
@@ -231,19 +226,18 @@ void MainWindow::initializeDataUi()
     emit updateCompass(0);
 }
 
-void MainWindow::updateUi()
-{
+void MainWindow::updateUi() {
     // Get data from UVState object
     ImuData sensors = uv_interface.getImuData();
 
     // Update user interface
-    depthBar->setValue(static_cast<int>(sensors.depth*depthLin + depthOffset));   // bar
+    depthBar->setValue(static_cast<int>(sensors.depth * depthLin + depthOffset));   // bar
     pitchBar->setValue(static_cast<int>(sensors.pitch));   // bar
 
-    depthLabel->setText(QString::number(sensors.depth *depthLin + depthOffset , 'f', 2));   // label under bar
+    depthLabel->setText(QString::number(sensors.depth * depthLin + depthOffset, 'f', 2));   // label under bar
     pitchLabel->setText(QString::number(sensors.pitch, 'f', 2));   // label under bar
 
-    sensorsDepthLabel->setText(QString::number(sensors.depth*depthLin + depthOffset, 'f', 2));
+    sensorsDepthLabel->setText(QString::number(sensors.depth * depthLin + depthOffset, 'f', 2));
     sensorsPitchLabel->setText(QString::number(sensors.pitch, 'f', 2));
 
     sensorsYawLabel->setText(QString::number(sensors.yaw, 'f', 2));
@@ -261,14 +255,14 @@ void MainWindow::updateUi()
     label_roll->setText(QString::number(control.roll, 'f', 2));
 
     label_grabber->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB), 'f', 2));
-    label_grabber_rotation->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE), 'f', 2));
+    label_grabber_rotation->setText(
+            QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE), 'f', 2));
     label_tilt->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_TILT), 'f', 2));
 //    qDebug() << "updateData";
 }
 
 // TODO это больше не нужно
-void MainWindow::checkboxChecked(int i)
-{
+void MainWindow::checkboxChecked(int i) {
 //    UV_State *state;
 //    IBasicData interface(&UVState, &UVMutex);
 //    state = interface.gainAccess();
@@ -281,37 +275,34 @@ void MainWindow::checkboxChecked(int i)
 //    interface.closeAccess();
 }
 
-void MainWindow::resetImu()
-{
+void MainWindow::resetImu() {
     IUserInterfaceData interface;
     interface.setResetImuValue(true);
 }
 
-void MainWindow::clearResetImu()
-{
+void MainWindow::clearResetImu() {
     IUserInterfaceData interface;
     interface.setResetImuValue(false);
 }
 
 void MainWindow::changeController(unsigned int current_device, QString name) //TODO: переделать под управляющий класс
 {
-    if(controller != nullptr) {
+    if (controller != nullptr) {
         delete controller;
     }
     switch (current_device) {
-    case 0:
-        controller = new Mouse3d("3dMouse", 5);
-        break;
-    case 1:
-        controller = new Mouse3d("3dMouse", 5);
-        break;
-    case 2:
-        controller = new Joystick(name, 10, 0); //default id = 0;
-        break;
+        case 0:
+            controller = new Mouse3d("3dMouse", 5);
+            break;
+        case 1:
+            controller = new Mouse3d("3dMouse", 5);
+            break;
+        case 2:
+            controller = new Joystick(name, 10, 0); //default id = 0;
+            break;
     }
 }
 
-void MainWindow::reconnectcROVclick()
-{
+void MainWindow::reconnectcROVclick() {
     emit reconnectROV();
 }
