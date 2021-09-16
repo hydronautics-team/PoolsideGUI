@@ -50,8 +50,6 @@ private slots:
 
     void updateUi();
 
-    void checkboxChecked(int i);
-
     void resetImu();
 
     void clearResetImu();

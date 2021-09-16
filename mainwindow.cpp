@@ -71,7 +71,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 
     connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
-    connect(checkBoxStabilizeRoll, SIGNAL(stateChanged(int)), this, SLOT(checkboxChecked(int)));
     connect(pushButtonResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
     connect(pushButtonResetIMU, SIGNAL(released()), this, SLOT(clearResetImu()));
 
@@ -261,19 +260,6 @@ void MainWindow::updateUi() {
 //    qDebug() << "updateData";
 }
 
-// TODO это больше не нужно
-void MainWindow::checkboxChecked(int i) {
-//    UV_State *state;
-//    IBasicData interface(&UVState, &UVMutex);
-//    state = interface.gainAccess();
-//    if(state->messageType == 0) {
-//        state->messageType = 2;
-//    }
-//    else {
-//        state->messageType = 0;
-//    }
-//    interface.closeAccess();
-}
 
 void MainWindow::resetImu() {
     IUserInterfaceData interface;
