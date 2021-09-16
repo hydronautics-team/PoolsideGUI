@@ -43,7 +43,7 @@ private slots:
 
     //import from old interface
     void updateVehicleUi();
-    void updateDataUi();
+    void updateUi();
     void checkboxChecked(int i);
     void resetImu();
     void clearResetImu();

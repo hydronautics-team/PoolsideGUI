@@ -63,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     currentConfiguration = settings->value("currentConfiguration").toString();
     emit updateVehicle();
 
-    emit reconnectROV();
+    reconnectROV();
 
     udp_client = new UDP_Client();
     udp_client->start();
@@ -83,7 +83,7 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     vehiclePic->scene()->addPixmap(QPixmap(":/images/Cousteau_2A.png"))->setTransform(QTransform::fromScale(0.2, 0.2));
 
     initializeDataUi();
-    updateDataUi();
+    updateUi();
 }
 
 void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew Serial_Client
@@ -91,15 +91,8 @@ void MainWindow::reconnectROV() // TODO: присутствует утечка �
     Serial_Client *serial_client = new Serial_Client();
     serial_client->start();
 
-    connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateDataUi()));
+    connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));
     connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client, SLOT(changeSelectedThruster(unsigned int)));
-
-
-    UDP_Client *udp_client = new UDP_Client();
-    udp_client->start();
-
-    connect(udp_client, SIGNAL(dataUpdated()), this, SLOT(updateData()));
-    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 }
 
 void MainWindow::createVehicle()
@@ -112,9 +105,9 @@ void MainWindow::chooseVehicle(QAction *action)
 {
     currentVehicle = action->text();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
-    foreach (QString name, settings->childKeys()) {
-        if (settings->value(name).toBool()){
-            currentConfiguration = name;
+    for(qsizetype i = 0; i < settings->childKeys().size(); i++) {
+        if (settings->value(settings->childKeys().at(i)).toBool()){
+            currentConfiguration = settings->childKeys().at(i);
             break;
         }
     }
@@ -152,9 +145,9 @@ void MainWindow::updateVehiclesMenu()
         if (!menu_choose_vehicle->isEmpty())
             menu_choose_vehicle->clear();
         settings->beginGroup("vehicle");
-        foreach (QString name, settings->childGroups()) {
-            QAction *vehicle = new QAction(name);
-            if (name == currentVehicle){
+        for (qsizetype i = 0; i < settings->childGroups().size(); i++) {
+            QAction *vehicle = new QAction(settings->childGroups().at(i));
+            if (settings->childGroups().at(i) == currentVehicle){
                 QFont f = vehicle->font();
                 f.setBold(true);
                 vehicle->setFont(f);
@@ -174,10 +167,10 @@ void MainWindow::updateVehicleConfigurationMenu()
 {
     menu_choose_configuration->clear();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
-    foreach (QString name, settings->childKeys()) {
-        if (settings->value(name).toBool()){
-            QAction *configuration = new QAction(name);
-            if (name == currentConfiguration){
+    for (qsizetype i = 0; i < settings->childKeys().size(); i++) {
+        if (settings->value(settings->childKeys().at(i)).toBool()){
+            QAction *configuration = new QAction(settings->childKeys().at(i));
+            if (settings->childKeys().at(i) == currentConfiguration){
                 QFont f = configuration->font();
                 f.setBold(true);
                 configuration->setFont(f);
@@ -219,7 +212,7 @@ void MainWindow::updateVehicleUi()
         thrusterBarGroup[i]->setFormat(settings->value("vehicle/" + currentVehicle + "/thrusters/" + QString::number(i) + "/name").toString());
     }
     initializeDataUi();
-    updateDataUi();
+    updateUi();
 }
 
 void MainWindow::initializeDataUi()
@@ -238,7 +231,7 @@ void MainWindow::initializeDataUi()
     emit updateCompass(0);
 }
 
-void MainWindow::updateDataUi()
+void MainWindow::updateUi()
 {
     // Get data from UVState object
     ImuData sensors = uv_interface.getImuData();
@@ -300,7 +293,7 @@ void MainWindow::clearResetImu()
     interface.setResetImuValue(false);
 }
 
-void MainWindow::changeController(unsigned int current_device, QString name)
+void MainWindow::changeController(unsigned int current_device, QString name) //TODO: переделать под управляющий класс
 {
     if(controller != nullptr) {
         delete controller;
@@ -322,4 +315,3 @@ void MainWindow::reconnectcROVclick()
 {
     emit reconnectROV();
 }
-
