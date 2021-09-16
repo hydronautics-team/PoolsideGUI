@@ -19,7 +19,7 @@ bool Serial_Client::portConnect(int port)
 {
     QString str;
 #ifdef unix
-    str = "/dev/ttyUSB";
+    str = "/dev/ttyUSB"; // небходимо открыть доступ к порту не из под sudo (sudo chmod a+rwx /dev/ttyUSBx)
 #else
     str = "COM";
 #endif
@@ -50,7 +50,7 @@ bool Serial_Client::portConnect(int port)
 void Serial_Client::run()
 {
     bool opened = false;
-    for(int i=1; i<MAX_COM_ID; i++) {
+    for(int i=0; i<MAX_COM_ID; i++) {
         opened = portConnect(i);
         if(opened) {
             break;
