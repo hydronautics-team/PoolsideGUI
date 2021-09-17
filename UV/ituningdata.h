@@ -6,8 +6,7 @@
 /** \brief Interface for accessing data in UV_State to alter specific thruster parameters
  *
  */
-class ITuningData : public IBasicData
-{
+class ITuningData : public IBasicData {
 public:
     ITuningData();
 

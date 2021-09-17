@@ -4,8 +4,7 @@
 #include <QString>
 
 
-class UV_Thruster
-{
+class UV_Thruster {
 public:
     UV_Thruster();
 

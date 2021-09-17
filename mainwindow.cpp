@@ -204,22 +204,22 @@ void MainWindow::updateVehicleUi()
     currentVehicle = settings->value("currentVehicle").toString();
     thrustersCount = settings->value("vehicle/" + currentVehicle + "/thrusters/count").toInt();
     //update bars
-    foreach (QProgressBar *bar, thrusterBarGroup) {
-        bar->hide();
-    }
-    for (int i = 0; i < thrustersCount; i++){
+            foreach (QProgressBar *bar, thrusterBarGroup) {
+            bar->hide();
+        }
+    for (int i = 0; i < thrustersCount; i++) {
         thrusterBarGroup[i]->show();
-        thrusterBarGroup[i]->setFormat(settings->value("vehicle/" + currentVehicle + "/thrusters/" + QString::number(i) + "/name").toString());
+        thrusterBarGroup[i]->setFormat(
+                settings->value("vehicle/" + currentVehicle + "/thrusters/" + QString::number(i) + "/name").toString());
     }
     initializeDataUi();
     updateUi();
 }
 
-void MainWindow::initializeDataUi()
-{
-    foreach (QProgressBar *bar, thrusterBarGroup) {
-        bar->setValue(0);
-    }
+void MainWindow::initializeDataUi() {
+            foreach (QProgressBar *bar, thrusterBarGroup) {
+            bar->setValue(0);
+        }
     pitchBar->setValue(0);
     depthBar->setValue(0);
     depthLabel->setText("0");   // label under bar
@@ -231,19 +231,18 @@ void MainWindow::initializeDataUi()
     emit updateCompass(0);
 }
 
-void MainWindow::updateUi()
-{
+void MainWindow::updateUi() {
     // Get data from UVState object
     ImuData sensors = uv_interface.getImuData();
 
     // Update user interface
-    depthBar->setValue(static_cast<int>(sensors.depth*depthLin + depthOffset));   // bar
+    depthBar->setValue(static_cast<int>(sensors.depth * depthLin + depthOffset));   // bar
     pitchBar->setValue(static_cast<int>(sensors.pitch));   // bar
 
-    depthLabel->setText(QString::number(sensors.depth *depthLin + depthOffset , 'f', 2));   // label under bar
+    depthLabel->setText(QString::number(sensors.depth * depthLin + depthOffset, 'f', 2));   // label under bar
     pitchLabel->setText(QString::number(sensors.pitch, 'f', 2));   // label under bar
 
-    sensorsDepthLabel->setText(QString::number(sensors.depth*depthLin + depthOffset, 'f', 2));
+    sensorsDepthLabel->setText(QString::number(sensors.depth * depthLin + depthOffset, 'f', 2));
     sensorsPitchLabel->setText(QString::number(sensors.pitch, 'f', 2));
 
     sensorsYawLabel->setText(QString::number(sensors.yaw, 'f', 2));
@@ -261,7 +260,8 @@ void MainWindow::updateUi()
     label_roll->setText(QString::number(control.roll, 'f', 2));
 
     label_grabber->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB), 'f', 2));
-    label_grabber_rotation->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE), 'f', 2));
+    label_grabber_rotation->setText(
+            QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB_ROTATE), 'f', 2));
     label_tilt->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_TILT), 'f', 2));
 //    qDebug() << "updateData";
 }
@@ -281,37 +281,34 @@ void MainWindow::checkboxChecked(int i)
 //    interface.closeAccess();
 }
 
-void MainWindow::resetImu()
-{
+void MainWindow::resetImu() {
     IUserInterfaceData interface;
     interface.setResetImuValue(true);
 }
 
-void MainWindow::clearResetImu()
-{
+void MainWindow::clearResetImu() {
     IUserInterfaceData interface;
     interface.setResetImuValue(false);
 }
 
 void MainWindow::changeController(unsigned int current_device, QString name) //TODO: переделать под управляющий класс
 {
-    if(controller != nullptr) {
+    if (controller != nullptr) {
         delete controller;
     }
     switch (current_device) {
-    case 0:
-        controller = new Mouse3d("3dMouse", 5);
-        break;
-    case 1:
-        controller = new Mouse3d("3dMouse", 5);
-        break;
-    case 2:
-        controller = new Joystick(name, 10, 0); //default id = 0;
-        break;
+        case 0:
+            controller = new Mouse3d("3dMouse", 5);
+            break;
+        case 1:
+            controller = new Mouse3d("3dMouse", 5);
+            break;
+        case 2:
+            controller = new Joystick(name, 10, 0); //default id = 0;
+            break;
     }
 }
 
-void MainWindow::reconnectcROVclick()
-{
+void MainWindow::reconnectcROVclick() {
     emit reconnectROV();
 }

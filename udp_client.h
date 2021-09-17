@@ -8,9 +8,8 @@
 
 #include "UV/iserverdata.h"
 
-class UDP_Client : public QThread
-{
-    Q_OBJECT
+class UDP_Client : public QThread {
+Q_OBJECT
 
 public:
     UDP_Client();
@@ -35,6 +34,7 @@ private:
     void connectToHost();
 
 private slots:
+
     void readPendingDatagrams();
 };
 

@@ -6,20 +6,21 @@
 #include <QVector>
 #include <QDebug>
 
-class Joystick : public ControlBase
-{
-    Q_OBJECT
+class Joystick : public ControlBase {
+Q_OBJECT
 
 public:
     Joystick(QString name, int update_time, unsigned int joy_id);
 
     int getID();
+
     float marchTrim, yawTrim;
     float marchYawTrim = -0.2;
     bool ignoreAxis = false;
     int ignoreAxisID = 6;
 
 public slots:
+
     void updateDevice();
 
 private:

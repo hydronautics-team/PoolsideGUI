@@ -3,8 +3,7 @@
 double X[2000][2];
 
 VehicleSettings::VehicleSettings(QWidget *parent) :
-    QWidget(parent)
-{
+        QWidget(parent) {
 //    connect(server, &Server::updateCsView, mainWindow,
 //            &MainWindow::update_csView);
 //    connect(mainWindow, &MainWindow::reset_IMU_btn_clicked,
@@ -26,51 +25,43 @@ VehicleSettings::VehicleSettings(QWidget *parent) :
     X_Protocol = new x_protocol("protocols.conf", "xi", X);
 }
 
-void VehicleSettings::updateData()
-{
+void VehicleSettings::updateData() {
     updateLabels();
     updateSpinboxes();
     updateVariables_KX();
 }
 
-void VehicleSettings::on_radioButton_CS_MarchSelect_released()
-{
+void VehicleSettings::on_radioButton_CS_MarchSelect_released() {
     current_contour = CONTOUR_MARCH;
     updateData();
 }
 
-void VehicleSettings::on_radioButton_CS_LagSelect_released()
-{
+void VehicleSettings::on_radioButton_CS_LagSelect_released() {
     current_contour = CONTOUR_LAG;
     updateData();
 }
 
-void VehicleSettings::on_radioButton_CS_YawSelect_released()
-{
+void VehicleSettings::on_radioButton_CS_YawSelect_released() {
     current_contour = CONTOUR_YAW;
     updateData();
 }
 
-void VehicleSettings::on_radioButton_CS_DepthSelect_released()
-{
+void VehicleSettings::on_radioButton_CS_DepthSelect_released() {
     current_contour = CONTOUR_DEPTH;
     updateData();
 }
 
-void VehicleSettings::on_radioButton_CS_RollSelect_released()
-{
+void VehicleSettings::on_radioButton_CS_RollSelect_released() {
     current_contour = CONTOUR_ROLL;
     updateData();
 }
 
-void VehicleSettings::on_radioButton_CS_PitchSelect_released()
-{
+void VehicleSettings::on_radioButton_CS_PitchSelect_released() {
     current_contour = CONTOUR_PITCH;
     updateData();
 }
 
-void VehicleSettings::updateLabels()
-{
+void VehicleSettings::updateLabels() {
     // Secure updating UVState structure
     UV_ControlContour data = uv_interface->getControlContourData(current_contour);
 
@@ -90,8 +81,7 @@ void VehicleSettings::updateLabels()
     lineEdit_CS_outputSignal->setText(QString::number(static_cast<double>(data.state.outputSignal), 'f', 2));
 }
 
-void VehicleSettings::updateSpinboxes()
-{
+void VehicleSettings::updateSpinboxes() {
     // Secure updating UVState structure
     UV_ControlContour data = uv_interface->getControlContourData(current_contour);
 
@@ -115,8 +105,7 @@ void VehicleSettings::updateSpinboxes()
     doubleSpinBox_CS_thrustersFilterT->setValue(static_cast<double>(data.constant.thrustersFilterT));
 }
 
-void VehicleSettings::saveSpinboxes()
-{
+void VehicleSettings::saveSpinboxes() {
     UV_ControlContour data;
 
     data.constant.pJoyUnitCast = static_cast<float>(doubleSpinBox_CS_pJoyUnitCast->value());
@@ -141,8 +130,7 @@ void VehicleSettings::saveSpinboxes()
     uv_interface->setControlContourData(current_contour, data);
 }
 
-void VehicleSettings::updateVariables_KX()
-{
+void VehicleSettings::updateVariables_KX() {
     // Secure updating UVState structure
     UV_ControlContour data = uv_interface->getControlContourData(current_contour);
 

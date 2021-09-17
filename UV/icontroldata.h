@@ -3,8 +3,7 @@
 
 #include "ibasicdata.h"
 
-class IControlData : public IBasicData
-{
+class IControlData : public IBasicData {
 public:
     IControlData();
 
@@ -16,7 +15,6 @@ public:
     void setRoll(double roll);
     void setPitch(double pitch);
     void setYaw(double yaw);
-
     void setDeviceVelocity(int slot, double velocity);
 };
 

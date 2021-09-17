@@ -3,39 +3,38 @@
 #include <stdexcept>
 
 IUserInterfaceData::IUserInterfaceData()
-    : IBasicData()
-{
+        : IBasicData() {
 
 }
 
-ControlData IUserInterfaceData::getControlData()
-{
+ControlData IUserInterfaceData::getControlData() {
     ControlData data;
+
     UVMutex.lock();
     data = UVState.control;
     UVMutex.unlock();
+
     return data;
 }
 
-ImuData IUserInterfaceData::getImuData()
-{
+ImuData IUserInterfaceData::getImuData() {
     ImuData data;
+
     UVMutex.lock();
     data = UVState.imu;
     UVMutex.unlock();
+
     return data;
 }
 
-UV_Device IUserInterfaceData::getDeviceData(QString name)
-{
+UV_Device IUserInterfaceData::getDeviceData(QString name) {
     UV_Device data;
     UVMutex.lock();
 
-    for(unsigned int i=0; i<UVState.devices_amount; i++) {
-        if(name == UVState.device[i].name) {
+    for (unsigned int i = 0; i < UVState.devices_amount; i++) {
+        if (name == UVState.device[i].name) {
             data = UVState.device[i];
-        }
-        else {
+        } else {
             std::string error = "There is no UV_device with the name: " + name.toStdString();
             throw std::invalid_argument(error);
         }
@@ -45,16 +44,14 @@ UV_Device IUserInterfaceData::getDeviceData(QString name)
     return data;
 }
 
-UV_Thruster IUserInterfaceData::getThrusterData(QString name)
-{
+UV_Thruster IUserInterfaceData::getThrusterData(QString name) {
     UV_Thruster data;
     UVMutex.lock();
 
-    for(unsigned int i=0; i<UVState.devices_amount; i++) {
-        if(name == UVState.thruster[i].name) {
+    for (unsigned int i = 0; i < UVState.devices_amount; i++) {
+        if (name == UVState.thruster[i].name) {
             data = UVState.thruster[i];
-        }
-        else {
+        } else {
             std::string error = "There is no UV_device with the name: " + name.toStdString();
             throw std::invalid_argument("There is no UV_device by this name");
         }
@@ -64,27 +61,21 @@ UV_Thruster IUserInterfaceData::getThrusterData(QString name)
     return data;
 }
 
-double IUserInterfaceData::getDeviceVelocity(int slot)
-{
-    if(static_cast<unsigned int>(slot) >= sizeof(UVState.device)/sizeof(UVState.device[0])) {
+double IUserInterfaceData::getDeviceVelocity(int slot) {
+    if (static_cast<unsigned int>(slot) >= sizeof(UVState.device) / sizeof(UVState.device[0])) {
         return 0;
     }
-
     double data = 0;
 
     UVMutex.lock();
-
     data = UVState.device[slot].velocity;
-
     UVMutex.unlock();
+
     return data;
 }
 
-void IUserInterfaceData::setResetImuValue(bool value)
-{
+void IUserInterfaceData::setResetImuValue(bool value) {
     UVMutex.lock();
-
     UVState.resetImu = value;
-
     UVMutex.unlock();
 }

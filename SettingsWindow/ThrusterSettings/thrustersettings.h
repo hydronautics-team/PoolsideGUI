@@ -8,9 +8,8 @@
 
 #include "UV/ituningdata.h"
 
-class ThrusterSettings : public QWidget, private Ui::ThrusterSettings
-{
-    Q_OBJECT
+class ThrusterSettings : public QWidget, private Ui::ThrusterSettings {
+Q_OBJECT
 
 public:
     explicit ThrusterSettings(QWidget *parent = nullptr);
@@ -33,6 +32,7 @@ private:
 
 private slots:
     void updateThrusterSettings();
+
     void thrusterButtonClicked(int value);
     void thrusterIdChanged(int value);
     void thrusterReverseChanged(int state);

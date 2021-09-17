@@ -1,7 +1,6 @@
 #include "uv_state.h"
 
-ImuData::ImuData()
-{
+ImuData::ImuData() {
     roll = 0;
     pitch = 0;
     yaw = 0;
@@ -11,8 +10,7 @@ ImuData::ImuData()
     depth = 0;
 }
 
-ControlData::ControlData()
-{
+ControlData::ControlData() {
     march = 0;
     lag = 0;
     depth = 0;
@@ -21,8 +19,7 @@ ControlData::ControlData()
     yaw = 0;
 };
 
-UV_State::UV_State()
-{
+UV_State::UV_State() {
     device[UV_Device::DEVICE_LIGHT].name = "Light";
     device[UV_Device::DEVICE_LIGHT].slot = UV_Device::DEVICE_LIGHT;
 

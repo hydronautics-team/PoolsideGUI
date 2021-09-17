@@ -7,8 +7,7 @@
 #include "uv_thruster.h"
 #include "uv_controlcontour.h"
 
-struct ImuData
-{
+struct ImuData {
     ImuData();
 
     double roll;
@@ -20,8 +19,7 @@ struct ImuData
     double depth;
 };
 
-struct ControlData
-{
+struct ControlData {
     ControlData();
 
     double march;
@@ -32,8 +30,7 @@ struct ControlData
     double yaw;
 };
 
-class UV_State
-{
+class UV_State {
 public:
     UV_State();
 

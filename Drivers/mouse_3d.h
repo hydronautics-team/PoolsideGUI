@@ -10,9 +10,8 @@
 #include "SFML/Window.hpp"
 #include "hidapi.h"
 
-class Mouse3d  : public ControlBase
-{
-    Q_OBJECT
+class Mouse3d : public ControlBase {
+Q_OBJECT
 
 public:
     Mouse3d(QString name, int update_time);
@@ -29,8 +28,8 @@ private:
     };
     mouseData mouseDta;
 
-    void parseCoordinate(unsigned char*, short int *); // парсит 2 байта из buf
-    void parseMouse(unsigned char*, mouseData*); // парсит все координаты и кнопки
+    void parseCoordinate(unsigned char *, short int *); // парсит 2 байта из buf
+    void parseMouse(unsigned char *, mouseData *); // парсит все координаты и кнопки
 
     struct control_axis {
         double multiplier;

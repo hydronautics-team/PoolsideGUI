@@ -7,9 +7,8 @@
 
 #include "UV/iserverdata.h"
 
-class Serial_Client : public QThread
-{
-    Q_OBJECT
+class Serial_Client : public QThread {
+Q_OBJECT
 
 public:
     Serial_Client();

@@ -9,9 +9,8 @@
 #include "controlbase.h"
 #include "SFML/Window.hpp"
 
-class Keyboard : public ControlBase
-{
-    Q_OBJECT
+class Keyboard : public ControlBase {
+Q_OBJECT
 
 public:
     Keyboard(QString name, int update_time);

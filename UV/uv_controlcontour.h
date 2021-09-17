@@ -1,8 +1,7 @@
 #ifndef UV_STABILIZATION_H
 #define UV_STABILIZATION_H
 
-enum STABILIZATION_CONTOURS
-{
+enum STABILIZATION_CONTOURS {
     CONTOUR_DEPTH = 0,
     CONTOUR_MARCH,
     CONTOUR_LAG,
@@ -11,8 +10,7 @@ enum STABILIZATION_CONTOURS
     CONTOUR_PITCH
 };
 
-struct UV_StabilizationConstants
-{
+struct UV_StabilizationConstants {
     float pJoyUnitCast;
     float pSpeedDyn;
     float pErrGain;
@@ -37,8 +35,7 @@ struct UV_StabilizationConstants
     float sOutSummatorMin;
 };
 
-struct UV_StabilizationState
-{
+struct UV_StabilizationState {
     float inputSignal;
     float speedSignal;
     float posSignal;
@@ -61,8 +58,7 @@ struct UV_StabilizationState
 /** \brief Base class for stabilization contour of the underwater vehicle
  * UV can receive configuration messages and send back debug informations about contour
  */
-class UV_ControlContour
-{
+class UV_ControlContour {
 public:
     UV_ControlContour();
 

@@ -14,17 +14,14 @@ void addCheckSumm16b(char *pcBlock, int len);
 void set_bit(uint8_t &byte, uint8_t bit, bool state);
 
 IServerData::IServerData()
-    : IBasicData()
-{
+        : IBasicData() {
     currentThruster = 0;
 }
 
-void IServerData::changeCurrentThruster(unsigned int slot)
-{
-    if(slot < UV_State::thrusters_amount) {
+void IServerData::changeCurrentThruster(unsigned int slot) {
+    if (slot < UV_State::thrusters_amount) {
         currentThruster = slot;
-    }
-    else {
+    } else {
         std::string error = "Max thruster slot is: " +
                             std::to_string(UV_State::thrusters_amount) +
                             ", you are trying to change to:" +
@@ -33,11 +30,10 @@ void IServerData::changeCurrentThruster(unsigned int slot)
     }
 }
 
-QByteArray IServerData::generateMessage(int message_type)
-{
+QByteArray IServerData::generateMessage(int message_type) {
     QByteArray formed;
     formed.clear();
-    switch(message_type) {
+    switch (message_type) {
         case MESSAGE_NORMAL:
             formed = generateNormalMessage();
             break;
@@ -51,8 +47,7 @@ QByteArray IServerData::generateMessage(int message_type)
     return formed;
 }
 
-QByteArray IServerData::generateNormalMessage()
-{
+QByteArray IServerData::generateNormalMessage() {
     QByteArray msg;
     msg.clear();
     QDataStream stream(&msg, QIODevice::Append);
@@ -70,7 +65,7 @@ QByteArray IServerData::generateNormalMessage()
     stream << req.roll;
     stream << req.pitch;
     stream << req.yaw;
-    for(int i=0; i<DevAmount; i++) {
+    for (int i = 0; i < DevAmount; i++) {
         stream << req.dev[i];
     }
     stream << req.lag_error;
@@ -85,8 +80,7 @@ QByteArray IServerData::generateNormalMessage()
     return msg;
 }
 
-void IServerData::fillStructure(RequestNormalMessage &req)
-{
+void IServerData::fillStructure(RequestNormalMessage &req) {
     req.flags = 0;
 
     UVMutex.lock();
@@ -99,7 +93,7 @@ void IServerData::fillStructure(RequestNormalMessage &req)
     req.pitch = resizeDoubleToInt16(UVState.control.pitch);
     req.yaw = resizeDoubleToInt16(UVState.control.yaw);
 
-    for(int i=0; i<DevAmount; i++) {
+    for (int i = 0; i < DevAmount; i++) {
         req.dev[i] = resizeDoubleToInt8(UVState.device[i].velocity);
     }
 
@@ -116,8 +110,7 @@ void IServerData::fillStructure(RequestNormalMessage &req)
     UVMutex.unlock();
 }
 
-QByteArray IServerData::generateConfigMessage()
-{
+QByteArray IServerData::generateConfigMessage() {
     QByteArray msg;
     msg.clear();
     QDataStream stream(&msg, QIODevice::Append);
@@ -166,13 +159,11 @@ QByteArray IServerData::generateConfigMessage()
 }
 
 // TODO: deal with filling config message
-void IServerData::fillStructure(RequestConfigMessage &req)
-{
+void IServerData::fillStructure(RequestConfigMessage &req) {
     req.lag = 0;
 }
 
-QByteArray IServerData::generateDirectMessage()
-{
+QByteArray IServerData::generateDirectMessage() {
     QByteArray msg;
     msg.clear();
     QDataStream stream(&msg, QIODevice::Append);
@@ -198,8 +189,7 @@ QByteArray IServerData::generateDirectMessage()
     return msg;
 }
 
-void IServerData::fillStructure(RequestDirectMessage &req)
-{
+void IServerData::fillStructure(RequestDirectMessage &req) {
     UVMutex.lock();
 
     req.number = currentThruster;
@@ -218,30 +208,28 @@ void IServerData::fillStructure(RequestDirectMessage &req)
     UVMutex.unlock();
 }
 
-void IServerData::parseMessage(QByteArray message, int message_type)
-{
-    switch(message_type) {
-    case MESSAGE_NORMAL:
-        parseNormalMessage(message);
-        break;
-    case MESSAGE_CONFIG:
-        parseConfigMessage(message);
-        break;
-    case MESSAGE_DIRECT:
-        parseDirectMessage(message);
-        break;
-    default:
-        std::stringstream stream;
-        stream << "Incorrect message type: [" << message_type << "]";
-        throw std::invalid_argument(stream.str());
+void IServerData::parseMessage(QByteArray message, int message_type) {
+    switch (message_type) {
+        case MESSAGE_NORMAL:
+            parseNormalMessage(message);
+            break;
+        case MESSAGE_CONFIG:
+            parseConfigMessage(message);
+            break;
+        case MESSAGE_DIRECT:
+            parseDirectMessage(message);
+            break;
+        default:
+            std::stringstream stream;
+            stream << "Incorrect message type: [" << message_type << "]";
+            throw std::invalid_argument(stream.str());
     }
 }
 
-void IServerData::parseNormalMessage(QByteArray msg)
-{
+void IServerData::parseNormalMessage(QByteArray msg) {
     ResponseNormalMessage res;
 
-    uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size()-2);
+    uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size() - 2);
 
     QDataStream stream(&msg, QIODevice::ReadOnly);
     stream.setByteOrder(QDataStream::LittleEndian);
@@ -261,11 +249,11 @@ void IServerData::parseNormalMessage(QByteArray msg)
     stream >> res.dev_state;
     stream >> res.leak_data;
 
-    for(int i=0; i<VmaAmount; i++) {
+    for (int i = 0; i < VmaAmount; i++) {
         stream >> res.vma_current[i];
     }
 
-    for(int i=0; i<DevAmount; i++) {
+    for (int i = 0; i < DevAmount; i++) {
         stream >> res.dev_current[i];
     }
 
@@ -275,20 +263,19 @@ void IServerData::parseNormalMessage(QByteArray msg)
 
     stream >> res.checksum;
 
-    if(res.checksum != checksum_calc) {
+    if (res.checksum != checksum_calc) {
         std::stringstream stream;
         stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
-                            std::ios::hex << checksum_calc << "] " <<
-                            "Received: [" <<
-                            std::ios::hex << res.checksum << "]";
+               std::ios::hex << checksum_calc << "] " <<
+               "Received: [" <<
+               std::ios::hex << res.checksum << "]";
         throw std::invalid_argument(stream.str());
     }
 
     pullFromStructure(res);
 }
 
-void IServerData::pullFromStructure(ResponseNormalMessage res)
-{
+void IServerData::pullFromStructure(ResponseNormalMessage res) {
     UVMutex.lock();
 
     UVState.imu.roll = static_cast<double>(res.roll);
@@ -317,11 +304,10 @@ void IServerData::pullFromStructure(ResponseNormalMessage res)
     UVMutex.unlock();
 }
 
-void IServerData::parseConfigMessage(QByteArray msg)
-{
+void IServerData::parseConfigMessage(QByteArray msg) {
     ResponseConfigMessage res;
 
-    uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size()-2);
+    uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size() - 2);
 
     QDataStream stream(&msg, QIODevice::ReadOnly);
 
@@ -358,12 +344,12 @@ void IServerData::parseConfigMessage(QByteArray msg)
 
     stream >> res.checksum;
 
-    if(res.checksum != checksum_calc) {
+    if (res.checksum != checksum_calc) {
         std::stringstream stream;
         stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
-                            std::ios::hex << checksum_calc << "] " <<
-                            "Received: [" <<
-                            std::ios::hex << res.checksum << "]";
+               std::ios::hex << checksum_calc << "] " <<
+               "Received: [" <<
+               std::ios::hex << res.checksum << "]";
         throw std::invalid_argument(stream.str());
     }
 
@@ -371,16 +357,14 @@ void IServerData::parseConfigMessage(QByteArray msg)
 }
 
 // TODO finish responseconfigmessage structure pulling
-void IServerData::pullFromStructure(ResponseConfigMessage res)
-{
+void IServerData::pullFromStructure(ResponseConfigMessage res) {
     res.yaw = 0;
 }
 
-void IServerData::parseDirectMessage(QByteArray msg)
-{
+void IServerData::parseDirectMessage(QByteArray msg) {
     ResponseDirectMessage res;
 
-    uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size()-2);
+    uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size() - 2);
 
     QDataStream stream(&msg, QIODevice::ReadOnly);
 
@@ -390,12 +374,12 @@ void IServerData::parseDirectMessage(QByteArray msg)
 
     stream >> res.checksum;
 
-    if(res.checksum != checksum_calc) {
+    if (res.checksum != checksum_calc) {
         std::stringstream stream;
         stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
-                            std::ios::hex << checksum_calc << "] " <<
-                            "Received: [" <<
-                            std::ios::hex << res.checksum << "]";
+               std::ios::hex << checksum_calc << "] " <<
+               "Received: [" <<
+               std::ios::hex << res.checksum << "]";
         throw std::invalid_argument(stream.str());
     }
 
@@ -403,30 +387,26 @@ void IServerData::parseDirectMessage(QByteArray msg)
 }
 
 // TODO finish ResponseDirectMessage structure pulling
-void IServerData::pullFromStructure(ResponseDirectMessage res)
-{
+void IServerData::pullFromStructure(ResponseDirectMessage res) {
     res.number = 9;
 //    res.connection;
 //    res.current;
 }
 
-int16_t resizeDoubleToInt16(double input)
-{
+int16_t resizeDoubleToInt16(double input) {
     int16_t output = 0;
     output = static_cast<int16_t>(input);
     return output;
 }
 
-int8_t resizeDoubleToInt8(double input)
-{
+int8_t resizeDoubleToInt8(double input) {
     int16_t output = 0;
     output = static_cast<int8_t>(input);
     return output;
 }
 
 /* CRC16-CCITT algorithm */
-uint16_t getCheckSumm16b(char *pcBlock, int len)
-{
+uint16_t getCheckSumm16b(char *pcBlock, int len) {
     uint16_t crc = 0xFFFF;
     //int crc_fix = reinterpret_cast<int*>(&crc);
     uint8_t i;
@@ -440,35 +420,30 @@ uint16_t getCheckSumm16b(char *pcBlock, int len)
     return crc;
 }
 
-uint8_t isCheckSumm16bCorrect(char *pcBlock, int len)
-{
+uint8_t isCheckSumm16bCorrect(char *pcBlock, int len) {
     uint16_t crc_calculated = getCheckSumm16b(pcBlock, len);
 
-    uint16_t *crc_pointer = reinterpret_cast<uint16_t*>(&pcBlock[len-2]);
+    uint16_t *crc_pointer = reinterpret_cast<uint16_t *>(&pcBlock[len - 2]);
     uint16_t crc_got = *crc_pointer;
 
-    if(crc_got == crc_calculated) {
+    if (crc_got == crc_calculated) {
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-void addCheckSumm16b(char *pcBlock, int len)
-{
+void addCheckSumm16b(char *pcBlock, int len) {
     uint16_t crc = getCheckSumm16b(pcBlock, len);
-    uint16_t *crc_pointer = reinterpret_cast<uint16_t*>(&pcBlock[len-2]);
+    uint16_t *crc_pointer = reinterpret_cast<uint16_t *>(&pcBlock[len - 2]);
     *crc_pointer = crc;
 }
 
-void set_bit(uint8_t &byte, uint8_t bit, bool state)
-{
+void set_bit(uint8_t &byte, uint8_t bit, bool state) {
     uint8_t value = 1;
-    if(state) {
+    if (state) {
         byte = byte | (value << bit);
-    }
-    else {
+    } else {
         byte = byte & ~(value << bit);
     }
 }

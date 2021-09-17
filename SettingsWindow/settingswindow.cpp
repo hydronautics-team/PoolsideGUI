@@ -3,8 +3,7 @@
 #include "SFML/Window.hpp"
 
 SettingsWindow::SettingsWindow(QWidget *parent) :
-    QWidget(parent)
-{
+        QWidget(parent) {
     setupUi(this);
 
     connect(this, SIGNAL(updateVehicle()),
@@ -51,36 +50,31 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     connect(comboBox_device, SIGNAL(currentIndexChanged(int)), this, SLOT(changeDevice(int)));
 }
 
-void SettingsWindow::showPageConfigThruster()
-{
+void SettingsWindow::showPageConfigThruster() {
     this->show();
     stackedWidget->setCurrentWidget(pageConfigThruster);
     this->setWindowTitle("Thruster settings");
 }
 
-void SettingsWindow::showPageConfigRS()
-{
+void SettingsWindow::showPageConfigRS() {
     this->show();
     stackedWidget->setCurrentWidget(pageConfigRS);
     this->setWindowTitle("Communication settings");
 }
 
-void SettingsWindow::showPageConfigSSH()
-{
+void SettingsWindow::showPageConfigSSH() {
     this->show();
     stackedWidget->setCurrentWidget(pageConfigSSH);
     this->setWindowTitle("Communication settings");
 }
 
-void SettingsWindow::showPageConfigCoef()
-{
+void SettingsWindow::showPageConfigCoef() {
     this->show();
     stackedWidget->setCurrentWidget(pageVehicleSettings);
     this->setWindowTitle("Vehicle settings");
 }
 
-void SettingsWindow::showPageConfigControls()
-{
+void SettingsWindow::showPageConfigControls() {
     comboBox_device->clear();
     joystick_list.clear();
 
@@ -96,42 +90,36 @@ void SettingsWindow::showPageConfigControls()
     this->setWindowTitle("Controls settings");
 }
 
-void SettingsWindow::showPageConfigView()
-{
+void SettingsWindow::showPageConfigView() {
     this->show();
     stackedWidget->setCurrentWidget(pageConfigView);
     this->setWindowTitle("View settings");
 }
 
-void SettingsWindow::showPageAboutProgram()
-{
+void SettingsWindow::showPageAboutProgram() {
     this->show();
     stackedWidget->setCurrentWidget(pageAboutProgram);
     this->setWindowTitle("About program");
 }
 
-void SettingsWindow::showPageOtherSettings()
-{
+void SettingsWindow::showPageOtherSettings() {
     this->show();
     stackedWidget->setCurrentWidget(pageOtherSettings);
     this->setWindowTitle("Other settings");
 }
 
-void SettingsWindow::changeDevice(int device_id)
-{
-    if(device_id == 0) {
+void SettingsWindow::changeDevice(int device_id) {
+    if (device_id == 0) {
         // Keyboard
         current_device = 0;
         qDebug() << "current_device 0";
         emit controllerChanged(current_device, "Keyboard");
-    }
-    else if(device_id == 1) {
+    } else if (device_id == 1) {
         // 3D Mouse + mini Keyboard
         current_device = 1;
         qDebug() << "current_device 1";
         emit controllerChanged(current_device, "3dMouse");
-    }
-    else if(device_id > 1) {
+    } else if (device_id > 1) {
         // Joystick Logitech
         current_device = 2;
         qDebug() << "current_device 2";
@@ -146,13 +134,13 @@ void SettingsWindow::timerTickEvent() // при подключенной мыш�
 
     sf::Joystick::update();
 
-    for (unsigned int i = 0; i<=sf::Joystick::ButtonCount; i++) {
+    for (unsigned int i = 0; i <= sf::Joystick::ButtonCount; i++) {
         if (sf::Joystick::isButtonPressed(joystick_id, i)) {
             buttons_list += QString::number(i) + ", ";
         }
     }
 
-    for (unsigned int i = 0; i<=sf::Joystick::AxisCount; i++) {
+    for (unsigned int i = 0; i <= sf::Joystick::AxisCount; i++) {
         if (sf::Joystick::hasAxis(joystick_id, static_cast<sf::Joystick::Axis>(i))) {
             axis_list += QString::number(i) + ", ";
         }
@@ -170,14 +158,22 @@ void SettingsWindow::timerTickEvent() // при подключенной мыш�
     table->setItem(4, 1, new QTableWidgetItem(QString::number(sf::Joystick::getButtonCount(joystick_id))));
     table->setItem(5, 1, new QTableWidgetItem(axis_list));
     table->setItem(6, 1, new QTableWidgetItem(buttons_list));
-    table->setItem(7, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::X))));
-    table->setItem(8, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::Y))));
-    table->setItem(9, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::Z))));
-    table->setItem(10, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::R))));
-    table->setItem(11, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::U))));
-    table->setItem(12, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::V))));
-    table->setItem(13, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::PovX))));
-    table->setItem(14, 1, new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::PovY))));
+    table->setItem(7, 1,
+                   new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::X))));
+    table->setItem(8, 1,
+                   new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::Y))));
+    table->setItem(9, 1,
+                   new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::Z))));
+    table->setItem(10, 1,
+                   new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::R))));
+    table->setItem(11, 1,
+                   new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::U))));
+    table->setItem(12, 1,
+                   new QTableWidgetItem(QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::V))));
+    table->setItem(13, 1, new QTableWidgetItem(
+            QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::PovX))));
+    table->setItem(14, 1, new QTableWidgetItem(
+            QString::number(sf::Joystick::getAxisPosition(joystick_id, sf::Joystick::PovY))));
 
 //    qDebug() << buttons_list;
 }

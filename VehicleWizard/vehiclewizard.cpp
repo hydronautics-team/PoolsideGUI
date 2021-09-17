@@ -5,8 +5,7 @@
 #include "mainwindow.h"
 
 VehicleWizard::VehicleWizard(QWidget *parent) :
-    QWidget(parent)
-{
+        QWidget(parent) {
     setupUi(this);
 
     connect(btnNext, SIGNAL(clicked()), SIGNAL(nextPressed()));
@@ -29,15 +28,15 @@ VehicleWizard::VehicleWizard(QWidget *parent) :
     setParameters->addTransition(this, SIGNAL(nextPressed()), finish);
     setParameters->addTransition(this, SIGNAL(backPressed()), setName);
 
-    idle->assignProperty(stackedWidget,"currentIndex", "0");
+    idle->assignProperty(stackedWidget, "currentIndex", "0");
     idle->assignProperty(btnBack, "enabled", "False");
     idle->assignProperty(btnNext, "text", "Next");
 
-    setName->assignProperty(stackedWidget,"currentIndex", "1");
+    setName->assignProperty(stackedWidget, "currentIndex", "1");
     setName->assignProperty(btnBack, "enabled", "True");
     setName->assignProperty(btnNext, "text", "Next");
 
-    setParameters->assignProperty(stackedWidget,"currentIndex", "2");
+    setParameters->assignProperty(stackedWidget, "currentIndex", "2");
     setParameters->assignProperty(btnNext, "text", "Finish");
 
     stateMachine.addState(idle);
@@ -57,29 +56,24 @@ VehicleWizard::VehicleWizard(QWidget *parent) :
     settingsFile = QApplication::applicationDirPath() + "/settings.ini";
 }
 
-void VehicleWizard::startStateMachine()
-{
+void VehicleWizard::startStateMachine() {
     stateMachine.start();
 }
 
-void VehicleWizard::closeEvent(QCloseEvent *event)
-{
+void VehicleWizard::closeEvent(QCloseEvent *event) {
     stateMachine.stop();
     event->accept();
 }
 
-void VehicleWizard::enableButtonNext()
-{
+void VehicleWizard::enableButtonNext() {
 
 }
 
-void VehicleWizard::enableButtonFinish()
-{
+void VehicleWizard::enableButtonFinish() {
 
 }
 
-void VehicleWizard::finishWizard()
-{
+void VehicleWizard::finishWizard() {
     // save vehicle in settings.ini
     QSettings settings(settingsFile, QSettings::IniFormat);
     settings.beginGroup("vehicle");
@@ -94,16 +88,15 @@ void VehicleWizard::finishWizard()
 
     settings.beginGroup("thrusters");
     settings.setValue("count", thrusters_count);
-    for (int i = 0; i < thrusters_count; i++){
+    for (int i = 0; i < thrusters_count; i++) {
         QString number = QString::number(i);
         QString name;
-        if (!thrustersTable->item(i,0))
+        if (!thrustersTable->item(i, 0))
             name = number;
-        else if (thrustersTable->item(i,0)->text().isEmpty()) {
+        else if (thrustersTable->item(i, 0)->text().isEmpty()) {
             name = number;
-        }
-        else
-            name = thrustersTable->item(i,0)->text();
+        } else
+            name = thrustersTable->item(i, 0)->text();
         settings.beginGroup(number);
         settings.setValue("name", name);
         settings.endGroup();
@@ -119,8 +112,7 @@ void VehicleWizard::finishWizard()
     this->close();
 }
 
-void VehicleWizard::updateThrustersCount()
-{
+void VehicleWizard::updateThrustersCount() {
     thrusters_count = thrustersSpinBox->value();
     thrustersTable->setRowCount(thrusters_count);
 }

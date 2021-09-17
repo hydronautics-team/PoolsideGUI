@@ -2,8 +2,7 @@
 
 unsigned int UV_Device::devices_number = 0;
 
-UV_Device::UV_Device()
-{
+UV_Device::UV_Device() {
     name = "dev_name";
     id = 0;
 
@@ -14,8 +13,7 @@ UV_Device::UV_Device()
     current = 0;
 }
 
-UV_Device::UV_Device(QString dev_name, unsigned int dev_id)
-{
+UV_Device::UV_Device(QString dev_name, unsigned int dev_id) {
     name = dev_name;
     id = dev_id;
 

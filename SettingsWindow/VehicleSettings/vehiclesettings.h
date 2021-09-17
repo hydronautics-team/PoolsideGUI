@@ -10,9 +10,8 @@
 #include "KX_Pult/kx_protocol.h"
 #include "KX_Pult/qkx_coeffs.h"
 
-class VehicleSettings : public QWidget, private Ui::VehicleSettings
-{
-    Q_OBJECT
+class VehicleSettings : public QWidget, private Ui::VehicleSettings {
+Q_OBJECT
 
 public:
     explicit VehicleSettings(QWidget *parent = nullptr);

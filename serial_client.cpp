@@ -7,16 +7,14 @@
 
 const int MAX_COM_ID = 20;
 
-Serial_Client::Serial_Client()
-{
+Serial_Client::Serial_Client() {
     timeoutTimer = new QTimer();
     connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
     interface = new IServerData();
 }
 
-bool Serial_Client::portConnect(int port)
-{
+bool Serial_Client::portConnect(int port) {
     QString str;
 #ifdef unix
     str = "/dev/ttyUSB"; // небходимо открыть доступ к порту не из под sudo (sudo chmod a+rwx /dev/ttyUSBx)
@@ -35,10 +33,9 @@ bool Serial_Client::portConnect(int port)
     serialPort->setStopBits(QSerialPort::StopBits::OneStop);
     serialPort->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
 
-    if(serialPort->open(QIODevice::ReadWrite)) {
+    if (serialPort->open(QIODevice::ReadWrite)) {
         qDebug() << "COM_SERVER: port" << str << "successfully opened!";
-    }
-    else {
+    } else {
 //        qDebug() << " serial port openning error";
 //        qDebug() << serialPort->error();
         delete serialPort;
@@ -47,25 +44,22 @@ bool Serial_Client::portConnect(int port)
     return true;
 }
 
-void Serial_Client::run()
-{
+void Serial_Client::run() {
     bool opened = false;
-    for(int i=0; i<MAX_COM_ID; i++) {
+    for (int i = 0; i < MAX_COM_ID; i++) {
         opened = portConnect(i);
-        if(opened) {
+        if (opened) {
             break;
         }
     }
 
-    if(opened) {
+    if (opened) {
         exec();
     }
 }
 
-int Serial_Client::exec()
-{
-    while(1)
-    {
+int Serial_Client::exec() {
+    while (1) {
         int messageType = MESSAGE_NORMAL;
 
         QByteArray msg;
@@ -93,15 +87,14 @@ int Serial_Client::exec()
             try {
                 interface->parseMessage(msg, messageType);
             }
-            catch(const std::invalid_argument& error) {
+            catch (const std::invalid_argument &error) {
 //                qDebug() << "[SERIAL_CLIENT] Parsing error: " << error.what();
                 exception_caught = true;
             }
-            if(!exception_caught) {
+            if (!exception_caught) {
                 //emit dataUpdated();
             }
-        }
-        else {
+        } else {
 //            qDebug() << "[SERIAL_CLIENT] Didn't receive answer for message " << messageType;
 //            qDebug() << "[SERIAL_CLIENT] Bytes available:" << bytesAvailiable;
             serialPort->readAll();
@@ -111,8 +104,7 @@ int Serial_Client::exec()
     }
 }
 
-void Serial_Client::changeSelectedThruster(unsigned int slot)
-{
+void Serial_Client::changeSelectedThruster(unsigned int slot) {
     interface->changeCurrentThruster(slot);
 }
 

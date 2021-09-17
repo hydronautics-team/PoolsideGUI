@@ -1,7 +1,6 @@
 #include "uv_thruster.h"
 
-UV_Thruster::UV_Thruster()
-{
+UV_Thruster::UV_Thruster() {
     name = "THRUSTER";
 
     id = 0;

@@ -6,9 +6,8 @@
 #include "qmath.h"
 
 class ControlBase :
-        public QObject
-{
-    Q_OBJECT
+        public QObject {
+Q_OBJECT
 
 public:
     ControlBase(QString name, int update_time);
@@ -30,7 +29,7 @@ protected:
         ROTATE_GRAB_LEFT,
         ROTATE_TILT_UP,
         ROTATE_TILT_DOWN
-        };
+    };
 
     void sendAction(e_actionTypes type, double value);
 
@@ -41,14 +40,17 @@ protected:
     void setPitch(double value);
     void setYaw(double value);
     void setTilt(double value);
+
     void clenchGrab(double value);
     void unclenchGrab(double value);
     void rotateGrabRight(double value);
     void rotateGrabLeft(double value);
     void rotateTiltUp(double value);
     void rotateTiltDown(double value);
+
     double Sensitivity(double value, double deadZone, double maxValue);
-    double Sensitivity(double value, double deadZone,double pointX,double pointY, double maxValue);
+    double Sensitivity(double value, double deadZone, double pointX, double pointY, double maxValue);
+
 private:
     IControlData interface;
 };

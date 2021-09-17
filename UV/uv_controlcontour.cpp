@@ -1,7 +1,6 @@
 #include "uv_controlcontour.h"
 
-UV_ControlContour::UV_ControlContour()
-{
+UV_ControlContour::UV_ControlContour() {
     constant.pJoyUnitCast = 0;
     constant.pSpeedDyn = 0;
     constant.pErrGain = 0;

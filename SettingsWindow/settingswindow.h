@@ -8,9 +8,8 @@
 #include "Drivers/joystick.h"
 #include "Drivers/mouse_3d.h"
 
-class SettingsWindow : public QWidget, public Ui::SettingsWindow
-{
-    Q_OBJECT
+class SettingsWindow : public QWidget, public Ui::SettingsWindow {
+Q_OBJECT
 
 signals:
     void updateVehicle();
@@ -31,6 +30,7 @@ public slots:
     void changeDevice(int device_id);
 
 signals:
+
     void controllerChanged(unsigned int id, QString name);
 
 private:

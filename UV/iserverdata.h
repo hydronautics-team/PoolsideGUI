@@ -19,8 +19,7 @@ enum e_MessageTypes {
 /** \brief Interface for accessing data in UV_State to form QByteArray messages
  *
  */
-class IServerData : public IBasicData
-{
+class IServerData : public IBasicData {
 public:
     IServerData();
 
@@ -43,8 +42,7 @@ private:
      * Normal request message contains vehicle movement control data, devices control values and various flags
      * Shore send requests and STM send responses
      */
-    struct RequestNormalMessage
-    {
+    struct RequestNormalMessage {
         /// Type code for the normal message protocol
         const static uint8_t type = 0xA5;
         uint8_t flags;
@@ -67,8 +65,7 @@ private:
      * Normal response message contains various telemetry (orientation sensors, current of the thrusters and devices, leak data and internal errors)
      * Shore send requests and STM send responses
      */
-    struct ResponseNormalMessage
-    {
+    struct ResponseNormalMessage {
         float roll;
         float pitch;
         float yaw;
@@ -97,8 +94,7 @@ private:
      * Configuration request message protocol is used for movement control of the UV and tuning selected stabilization contour
      * Shore send requests and STM send responses
      */
-    struct RequestConfigMessage
-    {
+    struct RequestConfigMessage {
         /// Type code for the normal message protocol
         const static uint8_t type = 0x55;
 
@@ -141,8 +137,7 @@ private:
      * Configuration response message contains orientation sensor information and internal variables of the selected stabilization contour
      * Shore send requests and STM send responses
      */
-    struct ResponseConfigMessage
-    {
+    struct ResponseConfigMessage {
         uint8_t code;
 
         float roll;
@@ -182,8 +177,7 @@ private:
      * Direcy request message protocol is used for controlling and tuning one particular thruster
      * Shore send requests and STM send responses
      */
-    struct RequestDirectMessage
-    {
+    struct RequestDirectMessage {
         /// Type code for the normal message protocol
         const static uint8_t type = 0xAA;
 
@@ -206,8 +200,7 @@ private:
      * Direct response message contains current and status information from particular thruster
      * Shore send requests and STM send responses
      */
-    struct ResponseDirectMessage
-    {
+    struct ResponseDirectMessage {
         uint8_t number;
         uint8_t connection;
         uint16_t current;
