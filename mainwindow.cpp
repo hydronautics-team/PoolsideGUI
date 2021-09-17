@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::noFullScreenKey);
 
     // Controller Changed
-    controller = new Keyboard("Keyboard", 20);
+    controller = new Mouse3d("3dMouse", 5);
     connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this, SLOT(changeController(unsigned int, QString)));
 
     connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
@@ -300,7 +300,7 @@ void MainWindow::changeController(unsigned int current_device, QString name) //T
     }
     switch (current_device) {
     case 0:
-        controller = new Keyboard("Keyboard", 10);
+        controller = new Mouse3d("3dMouse", 5);
         break;
     case 1:
         controller = new Mouse3d("3dMouse", 5);

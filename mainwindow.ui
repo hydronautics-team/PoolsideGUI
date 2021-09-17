@@ -1066,7 +1066,7 @@
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuBarControlBox">
@@ -1242,10 +1242,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ROVModeWidget</class>
+   <class>PicFrame</class>
    <extends>QWidget</extends>
-   <header>rovmodewidget.h</header>
-   <container>1</container>
+   <header>picframe.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
