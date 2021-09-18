@@ -20,9 +20,8 @@
 #include "serial_client.h"
 #include "udp_client.h"
 
-class MainWindow : public QMainWindow, private Ui::MainWindow
-{
-    Q_OBJECT
+class MainWindow : public QMainWindow, private Ui::MainWindow {
+Q_OBJECT
 signals:
     void updateVehicle();
     //import from old interface
@@ -44,7 +43,7 @@ private slots:
     //import from old interface
     void updateVehicleUi();
     void updateUi();
-    void checkboxChecked(int i);
+
     void resetImu();
     void clearResetImu();
 
@@ -81,8 +80,8 @@ private slots:
     void chooseVehicle(QAction *action);
     void chooseConfiguration(QAction *action);
     // full screen key combination
-    void noFullScreenKey();
-    void fullScreen();
+    void fullScreenKey();
+
     void reconnectcROVclick();
 
 };
