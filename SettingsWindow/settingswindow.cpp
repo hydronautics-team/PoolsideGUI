@@ -51,6 +51,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     connect(comboBox_device, SIGNAL(currentIndexChanged(int)), this, SLOT(changeDevice(int)));
 }
 
+SettingsWindow::~SettingsWindow()
+{
+    delete config;
+}
+
 void SettingsWindow::showPageConfigThruster()
 {
     this->show();
@@ -115,6 +120,12 @@ void SettingsWindow::showPageOtherSettings()
     this->show();
     stackedWidget->setCurrentWidget(pageOtherSettings);
     this->setWindowTitle("Other settings");
+}
+
+void SettingsWindow::showSetConfiguration()
+{
+    config = new setConfiguration();
+    config->show();
 }
 
 void SettingsWindow::changeDevice(int device_id)

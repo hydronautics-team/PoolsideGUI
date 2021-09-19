@@ -81,6 +81,7 @@ set(PROJECT_SOURCES
         SettingsWindow/CommunicationSettings/udp_settings.cpp
         SettingsWindow/ThrusterSettings/thrustersettings.cpp
         SettingsWindow/VehicleSettings/vehiclesettings.cpp
+        SettingsWindow/SetConfiguration/setconfiguration.cpp
         UI_Tests/serverdata_test.cpp
         UV/icontroldata.cpp
         UV/ituningdata.cpp
@@ -109,6 +110,7 @@ set(PROJECT_SOURCES
         SettingsWindow/CommunicationSettings/serial_settings.h
         SettingsWindow/CommunicationSettings/udp_settings.h
         SettingsWindow/VehicleSettings/vehiclesettings.h
+        SettingsWindow/SetConfiguration/setconfiguration.h
         UI_Tests/serverdata_test.h
         UV/ibasicdata.h
         UV/icontroldata.h
@@ -131,6 +133,7 @@ set(PROJECT_SOURCES
         SettingsWindow/CommunicationSettings/udp_settings.ui
         SettingsWindow/ThrusterSettings/thrustersettings.ui
         SettingsWindow/VehicleSettings/vehiclesettings.ui
+        SettingsWindow/SetConfiguration/setconfiguration.ui
         VehicleWizard/vehiclewizard.ui
         mainwindow.ui
         SettingsWindow/settingswindow.ui
@@ -145,6 +148,7 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS
         SettingsWindow/VehicleSettings
         SettingsWindow/ThrusterSettings
         SettingsWindow/CommunicationSettings
+        SettingsWindow/SetConfiguration
         VehicleWizard
         PicFrame
         )
