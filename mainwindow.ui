@@ -1066,45 +1066,8 @@
      <x>0</x>
      <y>0</y>
      <width>966</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
-   </property>
-   <property name="palette">
-    <palette>
-     <active>
-      <colorrole role="ButtonText">
-       <brush brushstyle="SolidPattern">
-        <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
-        </color>
-       </brush>
-      </colorrole>
-     </active>
-     <inactive>
-      <colorrole role="ButtonText">
-       <brush brushstyle="SolidPattern">
-        <color alpha="255">
-         <red>0</red>
-         <green>0</green>
-         <blue>0</blue>
-        </color>
-       </brush>
-      </colorrole>
-     </inactive>
-     <disabled>
-      <colorrole role="ButtonText">
-       <brush brushstyle="SolidPattern">
-        <color alpha="255">
-         <red>23</red>
-         <green>26</green>
-         <blue>27</blue>
-        </color>
-       </brush>
-      </colorrole>
-     </disabled>
-    </palette>
    </property>
    <widget class="QMenu" name="menuBarControlBox">
     <property name="title">

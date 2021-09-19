@@ -7,7 +7,6 @@
 
 #include "Drivers/joystick.h"
 #include "Drivers/mouse_3d.h"
-#include "SettingsWindow/SetConfiguration/setconfiguration.h"
 
 class SettingsWindow : public QWidget, public Ui::SettingsWindow
 {
@@ -18,7 +17,6 @@ signals:
 
 public:
     explicit SettingsWindow(QWidget *parent = nullptr);
-    ~SettingsWindow();// объявление деструктора для удаления объекта настройки конфигураций
 
 public slots:
     void showPageConfigThruster();
@@ -29,7 +27,6 @@ public slots:
     void showPageConfigView();
     void showPageAboutProgram();
     void showPageOtherSettings();
-    void showSetConfiguration();
     void timerTickEvent();
     void changeDevice(int device_id);
 
@@ -39,7 +36,6 @@ signals:
 private:
     QTimer *timer;
     QTableWidget *table;
-    setConfiguration* config; // объект класса конфигураций
     QVector<unsigned int> joystick_list;
     int current_device;
     int current_joystick;

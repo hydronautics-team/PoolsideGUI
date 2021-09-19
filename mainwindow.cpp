@@ -17,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     //start in full screen format
     QMainWindow::showFullScreen();
     QMainWindow::menuBar()->setVisible(false);
-    this->setWindowTitle("Hydronautics");
 
     // update vehicle and all parameters
     connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
@@ -54,7 +53,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(action_about_program, SIGNAL(triggered()), &settingsWindow, SLOT(showPageAboutProgram()));
     connect(action_other_settings, SIGNAL(triggered()), &settingsWindow, SLOT(showPageOtherSettings()));
     connect(action_full_screen, &QAction::triggered, this, &MainWindow::fullScreenKey);
-    connect(action_setConfig_program, SIGNAL(triggered()), &settingsWindow, SLOT(showSetConfiguration())); // коннект со слотом конфигураций
 
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file
     checkFile(settingsFile); // check file existance
@@ -90,7 +88,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 /*!
  * @brief Reconnect rov
  */
-
 void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew Serial_Client
 {
     Serial_Client *serial_client = new Serial_Client();
@@ -106,11 +103,11 @@ void MainWindow::createVehicle() {
     wizard.show();
 }
 
+
 /*!
  * @brief
  * @param action
  */
-
 void MainWindow::chooseVehicle(QAction *action) {
     currentVehicle = action->text();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
