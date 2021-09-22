@@ -15,6 +15,11 @@ public:
     explicit setConfiguration(QWidget *parent = nullptr);
     ~setConfiguration();
 
+    void configGitBush(); //функция настройки гит клиента на пк
+
+    bool file_flag = false; //переменная обработка .exe приложения
+    QString filePath; //путь к действующему git-bash.exe
+
 private slots:
     void on_pushButton_ThrusterSet_commit_clicked();
 
