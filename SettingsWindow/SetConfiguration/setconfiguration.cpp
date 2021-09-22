@@ -84,7 +84,6 @@ void setConfiguration::configGitBush()
         }
         else
             QMessageBox::information(this, "Error","Select git-bash.exe file");
-
     }
     else QMessageBox::information(this, "Error","Select second .exe file");
 }
