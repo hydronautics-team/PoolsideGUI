@@ -15,6 +15,7 @@ setConfiguration::setConfiguration(QWidget *parent) :
 setConfiguration::~setConfiguration()
 {
     delete ui;
+    delete message;
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setConfiguration::on_pushButton_ThrusterSet_commit_clicked()
@@ -22,7 +23,23 @@ void setConfiguration::on_pushButton_ThrusterSet_commit_clicked()
     if(!file_flag) //работа кнопки только в случае настройки гит клиента
     {
         configGitBush();
+        if(fileName != "git-bash.exe")
+            return;
     }
+
+    if(message == nullptr)
+    {
+        message = new DialogCommit;
+        message->show();
+    }
+    else
+    {
+        delete message;
+        message = new DialogCommit;
+        message->show();
+    }
+
+
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setConfiguration::on_pushButton_VehicleSetting_commit_clicked()
@@ -30,6 +47,20 @@ void setConfiguration::on_pushButton_VehicleSetting_commit_clicked()
     if(!file_flag) //работа кнопки только в случае настройки гит клиента
     {
         configGitBush();
+        if(fileName != "git-bash.exe")
+            return;
+    }
+
+    if(message == nullptr)
+    {
+        message = new DialogCommit;
+        message->show();
+    }
+    else
+    {
+        delete message;
+        message = new DialogCommit;
+        message->show();
     }
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -38,7 +69,23 @@ void setConfiguration::on_pushButton_devices_commit_clicked()
     if(!file_flag) //работа кнопки только в случае настройки гит клиента
     {
         configGitBush();
+        if(fileName != "git-bash.exe")
+            return;
     }
+
+    if(message == nullptr)
+    {
+        message = new DialogCommit;
+        message->show();
+    }
+    else
+    {
+        delete message;
+        message = new DialogCommit;
+        message->show();
+    }
+
+
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setConfiguration::on_pushButton_pull_clicked()
@@ -47,6 +94,8 @@ void setConfiguration::on_pushButton_pull_clicked()
     {
         configGitBush();
     }
+
+
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setConfiguration::on_pushButton_push_clicked()
@@ -72,7 +121,7 @@ void setConfiguration::configGitBush()
     if(file != 0)
     {
         QFileInfo fi(file);
-        QString fileName = fi.fileName();
+        fileName = fi.fileName();
         filePath = fi.filePath();
 
         if(fileName == "git-bash.exe")

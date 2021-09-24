@@ -80,6 +80,7 @@ set(PROJECT_SOURCES
         SettingsWindow/ThrusterSettings/thrustersettings.cpp
         SettingsWindow/VehicleSettings/vehiclesettings.cpp
         SettingsWindow/SetConfiguration/setconfiguration.cpp
+        SettingsWindow/SetConfiguration/dialogcommit.cpp
         UI_Tests/serverdata_test.cpp
         UV/icontroldata.cpp
         UV/ituningdata.cpp
@@ -109,6 +110,7 @@ set(PROJECT_SOURCES
         SettingsWindow/CommunicationSettings/udp_settings.h
         SettingsWindow/VehicleSettings/vehiclesettings.h
         SettingsWindow/SetConfiguration/setconfiguration.h
+        SettingsWindow/SetConfiguration/dialogcommit.h
         UI_Tests/serverdata_test.h
         UV/ibasicdata.h
         UV/icontroldata.h
@@ -132,6 +134,7 @@ set(PROJECT_SOURCES
         SettingsWindow/ThrusterSettings/thrustersettings.ui
         SettingsWindow/VehicleSettings/vehiclesettings.ui
         SettingsWindow/SetConfiguration/setconfiguration.ui
+        SettingsWindow/SetConfiguration/dialogcommit.ui
         VehicleWizard/vehiclewizard.ui
         mainwindow.ui
         SettingsWindow/settingswindow.ui

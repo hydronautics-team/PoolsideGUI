@@ -2,6 +2,7 @@
 #define SETCONFIGURATION_H
 
 #include <QWidget>
+#include "dialogcommit.h"
 
 namespace Ui {
 class setConfiguration;
@@ -19,6 +20,8 @@ public:
 
     bool file_flag = false; //переменная обработка .exe приложения
     QString filePath; //путь к действующему git-bash.exe
+    QString fileName; //имя файла к которому указывает путь
+    DialogCommit* message = nullptr;
 
 private slots:
     void on_pushButton_ThrusterSet_commit_clicked();
