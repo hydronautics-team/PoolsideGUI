@@ -1,4 +1,4 @@
-#include "joystick.h"
+#include "Joystick.h"
 
 /*
 схват зажать 0

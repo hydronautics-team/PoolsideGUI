@@ -1,7 +1,7 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 
-#include "controlbase.h"
+#include "ControlBase.h"
 #include "SFML/Window.hpp"
 #include <QVector>
 #include <QDebug>

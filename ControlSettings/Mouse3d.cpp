@@ -1,4 +1,4 @@
-#include "mouse_3d.h"
+#include "Mouse3d.h"
 
 const Mouse3d::control_axis Mouse3d::axis_table[] = {
         {91,  SET_LAG},
