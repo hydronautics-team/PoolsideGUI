@@ -387,7 +387,7 @@
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout" stretch="1,12">
+        <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,12">
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,2">
            <item>
@@ -416,6 +416,22 @@
           </layout>
          </item>
          <item>
+          <widget class="QLabel" name="label">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="text">
+            <string>ThrusterSetl:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QGroupBox" name="groupBox_ThrusterSet">
            <property name="title">
             <string/>
@@ -425,7 +441,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,12">
+        <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0,12">
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,2">
            <item>
@@ -454,6 +470,16 @@
           </layout>
          </item>
          <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>VehicleSetting:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QGroupBox" name="groupBox_VehicleSetting">
            <property name="title">
             <string/>
@@ -463,7 +489,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,12">
+        <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1,0,12">
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,2">
            <item>
@@ -490,6 +516,16 @@
             </spacer>
            </item>
           </layout>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>Devices:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QGroupBox" name="groupBox_devices">
