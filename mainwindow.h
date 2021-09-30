@@ -10,13 +10,12 @@
 
 #include "ui_mainwindow.h"
 
-//#include "rovmodewidget.h"
 #include "UV/iuserinterfacedata.h"
 #include "SettingsWindow/settingswindow.h"
 #include "VehicleWizard/vehiclewizard.h"
-#include "Drivers/joystick.h"
-#include "Drivers/keyboard.h"
-#include "Drivers/mouse_3d.h"
+#include "ControlSettings/Joystick.h"
+#include "ControlSettings/Keyboard.h"
+#include "ControlSettings/Mouse3d.h"
 #include "serial_client.h"
 #include "udp_client.h"
 

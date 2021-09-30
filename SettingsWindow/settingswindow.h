@@ -5,8 +5,8 @@
 #include <QTimer>
 #include <QVector>
 
-#include "Drivers/joystick.h"
-#include "Drivers/mouse_3d.h"
+#include "ControlSettings/Joystick.h"
+#include "ControlSettings/Mouse3d.h"
 
 class SettingsWindow : public QWidget, public Ui::SettingsWindow {
 Q_OBJECT

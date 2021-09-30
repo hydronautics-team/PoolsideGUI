@@ -12,8 +12,7 @@
 #include <QThread>
 #include <QTimer>
 
-MainWindow::MainWindow(QWidget *parent):QMainWindow(parent)
-{
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setupUi(this);
     //start in full screen format
     QMainWindow::showFullScreen();
@@ -99,18 +98,16 @@ void MainWindow::reconnectROV() // TODO: присутствует утечка �
             SLOT(changeSelectedThruster(unsigned int)));
 }
 
-void MainWindow::createVehicle()
-{
+void MainWindow::createVehicle() {
     wizard.startStateMachine();
     wizard.show();
 }
 
-void MainWindow::chooseVehicle(QAction *action)
-{
+void MainWindow::chooseVehicle(QAction *action) {
     currentVehicle = action->text();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
-    for(qsizetype i = 0; i < settings->childKeys().size(); i++) {
-        if (settings->value(settings->childKeys().at(i)).toBool()){
+    for (qsizetype i = 0; i < settings->childKeys().size(); i++) {
+        if (settings->value(settings->childKeys().at(i)).toBool()) {
             currentConfiguration = settings->childKeys().at(i);
             break;
         }
@@ -132,8 +129,7 @@ void MainWindow::fullScreenKey() {
     if (QMainWindow::windowState() == Qt::WindowFullScreen) {
         QMainWindow::showNormal();
         QMainWindow::menuBar()->setVisible(true);
-    }
-    else{
+    } else {
         QMainWindow::showFullScreen();
         QMainWindow::menuBar()->setVisible(false);
     }
@@ -157,7 +153,7 @@ void MainWindow::updateVehiclesMenu() {
         settings->endGroup();
     }
     settings->sync();
-    qDebug () << currentVehicle;
+    qDebug() << currentVehicle;
     updateVehicleConfigurationMenu();
 }
 
@@ -165,39 +161,33 @@ void MainWindow::updateVehicleConfigurationMenu() {
     menu_choose_configuration->clear();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
     for (qsizetype i = 0; i < settings->childKeys().size(); i++) {
-        if (settings->value(settings->childKeys().at(i)).toBool()){
+        if (settings->value(settings->childKeys().at(i)).toBool()) {
             QAction *configuration = new QAction(settings->childKeys().at(i));
-            if (settings->childKeys().at(i) == currentConfiguration){
+            if (settings->childKeys().at(i) == currentConfiguration) {
                 QFont f = configuration->font();
                 f.setBold(true);
                 configuration->setFont(f);
                 menu_choose_configuration->addAction(configuration);
-            }
-            else
+            } else
                 menu_choose_configuration->addAction(configuration);
         }
     }
     settings->endGroup();
-    qDebug () << currentConfiguration;
+    qDebug() << currentConfiguration;
 }
 
-void MainWindow::checkFile(QString filename)
-{
+void MainWindow::checkFile(QString filename) {
     QFile file(filename);
-    if(QFileInfo::exists(filename))
-    {
+    if (QFileInfo::exists(filename)) {
         file.open(QIODevice::ReadWrite | QIODevice::Text);
         file.close();
-    }
-    else
-    {
+    } else {
         file.open(QIODevice::ReadWrite | QIODevice::Text);
         file.close();
     }
 }
 
-void MainWindow::updateVehicleUi()
-{
+void MainWindow::updateVehicleUi() {
     currentVehicle = settings->value("currentVehicle").toString();
     thrustersCount = settings->value("vehicle/" + currentVehicle + "/thrusters/count").toInt();
     //update bars

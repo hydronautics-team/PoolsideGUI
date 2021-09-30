@@ -6,7 +6,7 @@
 #include <QtDebug>
 #include <QObject>
 
-#include "controlbase.h"
+#include "ControlBase.h"
 #include "SFML/Window.hpp"
 #include "hidapi.h"
 

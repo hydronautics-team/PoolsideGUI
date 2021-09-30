@@ -1,4 +1,4 @@
-#include "controlbase.h"
+#include "ControlBase.h"
 #include <QDebug>
 
 ControlBase::ControlBase(QString name, int update_time) {

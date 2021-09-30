@@ -67,10 +67,10 @@ endif()
 
 set(PROJECT_SOURCES
         main.cpp
-        Drivers/controlbase.cpp
-        Drivers/joystick.cpp
-        Drivers/keyboard.cpp
-        Drivers/mouse_3d.cpp
+        ControlSettings/ControlBase.cpp
+        ControlSettings/Joystick.cpp
+        ControlSettings/Keyboard.cpp
+        ControlSettings/Mouse3d.cpp
         KX_Pult/configdata.cpp
         KX_Pult/kx_protocol.cpp
         KX_Pult/qkx_coeffs.cpp
@@ -96,10 +96,10 @@ set(PROJECT_SOURCES
         SettingsWindow/settingswindow.cpp
         serial_client.cpp
         udp_client.cpp
-        Drivers/controlbase.h
-        Drivers/joystick.h
-        Drivers/keyboard.h
-        Drivers/mouse_3d.h
+        ControlSettings/ControlBase.h
+        ControlSettings/Joystick.h
+        ControlSettings/Keyboard.h
+        ControlSettings/Mouse3d.h
         KX_Pult/configdata.h
         KX_Pult/kx_protocol.h
         KX_Pult/qkx_coeffs.h
