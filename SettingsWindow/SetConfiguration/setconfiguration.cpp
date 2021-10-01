@@ -45,8 +45,6 @@ void setConfiguration::on_pushButton_ThrusterSet_commit_clicked()
         message->show();
     }
 
-
-
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setConfiguration::on_pushButton_VehicleSetting_commit_clicked()
@@ -184,7 +182,7 @@ void setConfiguration::setElement_GroupBox(QFileInfo file)
     QDir fileDir(file_path);
     fileDir.setFilter(QDir::Files | QDir::NoDot | QDir::NoDotAndDotDot);
     QFileInfoList filesList = fileDir.entryInfoList();
-    QString file_name = file.fileName();
+    QString file_name = (QString)file.fileName();
 
     if(file.fileName() == "ThrusterSet")
     {
@@ -202,8 +200,9 @@ void setConfiguration::setElement_GroupBox(QFileInfo file)
 
         for(int i = 0; i < (int)filesList.size(); i++)
         {
-            QPushButton* button = new QPushButton();
+            MyPushButton* button = new MyPushButton();
             button->setText(filesList[i].fileName());
+            connect(button, &MyPushButton::my_clicked, this, &setConfiguration::SignalProcessingButtons);
             vbox_ThrusterSet->addWidget(button);
         }
         vbox_ThrusterSet->addStretch(1);
@@ -226,8 +225,9 @@ void setConfiguration::setElement_GroupBox(QFileInfo file)
 
         for(int i = 0; i < (int)filesList.size(); i++)
         {
-            QPushButton* button = new QPushButton();
+            MyPushButton* button = new MyPushButton();
             button->setText(filesList[i].fileName());
+            connect(button, &MyPushButton::my_clicked, this, &setConfiguration::SignalProcessingButtons);
             vbox_VehicleSetting->addWidget(button);
         }
         vbox_VehicleSetting->addStretch(1);
@@ -250,15 +250,28 @@ void setConfiguration::setElement_GroupBox(QFileInfo file)
 
         for(int i = 0; i < (int)filesList.size(); i++)
         {
-            QPushButton* button = new QPushButton();
+            MyPushButton* button = new MyPushButton();
             button->setText(filesList[i].fileName());
+            connect(button, &MyPushButton::my_clicked, this, &setConfiguration::SignalProcessingButtons);
             vbox_Devices->addWidget(button);
         }
         vbox_Devices->addStretch(1);
         ui->groupBox_devices->setLayout(vbox_Devices);
     }
+}
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------
+void setConfiguration::SignalProcessingButtons(MyPushButton* this_button_)
+{
+    if(this_button == nullptr)
+    {
+        this_button = this_button_;
+    }
+    else
+    {
+        this_button->setEnabled(true);
+        this_button = this_button_;
+    }
 
 }
-
 
 

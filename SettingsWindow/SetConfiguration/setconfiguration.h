@@ -5,6 +5,7 @@
 #include <QFileInfo>
 #include <QVBoxLayout>
 #include "dialogcommit.h"
+#include "mypushbutton.h" //переопределённый класс QPushButton
 
 namespace Ui {
 class setConfiguration;
@@ -20,6 +21,7 @@ public:
 
     void configGitBush(); //функция настройки гит клиента на пк
     void setElement_GroupBox(QFileInfo); //функция настройки отображения элементов из соответствующих папок репозитория
+    void SignalProcessingButtons(MyPushButton*); //функция обработки сигнала при нажатии соответствующей кнопки
 
     bool file_flag = false; //переменная обработка .exe приложения
 
@@ -31,6 +33,7 @@ public:
     QVBoxLayout* vbox_ThrusterSet = nullptr;
     QVBoxLayout* vbox_VehicleSetting = nullptr;
     QVBoxLayout* vbox_Devices = nullptr;
+    MyPushButton* this_button = nullptr;
 
 private slots:
     void on_pushButton_ThrusterSet_commit_clicked();

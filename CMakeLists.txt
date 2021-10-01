@@ -81,6 +81,7 @@ set(PROJECT_SOURCES
         SettingsWindow/VehicleSettings/vehiclesettings.cpp
         SettingsWindow/SetConfiguration/setconfiguration.cpp
         SettingsWindow/SetConfiguration/dialogcommit.cpp
+        SettingsWindow/SetConfiguration/mypushbutton.cpp
         UI_Tests/serverdata_test.cpp
         UV/icontroldata.cpp
         UV/ituningdata.cpp
@@ -111,6 +112,7 @@ set(PROJECT_SOURCES
         SettingsWindow/VehicleSettings/vehiclesettings.h
         SettingsWindow/SetConfiguration/setconfiguration.h
         SettingsWindow/SetConfiguration/dialogcommit.h
+        SettingsWindow/SetConfiguration/mypushbutton.h
         UI_Tests/serverdata_test.h
         UV/ibasicdata.h
         UV/icontroldata.h
