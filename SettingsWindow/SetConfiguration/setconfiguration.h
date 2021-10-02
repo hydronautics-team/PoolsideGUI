@@ -28,6 +28,7 @@ public:
     QString filePath; //путь к действующему git-bash.exe
     QString fileName; //имя файла к которому указывает путь к действующему git-bash.exe
     QString dirConfig_Path; //путь к директории конфигураций
+    QString target_path;; //пусть к выбранному файлу конфигураций
 
     DialogCommit* message = nullptr;
     QVBoxLayout* vbox_ThrusterSet = nullptr;

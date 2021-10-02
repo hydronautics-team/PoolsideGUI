@@ -115,7 +115,7 @@ void setConfiguration::on_pushButton_pull_clicked()
         setElement_GroupBox(filesList[i]);
     }
     //---------------------------------------------------------------
-
+    this_button = nullptr;
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setConfiguration::on_pushButton_push_clicked()
@@ -272,6 +272,21 @@ void setConfiguration::SignalProcessingButtons(MyPushButton* this_button_)
         this_button = this_button_;
     }
 
+    QString parent_name = this_button->parentWidget()->objectName(); //вывод имени родителя выбранной кнопки
+
+    if(parent_name == "groupBox_ThrusterSet")
+    {
+        target_path = dirConfig_Path + "/ThrusterSet/" + this_button->text();
+    }
+    else if(parent_name == "groupBox_VehicleSetting")
+    {
+        target_path = dirConfig_Path + "/VehicleSetting/" + this_button->text();
+    }
+    else if(parent_name == "groupBox_devices")
+    {
+        target_path = dirConfig_Path + "/Devices/" + this_button->text();
+    }
+    qDebug() << target_path;
 }
 
 
