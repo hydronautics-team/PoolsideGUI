@@ -36,15 +36,18 @@ void setConfiguration::on_pushButton_ThrusterSet_commit_clicked()
     if(message == nullptr)
     {
         message = new DialogCommit;
+        message->FilePath_Func(dirConfig_Path + "/ThrusterSet/");
         message->show();
     }
     else
     {
         delete message;
         message = new DialogCommit;
+        message->FilePath_Func(dirConfig_Path + "/ThrusterSet/");
         message->show();
     }
 
+    connect(message, &DialogCommit::updateUi, this, &setConfiguration::Update);
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setConfiguration::on_pushButton_VehicleSetting_commit_clicked()
@@ -59,14 +62,18 @@ void setConfiguration::on_pushButton_VehicleSetting_commit_clicked()
     if(message == nullptr)
     {
         message = new DialogCommit;
+        message->FilePath_Func(dirConfig_Path + "/VehicleSetting/");
         message->show();
     }
     else
     {
         delete message;
         message = new DialogCommit;
+        message->FilePath_Func(dirConfig_Path + "/VehicleSetting/");
         message->show();
     }
+
+    connect(message, &DialogCommit::updateUi, this, &setConfiguration::Update);
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setConfiguration::on_pushButton_devices_commit_clicked()
@@ -81,15 +88,18 @@ void setConfiguration::on_pushButton_devices_commit_clicked()
     if(message == nullptr)
     {
         message = new DialogCommit;
+        message->FilePath_Func(dirConfig_Path + "/Devices/");
         message->show();
     }
     else
     {
         delete message;
         message = new DialogCommit;
+        message->FilePath_Func(dirConfig_Path + "/Devices/");
         message->show();
     }
 
+    connect(message, &DialogCommit::updateUi, this, &setConfiguration::Update);
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setConfiguration::on_pushButton_pull_clicked()
@@ -103,18 +113,8 @@ void setConfiguration::on_pushButton_pull_clicked()
     process1->start(filePath, {"-c", "cd " + dirConfig_Path + "\n" + "git pull"});
     process1->waitForFinished();
 
-    //обновление данных в связи с изменением локального репозитория
-    //---------------------------------------------------------------
-    QDir dir;
-    dir.setPath(dirConfig_Path);
-    dir.setFilter(QDir::AllDirs | QDir::NoDot | QDir::NoDotAndDotDot);
-    QFileInfoList filesList = dir.entryInfoList();
+    Update();
 
-    for(short i = 0; i < (int)filesList.size(); i++)
-    {
-        setElement_GroupBox(filesList[i]);
-    }
-    //---------------------------------------------------------------
     this_button = nullptr;
     target_path = "";
 }
@@ -289,5 +289,21 @@ void setConfiguration::SignalProcessingButtons(MyPushButton* this_button_)
     }
     qDebug() << target_path;
 }
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------
+void setConfiguration::Update()
+{
+    //обновление данных в связи с изменением локального репозитория
+    //---------------------------------------------------------------
+    QDir dir;
+    dir.setPath(dirConfig_Path);
+    dir.setFilter(QDir::AllDirs | QDir::NoDot | QDir::NoDotAndDotDot);
+    QFileInfoList filesList = dir.entryInfoList();
 
+    for(short i = 0; i < (int)filesList.size(); i++)
+    {
+        setElement_GroupBox(filesList[i]);
+    }
+    //---------------------------------------------------------------
+}
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------
 

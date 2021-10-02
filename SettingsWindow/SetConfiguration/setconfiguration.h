@@ -22,6 +22,7 @@ public:
     void configGitBush(); //функция настройки гит клиента на пк
     void setElement_GroupBox(QFileInfo); //функция настройки отображения элементов из соответствующих папок репозитория
     void SignalProcessingButtons(MyPushButton*); //функция обработки сигнала при нажатии соответствующей кнопки
+    void Update(); // обнорвление ui
 
     bool file_flag = false; //переменная обработка .exe приложения
 
