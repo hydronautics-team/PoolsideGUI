@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(action_config_thrusters, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigThruster()));
     connect(action_config_coef, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigCoef()));
     // Surface control unit
-    connect(action_config_controls, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigControls()));
+    connect(action_config_controls, SIGNAL(triggered()), &settingsWindow, SLOT(showControlDevices())); // изменение под класс управления
     connect(action_config_view, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigView()));
     // Other settings
     connect(action_about_program, SIGNAL(triggered()), &settingsWindow, SLOT(showPageAboutProgram()));
