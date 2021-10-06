@@ -29,5 +29,6 @@ void DialogCommit::on_pushButton_commit_Dialog_clicked()
     out << ui->textEdit_descriptionFile->toPlainText();
 
     emit updateUi();
+    this->close();
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
