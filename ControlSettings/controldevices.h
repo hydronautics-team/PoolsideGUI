@@ -2,6 +2,7 @@
 #define CONTROLDEVICES_H
 
 #include <QWidget>
+#include "ControlBase.h"
 
 namespace Ui {
 class ControlDevices;
@@ -14,6 +15,11 @@ class ControlDevices : public QWidget
 public:
     explicit ControlDevices(QWidget *parent = nullptr);
     ~ControlDevices();
+
+    ControlBase* controller = nullptr;
+
+signals:
+    void controlObject(ControlBase*);
 
 private slots:
     void on_checkBox_KeyBoard_clicked(bool checked);
