@@ -20,6 +20,7 @@ public:
 
 signals:
     void controlObject(ControlBase*);
+    void controlObject_del();
 
 private slots:
     void on_checkBox_KeyBoard_clicked(bool checked);

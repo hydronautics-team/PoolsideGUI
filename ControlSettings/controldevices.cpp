@@ -31,6 +31,7 @@ void ControlDevices::on_checkBox_KeyBoard_clicked(bool checked)
     else
     {
         delete controller;
+        emit controlObject_del();
         ui->checkBox_3dMouse->setEnabled(true);
         ui->checkBox_JoystickLogitech->setEnabled(true);
     }
@@ -50,6 +51,7 @@ void ControlDevices::on_checkBox_3dMouse_clicked(bool checked)
     else
     {
         delete controller;
+        emit controlObject_del();
         ui->checkBox_KeyBoard->setEnabled(true);
         ui->checkBox_JoystickLogitech->setEnabled(true);
     }
@@ -70,6 +72,7 @@ void ControlDevices::on_checkBox_JoystickLogitech_clicked(bool checked)
     else
     {
         delete controller;
+        emit controlObject_del();
         ui->checkBox_KeyBoard->setEnabled(true);
         ui->checkBox_3dMouse->setEnabled(true);
     }

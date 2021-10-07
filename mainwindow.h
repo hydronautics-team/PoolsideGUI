@@ -33,8 +33,10 @@ public:
     float depthOffset = 0;
 
 public slots:
-    void changeController(unsigned int current_device, QString name);
+    void changeController(ControlBase*);
+    void changeController_del();
     void reconnectROV();
+    void controlConnect();
 
 private slots:
     void updateVehiclesMenu();
@@ -58,7 +60,7 @@ private:
     void checkFile(QString filename);
 //    void enableAUVMode();
 //    void enableROVMode();
-    ControlBase *controller;
+    ControlBase *controller = nullptr;
     Serial_Client *serial_client;
     UDP_Client *udp_client;
 

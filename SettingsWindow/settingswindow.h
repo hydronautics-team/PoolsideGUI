@@ -18,6 +18,7 @@ signals:
 public:
     explicit SettingsWindow(QWidget *parent = nullptr);
     ~SettingsWindow();
+    ControlDevices* controldevices = nullptr;
 
 public slots:
     void showPageConfigThruster();
@@ -33,8 +34,7 @@ public slots:
     void changeDevice(int device_id);
 
 signals:
-
-    void controllerChanged(unsigned int id, QString name);
+    void controlConnect();
 
 private:
     QTimer *timer;
@@ -42,7 +42,6 @@ private:
     QVector<unsigned int> joystick_list;
     int current_device;
     int current_joystick;
-    ControlDevices* controldevices;
     ControlBase *controller;
 };
 

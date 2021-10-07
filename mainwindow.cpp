@@ -30,9 +30,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // Controller Changed
     controller = new Mouse3d("3dMouse", 5);
-    connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this,
-            SLOT(changeController(unsigned int, QString)));
-
+    connect(&settingsWindow, &SettingsWindow::controlConnect, this, &MainWindow::controlConnect);
     connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
     // Menu:
@@ -264,21 +262,25 @@ void MainWindow::clearResetImu() {
     interface.setResetImuValue(false);
 }
 
-void MainWindow::changeController(unsigned int current_device, QString name) //TODO: переделать под управляющий класс
+void MainWindow::changeController(ControlBase* obj) //TODO: переделать под управляющий класс
 {
-    if (controller != nullptr) {
+    controller = obj;
+}
+
+void MainWindow::changeController_del() //TODO: переделать под управляющий класс
+{
+    controller = NULL;
+}
+
+void MainWindow::controlConnect() //TODO: переделать под управляющий класс
+{
+    connect(settingsWindow.controldevices, &ControlDevices::controlObject, this, &MainWindow::changeController);
+    connect(settingsWindow.controldevices, &ControlDevices::controlObject_del, this, &MainWindow::changeController_del);
+
+    if(controller != NULL)
+    {
         delete controller;
-    }
-    switch (current_device) {
-        case 0:
-            controller = new Mouse3d("3dMouse", 5);
-            break;
-        case 1:
-            controller = new Mouse3d("3dMouse", 5);
-            break;
-        case 2:
-            controller = new Joystick(name, 10, 0); //default id = 0;
-            break;
+        controller = NULL;
     }
 }
 
