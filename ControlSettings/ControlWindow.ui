@@ -384,21 +384,21 @@
       <item row="0" column="0">
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
-         <widget class="QCheckBox" name="checkBox_KeyBoard">
+         <widget class="QCheckBox" name="CheckBoxKeyBoard">
           <property name="text">
            <string>KeyBoard</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QCheckBox" name="checkBox_3dMouse">
+         <widget class="QCheckBox" name="CheckBox3dMouse">
           <property name="text">
            <string>3dMouse</string>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QCheckBox" name="checkBox_JoystickLogitech">
+         <widget class="QCheckBox" name="CheckBoxJoystickLogitech">
           <property name="text">
            <string>Joystick Logitech</string>
           </property>

@@ -32,11 +32,11 @@ signals:
 
 private slots:
 
-    void on_checkBox_KeyBoard_clicked(bool checked);
+    void on_CheckBoxKeyBoard_clicked(bool checked);
 
-    void on_checkBox_3dMouse_clicked(bool checked);
+    void on_CheckBox3dMouse_clicked(bool checked);
 
-    void on_checkBox_JoystickLogitech_clicked(bool checked);
+    void on_CheckBoxJoystickLogitech_clicked(bool checked);
 
 private:
     Ui::ControlWindow *ui;
