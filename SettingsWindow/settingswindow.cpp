@@ -115,7 +115,7 @@ void SettingsWindow::showPageOtherSettings() {
 
 void SettingsWindow::showControlDevices()
 {
-    controldevices = new ControlDevices();
+    controldevices = new ControlWindow();
     controldevices->show();
 
     emit controlConnect();

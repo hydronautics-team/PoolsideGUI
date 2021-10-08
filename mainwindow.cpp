@@ -274,8 +274,8 @@ void MainWindow::changeController_del() //TODO: переделать под уп
 
 void MainWindow::controlConnect() //TODO: переделать под управляющий класс
 {
-    connect(settingsWindow.controldevices, &ControlDevices::controlObject, this, &MainWindow::changeController);
-    connect(settingsWindow.controldevices, &ControlDevices::controlObject_del, this, &MainWindow::changeController_del);
+    connect(settingsWindow.controldevices, &ControlWindow::controlObject, this, &MainWindow::changeController);
+    connect(settingsWindow.controldevices, &ControlWindow::controlObject_del, this, &MainWindow::changeController_del);
 
     if(controller != NULL)
     {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ControlDevices</class>
- <widget class="QWidget" name="ControlDevices">
+ <class>ControlWindow</class>
+ <widget class="QWidget" name="ControlWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -372,7 +372,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>ControlDevices</string>
+   <string>ControlWindow</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="0" column="0">

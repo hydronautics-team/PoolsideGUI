@@ -6,6 +6,7 @@
 #include <QtDebug>
 #include <QObject>
 
+
 #include "ControlBase.h"
 #include "SFML/Window.hpp"
 

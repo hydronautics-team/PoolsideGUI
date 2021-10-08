@@ -71,7 +71,7 @@ set(PROJECT_SOURCES
         ControlSettings/Joystick.cpp
         ControlSettings/Keyboard.cpp
         ControlSettings/Mouse3d.cpp
-        ControlSettings/controldevices.cpp
+        ControlSettings/СontrolWindow.cpp
         KX_Pult/configdata.cpp
         KX_Pult/kx_protocol.cpp
         KX_Pult/qkx_coeffs.cpp
@@ -101,7 +101,7 @@ set(PROJECT_SOURCES
         ControlSettings/Joystick.h
         ControlSettings/Keyboard.h
         ControlSettings/Mouse3d.h
-        ControlSettings/controldevices.h
+        ControlSettings/СontrolWindow.h
         KX_Pult/configdata.h
         KX_Pult/kx_protocol.h
         KX_Pult/qkx_coeffs.h
@@ -133,7 +133,7 @@ set(PROJECT_SOURCES
         SettingsWindow/CommunicationSettings/udp_settings.ui
         SettingsWindow/ThrusterSettings/thrustersettings.ui
         SettingsWindow/VehicleSettings/vehiclesettings.ui
-        ControlSettings/controldevices.ui
+        ControlSettings/ControlWindow.ui
         VehicleWizard/vehiclewizard.ui
         mainwindow.ui
         SettingsWindow/settingswindow.ui

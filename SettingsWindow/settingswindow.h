@@ -7,7 +7,7 @@
 
 #include "ControlSettings/Joystick.h"
 #include "ControlSettings/Mouse3d.h"
-#include "ControlSettings/controldevices.h"
+#include "ControlSettings/СontrolWindow.h"
 
 class SettingsWindow : public QWidget, public Ui::SettingsWindow {
 Q_OBJECT
@@ -18,7 +18,7 @@ signals:
 public:
     explicit SettingsWindow(QWidget *parent = nullptr);
     ~SettingsWindow();
-    ControlDevices* controldevices = nullptr;
+    ControlWindow* controldevices = nullptr;
 
 public slots:
     void showPageConfigThruster();
