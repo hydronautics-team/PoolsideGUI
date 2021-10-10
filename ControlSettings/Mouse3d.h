@@ -1,5 +1,5 @@
-#ifndef MOUSE_3D_H
-#define MOUSE_3D_H
+#ifndef MOUSE3D_H
+#define MOUSE3D_H
 
 #include <QMainWindow>
 #include <QTimer>
@@ -48,8 +48,7 @@ private:
 
 private slots:
     void updateDevice();
-    void updateKeyboardOnly();
 };
 
 
-#endif // MOUSE_3D_H
+#endif // MOUSE3D_H

@@ -85,29 +85,6 @@ void Mouse3d::updateDevice() {
     }
 }
 
-void Mouse3d::updateKeyboardOnly() {
-    QVector<unsigned int> ignore_press;
-    ignore_press.clear();
-
-    for (unsigned int i = 0; i < sizeof(buttons_table) / sizeof(buttons_table[0]); i++) {
-        if (sf::Keyboard::isKeyPressed(buttons_table[i].Key)) {
-            sendAction(buttons_table[i].action, buttons_table[i].setterValue);
-            ignore_press.append(buttons_table[i].antagonist);
-        } else {
-            bool ignore = false;
-            for (int j = 0; j < ignore_press.size(); j++) {
-                if (ignore_press[j] == i) {
-                    ignore = true;
-                }
-            }
-            if (ignore) {
-                continue;
-            }
-            sendAction(buttons_table[i].action, 0);
-        }
-    }
-}
-
 void Mouse3d::parseCoordinate(unsigned char *buf, short int *coordPosition) {
     if (static_cast<short int>(buf[1]) == 0) {
         *coordPosition = static_cast<short int>(buf[0]);

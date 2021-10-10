@@ -271,7 +271,7 @@ void MainWindow::changeController(unsigned int current_device, QString name) //T
     }
     switch (current_device) {
         case 0:
-            controller = new Mouse3d("3dMouse", 5);
+                controller = new Mouse3d("3dMouse", 5);
             break;
         case 1:
             controller = new Mouse3d("3dMouse", 5);
