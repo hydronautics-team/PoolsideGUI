@@ -31,10 +31,6 @@ Mouse3d::Mouse3d(QString name, int update_time) :
         qDebug() << "3Dmouse connected" << endl;
 
     } else {
-        update_timer = new QTimer(this);
-        connect(update_timer, SIGNAL(timeout()), this, SLOT(updateKeyboardOnly()));
-        update_timer->start(update_time);
-
         qDebug() << "can't connect 3Dmouse" << endl;
     }
 }

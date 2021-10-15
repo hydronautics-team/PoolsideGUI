@@ -8,8 +8,8 @@
 const int MAX_COM_ID = 20;
 
 Serial_Client::Serial_Client() {
-    timeoutTimer = new QTimer();
-    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
+//    timeoutTimer = new QTimer();
+//    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
     interface = new IServerData();
 }

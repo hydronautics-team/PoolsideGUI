@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     udp_client = new UDP_Client();
     udp_client->start();
 
-    connect(udp_client, SIGNAL(dataUpdated()), this, SLOT(updateData()));
+//    connect(udp_client, SIGNAL(dataUpdated()), this, SLOT(updateData()));
     connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 
     connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
