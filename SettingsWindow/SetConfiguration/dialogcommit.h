@@ -15,9 +15,10 @@ public:
     explicit DialogCommit(QWidget *parent = nullptr);
     ~DialogCommit();
 
-    void FilePath_Func(QString);
+    void FilePath_Func(QString, QString);
 
-    QString filePath;
+    QString filePathDir;
+    QString filePathProg;
 
 signals:
     void updateUi();

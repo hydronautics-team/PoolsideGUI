@@ -36,14 +36,14 @@ void setConfiguration::on_pushButton_ThrusterSet_commit_clicked()
     if(message == nullptr)
     {
         message = new DialogCommit;
-        message->FilePath_Func(dirConfig_Path + "/ThrusterSet/");
+        message->FilePath_Func(dirConfig_Path + "/ThrusterSet/", filePath);
         message->show();
     }
     else
     {
         delete message;
         message = new DialogCommit;
-        message->FilePath_Func(dirConfig_Path + "/ThrusterSet/");
+        message->FilePath_Func(dirConfig_Path + "/ThrusterSet/", filePath);
         message->show();
     }
 
@@ -62,14 +62,14 @@ void setConfiguration::on_pushButton_VehicleSetting_commit_clicked()
     if(message == nullptr)
     {
         message = new DialogCommit;
-        message->FilePath_Func(dirConfig_Path + "/VehicleSetting/");
+        message->FilePath_Func(dirConfig_Path + "/VehicleSetting/", filePath);
         message->show();
     }
     else
     {
         delete message;
         message = new DialogCommit;
-        message->FilePath_Func(dirConfig_Path + "/VehicleSetting/");
+        message->FilePath_Func(dirConfig_Path + "/VehicleSetting/", filePath);
         message->show();
     }
 
@@ -88,14 +88,14 @@ void setConfiguration::on_pushButton_devices_commit_clicked()
     if(message == nullptr)
     {
         message = new DialogCommit;
-        message->FilePath_Func(dirConfig_Path + "/Devices/");
+        message->FilePath_Func(dirConfig_Path + "/Devices/", filePath);
         message->show();
     }
     else
     {
         delete message;
         message = new DialogCommit;
-        message->FilePath_Func(dirConfig_Path + "/Devices/");
+        message->FilePath_Func(dirConfig_Path + "/Devices/", filePath);
         message->show();
     }
 
@@ -125,6 +125,11 @@ void setConfiguration::on_pushButton_push_clicked()
     {
         configGitBush();
     }
+
+    QProcess* process1 = new QProcess(this);
+    process1->start(filePath, {"-c", "cd " + dirConfig_Path + "\n" + "git push"});
+    process1->waitForFinished();
+
 }
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setConfiguration::on_pushButton_Accept_Configurations_clicked()
@@ -161,14 +166,7 @@ void setConfiguration::configGitBush()
             QProcess* process = new QProcess(this);
             process->start(filePath, {"-c", "git clone https://github.com/hidronautics/PoolsideGUI_config.git " + dirConfig_Path});
 
-            dir.setFilter(QDir::AllDirs | QDir::NoDot | QDir::NoDotAndDotDot);
-            QFileInfoList filesList = dir.entryInfoList();
-
-            for(short i = 0; i < (int)filesList.size(); i++)
-            {
-                setElement_GroupBox(filesList[i]);
-            }
-
+            Update();
         }
         else
             QMessageBox::information(this, "Error","Select git-bash.exe file");
