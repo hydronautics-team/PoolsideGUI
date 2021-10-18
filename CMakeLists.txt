@@ -59,7 +59,7 @@ endif()
 
 #HIDAPI
 if(WIN32)
-    add_subdirectory(hidapi)
+    add_subdirectory(Utilitis/hidapi)
 else()
     set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules;${CMAKE_MODULE_PATH}")
     include_directories(${HIDAPI_INCLUDE_DIR})
@@ -159,7 +159,7 @@ else()
 endif ()
 
 if(WIN32)
-    target_link_libraries(${PROJECT_NAME} hidapi)
+    target_link_libraries(${PROJECT_NAME} Utilitis/hidapi)
 else()
     target_link_libraries(${PROJECT_NAME} hidapi-libusb)
 endif()

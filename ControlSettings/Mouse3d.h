@@ -8,7 +8,7 @@
 
 #include "ControlBase.h"
 #include "SFML/Window.hpp"
-#include "hidapi.h"
+#include "Utilitis/hidapi.h"
 
 class Mouse3d : public ControlBase {
 Q_OBJECT

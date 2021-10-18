@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     // Controller Changed
     controller = new Mouse3d("3dMouse", 5);
-    connect(&settingsWindow, &SettingsWindow::controlConnect, this, &MainWindow::controlConnect);
+    connect(&settingsWindow, &SettingsWindow::controlConnect, this, &MainWindow::controlConnect); //TODO: переделать под SIGNAL SLOT
     connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
     // Menu:

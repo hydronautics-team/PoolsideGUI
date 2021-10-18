@@ -4,9 +4,6 @@ ControlWindow::ControlWindow(QWidget *parent) :
         QWidget(parent),
         ui(new Ui::ControlWindow) {
     ui->setupUi(this);
-
-//    connect(ui->CheckBox3dMouse, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
-
 }
 
 ControlWindow::~ControlWindow() {
@@ -24,6 +21,7 @@ void ControlWindow::on_CheckBoxKeyBoard_clicked(bool checked) {
     } else {
         delete controller;
         emit controlObject_del();
+
         ui->CheckBox3dMouse->setEnabled(true);
         ui->CheckBoxJoystickLogitech->setEnabled(true);
     }
@@ -40,13 +38,13 @@ void ControlWindow::on_CheckBox3dMouse_clicked(bool checked) {
     } else {
         delete controller;
         emit controlObject_del();
+
         ui->CheckBoxKeyBoard->setEnabled(true);
         ui->CheckBoxJoystickLogitech->setEnabled(true);
     }
 }
 
 void ControlWindow::on_CheckBoxJoystickLogitech_clicked(bool checked) {
-
     if (checked == true) {
         controller = new Joystick("Joystick", 10, 0);
 
@@ -57,6 +55,7 @@ void ControlWindow::on_CheckBoxJoystickLogitech_clicked(bool checked) {
     } else {
         delete controller;
         emit controlObject_del();
+
         ui->CheckBoxKeyBoard->setEnabled(true);
         ui->CheckBox3dMouse->setEnabled(true);
     }

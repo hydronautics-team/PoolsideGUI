@@ -21,6 +21,7 @@
 
 class MainWindow : public QMainWindow, private Ui::MainWindow {
 Q_OBJECT
+
 signals:
     void updateVehicle();
     //import from old interface
@@ -38,16 +39,6 @@ public slots:
     void reconnectROV();
     void controlConnect();
 
-private slots:
-    void updateVehiclesMenu();
-
-    //import from old interface
-    void updateVehicleUi();
-    void updateUi();
-
-    void resetImu();
-    void clearResetImu();
-
 private:
     SettingsWindow settingsWindow;
     VehicleWizard wizard;
@@ -58,8 +49,6 @@ private:
 
     void updateVehicleConfigurationMenu();
     void checkFile(QString filename);
-//    void enableAUVMode();
-//    void enableROVMode();
     ControlBase *controller = nullptr;
     Serial_Client *serial_client;
     UDP_Client *udp_client;
@@ -69,17 +58,25 @@ private:
     int thrustersCount;
     QList<QProgressBar *> thrusterBarGroup;
     QGraphicsScene *scene;
-    //QGraphicsPixmapItem *picROV;
-    //QGraphicsTextItem *txtCurrentYaw;
 
     // Interface for accessing UVState object
     IUserInterfaceData uv_interface;
 
 private slots:
+    void updateVehiclesMenu();
+
+    //import from old interface
+    void updateVehicleUi();
+    void updateUi();
+
+    void resetImu();
+    void clearResetImu();
+
     // menu actions
     void createVehicle();
     void chooseVehicle(QAction *action);
     void chooseConfiguration(QAction *action);
+
     // full screen key combination
     void fullScreenKey();
 
