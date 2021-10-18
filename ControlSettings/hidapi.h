@@ -188,7 +188,7 @@ extern "C" {
 
 			hid_write() will send the data on the first OUT endpoint, if
 			one exists. If it does not, it will send the data through
-			the Control Endpoint (Endpoint 0).
+			the ControlWindow Endpoint (Endpoint 0).
 
 			@ingroup API
 			@param device A device handle returned from hid_open().
@@ -265,7 +265,7 @@ extern "C" {
 
 		/** @brief Send a Feature report to the device.
 
-			Feature reports are sent over the Control endpoint as a
+			Feature reports are sent over the ControlWindow endpoint as a
 			Set_Report transfer.  The first byte of @p data[] must
 			contain the Report ID. For devices which only support a
 			single report, this must be set to 0x0. The remaining bytes

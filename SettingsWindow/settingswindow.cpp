@@ -50,6 +50,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     connect(comboBox_device, SIGNAL(currentIndexChanged(int)), this, SLOT(changeDevice(int)));
 }
 
+SettingsWindow::~SettingsWindow()
+{
+    delete controldevices;
+}
+
 void SettingsWindow::showPageConfigThruster() {
     this->show();
     stackedWidget->setCurrentWidget(pageConfigThruster);
@@ -108,23 +113,17 @@ void SettingsWindow::showPageOtherSettings() {
     this->setWindowTitle("Other settings");
 }
 
-void SettingsWindow::changeDevice(int device_id) {
-    if (device_id == 0) {
-        // Keyboard
-        current_device = 0;
-        qDebug() << "current_device 0";
-        emit controllerChanged(current_device, "Keyboard");
-    } else if (device_id == 1) {
-        // 3D Mouse + mini Keyboard
-        current_device = 1;
-        qDebug() << "current_device 1";
-        emit controllerChanged(current_device, "3dMouse");
-    } else if (device_id > 1) {
-        // Joystick Logitech
-        current_device = 2;
-        qDebug() << "current_device 2";
-        emit controllerChanged(current_device, "Joystick Logitech");
-    }
+void SettingsWindow::showControlDevices()
+{
+    controldevices = new ControlWindow();
+    controldevices->show();
+
+    emit controlConnect();
+}
+
+void SettingsWindow::changeDevice(int device_id)
+{
+
 }
 
 void SettingsWindow::timerTickEvent() // при подключенной мыши выводит с нее мусор

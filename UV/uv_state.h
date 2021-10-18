@@ -39,7 +39,7 @@ public:
     const static unsigned int thrusters_amount = 8;
     const static unsigned int control_counters_amount = 6;
 
-    // Control values
+    // ControlWindow values
     ControlData control;
 
     // IMU values

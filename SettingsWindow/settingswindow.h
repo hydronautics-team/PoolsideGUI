@@ -7,6 +7,7 @@
 
 #include "ControlSettings/Joystick.h"
 #include "ControlSettings/Mouse3d.h"
+#include "ControlSettings/СontrolWindow.h"
 
 class SettingsWindow : public QWidget, public Ui::SettingsWindow {
 Q_OBJECT
@@ -16,6 +17,8 @@ signals:
 
 public:
     explicit SettingsWindow(QWidget *parent = nullptr);
+    ~SettingsWindow();
+    ControlWindow* controldevices = nullptr;
 
 public slots:
     void showPageConfigThruster();
@@ -26,12 +29,12 @@ public slots:
     void showPageConfigView();
     void showPageAboutProgram();
     void showPageOtherSettings();
+    void showControlDevices();
     void timerTickEvent();
     void changeDevice(int device_id);
 
 signals:
-
-    void controllerChanged(unsigned int id, QString name);
+    void controlConnect();
 
 private:
     QTimer *timer;
