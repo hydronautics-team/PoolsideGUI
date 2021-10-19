@@ -7,6 +7,12 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsPixmapItem>
+#include <QFileInfo>
+#include <QDebug>
+#include <QShortcut>
+#include <QApplication>
+#include <QThread>
+#include <QTimer>
 
 #include "ui_mainwindow.h"
 

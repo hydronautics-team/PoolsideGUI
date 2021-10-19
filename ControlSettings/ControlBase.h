@@ -5,8 +5,7 @@
 #include "UV/icontroldata.h"
 #include "qmath.h"
 
-class ControlBase :
-        public QObject {
+class ControlBase : public QObject {
 Q_OBJECT
 
 public:

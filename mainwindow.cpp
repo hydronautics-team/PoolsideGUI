@@ -1,16 +1,4 @@
 #include "mainwindow.h"
-#include <QDebug>
-#include <QFileInfo>
-
-#include "ui_settingswindow.h"
-
-#include "serial_client.h"
-#include "udp_client.h"
-
-#include <QShortcut>
-#include <QApplication>
-#include <QThread>
-#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setupUi(this);
