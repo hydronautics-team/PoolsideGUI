@@ -22,8 +22,8 @@
 #include "ControlSettings/Joystick.h"
 #include "ControlSettings/Keyboard.h"
 #include "ControlSettings/Mouse3d.h"
-#include "serial_client.h"
-#include "udp_client.h"
+#include "CommunicationSettings/SerialClient.h"
+#include "CommunicationSettings/UdpClient.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow {
 Q_OBJECT
@@ -56,8 +56,8 @@ private:
     void updateVehicleConfigurationMenu();
     void checkFile(QString filename);
     ControlBase *controller = nullptr;
-    Serial_Client *serial_client;
-    UDP_Client *udp_client;
+    SerialClient *serial_client;
+    UdpClient *udp_client;
 
     //import from old interface
     void initializeDataUi();

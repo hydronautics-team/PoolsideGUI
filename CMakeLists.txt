@@ -71,7 +71,7 @@ set(PROJECT_SOURCES
         ControlSettings/Joystick.cpp
         ControlSettings/Keyboard.cpp
         ControlSettings/Mouse3d.cpp
-        ControlSettings/СontrolWindow.cpp
+        ControlSettings/ControlWindow.cpp
         KX_Pult/configdata.cpp
         KX_Pult/kx_protocol.cpp
         KX_Pult/qkx_coeffs.cpp
@@ -95,13 +95,13 @@ set(PROJECT_SOURCES
         UV/uv_state.cpp
         mainwindow.cpp
         SettingsWindow/settingswindow.cpp
-        serial_client.cpp
-        udp_client.cpp
+        CommunicationSettings/SerialClient.cpp
+        CommunicationSettings/UdpClient.cpp
         ControlSettings/ControlBase.h
         ControlSettings/Joystick.h
         ControlSettings/Keyboard.h
         ControlSettings/Mouse3d.h
-        ControlSettings/СontrolWindow.h
+        ControlSettings/ControlWindow.h
         KX_Pult/configdata.h
         KX_Pult/kx_protocol.h
         KX_Pult/qkx_coeffs.h
@@ -125,8 +125,8 @@ set(PROJECT_SOURCES
         VehicleWizard/vehiclewizard.h
         mainwindow.h
         SettingsWindow/settingswindow.h
-        serial_client.h
-        udp_client.h
+        CommunicationSettings/SerialClient.h
+        CommunicationSettings/UdpClient.h
         PicFrame/picframe.ui
         SettingsWindow/CommunicationSettings/communicationsettings.ui
         SettingsWindow/CommunicationSettings/serial_settings.ui

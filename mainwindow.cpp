@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     reconnectROV();
 
-    udp_client = new UDP_Client();
+    udp_client = new UdpClient();
     udp_client->start();
 
 //    connect(udp_client, SIGNAL(dataUpdated()), this, SLOT(updateData()));
@@ -74,9 +74,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 /*!
  * @brief Reconnect rov
  */
-void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew Serial_Client
+void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew SerialClient
 {
-    Serial_Client *serial_client = new Serial_Client();
+    SerialClient *serial_client = new SerialClient();
     serial_client->start();
 
     connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));

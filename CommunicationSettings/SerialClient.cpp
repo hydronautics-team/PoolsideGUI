@@ -1,4 +1,4 @@
-#include "serial_client.h"
+#include "SerialClient.h"
 #include "UV/iserverdata.h"
 #include "SettingsWindow/ThrusterSettings/thrustersettings.h"
 
@@ -7,14 +7,14 @@
 
 const int MAX_COM_ID = 20;
 
-Serial_Client::Serial_Client() {
+SerialClient::SerialClient() {
 //    timeoutTimer = new QTimer();
 //    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
     interface = new IServerData();
 }
 
-bool Serial_Client::portConnect(int port) {
+bool SerialClient::portConnect(int port) {
     QString str;
 #ifdef unix
     str = "/dev/ttyUSB"; // небходимо открыть доступ к порту не из под sudo (sudo chmod a+rwx /dev/ttyUSBx)
@@ -44,7 +44,7 @@ bool Serial_Client::portConnect(int port) {
     return true;
 }
 
-void Serial_Client::run() {
+void SerialClient::run() {
     bool opened = false;
     for (int i = 0; i < MAX_COM_ID; i++) {
         opened = portConnect(i);
@@ -58,7 +58,7 @@ void Serial_Client::run() {
     }
 }
 
-int Serial_Client::exec() {
+int SerialClient::exec() {
     while (1) {
         int messageType = MESSAGE_NORMAL;
 
@@ -104,7 +104,7 @@ int Serial_Client::exec() {
     }
 }
 
-void Serial_Client::changeSelectedThruster(unsigned int slot) {
+void SerialClient::changeSelectedThruster(unsigned int slot) {
     interface->changeCurrentThruster(slot);
 }
 

@@ -1,5 +1,5 @@
-#ifndef COM_SERVER_H
-#define COM_SERVER_H
+#ifndef SERIALCLIENT_H
+#define SERIALCLIENT_H
 
 #include <QThread>
 #include <QSerialPort>
@@ -7,11 +7,11 @@
 
 #include "UV/iserverdata.h"
 
-class Serial_Client : public QThread {
+class SerialClient : public QThread {
 Q_OBJECT
 
 public:
-    Serial_Client();
+    SerialClient();
 
     void run();
     int exec();
@@ -31,4 +31,4 @@ private:
     bool portConnect(int port);
 };
 
-#endif // COM_SERVER_H
+#endif // SERIALCLIENT_H

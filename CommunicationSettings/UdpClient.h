@@ -1,5 +1,5 @@
-#ifndef UDP_SERVER_H
-#define UDP_SERVER_H
+#ifndef UDPCLIENT_H
+#define UDPCLIENT_H
 
 #include <QThread>
 #include <QUdpSocket>
@@ -8,12 +8,12 @@
 
 #include "UV/iserverdata.h"
 
-class UDP_Client : public QThread {
+class UdpClient : public QThread {
 Q_OBJECT
 
 public:
-    UDP_Client();
-    ~UDP_Client();
+    UdpClient();
+    ~UdpClient();
 
     void run();
     int exec();
@@ -38,4 +38,4 @@ private slots:
     void readPendingDatagrams();
 };
 
-#endif // UDP_SERVER_H
+#endif // UDPCLIENT_H

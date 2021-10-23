@@ -1,4 +1,4 @@
-#include "СontrolWindow.h"
+#include "ControlWindow.h"
 
 ControlWindow::ControlWindow(QWidget *parent) :
         QWidget(parent),

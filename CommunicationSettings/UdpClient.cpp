@@ -1,16 +1,16 @@
-#include "udp_client.h"
+#include "UdpClient.h"
 
 #include <QNetworkDatagram>
 #include <sstream>
 
-UDP_Client::UDP_Client() {
+UdpClient::UdpClient() {
     uv_interface = new IServerData();
 
     udpSocket = new QUdpSocket(this);
     udpSocket->bind(QHostAddress::LocalHost, 7755);
 
     connect(udpSocket, &QUdpSocket::readyRead,
-            this, &UDP_Client::readPendingDatagrams);
+            this, &UdpClient::readPendingDatagrams);
 
     udpHostAddress = "127.0.0.1";
     udpHostPort = 26782;
@@ -18,14 +18,14 @@ UDP_Client::UDP_Client() {
     messageType = MESSAGE_NORMAL;
 }
 
-UDP_Client::~UDP_Client() {
+UdpClient::~UdpClient() {
     udpSocket->close();
     delete udpSocket;
     delete uv_interface;
     delete timeoutTimer;
 }
 
-void UDP_Client::run() {
+void UdpClient::run() {
     try {
         connectToHost();
     }
@@ -36,7 +36,7 @@ void UDP_Client::run() {
     exec();
 }
 
-int UDP_Client::exec() {
+int UdpClient::exec() {
     while (1) {
         QByteArray msg;
         msg = uv_interface->generateMessage(messageType);
@@ -50,7 +50,7 @@ int UDP_Client::exec() {
     }
 }
 
-void UDP_Client::readPendingDatagrams() {
+void UdpClient::readPendingDatagrams() {
     while (udpSocket->hasPendingDatagrams()) {
         QNetworkDatagram datagram = udpSocket->receiveDatagram();
         QByteArray msg = datagram.data();
@@ -69,7 +69,7 @@ void UDP_Client::readPendingDatagrams() {
     }
 }
 
-void UDP_Client::connectToHost() {
+void UdpClient::connectToHost() {
     QHostAddress udpQHostAddress;
     if (!udpQHostAddress.setAddress(udpHostAddress)) {
         std::stringstream stream;
