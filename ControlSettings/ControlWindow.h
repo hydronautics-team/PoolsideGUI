@@ -1,40 +1,33 @@
-#ifndef CONTROL_H
-#define CONTROL_H
+#ifndef CONTROLWINDOW_H
+#define CONTROLWINDOW_H
 
 #include <QWidget>
 #include "ControlBase.h"
 
 #include "ui_ControlWindow.h"
 
-#include "Keyboard.h"
-#include "Mouse3d.h"
-#include "Joystick.h"
+#include "Control.h"
 
 namespace Ui {
     class ControlWindow;
 }
 
-class ControlWindow : public QWidget {
+class ControlWindow : public QWidget, public Ui::ControlWindow {
 Q_OBJECT
 
 public:
     explicit ControlWindow(QWidget *parent = nullptr);
     ~ControlWindow();
 
-    ControlBase *controller = nullptr;
-
-signals:
-    void controlObject(ControlBase *);
-
-    void controlObject_del();
-
-private:
     Ui::ControlWindow *ui;
+//
+//public slots:
+//    void KeyboardSelection(bool selected);
+//    void Mouse3dSelection(bool selected);
+//    void JoystickLogitechSelection(bool selected);
 
 private slots:
-    void on_CheckBoxKeyBoard_clicked(bool checked);
-    void on_CheckBox3dMouse_clicked(bool checked);
-    void on_CheckBoxJoystickLogitech_clicked(bool checked);
+
 };
 
-#endif // CONTROL_H
+#endif // CONTROLWINDOW_H

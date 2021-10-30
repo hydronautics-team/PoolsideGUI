@@ -4,15 +4,15 @@
 #include <QSettings>
 #include <QPushButton>
 #include <QButtonGroup>
-#include "ui_thrustersettings.h"
+#include "ui_ThrusterWindow.h"
 
 #include "UV/ituningdata.h"
 
-class ThrusterSettings : public QWidget, private Ui::ThrusterSettings {
+class ThrusterWindow : public QWidget, private Ui::ThrusterSettings {
 Q_OBJECT
 
 public:
-    explicit ThrusterSettings(QWidget *parent = nullptr);
+    explicit ThrusterWindow(QWidget *parent = nullptr);
 
 signals:
     void flashVehicle();

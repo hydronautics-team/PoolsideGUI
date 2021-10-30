@@ -1,11 +1,11 @@
-#include "thrustersettings.h"
+#include "ThrusterWindow.h"
 #include "UV/uv_state.h"
 #include "UV/ibasicdata.h"
 
 #include <QDebug>
 #include <QFileInfo>
 
-ThrusterSettings::ThrusterSettings(QWidget *parent) :
+ThrusterWindow::ThrusterWindow(QWidget *parent) :
         QWidget(parent) {
     setupUi(this);
 
@@ -65,7 +65,7 @@ ThrusterSettings::ThrusterSettings(QWidget *parent) :
     updateThrusterSettings();
 }
 
-void ThrusterSettings::updateVehicle() {
+void ThrusterWindow::updateVehicle() {
     currentVehicle = settings->value("currentVehicle").toString();
     thrustersCount = settings->value("vehicle/" +
                                      currentVehicle +
@@ -87,7 +87,7 @@ void ThrusterSettings::updateVehicle() {
     updateThrusterSettings();
 }
 
-void ThrusterSettings::updateThrusterSettings() {
+void ThrusterWindow::updateThrusterSettings() {
     idSpinBox->setValue(
             settings->value("vehicle/" +
                             currentVehicle +
@@ -104,7 +104,7 @@ void ThrusterSettings::updateThrusterSettings() {
     verticalSliderForwardK->setValue(static_cast<int>(
                                              settings->value("vehicle/" +
                                                              currentVehicle +
-                                                             "/thrusters/" +
+                                                              "/thrusters/" +
                                                              QString::number(currentThruster) +
                                                              "/forwardK").toDouble() *
                                              verticalSliderForwardK->maximum()));
@@ -135,7 +135,7 @@ void ThrusterSettings::updateThrusterSettings() {
 //                     QString::number(currentThruster) + "/name").toString() << "Thrusters updated";
 }
 
-void ThrusterSettings::thrusterButtonClicked(int value) {
+void ThrusterWindow::thrusterButtonClicked(int value) {
     currentThruster = value;
 
     // Signal for the Serial_Server to change selected thruster
@@ -144,7 +144,7 @@ void ThrusterSettings::thrusterButtonClicked(int value) {
     updateThrusterSettings();
 }
 
-void ThrusterSettings::thrusterIdChanged(int value) {
+void ThrusterWindow::thrusterIdChanged(int value) {
     // Secure updating UVState structure
     UV_Thruster data = uv_interface.getThrusterData(currentThruster);
     data.id = value;
@@ -158,7 +158,7 @@ void ThrusterSettings::thrusterIdChanged(int value) {
                        "/id", value);
 }
 
-void ThrusterSettings::thrusterReverseChanged(int state) {
+void ThrusterWindow::thrusterReverseChanged(int state) {
     // Secure updating UVState structure
     UV_Thruster data = uv_interface.getThrusterData(currentThruster);
     data.reverse = state;
@@ -172,12 +172,12 @@ void ThrusterSettings::thrusterReverseChanged(int state) {
                        "/reverse", state);
 }
 
-void ThrusterSettings::flashButtonClicked() {
+void ThrusterWindow::flashButtonClicked() {
     // Signal for the Serial_Server to set flash flag
     emit flashVehicle();
 }
 
-void ThrusterSettings::sliderVelocityChanged(int value) {
+void ThrusterWindow::sliderVelocityChanged(int value) {
     // Secure updating UVState structure
     UV_Thruster data = uv_interface.getThrusterData(currentThruster);
     data.velocity = value;
@@ -192,7 +192,7 @@ void ThrusterSettings::sliderVelocityChanged(int value) {
     spinBoxVelocity->setValue(value);
 }
 
-void ThrusterSettings::sliderKForwardChanged(int value) {
+void ThrusterWindow::sliderKForwardChanged(int value) {
     // Secure updating UVState structure
     UV_Thruster data = uv_interface.getThrusterData(currentThruster);
     data.kForward = value;
@@ -208,7 +208,7 @@ void ThrusterSettings::sliderKForwardChanged(int value) {
     spinBoxForwardK->setValue(d_value);
 }
 
-void ThrusterSettings::sliderKBackwardChanged(int value) {
+void ThrusterWindow::sliderKBackwardChanged(int value) {
     // Secure updating UVState structure
     UV_Thruster data = uv_interface.getThrusterData(currentThruster);
     data.kBackward = value;
@@ -224,7 +224,7 @@ void ThrusterSettings::sliderKBackwardChanged(int value) {
     spinBoxBackwardK->setValue(d_value);
 }
 
-void ThrusterSettings::sliderForwardSaturationChanged(int value) {
+void ThrusterWindow::sliderForwardSaturationChanged(int value) {
     // Secure updating UVState structure
     UV_Thruster data = uv_interface.getThrusterData(currentThruster);
     data.sForward = value;
@@ -239,7 +239,7 @@ void ThrusterSettings::sliderForwardSaturationChanged(int value) {
     spinBoxForwardSaturation->setValue(value);
 }
 
-void ThrusterSettings::sliderBackwardSaturationChanged(int value) {
+void ThrusterWindow::sliderBackwardSaturationChanged(int value) {
     // Secure updating UVState structure
     UV_Thruster data = uv_interface.getThrusterData(currentThruster);
     data.sBackward = value;
@@ -254,7 +254,7 @@ void ThrusterSettings::sliderBackwardSaturationChanged(int value) {
     spinBoxBackwardSaturation->setValue(value);
 }
 
-void ThrusterSettings::spinBoxVelocityChanged(int value) {
+void ThrusterWindow::spinBoxVelocityChanged(int value) {
     // Secure updating UVState structure
     UV_Thruster data = uv_interface.getThrusterData(currentThruster);
     data.velocity = value;
@@ -269,7 +269,7 @@ void ThrusterSettings::spinBoxVelocityChanged(int value) {
     verticalSliderVelocity->setValue(value);
 }
 
-void ThrusterSettings::spinBoxKForwardChanged(double value) {
+void ThrusterWindow::spinBoxKForwardChanged(double value) {
     // TODO если значение рассчитывается здесь, то что же тогда отсылается в UVState сверху?
     int i_value = static_cast<int>(value * verticalSliderForwardK->maximum());
 
@@ -282,7 +282,7 @@ void ThrusterSettings::spinBoxKForwardChanged(double value) {
     verticalSliderForwardK->setValue(i_value);
 }
 
-void ThrusterSettings::spinBoxKBackwardChanged(double value) {
+void ThrusterWindow::spinBoxKBackwardChanged(double value) {
     int i_value = static_cast<int>(value * verticalSliderBackwardK->maximum());
 
     // Updating QSettings
@@ -294,7 +294,7 @@ void ThrusterSettings::spinBoxKBackwardChanged(double value) {
     verticalSliderBackwardK->setValue(i_value);
 }
 
-void ThrusterSettings::spinBoxForwardSaturationChanged(int value) {
+void ThrusterWindow::spinBoxForwardSaturationChanged(int value) {
     // Updating QSettings
     settings->setValue("vehicle/" +
                        currentVehicle +
@@ -304,7 +304,7 @@ void ThrusterSettings::spinBoxForwardSaturationChanged(int value) {
     verticalSliderForwardSaturation->setValue(value);
 }
 
-void ThrusterSettings::spinBoxBackwardSaturationChanged(int value) {
+void ThrusterWindow::spinBoxBackwardSaturationChanged(int value) {
     // Updating QSettings
     settings->setValue("vehicle/" +
                        currentVehicle +

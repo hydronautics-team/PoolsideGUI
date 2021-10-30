@@ -4,12 +4,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setupUi(this);
     //start in full screen format
     QMainWindow::showFullScreen();
-    QMainWindow::menuBar()->setVisible(false);
+    QMainWindow::menuBar()->setVisible(true);
 
     // update vehicle and all parameters
     connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
     connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehiclesMenu()));
-    connect(this, SIGNAL(updateVehicle()), &settingsWindow, SIGNAL(updateVehicle()));
 
     // Reading the key combination of turning the window to the full screen and back
     QShortcut *keyCtrlF = new QShortcut(this);
@@ -17,8 +16,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::fullScreenKey);
 
     // Controller Changed
-    controller = new Mouse3d("3dMouse", 5);
-    connect(&settingsWindow, &SettingsWindow::controlConnect, this, &MainWindow::controlConnect); //TODO: переделать под SIGNAL SLOT
+    controller.enableController(Control::MOUSE3D, true);
+    connect(controlWindow.ui->CheckBoxKeyBoard, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
+    connect(controlWindow.ui->CheckBoxMouse3d, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
+    connect(controlWindow.ui->CheckBoxJoystickLogitech, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
+
     connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
     // Menu:
@@ -28,16 +30,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // Choose vehicle and configuration
     connect(menu_choose_configuration, SIGNAL(triggered(QAction * )), this, SLOT(chooseConfiguration(QAction * )));
     connect(menu_choose_vehicle, SIGNAL(triggered(QAction * )), this, SLOT(chooseVehicle(QAction * )));
-    // Settings
-    connect(action_config_com, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigRS()));
-    connect(action_config_thrusters, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigThruster()));
-    connect(action_config_coef, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigCoef()));
-    // Surface control unit
-    connect(action_config_controls, SIGNAL(triggered()), &settingsWindow, SLOT(showControlDevices())); // изменение под класс управления
-    connect(action_config_view, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigView()));
-    // Other settings
-    connect(action_about_program, SIGNAL(triggered()), &settingsWindow, SLOT(showPageAboutProgram()));
-    connect(action_other_settings, SIGNAL(triggered()), &settingsWindow, SLOT(showPageOtherSettings()));
+//    // Settings
+//    connect(action_config_com, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigRS()));
+//    connect(action_config_thrusters, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigThruster()));
+//    connect(action_config_coef, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigCoef()));
+//    // Surface control unit
+    connect(action_config_controls, SIGNAL(triggered()), &controlWindow, SLOT(show()));
+//    connect(action_config_view, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigView()));
+//    // Other settings
+//    connect(action_about_program, SIGNAL(triggered()), &settingsWindow, SLOT(showPageAboutProgram()));
+//    connect(action_other_settings, SIGNAL(triggered()), &settingsWindow, SLOT(showPageOtherSettings()));
     connect(action_full_screen, &QAction::triggered, this, &MainWindow::fullScreenKey);
 
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file
@@ -52,9 +54,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     udp_client = new UdpClient();
     udp_client->start();
-
-//    connect(udp_client, SIGNAL(dataUpdated()), this, SLOT(updateData()));
-    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
 
     connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
     connect(pushButtonResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
@@ -76,12 +75,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
  */
 void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew SerialClient
 {
-    SerialClient *serial_client = new SerialClient();
-    serial_client->start();
+   serial_client = new SerialClient();
+   serial_client->start();
 
     connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));
-    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client,
-            SLOT(changeSelectedThruster(unsigned int)));
+//    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client,
+//            SLOT(changeSelectedThruster(unsigned int)));
 }
 
 void MainWindow::createVehicle() {
@@ -117,7 +116,7 @@ void MainWindow::fullScreenKey() {
         QMainWindow::menuBar()->setVisible(true);
     } else {
         QMainWindow::showFullScreen();
-        QMainWindow::menuBar()->setVisible(false);
+        QMainWindow::menuBar()->setVisible(true);
     }
 }
 
@@ -250,28 +249,10 @@ void MainWindow::clearResetImu() {
     interface.setResetImuValue(false);
 }
 
-void MainWindow::changeController(ControlBase* obj) //TODO: переделать под управляющий класс
-{
-    controller = obj;
-}
-
-void MainWindow::changeController_del() //TODO: переделать под управляющий класс
-{
-    controller = NULL;
-}
-
-void MainWindow::controlConnect() //TODO: переделать под управляющий класс
-{
-    connect(settingsWindow.controldevices, &ControlWindow::controlObject, this, &MainWindow::changeController);
-    connect(settingsWindow.controldevices, &ControlWindow::controlObject_del, this, &MainWindow::changeController_del);
-
-    if(controller != NULL)
-    {
-        delete controller;
-        controller = NULL;
-    }
-}
-
 void MainWindow::reconnectcROVclick() {
     emit reconnectROV();
+}
+
+void MainWindow::enableController(int mode) {
+    controller.enableController(Control::MOUSE3D, mode);
 }

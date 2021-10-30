@@ -1,6 +1,6 @@
 #include "SerialClient.h"
 #include "UV/iserverdata.h"
-#include "SettingsWindow/ThrusterSettings/thrustersettings.h"
+#include "ThrusterSettings/ThrusterWindow.h"
 
 #include <QString>
 #include <QDebug>

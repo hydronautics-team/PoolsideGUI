@@ -17,13 +17,11 @@
 #include "ui_mainwindow.h"
 
 #include "UV/iuserinterfacedata.h"
-#include "SettingsWindow/settingswindow.h"
 #include "VehicleWizard/vehiclewizard.h"
-#include "ControlSettings/Joystick.h"
-#include "ControlSettings/Keyboard.h"
-#include "ControlSettings/Mouse3d.h"
 #include "CommunicationSettings/SerialClient.h"
 #include "CommunicationSettings/UdpClient.h"
+#include "ControlSettings/ControlWindow.h"
+#include "ControlSettings/Control.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow {
 Q_OBJECT
@@ -38,15 +36,14 @@ public:
     //import from old interface
     float depthLin = 9.9546;
     float depthOffset = 0;
+    Control controller;
 
 public slots:
-    void changeController(ControlBase*);
-    void changeController_del();
     void reconnectROV();
-    void controlConnect();
+    void enableController(int mode);
 
 private:
-    SettingsWindow settingsWindow;
+    ControlWindow controlWindow;
     VehicleWizard wizard;
     QString settingsFile;
     QSettings *settings;
@@ -55,7 +52,6 @@ private:
 
     void updateVehicleConfigurationMenu();
     void checkFile(QString filename);
-    ControlBase *controller = nullptr;
     SerialClient *serial_client;
     UdpClient *udp_client;
 
@@ -85,6 +81,7 @@ private slots:
 
     // full screen key combination
     void fullScreenKey();
+
 
     void reconnectcROVclick();
 

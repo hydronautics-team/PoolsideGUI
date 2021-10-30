@@ -4,59 +4,41 @@ ControlWindow::ControlWindow(QWidget *parent) :
         QWidget(parent),
         ui(new Ui::ControlWindow) {
     ui->setupUi(this);
+//    connect(ui->CheckBoxKeyBoard, SIGNAL(stateChanged(state)), this, SLOT(MainWindow::enableController(Control::KEYBOARD, state)));
+//    connect(ui->CheckBoxKeyBoard, SIGNAL(stateChanged(state)), this, SLOT(KeyboardSelection(state)));
+//    connect(ui->CheckBoxMouse3d, SIGNAL(stateChanged(state)), this, SLOT(Mouse3dSelection(state)));
+//    connect(ui->CheckBoxJoystickLogitech, SIGNAL(stateChanged(state)), this, SLOT(JoystickLogitechSelection(state)));
+
 }
 
 ControlWindow::~ControlWindow() {
     delete ui;
 }
+//
+//void ControlWindow::KeyboardSelection(bool selected) {
+//        emit MainWindow::enableController(Control::KEYBOARD, selected);
+//}
 
-void ControlWindow::on_CheckBoxKeyBoard_clicked(bool checked) {
-    if (checked == true) {
-        controller = new Keyboard("KeyBoard", 5);
+//void ControlWindow::Mouse3dSelection(bool selected) {
+//    if (checked == true) {
+////        MainWindow::controller.changeController(Control::MOUSE3D);
+//
+//        ui->CheckBoxKeyBoard->setEnabled(false);
+//        ui->CheckBoxJoystickLogitech->setEnabled(false);
+//    } else {
+//        ui->CheckBoxKeyBoard->setEnabled(true);
+//        ui->CheckBoxJoystickLogitech->setEnabled(true);
+//    }
+//}
 
-        ui->CheckBox3dMouse->setEnabled(false);
-        ui->CheckBoxJoystickLogitech->setEnabled(false);
-
-        emit controlObject(controller);
-    } else {
-        delete controller;
-        emit controlObject_del();
-
-        ui->CheckBox3dMouse->setEnabled(true);
-        ui->CheckBoxJoystickLogitech->setEnabled(true);
-    }
-}
-
-void ControlWindow::on_CheckBox3dMouse_clicked(bool checked) {
-    if (checked == true) {
-        controller = new Mouse3d("3dMouse", 5);
-
-        ui->CheckBoxKeyBoard->setEnabled(false);
-        ui->CheckBoxJoystickLogitech->setEnabled(false);
-
-        emit controlObject(controller);
-    } else {
-        delete controller;
-        emit controlObject_del();
-
-        ui->CheckBoxKeyBoard->setEnabled(true);
-        ui->CheckBoxJoystickLogitech->setEnabled(true);
-    }
-}
-
-void ControlWindow::on_CheckBoxJoystickLogitech_clicked(bool checked) {
-    if (checked == true) {
-        controller = new Joystick("Joystick", 10, 0);
-
-        ui->CheckBoxKeyBoard->setEnabled(false);
-        ui->CheckBox3dMouse->setEnabled(false);
-
-        emit controlObject(controller);
-    } else {
-        delete controller;
-        emit controlObject_del();
-
-        ui->CheckBoxKeyBoard->setEnabled(true);
-        ui->CheckBox3dMouse->setEnabled(true);
-    }
-}
+//void ControlWindow::JoystickLogitechSelection(bool selected) {
+//    if (checked == true) {
+////        MainWindow::controller.changeController(Control::JOYSTICK);
+//
+//        ui->CheckBoxKeyBoard->setEnabled(false);
+//        ui->CheckBoxMouse3d->setEnabled(false);
+//    } else {
+//        ui->CheckBoxKeyBoard->setEnabled(true);
+//        ui->CheckBoxMouse3d->setEnabled(true);
+//    }
+//}
