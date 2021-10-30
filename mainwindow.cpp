@@ -16,10 +16,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::fullScreenKey);
 
     // Controller Changed
-    controller.enableController(Control::MOUSE3D, true);
-    connect(controlWindow.ui->CheckBoxKeyBoard, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
-    connect(controlWindow.ui->CheckBoxMouse3d, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
-    connect(controlWindow.ui->CheckBoxJoystickLogitech, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
+    controller.setDefoultEnabeling();
+    connect(&controlWindow, SIGNAL(controllersEnabelChanged(Control::e_controllerType, bool)),
+            this, SLOT(enableControllerChanged(Control::e_controllerType, bool)));
+
+//    connect(controlWindow.ui->CheckBoxKeyBoard, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
+//    connect(controlWindow.ui->CheckBoxMouse3d, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
+//    connect(controlWindow.ui->CheckBoxJoystickLogitech, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
 
     connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
@@ -253,6 +256,6 @@ void MainWindow::reconnectcROVclick() {
     emit reconnectROV();
 }
 
-void MainWindow::enableController(int mode) {
-    controller.enableController(Control::MOUSE3D, mode);
+void MainWindow::enableControllerChanged(Control::e_controllerType controllerType, bool enabel) {
+    controller.setEnabel(controllerType, enabel);
 }

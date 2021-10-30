@@ -40,7 +40,7 @@ public:
 
 public slots:
     void reconnectROV();
-    void enableController(int mode);
+    void enableControllerChanged(Control::e_controllerType controllerType, bool enabel);
 
 private:
     ControlWindow controlWindow;

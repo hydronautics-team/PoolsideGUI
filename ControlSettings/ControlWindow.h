@@ -20,13 +20,14 @@ public:
     ~ControlWindow();
 
     Ui::ControlWindow *ui;
-//
-//public slots:
-//    void KeyboardSelection(bool selected);
-//    void Mouse3dSelection(bool selected);
-//    void JoystickLogitechSelection(bool selected);
 
-private slots:
+public slots:
+    void KeyboardSelection(int state);
+    void Mouse3dSelection(int state);
+    void JoystickLogitechSelection(int state);
+
+signals:
+    void controllersEnabelChanged(Control::e_controllerType controllerType, bool enabel);
 
 };
 

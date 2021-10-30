@@ -17,10 +17,11 @@ public:
         MOUSE3D
     };
 
-    Keyboard *keyboard;
-    Mouse3d *mouse3D;
-    Joystick *joystick;
-    void enableController(e_controllerType controlType, bool mode);
+    Keyboard *keyboard = nullptr;
+    Mouse3d *mouse3D = nullptr;
+    Joystick *joystick = nullptr;
+    void setDefoultEnabeling();
+    void setEnabel(e_controllerType controlType, bool enabel);
 
 };
 
