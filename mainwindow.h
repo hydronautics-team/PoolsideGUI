@@ -22,6 +22,7 @@
 #include "CommunicationSettings/UdpClient.h"
 #include "ControlSettings/ControlWindow.h"
 #include "ControlSettings/Control.h"
+#include "ThrusterSettings/ThrusterWindow.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow {
 Q_OBJECT
@@ -44,6 +45,7 @@ public slots:
 
 private:
     ControlWindow controlWindow;
+    ThrusterWindow thrusterWindow;
     VehicleWizard wizard;
     QString settingsFile;
     QSettings *settings;

@@ -1,404 +1,553 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-    <class>ThrusterSettings</class>
-    <widget class="QWidget" name="ThrusterSettings">
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>983</width>
-                <height>493</height>
-            </rect>
-        </property>
-        <property name="windowTitle">
-            <string>Form</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-            <item>
-                <layout class="QHBoxLayout" name="horizontalLayout">
-                    <item>
-                        <layout class="QVBoxLayout" name="verticalLayout_2">
-                            <item>
-                                <widget class="QPushButton" name="thrusterBtn0">
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                            <horstretch>0</horstretch>
-                                            <verstretch>0</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <property name="text">
-                                        <string>0</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="thrusterBtn1">
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                            <horstretch>0</horstretch>
-                                            <verstretch>0</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <property name="text">
-                                        <string>1</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="thrusterBtn2">
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                            <horstretch>0</horstretch>
-                                            <verstretch>0</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <property name="text">
-                                        <string>2</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="thrusterBtn3">
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                            <horstretch>0</horstretch>
-                                            <verstretch>0</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <property name="text">
-                                        <string>3</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="thrusterBtn4">
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                            <horstretch>0</horstretch>
-                                            <verstretch>0</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <property name="text">
-                                        <string>4</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="thrusterBtn5">
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                            <horstretch>0</horstretch>
-                                            <verstretch>0</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <property name="text">
-                                        <string>5</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="thrusterBtn6">
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                            <horstretch>0</horstretch>
-                                            <verstretch>0</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <property name="text">
-                                        <string>6</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QPushButton" name="thrusterBtn7">
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                            <horstretch>0</horstretch>
-                                            <verstretch>0</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <property name="text">
-                                        <string>7</string>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <layout class="QHBoxLayout" name="horizontalLayout_3">
-                                    <item>
-                                        <layout class="QVBoxLayout" name="verticalLayout_3">
-                                            <item>
-                                                <layout class="QHBoxLayout" name="horizontalLayout_2">
-                                                    <item>
-                                                        <widget class="QLabel" name="label">
-                                                            <property name="text">
-                                                                <string>ID:</string>
-                                                            </property>
-                                                            <property name="alignment">
-                                                                <set>Qt::AlignCenter</set>
-                                                            </property>
-                                                        </widget>
-                                                    </item>
-                                                    <item>
-                                                        <widget class="QSpinBox" name="idSpinBox"/>
-                                                    </item>
-                                                </layout>
-                                            </item>
-                                            <item>
-                                                <widget class="QCheckBox" name="checkBoxReverse">
-                                                    <property name="text">
-                                                        <string>Reverse</string>
-                                                    </property>
-                                                </widget>
-                                            </item>
-                                        </layout>
-                                    </item>
-                                    <item>
-                                        <widget class="QPushButton" name="flashButton">
-                                            <property name="sizePolicy">
-                                                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                                    <horstretch>0</horstretch>
-                                                    <verstretch>0</verstretch>
-                                                </sizepolicy>
-                                            </property>
-                                            <property name="text">
-                                                <string>Flash</string>
-                                            </property>
-                                        </widget>
-                                    </item>
-                                </layout>
-                            </item>
-                        </layout>
-                    </item>
-                    <item>
-                        <widget class="QGroupBox" name="groupBoxVelosity">
-                            <property name="title">
-                                <string>Velocity</string>
-                            </property>
-                            <property name="alignment">
-                                <set>Qt::AlignCenter</set>
-                            </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_5">
-                                <item>
-                                    <widget class="QSlider" name="verticalSliderVelocity">
-                                        <property name="sizePolicy">
-                                            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                        <property name="minimum">
-                                            <number>-128</number>
-                                        </property>
-                                        <property name="maximum">
-                                            <number>127</number>
-                                        </property>
-                                        <property name="singleStep">
-                                            <number>1</number>
-                                        </property>
-                                        <property name="orientation">
-                                            <enum>Qt::Vertical</enum>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <widget class="QSpinBox" name="spinBoxVelocity">
-                                        <property name="minimum">
-                                            <number>-128</number>
-                                        </property>
-                                        <property name="maximum">
-                                            <number>127</number>
-                                        </property>
-                                    </widget>
-                                </item>
-                            </layout>
-                        </widget>
-                    </item>
-                    <item>
-                        <widget class="QGroupBox" name="groupBoxForwardK">
-                            <property name="title">
-                                <string>Forward K</string>
-                            </property>
-                            <property name="alignment">
-                                <set>Qt::AlignCenter</set>
-                            </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_11">
-                                <item>
-                                    <widget class="QSlider" name="verticalSliderForwardK">
-                                        <property name="sizePolicy">
-                                            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                        <property name="minimum">
-                                            <number>0</number>
-                                        </property>
-                                        <property name="maximum">
-                                            <number>1000</number>
-                                        </property>
-                                        <property name="orientation">
-                                            <enum>Qt::Vertical</enum>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <widget class="QDoubleSpinBox" name="spinBoxForwardK">
-                                        <property name="decimals">
-                                            <number>3</number>
-                                        </property>
-                                        <property name="maximum">
-                                            <double>1.000000000000000</double>
-                                        </property>
-                                        <property name="singleStep">
-                                            <double>0.001000000000000</double>
-                                        </property>
-                                    </widget>
-                                </item>
-                            </layout>
-                        </widget>
-                    </item>
-                    <item>
-                        <widget class="QGroupBox" name="groupBoxBackwardK">
-                            <property name="title">
-                                <string>Backward K</string>
-                            </property>
-                            <property name="alignment">
-                                <set>Qt::AlignCenter</set>
-                            </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_23">
-                                <item>
-                                    <widget class="QSlider" name="verticalSliderBackwardK">
-                                        <property name="sizePolicy">
-                                            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                        <property name="minimum">
-                                            <number>0</number>
-                                        </property>
-                                        <property name="maximum">
-                                            <number>1000</number>
-                                        </property>
-                                        <property name="orientation">
-                                            <enum>Qt::Vertical</enum>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <widget class="QDoubleSpinBox" name="spinBoxBackwardK">
-                                        <property name="wrapping">
-                                            <bool>false</bool>
-                                        </property>
-                                        <property name="frame">
-                                            <bool>true</bool>
-                                        </property>
-                                        <property name="decimals">
-                                            <number>3</number>
-                                        </property>
-                                        <property name="maximum">
-                                            <double>1.000000000000000</double>
-                                        </property>
-                                        <property name="singleStep">
-                                            <double>0.100000000000000</double>
-                                        </property>
-                                        <property name="stepType">
-                                            <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-                                        </property>
-                                        <property name="value">
-                                            <double>0.100000000000000</double>
-                                        </property>
-                                    </widget>
-                                </item>
-                            </layout>
-                        </widget>
-                    </item>
-                    <item>
-                        <widget class="QGroupBox" name="groupBoxForwardSaturation">
-                            <property name="title">
-                                <string>Forward Saturation</string>
-                            </property>
-                            <property name="alignment">
-                                <set>Qt::AlignCenter</set>
-                            </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_24">
-                                <item>
-                                    <widget class="QSlider" name="verticalSliderForwardSaturation">
-                                        <property name="sizePolicy">
-                                            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                        <property name="minimum">
-                                            <number>0</number>
-                                        </property>
-                                        <property name="maximum">
-                                            <number>127</number>
-                                        </property>
-                                        <property name="orientation">
-                                            <enum>Qt::Vertical</enum>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <widget class="QSpinBox" name="spinBoxForwardSaturation">
-                                        <property name="minimum">
-                                            <number>0</number>
-                                        </property>
-                                        <property name="maximum">
-                                            <number>127</number>
-                                        </property>
-                                    </widget>
-                                </item>
-                            </layout>
-                        </widget>
-                    </item>
-                    <item>
-                        <widget class="QGroupBox" name="groupBoxBackwardSaturation">
-                            <property name="title">
-                                <string>Backward Saturation</string>
-                            </property>
-                            <property name="alignment">
-                                <set>Qt::AlignCenter</set>
-                            </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_25">
-                                <item>
-                                    <widget class="QSlider" name="verticalSliderBackwardSaturation">
-                                        <property name="sizePolicy">
-                                            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                                                <horstretch>0</horstretch>
-                                                <verstretch>0</verstretch>
-                                            </sizepolicy>
-                                        </property>
-                                        <property name="minimum">
-                                            <number>0</number>
-                                        </property>
-                                        <property name="maximum">
-                                            <number>127</number>
-                                        </property>
-                                        <property name="orientation">
-                                            <enum>Qt::Vertical</enum>
-                                        </property>
-                                    </widget>
-                                </item>
-                                <item>
-                                    <widget class="QSpinBox" name="spinBoxBackwardSaturation">
-                                        <property name="minimum">
-                                            <number>0</number>
-                                        </property>
-                                        <property name="maximum">
-                                            <number>127</number>
-                                        </property>
-                                    </widget>
-                                </item>
-                            </layout>
-                        </widget>
-                    </item>
-                </layout>
-            </item>
-        </layout>
-    </widget>
-    <resources/>
-    <connections/>
+ <class>ThrusterWindow</class>
+ <widget class="QWidget" name="ThrusterWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>680</width>
+    <height>510</height>
+   </rect>
+  </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="WindowText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>46</red>
+        <green>52</green>
+        <blue>54</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Light">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>69</red>
+        <green>78</green>
+        <blue>81</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Midlight">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>57</red>
+        <green>65</green>
+        <blue>67</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Dark">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>23</red>
+        <green>26</green>
+        <blue>27</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Mid">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>30</red>
+        <green>34</green>
+        <blue>36</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Text">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="BrightText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ButtonText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>46</red>
+        <green>52</green>
+        <blue>54</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Shadow">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="AlternateBase">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>23</red>
+        <green>26</green>
+        <blue>27</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ToolTipBase">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>220</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ToolTipText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="PlaceholderText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="128">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="WindowText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>46</red>
+        <green>52</green>
+        <blue>54</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Light">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>69</red>
+        <green>78</green>
+        <blue>81</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Midlight">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>57</red>
+        <green>65</green>
+        <blue>67</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Dark">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>23</red>
+        <green>26</green>
+        <blue>27</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Mid">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>30</red>
+        <green>34</green>
+        <blue>36</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Text">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="BrightText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ButtonText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>46</red>
+        <green>52</green>
+        <blue>54</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Shadow">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="AlternateBase">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>23</red>
+        <green>26</green>
+        <blue>27</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ToolTipBase">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>220</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ToolTipText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="PlaceholderText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="128">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="WindowText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>23</red>
+        <green>26</green>
+        <blue>27</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>46</red>
+        <green>52</green>
+        <blue>54</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Light">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>69</red>
+        <green>78</green>
+        <blue>81</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Midlight">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>57</red>
+        <green>65</green>
+        <blue>67</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Dark">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>23</red>
+        <green>26</green>
+        <blue>27</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Mid">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>30</red>
+        <green>34</green>
+        <blue>36</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Text">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>23</red>
+        <green>26</green>
+        <blue>27</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="BrightText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ButtonText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>23</red>
+        <green>26</green>
+        <blue>27</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>46</red>
+        <green>52</green>
+        <blue>54</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>46</red>
+        <green>52</green>
+        <blue>54</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Shadow">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="AlternateBase">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>46</red>
+        <green>52</green>
+        <blue>54</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ToolTipBase">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>220</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ToolTipText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="PlaceholderText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="128">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
+  </property>
+  <property name="windowTitle">
+   <string>Thruster setting</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMrgin" stdset="0">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label_AllThruster">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;All&lt;/p&gt;&lt;p&gt;Thruster&lt;/p&gt;&lt;p&gt;Control&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="PushButton_AllThrusterForward">
+         <property name="text">
+          <string>Forward</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="PushButton_AllThrusterStop">
+         <property name="text">
+          <string>Stop</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="PushButton_AllThrusterBackward">
+         <property name="text">
+          <string>Backward</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="SpinBox_AllThtusterSetSpeed">
+         <property name="minimum">
+          <number>-100</number>
+         </property>
+         <property name="maximum">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="2">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_Thrusters"/>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
 </ui>

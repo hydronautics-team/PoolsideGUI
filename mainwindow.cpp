@@ -3,8 +3,8 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setupUi(this);
     //start in full screen format
-    QMainWindow::showFullScreen();
-    QMainWindow::menuBar()->setVisible(true);
+//    QMainWindow::showFullScreen();
+//    QMainWindow::menuBar()->setVisible(true);
 
     // update vehicle and all parameters
     connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(menu_choose_vehicle, SIGNAL(triggered(QAction * )), this, SLOT(chooseVehicle(QAction * )));
 //    // Settings
 //    connect(action_config_com, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigRS()));
-//    connect(action_config_thrusters, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigThruster()));
+    connect(action_config_thrusters, SIGNAL(triggered()), &thrusterWindow, SLOT(show()));
 //    connect(action_config_coef, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigCoef()));
 //    // Surface control unit
     connect(action_config_controls, SIGNAL(triggered()), &controlWindow, SLOT(show()));
@@ -55,8 +55,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     reconnectROV();
 
-    udp_client = new UdpClient();
-    udp_client->start();
+//    udp_client = new UdpClient();
+//    udp_client->start();
 
     connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
     connect(pushButtonResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
@@ -141,7 +141,7 @@ void MainWindow::updateVehiclesMenu() {
         settings->endGroup();
     }
     settings->sync();
-    qDebug() << currentVehicle;
+//    qDebug() << currentVehicle;
     updateVehicleConfigurationMenu();
 }
 
@@ -161,7 +161,7 @@ void MainWindow::updateVehicleConfigurationMenu() {
         }
     }
     settings->endGroup();
-    qDebug() << currentConfiguration;
+//    qDebug() << currentConfiguration;
 }
 
 void MainWindow::checkFile(QString filename) {
