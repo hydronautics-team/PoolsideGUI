@@ -92,6 +92,7 @@ set(PROJECT_SOURCES
         UV/uv_state.cpp
         CommunicationSettings/SerialClient.cpp
         CommunicationSettings/UdpClient.cpp
+        CommunicationSettings/Connection.cpp
         mainwindow.cpp
 
         ControlSettings/ControlBase.h
@@ -121,6 +122,7 @@ set(PROJECT_SOURCES
         mainwindow.h
         CommunicationSettings/SerialClient.h
         CommunicationSettings/UdpClient.h
+        CommunicationSettings/Connection.h
 
         PicFrame/picframe.ui
         ThrusterSettings/ThrusterWindow.ui

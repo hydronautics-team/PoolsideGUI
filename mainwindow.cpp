@@ -20,6 +20,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(&controlWindow, SIGNAL(controllersEnabelChanged(Control::e_controllerType, bool)),
             this, SLOT(enableControllerChanged(Control::e_controllerType, bool)));
 
+    // Connection Type Changed
+    connect(&this, SIGNAL(controllersEnabelChanged(Control::e_controllerType, bool)),
+            this, SLOT(enableControllerChanged(Control::e_controllerType, bool)));
+
+
 //    connect(controlWindow.ui->CheckBoxKeyBoard, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
 //    connect(controlWindow.ui->CheckBoxMouse3d, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
 //    connect(controlWindow.ui->CheckBoxJoystickLogitech, SIGNAL(stateChanged(int)), this, SLOT(enableController(int)));
