@@ -39,8 +39,6 @@ endif()
 
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
 
-
-
 include_directories("ThrusterSettings")
 include_directories("CommunicationSettings")
 include_directories("ControlSettings")

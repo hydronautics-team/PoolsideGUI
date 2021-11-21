@@ -17,29 +17,19 @@ ThrusterWindow::ThrusterWindow(QWidget *parent) :
         file >> thrusterJson;
         file.close();
     }
-//    } else {
-//        qDebug() << "thrusterJson не может быть создан!";
-//    }
 
-//    for (int i = 0; true; ++i) {
-//        if(thrusterJson["thrusters"][0] != )
-//    }
-//    thrusterJson
-
-//    auto shit = thrusterJson["thrusters"][9].get<std::string>();
-//   qDebug() << thrusterJson[1]["backward_saturation"].get<int>();
-//    qDebug() << (thrusterJson.size() / thrusterJson[0].size());
-
-
-    thrusters_amount = sizeof(thrusters) / sizeof(thrusters[0]);
+    thrusters_amount = thrusterJson["thrusters"].size();
+    thrusters = new Thruster[thrusters_amount];
+//    thrusters_table = new ThrusterName_number[thrusters_amount];
     for (int i = 0; i < thrusters_amount; ++i) {
         ui->horizontalLayout_Thrusters->addWidget(&thrusters[i], i);
+        thrusters[i].setThruster(i);
+//        thrusters_table[i].name = QString::fromStdString(thrusterJson["thrusters"][i]["name"]);
     }
-
-
 }
 
 ThrusterWindow::~ThrusterWindow() {
+    delete [] thrusters;
     delete ui;
 }
 

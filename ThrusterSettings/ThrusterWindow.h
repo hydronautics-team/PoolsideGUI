@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <string>
 
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -12,6 +13,7 @@
 using json = nlohmann::json;
 
 #include "Thruster.h"
+
 namespace Ui {
 class ThrusterWindow;
 }
@@ -25,11 +27,18 @@ public:
     ~ThrusterWindow();
 
     int thrusters_amount;
-    Thruster thrusters[8];
+    Thruster *thrusters;
 
 private:
+
     json thrusterJson;
     void createDefaultThrusterJson(std::string fileName);
+
+//    struct ThrusterName_number {
+//        QString name;
+//        int number;
+//    };
+//    ThrusterName_number *thrusters_table;
 
     Ui::ThrusterWindow *ui;
 };
