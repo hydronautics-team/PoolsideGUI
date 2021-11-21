@@ -24,27 +24,3 @@ void ControlWindow::Mouse3dSelection(int state) {
 void ControlWindow::JoystickLogitechSelection(int state) {
     emit controllersEnabelChanged(Control::JOYSTICK, state);
 }
-
-//void ControlWindow::Mouse3dSelection(bool selected) {
-//    if (checked == true) {
-////        MainWindow::controller.changeController(Control::MOUSE3D);
-//
-//        ui->CheckBoxKeyBoard->setEnabled(false);
-//        ui->CheckBoxJoystickLogitech->setEnabled(false);
-//    } else {
-//        ui->CheckBoxKeyBoard->setEnabled(true);
-//        ui->CheckBoxJoystickLogitech->setEnabled(true);
-//    }
-//}
-//
-//void ControlWindow::JoystickLogitechSelection(bool selected) {
-//    if (checked == true) {
-////        MainWindow::controller.changeController(Control::JOYSTICK);
-//
-//        ui->CheckBoxKeyBoard->setEnabled(false);
-//        ui->CheckBoxMouse3d->setEnabled(false);
-//    } else {
-//        ui->CheckBoxKeyBoard->setEnabled(true);
-//        ui->CheckBoxMouse3d->setEnabled(true);
-//    }
-//}
