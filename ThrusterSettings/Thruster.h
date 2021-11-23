@@ -23,19 +23,30 @@ public:
 
     ~Thruster();
 
-    QString name;
-
 private:
     UV_Thruster ThisThruster;
-    json ThisThrusterJson;
+    json ThrusterJson;
     Ui::Thruster *ui;
+    void setUV_Thruster();
+    void setUi();
 
 signals:
     void speedSpinBoxChange(int);
     UV_Thruster ThrusterDataChanged();
 
 public slots:
-    void setThruster(int number);
+    void setThruster(int number, json ThrusterJson);
+    json configureJson();
+
+private slots:
+    void idChanged(int id);
+    void speedChanged(int speed);
+    void forwardKChanged(double forwardK);
+    void backwardKChanged(double backwardK);
+    void forwardSaturationChanged(int forwardSaturation);
+    void backwardSaturationChanged(int backwardSaturation);
+    void reverseChanged(int state);
+
     void speedSetForward();
     void speedSetStop();
     void speedSetBackward();

@@ -28,9 +28,9 @@ public:
 
     int thrusters_amount;
     Thruster *thrusters;
+    std::ifstream file;
 
 private:
-
     json thrusterJson;
     void createDefaultThrusterJson(std::string fileName);
 
