@@ -27,18 +27,24 @@ private:
     UV_Thruster ThisThruster;
     json ThrusterJson;
     Ui::Thruster *ui;
+
     void setUV_Thruster();
     void setUi();
 
+    bool power;
+
 signals:
     void speedSpinBoxChange(int);
-    UV_Thruster ThrusterDataChanged();
+    void parametorsChanged(json json, UV_Thruster thruster);
 
 public slots:
     void setThruster(int number, json ThrusterJson);
-    json configureJson();
+
+//    json getThrusterJson();
+//    UV_Thruster getThisThruster();
 
 private slots:
+    void powerChanged(int power);
     void idChanged(int id);
     void speedChanged(int speed);
     void forwardKChanged(double forwardK);

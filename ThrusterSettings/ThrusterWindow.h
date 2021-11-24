@@ -26,21 +26,27 @@ public:
     explicit ThrusterWindow(QWidget *parent = nullptr);
     ~ThrusterWindow();
 
+    QString jsonName;
+
     int thrusters_amount;
     Thruster *thrusters;
     std::ifstream file;
 
 private:
-    json thrusterJson;
-    void createDefaultThrusterJson(std::string fileName);
-
-//    struct ThrusterName_number {
-//        QString name;
-//        int number;
-//    };
-//    ThrusterName_number *thrusters_table;
-
+    json allThrusterJson;
+    void createDefaultThrusterJson();
     Ui::ThrusterWindow *ui;
+
+    struct ThrusterPower {
+        int slot;
+        bool power;
+    };
+    ThrusterPower *thrustersPower;
+
+public slots:
+    void thrusterEdited(json thrusterJson, UV_Thruster thruster);
+    void powerEdited(int power);
+
 };
 
 #endif // THRUSTERWINDOW_H
