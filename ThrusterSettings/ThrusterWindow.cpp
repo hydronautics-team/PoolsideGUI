@@ -23,15 +23,12 @@ ThrusterWindow::ThrusterWindow(QWidget *parent) :
 
     thrusters_amount = allThrusterJson["thrusters"].size();
     thrusters = new Thruster[thrusters_amount];
-    thrustersPower = new ThrusterPower[thrusters_amount];
     for (int i = 0; i < thrusters_amount; ++i) {
         ui->horizontalLayout_Thrusters->addWidget(&thrusters[i], i);
         thrusters[i].setThruster(i, allThrusterJson["thrusters"][i]);
-        thrustersPower[i] = {i, 0};
         connect(&thrusters[i], SIGNAL(parametorsChanged(json, UV_Thruster)), this, SLOT(thrusterEdited(json, UV_Thruster)));
-        connect(&thrusters[i], SIGNAL(powerChanged(int)), this, SLOT()) //TODO вызов сизнала, который нужно реалтзовать
+        connect(&thrusters[i], SIGNAL(powerChanged(int, bool)), this, SLOT(powerEdited(int, bool)));
     }
-    
 }
 
 ThrusterWindow::~ThrusterWindow() {
@@ -44,7 +41,10 @@ void ThrusterWindow::thrusterEdited(json thrusterJson, UV_Thruster thruster) {
     std::ofstream o(jsonName.toStdString());
     o << std::setw(4) << allThrusterJson << std::endl;
     o.close();
-    
+}
+
+void ThrusterWindow::powerEdited(int slot, bool power) {
+
 }
 
 void ThrusterWindow::createDefaultThrusterJson() {

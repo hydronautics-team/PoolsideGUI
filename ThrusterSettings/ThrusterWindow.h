@@ -37,15 +37,9 @@ private:
     void createDefaultThrusterJson();
     Ui::ThrusterWindow *ui;
 
-    struct ThrusterPower {
-        int slot;
-        bool power;
-    };
-    ThrusterPower *thrustersPower;
-
 public slots:
     void thrusterEdited(json thrusterJson, UV_Thruster thruster);
-    void powerEdited(int power);
+    void powerEdited(int slot, bool power);
 
 };
 

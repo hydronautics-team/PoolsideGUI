@@ -8,7 +8,7 @@ Thruster::Thruster(QWidget *parent) :
     ui->setupUi(this);
 
     //change parameters
-    connect(ui->CheckBox_ThrusterPower, SIGNAL(stateChanged(int)), this, SLOT(powerChanged(int)));
+    connect(ui->CheckBox_ThrusterPower, SIGNAL(stateChanged(int)), this, SLOT(powerCheckBoxChanged(int)));
     connect(ui->SpinBox_ThrusterId, SIGNAL(valueChanged(int)), this, SLOT(idChanged(int)));
     connect(ui->SpinBox_ThrusterSetSpeed, SIGNAL(valueChanged(int)), this, SLOT(speedChanged(int)));
     connect(ui->DoubleSpinBox_SetForwardK, SIGNAL(valueChanged(double)), this, SLOT(forwardKChanged(double)));
@@ -61,41 +61,13 @@ void  Thruster::setUi() {
     }
 }
 
-//json Thruster::configureJson() {
-//    ThrusterJson["name"] = ui->Label_ThrusterName->text().toStdString();
-//    ui->Label_ThrusterName->text();
-//    ThrusterJson["id"] = ui->SpinBox_ThrusterId->value();
-//
-//    ThrusterJson["kForward"] = ui->DoubleSpinBox_SetForwardK->value();
-//    ThrusterJson["kBackward"] = ui->DoubleSpinBox_SetBackwardK->value();
-//
-//    ThrusterJson["forward_saturation"] = ui->SpinBox_ThrusterSetForwardSaturation->value();
-//    ThrusterJson["backward_saturation"] = ui->SpinBox_ThrusterSetBackwardSaturation->value();
-//
-//    ThrusterJson["reverse"] = !!ui->CheckBox_ThrusterReverse->checkState();
-//
-//    return ThrusterJson;
-//}
-//
-//UV_Thruster Thruster::configureUV_Thruster() {
-//
-//    return ThisThruster
-//}
-
-//json Thruster::getThrusterJson() {
-//    return ThrusterJson;
-//}
-//
-//UV_Thruster Thruster::getThisThruster() {
-//    return ThisThruster;
-//}
-
-void Thruster::powerChanged(int power){
+void Thruster::powerCheckBoxChanged(int power){
     if (power == 0) {
-        emit() //TODO вызов сизнала, который нужно реалтзовать
+        this->power = false;
     } else{
-        emit()
+        this->power = true;
     }
+    emit(powerChanged(ThisThruster.slot, power));
 }
 
 void Thruster::idChanged(int id){
