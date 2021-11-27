@@ -28,6 +28,10 @@ Thruster::~Thruster() {
     delete ui;
 }
 
+UV_Thruster Thruster::getUV_Thruster(){
+    return ThisThruster;
+}
+
 void Thruster::setThruster(int number, json ThrusterJson) {
     this->ThisThruster.slot = number;
     this->ThrusterJson = ThrusterJson;

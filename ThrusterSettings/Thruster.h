@@ -23,8 +23,10 @@ public:
 
     ~Thruster();
 
+    UV_Thruster getUV_Thruster();
+
 private:
-    UV_Thruster ThisThruster;
+    UV_Thruster ThisThruster; //TODO: переделать под работу с UV_State
     json ThrusterJson;
     Ui::Thruster *ui;
 

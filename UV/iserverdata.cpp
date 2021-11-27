@@ -1,5 +1,4 @@
 #include "iserverdata.h"
-//#include "rovmodewidget.h"
 
 #include <string>
 #include <sstream>
@@ -19,11 +18,11 @@ IServerData::IServerData()
 }
 
 void IServerData::changeCurrentThruster(unsigned int slot) {
-    if (slot < UV_State::thrusters_amount) {
+    if (slot < sizeof(UV_State::thruster)) {
         currentThruster = slot;
     } else {
         std::string error = "Max thruster slot is: " +
-                            std::to_string(UV_State::thrusters_amount) +
+                            std::to_string(sizeof(UV_State::thruster)) +
                             ", you are trying to change to:" +
                             std::to_string(slot);
         throw std::invalid_argument(error);

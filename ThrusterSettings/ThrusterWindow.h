@@ -9,6 +9,8 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+
+#include "UV/ituningdata.h"
 #include "Utilitis/json.h"
 using json = nlohmann::json;
 
@@ -36,6 +38,7 @@ private:
     json allThrusterJson;
     void createDefaultThrusterJson();
     Ui::ThrusterWindow *ui;
+    ITuningData interface;
 
 public slots:
     void thrusterEdited(json thrusterJson, UV_Thruster thruster);

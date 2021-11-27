@@ -40,3 +40,18 @@ UV_State::UV_State() {
 
     resetImu = false;
 }
+
+UV_State::~UV_State() {
+    if (thruster != nullptr){
+        delete[] thruster;
+    }
+}
+
+void UV_State::setThrusterAmount(int thrusterAmount) {
+    if (thruster != nullptr){
+        delete thruster;
+    }
+    thruster = new UV_Thruster[thrusterAmount];
+    qDebug() << "setThrusterAmount " << thrusterAmount;
+}
+

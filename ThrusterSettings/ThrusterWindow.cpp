@@ -23,9 +23,11 @@ ThrusterWindow::ThrusterWindow(QWidget *parent) :
 
     thrusters_amount = allThrusterJson["thrusters"].size();
     thrusters = new Thruster[thrusters_amount];
+    interface.setThrusterAmount(thrusters_amount);
     for (int i = 0; i < thrusters_amount; ++i) {
         ui->horizontalLayout_Thrusters->addWidget(&thrusters[i], i);
         thrusters[i].setThruster(i, allThrusterJson["thrusters"][i]);
+        interface.setThrusterData(i, thrusters[i].getUV_Thruster());
         connect(&thrusters[i], SIGNAL(parametorsChanged(json, UV_Thruster)), this, SLOT(thrusterEdited(json, UV_Thruster)));
         connect(&thrusters[i], SIGNAL(powerChanged(int, bool)), this, SLOT(powerEdited(int, bool)));
     }
@@ -37,6 +39,8 @@ ThrusterWindow::~ThrusterWindow() {
 }
 
 void ThrusterWindow::thrusterEdited(json thrusterJson, UV_Thruster thruster) {
+    interface.setThrusterData(thruster.slot, thruster);
+    interface.getThrusterData(thruster.slot);
     allThrusterJson["thrusters"][thruster.slot] = thrusterJson;
     std::ofstream o(jsonName.toStdString());
     o << std::setw(4) << allThrusterJson << std::endl;
@@ -44,7 +48,8 @@ void ThrusterWindow::thrusterEdited(json thrusterJson, UV_Thruster thruster) {
 }
 
 void ThrusterWindow::powerEdited(int slot, bool power) {
-
+//    if(power == )
+//    interface.setThrusterData(slot, )
 }
 
 void ThrusterWindow::createDefaultThrusterJson() {

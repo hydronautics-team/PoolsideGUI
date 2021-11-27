@@ -3,6 +3,7 @@
 
 #include "stdint.h"
 
+#include <QDebug>
 #include "uv_device.h"
 #include "uv_thruster.h"
 #include "uv_controlcontour.h"
@@ -33,11 +34,13 @@ struct ControlData {
 class UV_State {
 public:
     UV_State();
+    ~UV_State();
 
     // TODO: Replace this with dynamic arrays (later)
     const static unsigned int devices_amount = 6;
-    const static unsigned int thrusters_amount = 8;
     const static unsigned int control_counters_amount = 6;
+
+    void setThrusterAmount(int thrusterAmount);
 
     // ControlWindow values
     ControlData control;
@@ -52,7 +55,7 @@ public:
     UV_Device device[devices_amount];
 
     // Thrusters
-    UV_Thruster thruster[thrusters_amount];
+    UV_Thruster *thruster;
 
     // Stabilization Contours
     UV_ControlContour ControlContour[control_counters_amount];
