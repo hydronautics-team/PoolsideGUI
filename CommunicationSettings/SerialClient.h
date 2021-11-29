@@ -11,22 +11,19 @@ class SerialClient : public QThread {
 Q_OBJECT
 
 public:
-    SerialClient();
+    SerialClient(e_MessageTypes connectionType);
 
     void run();
     int exec();
 
-    enum e_connectionTypes {
-        NORMAL,
-        DIRECT,
-        CONFIG
-    };
+    e_MessageTypes messageType;
 
 signals:
     void error(QString err);
     void dataUpdated();
 
 public slots:
+    void changeSelectedConnectionType(e_MessageTypes connectionType);
     void changeSelectedThruster(unsigned int slot);
 
 private:

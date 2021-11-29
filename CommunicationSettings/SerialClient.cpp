@@ -7,7 +7,9 @@
 
 const int MAX_COM_ID = 20;
 
-SerialClient::SerialClient() {
+SerialClient::SerialClient(e_MessageTypes connectionType) {
+    messageType = connectionType;
+    qDebug() << connectionType;
 //    timeoutTimer = new QTimer();
 //    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
@@ -60,8 +62,6 @@ void SerialClient::run() {
 
 int SerialClient::exec() {
     while (1) {
-        int messageType = MESSAGE_NORMAL;
-
         QByteArray msg;
         msg = interface->generateMessage(messageType);
 
@@ -102,6 +102,11 @@ int SerialClient::exec() {
 
         emit dataUpdated();
     }
+}
+
+void SerialClient::changeSelectedConnectionType(e_MessageTypes connectionType) {
+    messageType = connectionType; // проверить, вызывается ли он быстрее чем exec()
+    qDebug() << connectionType;
 }
 
 void SerialClient::changeSelectedThruster(unsigned int slot) {

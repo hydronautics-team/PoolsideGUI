@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
             this, SLOT(enableControllerChanged(Control::e_controllerType, bool)));
 
     // Connection Type Changed
+    radioButton_ConnectionNormal->setChecked(true); // default Connection type
     connect(radioButton_ConnectionNormal, SIGNAL(clicked()), this, SLOT(normalConnectionClick()));
     connect(radioButton_ConnectionDirect, SIGNAL(clicked()), this, SLOT(directConnectionClick()));
     connect(radioButton_ConnectionConfig, SIGNAL(clicked()), this, SLOT(configConnectionClick()));
@@ -79,8 +80,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
  */
 void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew SerialClient
 {
-   serial_client = new SerialClient();
-   serial_client->start();
+    if (radioButton_ConnectionNormal->isChecked() == true) {
+        serial_client = new SerialClient(MESSAGE_NORMAL);
+    }
+    if (radioButton_ConnectionDirect->isChecked() == true) {
+        serial_client = new SerialClient(MESSAGE_DIRECT);
+    }
+    if (radioButton_ConnectionConfig->isChecked() == true) {
+        serial_client = new SerialClient(MESSAGE_CONFIG);
+    }
+    serial_client->start();
 
     connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));
 //    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client,
@@ -262,32 +271,33 @@ void MainWindow::enableControllerChanged(Control::e_controllerType controllerTyp
 }
 
 void MainWindow::normalConnectionClick() {
-    emit(ConnectionTypeChanged(SerialClient::NORMAL));
+    emit(ConnectionTypeChanged(MESSAGE_NORMAL));
 }
 
 void MainWindow::directConnectionClick() {
-    emit(ConnectionTypeChanged(SerialClient::DIRECT));
+    emit(ConnectionTypeChanged(MESSAGE_DIRECT));
 }
 
 void MainWindow::configConnectionClick() {
-    emit(ConnectionTypeChanged(SerialClient::CONFIG));
+    emit(ConnectionTypeChanged(MESSAGE_CONFIG));
 }
 
-void MainWindow::ConnectionTypeChanged(SerialClient::e_connectionTypes connectionType) {
+void MainWindow::ConnectionTypeChanged(e_MessageTypes connectionType) {
     switch (connectionType) {
-        case SerialClient::NORMAL:
-            radioButton_ConnectionDirect->toggled(false);
-            radioButton_ConnectionConfig->toggled(false);
+        case MESSAGE_NORMAL:
+            radioButton_ConnectionDirect->setChecked(false);
+            radioButton_ConnectionConfig->setChecked(false);
             break;
 
-        case SerialClient::DIRECT:
-            radioButton_ConnectionNormal->toggled(false);
-            radioButton_ConnectionConfig->toggled(false);
+        case MESSAGE_CONFIG:
+            radioButton_ConnectionNormal->setChecked(false);
+            radioButton_ConnectionConfig->setChecked(false);
             break;
 
-        case SerialClient::CONFIG:
-            radioButton_ConnectionNormal->toggled(false);
-            radioButton_ConnectionDirect->toggled(false);
+        case MESSAGE_DIRECT:
+            radioButton_ConnectionNormal->setChecked(false);
+            radioButton_ConnectionDirect->setChecked(false);
             break;
     }
+    emit serial_client->changeSelectedConnectionType(connectionType);
 }

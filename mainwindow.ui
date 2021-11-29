@@ -857,16 +857,16 @@
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioButton_ConnectionDirect">
+            <widget class="QRadioButton" name="radioButton_ConnectionConfig">
              <property name="text">
-              <string>Direct</string>
+              <string>Config</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioButton_ConnectionConfig">
+            <widget class="QRadioButton" name="radioButton_ConnectionDirect">
              <property name="text">
-              <string>Config</string>
+              <string>Direct</string>
              </property>
             </widget>
            </item>

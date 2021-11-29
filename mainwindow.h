@@ -92,7 +92,7 @@ private slots:
     void directConnectionClick();
     void configConnectionClick();
 
-    void ConnectionTypeChanged(SerialClient::e_connectionTypes connectionType);
+    void ConnectionTypeChanged(e_MessageTypes connectionType);
 
 };
 
