@@ -21,8 +21,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
             this, SLOT(enableControllerChanged(Control::e_controllerType, bool)));
 
     // Connection Type Changed
-//    connect(&this, SIGNAL(controllersEnabelChanged(Control::e_controllerType, bool)),
-//            this, SLOT(enableControllerChanged(Control::e_controllerType, bool)));
+    connect(radioButton_ConnectionNormal, SIGNAL(clicked()), this, SLOT(normalConnectionClick()));
+    connect(radioButton_ConnectionDirect, SIGNAL(clicked()), this, SLOT(directConnectionClick()));
+    connect(radioButton_ConnectionConfig, SIGNAL(clicked()), this, SLOT(configConnectionClick()));
 
     connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
@@ -258,4 +259,35 @@ void MainWindow::reconnectcROVclick() {
 
 void MainWindow::enableControllerChanged(Control::e_controllerType controllerType, bool enabel) {
     controller.setEnabel(controllerType, enabel);
+}
+
+void MainWindow::normalConnectionClick() {
+    emit(ConnectionTypeChanged(SerialClient::NORMAL));
+}
+
+void MainWindow::directConnectionClick() {
+    emit(ConnectionTypeChanged(SerialClient::DIRECT));
+}
+
+void MainWindow::configConnectionClick() {
+    emit(ConnectionTypeChanged(SerialClient::CONFIG));
+}
+
+void MainWindow::ConnectionTypeChanged(SerialClient::e_connectionTypes connectionType) {
+    switch (connectionType) {
+        case SerialClient::NORMAL:
+            radioButton_ConnectionDirect->toggled(false);
+            radioButton_ConnectionConfig->toggled(false);
+            break;
+
+        case SerialClient::DIRECT:
+            radioButton_ConnectionNormal->toggled(false);
+            radioButton_ConnectionConfig->toggled(false);
+            break;
+
+        case SerialClient::CONFIG:
+            radioButton_ConnectionNormal->toggled(false);
+            radioButton_ConnectionDirect->toggled(false);
+            break;
+    }
 }

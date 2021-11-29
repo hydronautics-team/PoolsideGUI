@@ -32,6 +32,7 @@ signals:
     //import from old interface
     void updateCompass(double yaw);
 
+
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     //import from old interface
@@ -84,8 +85,14 @@ private slots:
     // full screen key combination
     void fullScreenKey();
 
-
+    //Other buttons
     void reconnectcROVclick();
+
+    void normalConnectionClick();
+    void directConnectionClick();
+    void configConnectionClick();
+
+    void ConnectionTypeChanged(SerialClient::e_connectionTypes connectionType);
 
 };
 

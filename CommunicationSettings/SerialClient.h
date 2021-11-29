@@ -16,6 +16,12 @@ public:
     void run();
     int exec();
 
+    enum e_connectionTypes {
+        NORMAL,
+        DIRECT,
+        CONFIG
+    };
+
 signals:
     void error(QString err);
     void dataUpdated();
