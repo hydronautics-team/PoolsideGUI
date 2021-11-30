@@ -55,3 +55,7 @@ void UV_State::setThrusterAmount(int thrusterAmount) {
     qDebug() << "setThrusterAmount " << thrusterAmount;
 }
 
+int UV_State::getThrusterAmount() {
+    return sizeof(thruster);
+}
+

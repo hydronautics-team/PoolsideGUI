@@ -63,6 +63,9 @@ void SerialClient::run() {
 int SerialClient::exec() {
     while (1) {
         QByteArray msg;
+        if (messageType == MESSAGE_DIRECT) {
+            changeThrusterToNext();
+        }
         msg = interface->generateMessage(messageType);
 
 //        qDebug() << "[SERIAL_CLIENT] Sending message type " << messageType << "||" << msg.size();
@@ -99,7 +102,6 @@ int SerialClient::exec() {
 //            qDebug() << "[SERIAL_CLIENT] Bytes available:" << bytesAvailiable;
             serialPort->readAll();
         }
-
         emit dataUpdated();
     }
 }
@@ -109,8 +111,13 @@ void SerialClient::changeSelectedConnectionType(e_MessageTypes connectionType) {
     qDebug() << connectionType;
 }
 
-void SerialClient::changeSelectedThruster(unsigned int slot) {
-    interface->changeCurrentThruster(slot);
+void SerialClient::changeThrusterToNext() {
+    for (int i = interface->getCurrentThruster(); i < interface->getThrusterAmount() - 1;) {
+        interface->changeCurrentThruster(++i);
+
+        if (i == interface->getThrusterAmount()) {
+            i = 0;
+        }
+        break;
+    }
 }
-
-

@@ -29,6 +29,32 @@ void IServerData::changeCurrentThruster(unsigned int slot) {
     }
 }
 
+void IServerData::changeThrusterToNext() {
+    if (currentThruster = (getThrusterAmount() - 1)) {
+
+    }
+}
+
+int IServerData::getCurrentThruster() {
+    return currentThruster;
+}
+
+int IServerData::getThrusterAmount() {
+    int thrusterAmount;
+    UVMutex.lock();
+    thrusterAmount = sizeof(UV_State::thruster);
+    UVMutex.unlock();
+    return thrusterAmount;
+}
+
+bool IServerData::getThrusterPower(int slot) {
+    bool  power;
+    UVMutex.lock();
+    power = UVState.thruster[slot].power;
+    UVMutex.unlock();
+    return  power;
+}
+
 QByteArray IServerData::generateMessage(int message_type) {
     QByteArray formed;
     formed.clear();
@@ -194,7 +220,11 @@ void IServerData::fillStructure(RequestDirectMessage &req) {
     req.number = currentThruster;
     req.id = static_cast<uint8_t>(UVState.thruster[req.number].id);
 
-    req.velocity = static_cast<int8_t>(UVState.thruster[req.number].velocity);
+    if (UVState.thruster[req.number].power == false) {
+        req.velocity = 0;
+    } else {
+        req.velocity = static_cast<int8_t>(UVState.thruster[req.number].velocity);
+    }
 
     req.reverse = UVState.thruster[req.number].reverse;
 

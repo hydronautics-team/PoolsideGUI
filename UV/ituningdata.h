@@ -12,8 +12,10 @@ public:
     ITuningData();
 
     void setThrusterAmount(int thrusterAmount);
+    int getThrusterAmount();
     UV_Thruster getThrusterData(unsigned int slot);
     void setThrusterData(unsigned int slot, UV_Thruster data);
+    void setThrusterPower(unsigned int slot, bool power);
 
     UV_ControlContour getControlContourData(unsigned int slot);
     void setControlContourData(unsigned int slot, UV_ControlContour data);

@@ -66,12 +66,14 @@ void  Thruster::setUi() {
 }
 
 void Thruster::powerCheckBoxChanged(int power){
-    if (power == 0) {
-        this->power = false;
-    } else{
-        this->power = true;
-    }
-    emit(powerChanged(ThisThruster.slot, power));
+//    if (power == 0) {
+//        this->power = false;
+//    } else{
+//        this->power = true;
+//    }
+//    emit(powerChanged(ThisThruster.slot, power));
+    ThisThruster.power = power;
+    emit parametorsChanged(ThrusterJson, ThisThruster);
 }
 
 void Thruster::idChanged(int id){
@@ -108,7 +110,6 @@ void Thruster::reverseChanged(int state){
     ThisThruster.reverse = !!state;
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
-
 
 void Thruster::speedSetForward() {
     emit speedSpinBoxChange(15);

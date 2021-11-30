@@ -12,6 +12,7 @@ class IBasicData {
 public:
     IBasicData();
 
+
 protected:
     /// Static mutex variable
     static QMutex UVMutex;

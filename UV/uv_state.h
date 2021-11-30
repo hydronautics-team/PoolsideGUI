@@ -41,6 +41,9 @@ public:
     const static unsigned int control_counters_amount = 6;
 
     void setThrusterAmount(int thrusterAmount);
+    int getThrusterAmount();
+
+
 
     // ControlWindow values
     ControlData control;

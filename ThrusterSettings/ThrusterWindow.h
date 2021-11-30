@@ -42,7 +42,7 @@ private:
 
 public slots:
     void thrusterEdited(json thrusterJson, UV_Thruster thruster);
-    void powerEdited(int slot, bool power);
+//    void powerEdited(int slot, bool power);
 
 };
 

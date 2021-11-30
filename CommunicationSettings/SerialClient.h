@@ -24,12 +24,13 @@ signals:
 
 public slots:
     void changeSelectedConnectionType(e_MessageTypes connectionType);
-    void changeSelectedThruster(unsigned int slot);
 
 private:
     QSerialPort *serialPort;
     QTimer *timeoutTimer;
     IServerData *interface;
+
+    void changeThrusterToNext();
 
     bool portConnect(int port);
 };

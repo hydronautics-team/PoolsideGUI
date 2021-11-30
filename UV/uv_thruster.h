@@ -10,6 +10,8 @@ public:
 
     QString name;
 
+    bool power;
+
     int id;
     int slot;
 
