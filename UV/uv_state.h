@@ -40,6 +40,8 @@ public:
     const static unsigned int devices_amount = 6;
     const static unsigned int control_counters_amount = 6;
 
+    int thrusterAmount;
+
     void setThrusterAmount(int thrusterAmount);
     int getThrusterAmount();
 

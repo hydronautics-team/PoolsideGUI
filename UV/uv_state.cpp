@@ -52,10 +52,10 @@ void UV_State::setThrusterAmount(int thrusterAmount) {
         delete thruster;
     }
     thruster = new UV_Thruster[thrusterAmount];
-    qDebug() << "setThrusterAmount " << thrusterAmount << "sizeof(thruster)" << sizeof(thruster);
+    this->thrusterAmount = thrusterAmount;
+    qDebug() << "setThrusterAmount " << thrusterAmount;
 }
 
 int UV_State::getThrusterAmount() {
-    return sizeof(thruster);
+    return thrusterAmount;
 }
-

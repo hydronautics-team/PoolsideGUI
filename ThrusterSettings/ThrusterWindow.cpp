@@ -28,9 +28,12 @@ ThrusterWindow::ThrusterWindow(QWidget *parent) :
         ui->horizontalLayout_Thrusters->addWidget(&thrusters[i], i);
         thrusters[i].setThruster(i, allThrusterJson["thrusters"][i]);
         interface.setThrusterData(i, thrusters[i].getUV_Thruster());
+
+        connect(ui->CheckBox_AutoSave, SIGNAL(stateChanged(int)), &thrusters[i], SLOT(setAutoSave(int)));
+        connect(ui->PushButton_Save, SIGNAL(clicked(bool)), &thrusters[i], SLOT(save(bool)));
         connect(&thrusters[i], SIGNAL(parametorsChanged(json, UV_Thruster)), this, SLOT(thrusterEdited(json, UV_Thruster)));
-//        connect(&thrusters[i], SIGNAL(powerChanged(int, bool)), this, SLOT(powerEdited(int, bool)));
     }
+    ui->CheckBox_AutoSave->setCheckState(Qt::Checked);
 }
 
 ThrusterWindow::~ThrusterWindow() {
@@ -70,7 +73,7 @@ void ThrusterWindow::createDefaultThrusterJson() {
                     {"name", "HRB"},
                     {"backward_saturation", 75},
                     {"forward_saturation", 75},
-                    {"id", 0},
+                    {"id", 6},
                     {"kBackward", 1},
                     {"kForward", 1},
                     {"reverse", true}
@@ -86,7 +89,7 @@ void ThrusterWindow::createDefaultThrusterJson() {
                     {"name", "VR"},
                     {"backward_saturation", 75},
                     {"forward_saturation", 75},
-                    {"id", 6},
+                    {"id", 0},
                     {"kBackward", 1},
                     {"kForward", 1},
                     {"reverse", true}

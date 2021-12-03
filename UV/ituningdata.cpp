@@ -13,7 +13,7 @@ void ITuningData::setThrusterAmount(int thrusterAmount){
 int ITuningData::getThrusterAmount() {
     int thrusterAmount;
     UVMutex.lock();
-    thrusterAmount = sizeof(UV_State::thruster);
+    thrusterAmount = UVState.getThrusterAmount();
     UVMutex.unlock();
     return thrusterAmount;
 }
@@ -27,7 +27,7 @@ UV_Thruster ITuningData::getThrusterData(unsigned int slot) {
         qDebug() << data.id;
     } else {
         std::string error = "Max thruster slot is: " +
-                            std::to_string(getThrusterAmount()) +
+                            std::to_string(UVState.getThrusterAmount()) +
                             ", you are trying to reach:" +
                             std::to_string(slot);
         throw std::invalid_argument(error);
@@ -36,13 +36,13 @@ UV_Thruster ITuningData::getThrusterData(unsigned int slot) {
 }
 
 void ITuningData::setThrusterData(unsigned int slot, UV_Thruster data) {
-    if (slot < getThrusterAmount()) {
+    if (slot < UVState.getThrusterAmount()) {
         UVMutex.lock();
         UVState.thruster[slot] = data;
         UVMutex.unlock();
     } else {
         std::string error = "Max thruster slot is: " +
-                            std::to_string(getThrusterAmount()) +
+                            std::to_string(UVState.getThrusterAmount()) +
                             ", you are trying to reach:" +
                             std::to_string(slot);
         throw std::invalid_argument(error);

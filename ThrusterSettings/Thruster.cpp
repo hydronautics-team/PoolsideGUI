@@ -13,8 +13,10 @@ Thruster::Thruster(QWidget *parent) :
     connect(ui->SpinBox_ThrusterSetSpeed, SIGNAL(valueChanged(int)), this, SLOT(speedChanged(int)));
     connect(ui->DoubleSpinBox_SetForwardK, SIGNAL(valueChanged(double)), this, SLOT(forwardKChanged(double)));
     connect(ui->DoubleSpinBox_SetBackwardK, SIGNAL(valueChanged(double)), this, SLOT(backwardKChanged(double)));
-    connect(ui->SpinBox_ThrusterSetForwardSaturation, SIGNAL(valueChanged(int)), this, SLOT(forwardSaturationChanged(int)));
-    connect(ui->SpinBox_ThrusterSetBackwardSaturation, SIGNAL(valueChanged(int)), this, SLOT(backwardSaturationChanged(int)));
+    connect(ui->SpinBox_ThrusterSetForwardSaturation, SIGNAL(valueChanged(int)), this,
+            SLOT(forwardSaturationChanged(int)));
+    connect(ui->SpinBox_ThrusterSetBackwardSaturation, SIGNAL(valueChanged(int)), this,
+            SLOT(backwardSaturationChanged(int)));
     connect(ui->CheckBox_ThrusterReverse, SIGNAL(stateChanged(int)), this, SLOT(reverseChanged(int)));
 
     //speed
@@ -28,7 +30,7 @@ Thruster::~Thruster() {
     delete ui;
 }
 
-UV_Thruster Thruster::getUV_Thruster(){
+UV_Thruster Thruster::getUV_Thruster() {
     return ThisThruster;
 }
 
@@ -41,6 +43,22 @@ void Thruster::setThruster(int number, json ThrusterJson) {
     qDebug() << ThisThruster.name;
 }
 
+void Thruster::setAutoSave(int autoSave) {
+    this->autoSave = !!autoSave;
+    qDebug() << "autoSave " << !!autoSave;
+}
+
+void Thruster::save(bool click) {
+    ThrusterJson["id"] = ThisThruster.id;
+    ThrusterJson["kForward"] = ThisThruster.kForward;
+    ThrusterJson["kBackward"] = ThisThruster.kBackward;
+    ThrusterJson["forward_saturation"] = ThisThruster.sForward;
+    ThrusterJson["backward_saturation"] = ThisThruster.sBackward;
+    ThrusterJson["reverse"] = ThisThruster.reverse;
+
+    emit parametorsChanged(ThrusterJson, ThisThruster);
+}
+
 void Thruster::setUV_Thruster() {
     ThisThruster.name = QString::fromStdString(ThrusterJson["name"]);
     ThisThruster.id = ThrusterJson["id"];
@@ -51,7 +69,8 @@ void Thruster::setUV_Thruster() {
     ThisThruster.sBackward = ThrusterJson["backward_saturation"];
 }
 
-void  Thruster::setUi() {
+void Thruster::setUi() {
+    ui->SpinBox_ThrusterId->setEnabled(!power);
     ui->Label_ThrusterName->setText(QString::fromStdString(ThrusterJson["name"]));
     ui->SpinBox_ThrusterId->setValue(ThrusterJson["id"]);
     ui->DoubleSpinBox_SetForwardK->setValue(ThrusterJson["kForward"]);
@@ -60,53 +79,59 @@ void  Thruster::setUi() {
     ui->SpinBox_ThrusterSetBackwardSaturation->setValue(ThrusterJson["backward_saturation"]);
     if (ThrusterJson["reverse"] == true) {
         ui->CheckBox_ThrusterReverse->setCheckState(Qt::Checked);
-    } else{
+    } else {
         ui->CheckBox_ThrusterReverse->setCheckState(Qt::Unchecked);
     }
 }
 
-void Thruster::powerCheckBoxChanged(int power){
-//    if (power == 0) {
-//        this->power = false;
-//    } else{
-//        this->power = true;
-//    }
-//    emit(powerChanged(ThisThruster.slot, power));
+void Thruster::powerCheckBoxChanged(int power) {
     ThisThruster.power = power;
+    ui->SpinBox_ThrusterId->setEnabled(!power);
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
 
-void Thruster::idChanged(int id){
-    ThrusterJson["id"] = id;
+void Thruster::idChanged(int id) {
+    ui->SpinBox_ThrusterSetSpeed->setValue(0); // обнулям, чтобы не крутились не нужные движки
+    ThisThruster.velocity = 0;
+    emit parametorsChanged(ThrusterJson, ThisThruster);
+
+    if (autoSave == true) ThrusterJson["id"] = id;
+
     ThisThruster.id = id;
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
-void Thruster::speedChanged(int speed){
+
+void Thruster::speedChanged(int speed) {
     ThisThruster.velocity = speed;
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
-void Thruster::forwardKChanged(double forwardK){
-    ThrusterJson["kForward"] = forwardK;
+
+void Thruster::forwardKChanged(double forwardK) {
+    if (autoSave == true) ThrusterJson["kForward"] = forwardK;
     ThisThruster.kForward = forwardK;
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
-void Thruster::backwardKChanged(double backwardK){
-    ThrusterJson["kBackward"] = backwardK;
+
+void Thruster::backwardKChanged(double backwardK) {
+    if (autoSave == true) ThrusterJson["kBackward"] = backwardK;
     ThisThruster.kBackward = backwardK;
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
-void Thruster::forwardSaturationChanged(int forwardSaturation){
-    ThrusterJson["forward_saturation"] = forwardSaturation;
+
+void Thruster::forwardSaturationChanged(int forwardSaturation) {
+    if (autoSave == true) ThrusterJson["forward_saturation"] = forwardSaturation;
     ThisThruster.sForward = forwardSaturation;
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
-void Thruster::backwardSaturationChanged(int backwardSaturation){
-    ThrusterJson["backward_saturation"] = backwardSaturation;
+
+void Thruster::backwardSaturationChanged(int backwardSaturation) {
+    if (autoSave == true) ThrusterJson["backward_saturation"] = backwardSaturation;
     ThisThruster.sBackward = backwardSaturation;
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
-void Thruster::reverseChanged(int state){
-    ThrusterJson["reverse"] = !!state;
+
+void Thruster::reverseChanged(int state) {
+    if (autoSave == true) ThrusterJson["reverse"] = !!state;
     ThisThruster.reverse = !!state;
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }

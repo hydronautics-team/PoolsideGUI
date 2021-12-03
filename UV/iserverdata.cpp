@@ -19,11 +19,11 @@ IServerData::IServerData()
 }
 
 void IServerData::changeCurrentThruster(unsigned int slot) {
-    if (slot < sizeof(UV_State::thruster)) {
+    if (slot < UVState.getThrusterAmount()) {
         currentThruster = slot;
     } else {
         std::string error = "Max thruster slot is: " +
-                            std::to_string(sizeof(UV_State::thruster) - 1) +
+                            std::to_string(UVState.getThrusterAmount() - 1) +
                             ", you are trying to change to:" +
                             std::to_string(slot);
         throw std::invalid_argument(error);
@@ -37,17 +37,9 @@ int IServerData::getCurrentThruster() {
 int IServerData::getThrusterAmount() {
     int thrusterAmount;
     UVMutex.lock();
-    thrusterAmount = sizeof(UV_State::thruster);
+    thrusterAmount = UVState.getThrusterAmount();
     UVMutex.unlock();
     return thrusterAmount;
-}
-
-bool IServerData::getThrusterPower(int slot) {
-    bool  power;
-    UVMutex.lock();
-    power = UVState.thruster[slot].power;
-    UVMutex.unlock();
-    return  power;
 }
 
 QByteArray IServerData::generateMessage(int message_type) {

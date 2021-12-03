@@ -113,8 +113,8 @@ void SerialClient::changeSelectedConnectionType(e_MessageTypes connectionType) {
 }
 
 void SerialClient::changeThrusterToNext() {
-    for (int i = interface->getCurrentThruster(); i < interface->getThrusterAmount() - 2; i++) {
-        if (i == interface->getThrusterAmount() - 1 - 2) {
+    for (int i = interface->getCurrentThruster(); i < interface->getThrusterAmount(); i++) {
+        if (i == interface->getThrusterAmount() - 1) {
             i = -1;
         }
 

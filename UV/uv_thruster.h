@@ -10,7 +10,7 @@ public:
 
     QString name;
 
-    bool power;
+    bool power = false;
 
     int id;
     int slot;
