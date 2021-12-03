@@ -65,6 +65,7 @@ int SerialClient::exec() {
         QByteArray msg;
         if (messageType == MESSAGE_DIRECT) {
             changeThrusterToNext();
+//            qDebug() << interface->getCurrentThruster();
         }
         msg = interface->generateMessage(messageType);
 
@@ -112,12 +113,12 @@ void SerialClient::changeSelectedConnectionType(e_MessageTypes connectionType) {
 }
 
 void SerialClient::changeThrusterToNext() {
-    for (int i = interface->getCurrentThruster(); i < interface->getThrusterAmount() - 1;) {
-        interface->changeCurrentThruster(++i);
-
-        if (i == interface->getThrusterAmount()) {
-            i = 0;
+    for (int i = interface->getCurrentThruster(); i < interface->getThrusterAmount() - 2; i++) {
+        if (i == interface->getThrusterAmount() - 1 - 2) {
+            i = -1;
         }
+
+        interface->changeCurrentThruster(i + 1);
         break;
     }
 }

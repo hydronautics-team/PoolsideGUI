@@ -1,5 +1,6 @@
 #include "iserverdata.h"
 
+#include <QDebug>
 #include <string>
 #include <sstream>
 
@@ -22,16 +23,10 @@ void IServerData::changeCurrentThruster(unsigned int slot) {
         currentThruster = slot;
     } else {
         std::string error = "Max thruster slot is: " +
-                            std::to_string(sizeof(UV_State::thruster)) +
+                            std::to_string(sizeof(UV_State::thruster) - 1) +
                             ", you are trying to change to:" +
                             std::to_string(slot);
         throw std::invalid_argument(error);
-    }
-}
-
-void IServerData::changeThrusterToNext() {
-    if (currentThruster = (getThrusterAmount() - 1)) {
-
     }
 }
 
@@ -207,6 +202,7 @@ QByteArray IServerData::generateDirectMessage() {
     stream << req.kBackward;
     stream << req.sForward;
     stream << req.sBackward;
+    qDebug() << "req.number" << req.number << "req.id" << req.id << "req.velocity" << req.velocity;
 
     uint16_t checksum = getCheckSumm16b(msg.data(), msg.size());
     stream << checksum;

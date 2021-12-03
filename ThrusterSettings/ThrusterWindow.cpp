@@ -54,7 +54,7 @@ void ThrusterWindow::createDefaultThrusterJson() {
                     {"name", "HLB"},
                     {"backward_saturation", 75},
                     {"forward_saturation", 75},
-                    {"id", 6},
+                    {"id", 2},
                     {"kBackward", 1},
                     {"kForward", 1},
                     {"reverse", true}
@@ -62,7 +62,7 @@ void ThrusterWindow::createDefaultThrusterJson() {
                     {"name", "HLF"},
                     {"backward_saturation", 75},
                     {"forward_saturation", 75},
-                    {"id", 8},
+                    {"id", 1},
                     {"kBackward", 1},
                     {"kForward", 1},
                     {"reverse", false}
@@ -70,7 +70,7 @@ void ThrusterWindow::createDefaultThrusterJson() {
                     {"name", "HRB"},
                     {"backward_saturation", 75},
                     {"forward_saturation", 75},
-                    {"id", 1},
+                    {"id", 0},
                     {"kBackward", 1},
                     {"kForward", 1},
                     {"reverse", true}
@@ -78,23 +78,15 @@ void ThrusterWindow::createDefaultThrusterJson() {
                     {"name", "HRF"},
                     {"backward_saturation", 75},
                     {"forward_saturation", 75},
-                    {"id", 2},
+                    {"id", 4},
                     {"kBackward", 1},
                     {"kForward", 1},
                     {"reverse", true}
             }, {
-                    {"name", "VB"},
+                    {"name", "VR"},
                     {"backward_saturation", 75},
                     {"forward_saturation", 75},
-                    {"id", 3},
-                    {"kBackward", 1},
-                    {"kForward", 1},
-                    {"reverse", true}
-            }, {
-                    {"name", "VF"},
-                    {"backward_saturation", 75},
-                    {"forward_saturation", 75},
-                    {"id", 5},
+                    {"id", 6},
                     {"kBackward", 1},
                     {"kForward", 1},
                     {"reverse", true}
@@ -102,15 +94,7 @@ void ThrusterWindow::createDefaultThrusterJson() {
                     {"name", "VL"},
                     {"backward_saturation", 75},
                     {"forward_saturation", 75},
-                    {"id", 4},
-                    {"kBackward", 1},
-                    {"kForward", 1},
-                    {"reverse", true}
-            }, {
-                    {"name", "VB"},
-                    {"backward_saturation", 75},
-                    {"forward_saturation", 75},
-                    {"id", 7},
+                    {"id", 3},
                     {"kBackward", 1},
                     {"kForward", 1},
                     {"reverse", true}
