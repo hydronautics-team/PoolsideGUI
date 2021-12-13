@@ -12,6 +12,7 @@ Q_OBJECT
 
 public:
     SerialClient(e_MessageTypes connectionType);
+    ~SerialClient();
 
     void run();
     int exec();

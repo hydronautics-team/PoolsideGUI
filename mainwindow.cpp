@@ -47,6 +47,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 //    connect(action_other_settings, SIGNAL(triggered()), &settingsWindow, SLOT(showPageOtherSettings()));
     connect(action_full_screen, &QAction::triggered, this, &MainWindow::fullScreenKey);
 
+
+    stabilizationWindow.show();
+
+
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file
     checkFile(settingsFile); // check file existance
     settings = new QSettings(settingsFile, QSettings::IniFormat);

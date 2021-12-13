@@ -23,6 +23,7 @@
 #include "ControlSettings/ControlWindow.h"
 #include "ControlSettings/Control.h"
 #include "ThrusterSettings/ThrusterWindow.h"
+#include "StabilizationSettings/StabilizationWindow.h"
 
 class MainWindow : public QMainWindow, private Ui::MainWindow {
 Q_OBJECT
@@ -45,6 +46,7 @@ public slots:
     void enableControllerChanged(Control::e_controllerType controllerType, bool enabel);
 
 private:
+    StabilizationWindow stabilizationWindow;
     ControlWindow controlWindow;
     ThrusterWindow thrusterWindow;
     VehicleWizard wizard;

@@ -42,6 +42,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets SerialPort Networ
 include_directories("ThrusterSettings")
 include_directories("CommunicationSettings")
 include_directories("ControlSettings")
+include_directories("StabilizationSettings")
 include_directories("${PROJECT_SOURCE_DIR}/VehicleWizard")
 include_directories("${PROJECT_SOURCE_DIR}/PicFrame")
 
@@ -91,6 +92,7 @@ set(PROJECT_SOURCES
         CommunicationSettings/SerialClient.cpp
         CommunicationSettings/UdpClient.cpp
         CommunicationSettings/Connection.cpp
+        StabilizationSettings/StabilizationWindow.cpp
         mainwindow.cpp
 
         ControlSettings/ControlBase.h
@@ -121,11 +123,13 @@ set(PROJECT_SOURCES
         CommunicationSettings/SerialClient.h
         CommunicationSettings/UdpClient.h
         CommunicationSettings/Connection.h
+        StabilizationSettings/StabilizationWindow.h
 
         PicFrame/picframe.ui
         ThrusterSettings/ThrusterWindow.ui
         ThrusterSettings/Thruster.ui
         ControlSettings/ControlWindow.ui
+        StabilizationSettings/StabilizationWindow.ui
         VehicleWizard/vehiclewizard.ui
         mainwindow.ui
         )
@@ -135,6 +139,7 @@ set(QRC_FILES
         vehicles.qrc)
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS
+        StabilizationSettings
         CommunicationSettings
         ControlSettings
         ThrusterSettings

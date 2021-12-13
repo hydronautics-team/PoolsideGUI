@@ -16,6 +16,10 @@ SerialClient::SerialClient(e_MessageTypes connectionType) {
     interface = new IServerData();
 }
 
+SerialClient::~SerialClient() {
+    delete serialPort;
+}
+
 bool SerialClient::portConnect(int port) {
     QString str;
 #ifdef unix
