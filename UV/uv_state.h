@@ -38,14 +38,16 @@ public:
 
     // TODO: Replace this with dynamic arrays (later)
     const static unsigned int devices_amount = 6;
-    const static unsigned int control_counters_amount = 6;
 
     int thrusterAmount;
 
     void setThrusterAmount(int thrusterAmount);
     int getThrusterAmount();
 
+    int сontrolContourAmount;
 
+    void setControlContourAmount(int controlContourAmount);
+    int getControlContourAmount();
 
     // ControlWindow values
     ControlData control;
@@ -63,7 +65,7 @@ public:
     UV_Thruster *thruster;
 
     // Stabilization Contours
-    UV_ControlContour ControlContour[control_counters_amount];
+    UV_ControlContour *controlContour;
 
     // Flags
     bool resetImu;

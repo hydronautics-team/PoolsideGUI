@@ -17,6 +17,8 @@ public:
     void setThrusterData(unsigned int slot, UV_Thruster data);
     void setThrusterPower(unsigned int slot, bool power);
 
+    void setControlContourAmount(int thrusterAmount);
+    int getControlContourAmount();
     UV_ControlContour getControlContourData(unsigned int slot);
     void setControlContourData(unsigned int slot, UV_ControlContour data);
 };

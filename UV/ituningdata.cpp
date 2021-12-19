@@ -49,15 +49,29 @@ void ITuningData::setThrusterData(unsigned int slot, UV_Thruster data) {
     }
 }
 
+void ITuningData::setControlContourAmount(int controlContourAmount){
+    UVMutex.lock();
+    UVState.setControlContourAmount(controlContourAmount);
+    UVMutex.unlock();
+}
+
+int ITuningData::getControlContourAmount() {
+    int controlContourAmount;
+    UVMutex.lock();
+    controlContourAmount = UVState.getControlContourAmount();
+    UVMutex.unlock();
+    return controlContourAmount;
+}
+
 UV_ControlContour ITuningData::getControlContourData(unsigned int slot) {
     UV_ControlContour data;
-    if (slot < UV_State::control_counters_amount) {
+    if (slot < UVState.getControlContourAmount()) {
         UVMutex.lock();
-        data = UVState.ControlContour[slot];
+        data = UVState.controlContour[slot];
         UVMutex.unlock();
     } else {
         std::string error = "Max thruster slot is: " +
-                            std::to_string(UV_State::control_counters_amount) +
+                            std::to_string(UVState.getControlContourAmount()) +
                             ", you are trying to reach:" +
                             std::to_string(slot);
         throw std::invalid_argument(error);
@@ -66,13 +80,13 @@ UV_ControlContour ITuningData::getControlContourData(unsigned int slot) {
 }
 
 void ITuningData::setControlContourData(unsigned int slot, UV_ControlContour data) {
-    if (slot < UV_State::control_counters_amount) {
+    if (slot < UVState.getControlContourAmount()) {
         UVMutex.lock();
-        UVState.ControlContour[slot] = data;
+        UVState.controlContour[slot] = data;
         UVMutex.unlock();
     } else {
         std::string error = "Max thruster slot is: " +
-                            std::to_string(UV_State::control_counters_amount) +
+                            std::to_string(UVState.getControlContourAmount()) +
                             ", you are trying to reach:" +
                             std::to_string(slot);
         throw std::invalid_argument(error);

@@ -59,3 +59,16 @@ void UV_State::setThrusterAmount(int thrusterAmount) {
 int UV_State::getThrusterAmount() {
     return thrusterAmount;
 }
+
+void UV_State::setControlContourAmount(int controlContourAmount) {
+    if (controlContour != nullptr){
+        delete controlContour;
+    }
+    controlContour = new UV_ControlContour[controlContourAmount];
+    this->сontrolContourAmount = controlContourAmount;
+    qDebug() << "setControlContourAmount " << controlContourAmount;
+}
+
+int UV_State::getControlContourAmount() {
+    return сontrolContourAmount;
+}
