@@ -20,6 +20,8 @@ StabilizationWindow::StabilizationWindow(QWidget *parent) :
         file >> allStabilizationJson;
         file.close();
     }
+    connect(ui->pushButton_CS_saveConfig, SIGNAL(released()), this, SLOT(saveToJsonFile()));
+
     // TODO:нужно что-то сделать с огромным количеством кода
     connect(ui->doubleSpinBox_CS_pErrGain, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
     connect(ui->doubleSpinBox_CS_pJoyUnitCast, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
@@ -53,22 +55,21 @@ StabilizationWindow::StabilizationWindow(QWidget *parent) :
         setUV_ControlContour(i, allStabilizationJson["stabilizationСontour"][i]);
         interface.setControlContourData(i, ControlContour[i]);
     }
-    qDebug() << ROLL + DEPTH << " создан";
     emit ContourChanged();
 }
 
 void StabilizationWindow::ContourChanged() {
-    if(ui->radioButton_CS_YawSelect->isChecked() == true)
+    if (ui->radioButton_CS_YawSelect->isChecked() == true)
         currentContour = YAW;
-    if(ui->radioButton_CS_RollSelect->isChecked() == true)
+    if (ui->radioButton_CS_RollSelect->isChecked() == true)
         currentContour = ROLL;
-    if(ui->radioButton_CS_PitchSelect->isChecked() == true)
+    if (ui->radioButton_CS_PitchSelect->isChecked() == true)
         currentContour = PITCH;
-    if(ui->radioButton_CS_DepthSelect->isChecked() == true)
+    if (ui->radioButton_CS_DepthSelect->isChecked() == true)
         currentContour = DEPTH;
-    if(ui->radioButton_CS_MarchSelect->isChecked() == true)
+    if (ui->radioButton_CS_MarchSelect->isChecked() == true)
         currentContour = MARCH;
-    if(ui->radioButton_CS_LagSelect->isChecked() == true)
+    if (ui->radioButton_CS_LagSelect->isChecked() == true)
         currentContour = LAG;
 
     // TODO:нужно что-то сделать с огромным количеством кода(например обьеденить doubleSpinBox в массив)
@@ -91,6 +92,7 @@ void StabilizationWindow::ContourChanged() {
     ui->doubleSpinBox_CS_pThrustersCast->setValue(ControlContour[currentContour].constant.pThrustersCast);
 
 }
+
 void StabilizationWindow::ContourEdited() {
     // TODO:нужно что-то сделать с огромным количеством кода
     ControlContour[currentContour].constant.pJoyUnitCast = ui->doubleSpinBox_CS_pJoyUnitCast->value();
@@ -119,6 +121,28 @@ StabilizationWindow::~StabilizationWindow() {
     delete ui;
 }
 
+void StabilizationWindow::saveToJsonFile() {
+    for (int i = 0; i < controlContour_amount; ++i) {
+        allStabilizationJson["stabilizationСontour"][i]["pJoyUnitCast"] = ControlContour[i].constant.pJoyUnitCast;
+        allStabilizationJson["stabilizationСontour"][i]["pSpeedDyn"] = ControlContour[i].constant.pSpeedDyn;
+        allStabilizationJson["stabilizationСontour"][i]["pErrGain"] = ControlContour[i].constant.pErrGain;
+        allStabilizationJson["stabilizationСontour"][i]["posFilterT"] = ControlContour[i].constant.posFilterT;
+        allStabilizationJson["stabilizationСontour"][i]["posFilterK"] = ControlContour[i].constant.posFilterK;
+        allStabilizationJson["stabilizationСontour"][i]["speedFilterT"] = ControlContour[i].constant.speedFilterT;
+        allStabilizationJson["stabilizationСontour"][i]["speedFilterK"] = ControlContour[i].constant.speedFilterK;
+        allStabilizationJson["stabilizationСontour"][i]["pid_pGain"] = ControlContour[i].constant.pid_pGain;
+        allStabilizationJson["stabilizationСontour"][i]["pid_iGain"] = ControlContour[i].constant.pid_iGain;
+        allStabilizationJson["stabilizationСontour"][i]["pid_iMax"] = ControlContour[i].constant.pid_iMax;
+        allStabilizationJson["stabilizationСontour"][i]["pid_iMin"] = ControlContour[i].constant.pid_iMin;
+        allStabilizationJson["stabilizationСontour"][i]["pThrustersMin"] = ControlContour[i].constant.pThrustersMin;
+        allStabilizationJson["stabilizationСontour"][i]["pThrustersMax"] = ControlContour[i].constant.pThrustersMax;
+        allStabilizationJson["stabilizationСontour"][i]["pThrustersCast"] = ControlContour[i].constant.pThrustersCast;
+    };
+    std::ofstream o(jsonName.toStdString());
+    o << std::setw(4) << allStabilizationJson << std::endl;
+    o.close();
+}
+
 void StabilizationWindow::setUV_ControlContour(int number, json StabilizationJson) {
     // TODO:нужно что-то сделать с огромным количеством кода
     ControlContour[number].constant.pJoyUnitCast = StabilizationJson["pJoyUnitCast"];
@@ -145,6 +169,7 @@ void StabilizationWindow::setUV_ControlContour(int number, json StabilizationJso
     ControlContour[number].constant.sOutSummatorMax = StabilizationJson["sOutSummatorMax"];
     ControlContour[number].constant.sOutSummatorMin = StabilizationJson["sOutSummatorMin"];
 }
+
 
 void StabilizationWindow::createDefaultStabilizationJson() {
     std::ofstream o(jsonName.toStdString());

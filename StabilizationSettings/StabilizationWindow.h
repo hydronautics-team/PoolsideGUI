@@ -53,8 +53,9 @@ private:
     Ui::StabilizationWindow *ui;
     ITuningData interface;
 
-public slots:
 
+private slots:
+    void saveToJsonFile();
     void ContourChanged();
     void ContourEdited();
 

@@ -393,26 +393,13 @@
      <string>Roll</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_CS_loadConfig">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>450</y>
-      <width>111</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Load from file</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_CS_saveConfig">
     <property name="enabled">
      <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>164</x>
+      <x>80</x>
       <y>450</y>
       <width>111</width>
       <height>23</height>

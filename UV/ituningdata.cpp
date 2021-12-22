@@ -24,7 +24,6 @@ UV_Thruster ITuningData::getThrusterData(unsigned int slot) {
         UVMutex.lock();
         data = UVState.thruster[slot];
         UVMutex.unlock();
-        qDebug() << data.id;
     } else {
         std::string error = "Max thruster slot is: " +
                             std::to_string(UVState.getThrusterAmount()) +

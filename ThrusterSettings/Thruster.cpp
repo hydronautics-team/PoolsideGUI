@@ -39,13 +39,10 @@ void Thruster::setThruster(int number, json ThrusterJson) {
     this->ThrusterJson = ThrusterJson;
     emit setUV_Thruster();
     emit setUi();
-
-    qDebug() << ThisThruster.name;
 }
 
 void Thruster::setAutoSave(int autoSave) {
     this->autoSave = !!autoSave;
-    qDebug() << "autoSave " << !!autoSave;
 }
 
 void Thruster::save(bool click) {
