@@ -31,9 +31,15 @@ public:
 
     int getCurrentThruster();
 
+    void changeCurrentControlContour(unsigned int slot);
+    int getControlContourAmount();
+
+    int getCurrentControlContour();
+
 private:
     QDataStream *port;
     unsigned int currentThruster = 0;
+    unsigned int currentControlContour = 0;
 
     /// Number of the thrusters in transfer protocol
     static const uint8_t VmaAmount = 6;

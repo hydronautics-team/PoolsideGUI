@@ -32,6 +32,7 @@ private:
     IServerData *interface;
 
     void changeThrusterToNext();
+    void changeControlContourToNext();
 
     bool portConnect(int port);
 };

@@ -42,6 +42,30 @@ int IServerData::getThrusterAmount() {
     return thrusterAmount;
 }
 
+void IServerData::changeCurrentControlContour(unsigned int slot) {
+    if (slot < UVState.getControlContourAmount()) {
+        currentControlContour = slot;
+    } else {
+        std::string error = "Max thruster slot is: " +
+                            std::to_string(UVState.getControlContourAmount() - 1) +
+                            ", you are trying to change to:" +
+                            std::to_string(slot);
+        throw std::invalid_argument(error);
+    }
+}
+
+int IServerData::getCurrentControlContour() {
+    return currentControlContour;
+}
+
+int IServerData::getControlContourAmount() {
+    int controlContourAmount;
+    UVMutex.lock();
+    controlContourAmount = UVState.getControlContourAmount();
+    UVMutex.unlock();
+    return controlContourAmount;
+}
+
 QByteArray IServerData::generateMessage(int message_type) {
     QByteArray formed;
     formed.clear();

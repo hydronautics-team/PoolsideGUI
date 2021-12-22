@@ -69,8 +69,11 @@ int SerialClient::exec() {
         QByteArray msg;
         if (messageType == MESSAGE_DIRECT) {
             changeThrusterToNext();
-//            qDebug() << interface->getCurrentThruster();
         }
+        if (messageType == MESSAGE_CONFIG) {
+            changeControlContourToNext();
+        }
+
         msg = interface->generateMessage(messageType);
 
 //        qDebug() << "[SERIAL_CLIENT] Sending message type " << messageType << "||" << msg.size();
@@ -112,8 +115,7 @@ int SerialClient::exec() {
 }
 
 void SerialClient::changeSelectedConnectionType(e_MessageTypes connectionType) {
-    messageType = connectionType; // проверить, вызывается ли он быстрее чем exec()
-    qDebug() << connectionType;
+    messageType = connectionType;
 }
 
 void SerialClient::changeThrusterToNext() {
@@ -123,6 +125,17 @@ void SerialClient::changeThrusterToNext() {
         }
 
         interface->changeCurrentThruster(i + 1);
+        break;
+    }
+}
+
+void SerialClient::changeControlContourToNext() {
+    for (int i = interface->getCurrentControlContour(); i < interface->getControlContourAmount(); i++) {
+        if (i == interface->getControlContourAmount() - 1) {
+            i = -1;
+        }
+
+        interface->changeCurrentControlContour(i + 1);
         break;
     }
 }
