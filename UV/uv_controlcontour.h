@@ -27,6 +27,7 @@ struct UV_StabilizationConstants {
 
     float pThrustersMin;
     float pThrustersMax;
+    float pThrustersCast;
 
     float thrustersFilterT;
     float thrustersFilterK;

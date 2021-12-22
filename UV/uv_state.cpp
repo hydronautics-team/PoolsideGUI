@@ -65,10 +65,10 @@ void UV_State::setControlContourAmount(int controlContourAmount) {
         delete controlContour;
     }
     controlContour = new UV_ControlContour[controlContourAmount];
-    this->сontrolContourAmount = controlContourAmount;
+    this->controlContourAmount = controlContourAmount;
     qDebug() << "setControlContourAmount " << controlContourAmount;
 }
 
 int UV_State::getControlContourAmount() {
-    return сontrolContourAmount;
+    return controlContourAmount;
 }

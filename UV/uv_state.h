@@ -44,7 +44,7 @@ public:
     void setThrusterAmount(int thrusterAmount);
     int getThrusterAmount();
 
-    int сontrolContourAmount;
+    int controlContourAmount;
 
     void setControlContourAmount(int controlContourAmount);
     int getControlContourAmount();

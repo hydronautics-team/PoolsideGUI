@@ -17,6 +17,7 @@ UV_ControlContour::UV_ControlContour() {
 
     constant.pThrustersMin = 0;
     constant.pThrustersMax = 0;
+    constant.pThrustersCast = 0;
 
     constant.thrustersFilterT = 0;
     constant.thrustersFilterK = 0;

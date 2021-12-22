@@ -355,7 +355,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>320</y>
+      <y>300</y>
       <width>112</width>
       <height>23</height>
      </rect>
@@ -371,7 +371,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>350</y>
+      <y>370</y>
       <width>112</width>
       <height>23</height>
      </rect>
@@ -384,7 +384,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>380</y>
+      <y>320</y>
       <width>112</width>
       <height>23</height>
      </rect>
@@ -429,7 +429,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>410</y>
+      <y>340</y>
       <width>112</width>
       <height>23</height>
      </rect>
@@ -813,6 +813,32 @@
     </property>
     <property name="text">
      <string>raw - yaw = 15</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButton_CS_MarchSelect">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>390</y>
+      <width>112</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>March</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButton_CS_LagSelect">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>410</y>
+      <width>112</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Lag</string>
     </property>
    </widget>
   </widget>

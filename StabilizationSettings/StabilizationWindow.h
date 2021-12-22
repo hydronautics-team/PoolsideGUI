@@ -29,7 +29,17 @@ public:
 
     QString jsonName;
 
-    int thrusters_amount;
+    enum ContourName {
+        YAW = 0,
+        ROLL = 1,
+        PITCH = 2,
+        DEPTH = 3,
+        MARCH = 4,
+        LAG = 5
+    };
+
+    int controlContour_amount;
+    ContourName currentContour;
     UV_ControlContour *ControlContour;
     std::ifstream file;
 
@@ -37,9 +47,17 @@ private:
     json allStabilizationJson;
 
     void createDefaultStabilizationJson();
+    void setUV_ControlContour(int number, json StabilizationJson);
+
 
     Ui::StabilizationWindow *ui;
     ITuningData interface;
+
+public slots:
+
+    void ContourChanged();
+    void ContourEdited();
+
 };
 
 #endif // STABILIZATIONSETTINGS_H
