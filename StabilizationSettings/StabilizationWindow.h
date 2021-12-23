@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDebug>
 #include <string>
+#include <QTimer>
 
 
 #include <iostream>
@@ -40,10 +41,12 @@ public:
 
     int controlContour_amount;
     ContourName currentContour;
-    UV_ControlContour *ControlContour;
+    UV_StabilizationConstants *ConstantsControlContour;
+    UV_StabilizationState *StateControlContour;
     std::ifstream file;
 
 private:
+    QTimer *updateStabilizationState;
     json allStabilizationJson;
 
     void createDefaultStabilizationJson();
@@ -55,6 +58,7 @@ private:
 
 
 private slots:
+    void updateStabilizationStateUi();
     void saveToJsonFile();
     void ContourChanged();
     void ContourEdited();

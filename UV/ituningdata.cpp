@@ -91,3 +91,17 @@ void ITuningData::setControlContourData(unsigned int slot, UV_ControlContour dat
         throw std::invalid_argument(error);
     }
 }
+
+void ITuningData::setControlContourData(unsigned int slot, UV_StabilizationConstants data) {
+    if (slot < UVState.getControlContourAmount()) {
+        UVMutex.lock();
+        UVState.controlContour[slot].constant = data;
+        UVMutex.unlock();
+    } else {
+        std::string error = "Max thruster slot is: " +
+                            std::to_string(UVState.getControlContourAmount()) +
+                            ", you are trying to reach:" +
+                            std::to_string(slot);
+        throw std::invalid_argument(error);
+    }
+}

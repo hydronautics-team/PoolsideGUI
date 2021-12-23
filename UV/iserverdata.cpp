@@ -196,7 +196,36 @@ QByteArray IServerData::generateConfigMessage() {
 
 // TODO: deal with filling config message
 void IServerData::fillStructure(RequestConfigMessage &req) {
-    req.lag = 0;
+    UVMutex.lock();
+
+    req.march = resizeDoubleToInt16(UVState.control.march);
+    req.lag = resizeDoubleToInt16(UVState.control.lag);
+    req.depth = resizeDoubleToInt16(UVState.control.depth);
+    req.roll = resizeDoubleToInt16(UVState.control.roll);
+    req.pitch = resizeDoubleToInt16(UVState.control.pitch);
+    req.yaw = resizeDoubleToInt16(UVState.control.yaw);
+
+    req.contour = currentControlContour;
+
+    req.pJoyUnitCast =      static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pJoyUnitCast     );
+    req.pSpeedDyn =         static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pSpeedDyn        );
+    req.pErrGain =          static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pErrGain         );
+    req.posFilterT =        static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.posFilterT       );
+    req.posFilterK =        static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.posFilterK       );
+    req.speedFilterT =      static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.speedFilterT     );
+    req.speedFilterK =      static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.speedFilterK     );
+    req.pid_pGain =         static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pid_pGain        );
+    req.pid_iGain =         static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pid_iGain        );
+    req.pid_iMax =          static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pid_iMax         );
+    req.pid_iMin =          static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pid_iMin         );
+    req.pThrustersMin =     static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pThrustersMin    );
+    req.pThrustersMax =     static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pThrustersMax    );
+    req.thrustersFilterT =  static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.thrustersFilterT );
+    req.thrustersFilterK =  static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.thrustersFilterK );
+    req.sOutSummatorMax =   static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.sOutSummatorMax  );
+    req.sOutSummatorMin =   static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.sOutSummatorMin  );
+
+    UVMutex.unlock();
 }
 
 QByteArray IServerData::generateDirectMessage() {
@@ -240,8 +269,8 @@ void IServerData::fillStructure(RequestDirectMessage &req) {
 
     req.reverse = UVState.thruster[req.number].reverse;
 
-    req.kForward = 1;
-    req.kBackward = 1;
+    req.kForward = static_cast<int8_t>(UVState.thruster[req.number].kForward);
+    req.kBackward = static_cast<int8_t>(UVState.thruster[req.number].kBackward);
 
     req.sForward = static_cast<int8_t>(UVState.thruster[req.number].sForward);
     req.sBackward = static_cast<int8_t>(UVState.thruster[req.number].sBackward);
@@ -399,7 +428,34 @@ void IServerData::parseConfigMessage(QByteArray msg) {
 
 // TODO finish responseconfigmessage structure pulling
 void IServerData::pullFromStructure(ResponseConfigMessage res) {
-    res.yaw = 0;
+    UVMutex.lock();
+
+    UVState.imu.roll = res.roll;
+    UVState.imu.pitch = res.pitch;
+    UVState.imu.yaw = res.yaw;
+    UVState.imu.rollSpeed = res.rollSpeed;
+    UVState.imu.pitchSpeed = res.pitchSpeed;
+    UVState.imu.yawSpeed = res.yawSpeed;
+
+    UVState.controlContour[currentControlContour].state.inputSignal = res.inputSignal;
+    UVState.controlContour[currentControlContour].state.speedSignal = res.speedSignal;
+    UVState.controlContour[currentControlContour].state.posSignal = res.posSignal;
+
+    UVState.controlContour[currentControlContour].state.joyUnitCasted = res.joyUnitCasted;
+    UVState.controlContour[currentControlContour].state.joy_iValue = res.joy_iValue;
+    UVState.controlContour[currentControlContour].state.posError = res.posError;
+    UVState.controlContour[currentControlContour].state.speedError = res.speedError;
+    UVState.controlContour[currentControlContour].state.dynSummator = res.dynSummator;
+    UVState.controlContour[currentControlContour].state.pidValue = res.pidValue;
+    UVState.controlContour[currentControlContour].state.posErrorAmp = res.posErrorAmp;
+    UVState.controlContour[currentControlContour].state.speedFiltered = res.speedFiltered;
+    UVState.controlContour[currentControlContour].state.posFiltered = res.posFiltered;
+    UVState.controlContour[currentControlContour].state.pid_iValue = res.pid_iValue;
+    UVState.controlContour[currentControlContour].state.thrustersFiltered = res.thrustersFiltered;
+
+    UVState.controlContour[currentControlContour].state.outputSignal = res.outputSignal;
+
+    UVMutex.unlock();
 }
 
 void IServerData::parseDirectMessage(QByteArray msg) {
