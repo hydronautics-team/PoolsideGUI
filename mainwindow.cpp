@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(action_full_screen, &QAction::triggered, this, &MainWindow::fullScreenKey);
 
 
-    stabilizationWindow.show();
+//    stabilizationWindow.show();
 
 
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file
@@ -276,6 +276,7 @@ void MainWindow::enableControllerChanged(Control::e_controllerType controllerTyp
 
 void MainWindow::normalConnectionClick() {
     emit(ConnectionTypeChanged(MESSAGE_NORMAL));
+
 }
 
 void MainWindow::directConnectionClick() {

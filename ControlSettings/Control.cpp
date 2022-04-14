@@ -5,8 +5,8 @@ Control::Control() {
 }
 
 void Control::setDefoultEnabeling() {
-    this->setEnabel(JOYSTICK, false);
-    this->setEnabel(MOUSE3D, true);
+    this->setEnabel(JOYSTICK, true);
+    this->setEnabel(MOUSE3D, false);
     this->setEnabel(KEYBOARD, false);
 
 };

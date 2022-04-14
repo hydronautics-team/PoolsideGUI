@@ -9,7 +9,7 @@ const int MAX_COM_ID = 20;
 
 SerialClient::SerialClient(e_MessageTypes connectionType) {
     messageType = connectionType;
-    qDebug() << connectionType;
+//    qDebug() << connectionType;
 //    timeoutTimer = new QTimer();
 //    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
@@ -30,7 +30,7 @@ bool SerialClient::portConnect(int port) {
 
     str.append(QString::number(port));
 
-//    qDebug () << "COM_SERVER: Trying to open port " << str;
+    qDebug () << "COM_SERVER: Trying to open port " << str;
 
     serialPort = new QSerialPort(str);
     serialPort->setBaudRate(QSerialPort::BaudRate::Baud57600, QSerialPort::AllDirections);
@@ -116,6 +116,9 @@ int SerialClient::exec() {
 
 void SerialClient::changeSelectedConnectionType(e_MessageTypes connectionType) {
     messageType = connectionType;
+    if (connectionType == MESSAGE_NORMAL) {
+        interface->setFlashVmaSettings(true);
+    }
 }
 
 void SerialClient::changeThrusterToNext() {

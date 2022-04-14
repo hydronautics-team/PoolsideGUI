@@ -36,10 +36,13 @@ public:
 
     int getCurrentControlContour();
 
+    void setFlashVmaSettings(bool FlashVmaSettings);
+
 private:
     QDataStream *port;
     unsigned int currentThruster = 0;
     unsigned int currentControlContour = 0;
+    bool flashVmaSettings = false;
 
     /// Number of the thrusters in transfer protocol
     static const uint8_t VmaAmount = 6;

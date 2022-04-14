@@ -72,6 +72,7 @@ QByteArray IServerData::generateMessage(int message_type) {
     switch (message_type) {
         case MESSAGE_NORMAL:
             formed = generateNormalMessage();
+            flashVmaSettings = false;
             break;
         case MESSAGE_CONFIG:
             formed = generateConfigMessage();
@@ -81,6 +82,10 @@ QByteArray IServerData::generateMessage(int message_type) {
             break;
     }
     return formed;
+}
+
+void IServerData::setFlashVmaSettings(bool FlashVmaSettings) {
+    flashVmaSettings = FlashVmaSettings;
 }
 
 QByteArray IServerData::generateNormalMessage() {
@@ -138,7 +143,10 @@ void IServerData::fillStructure(RequestNormalMessage &req) {
     req.dev_flags = 0;
 
     req.stabilize_flags = 0;
-    set_bit(req.stabilize_flags, 6, UVState.resetImu);
+
+    qDebug() << "flashVmaSettings" << flashVmaSettings;
+    set_bit(req.stabilize_flags, 6, flashVmaSettings);
+    set_bit(req.stabilize_flags, 7, UVState.resetImu);
 
     req.cameras = 0;
     req.pc_reset = 0;
