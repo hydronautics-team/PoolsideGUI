@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 //    // Settings
 //    connect(action_config_com, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigRS()));
     connect(action_config_thrusters, SIGNAL(triggered()), &thrusterWindow, SLOT(show()));
-//    connect(action_config_coef, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigCoef()));
+    connect(action_config_coef, SIGNAL(triggered()), &stabilizationWindow, SLOT(show()));
 //    // Surface control unit
     connect(action_config_controls, SIGNAL(triggered()), &controlWindow, SLOT(show()));
 //    connect(action_config_view, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigView()));
@@ -46,9 +46,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 //    connect(action_about_program, SIGNAL(triggered()), &settingsWindow, SLOT(showPageAboutProgram()));
 //    connect(action_other_settings, SIGNAL(triggered()), &settingsWindow, SLOT(showPageOtherSettings()));
     connect(action_full_screen, &QAction::triggered, this, &MainWindow::fullScreenKey);
-
-
-//    stabilizationWindow.show();
 
 
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file

@@ -28,10 +28,10 @@
 class MainWindow : public QMainWindow, private Ui::MainWindow {
 Q_OBJECT
 
-signals:
-    void updateVehicle();
-    //import from old interface
-    void updateCompass(double yaw);
+    signals:
+        void updateVehicle();
+        //import from old interface
+        void updateCompass(double yaw);
 
 
 public:

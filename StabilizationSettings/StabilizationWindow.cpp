@@ -79,7 +79,7 @@ void StabilizationWindow::updateStabilizationStateUi() {
     ui->lineEdit_CS_posFiltered->setText(QString::number(StateControlContour[currentContour].posFiltered));
     ui->lineEdit_CS_pid_iValue->setText(QString::number(StateControlContour[currentContour].pid_iValue));
 
-    qDebug() << StateControlContour[currentContour].pid_iValue;
+    qDebug() << "currentContour].pid_iValue" << StateControlContour[currentContour].pid_iValue;
 }
 
 void StabilizationWindow::ContourChanged() {
