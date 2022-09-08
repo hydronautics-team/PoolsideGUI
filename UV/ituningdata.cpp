@@ -62,7 +62,7 @@ int ITuningData::getControlContourAmount() {
     return controlContourAmount;
 }
 
-UV_ControlContour ITuningData::getControlContourData(unsigned int slot) {
+UV_ControlContour ITuningData::getControlContourData(STABILIZATION_CONTOURS slot) {
     UV_ControlContour data;
     if (slot < UVState.getControlContourAmount()) {
         UVMutex.lock();

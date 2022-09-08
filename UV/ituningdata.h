@@ -19,7 +19,7 @@ public:
 
     void setControlContourAmount(int thrusterAmount);
     int getControlContourAmount();
-    UV_ControlContour getControlContourData(unsigned int slot);
+    UV_ControlContour getControlContourData(STABILIZATION_CONTOURS slot);
     UV_StabilizationState getControlContourStabilizationState(unsigned int slot);
     void setCurrentControlContour(STABILIZATION_CONTOURS contour);
     void setControlContourData(unsigned int slot, UV_ControlContour data);

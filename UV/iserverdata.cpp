@@ -212,14 +212,16 @@ QByteArray IServerData::generateConfigMessage() {
 void IServerData::fillStructure(RequestConfigMessage &req) {
     UVMutex.lock();
     STABILIZATION_CONTOURS currentControlContour = UVState.currentControlContour;
-    qDebug() << "fillStructure ConfigMessage " << currentControlContour;
 
+//    qDebug () << "fillStructure currentControlContour " << currentControlContour << "pJoyUnitCast " << UVState.controlContour[currentControlContour].constant.pJoyUnitCast;
+    req.contour = currentControlContour;
     req.march = resizeDoubleToInt16(UVState.control.march);
     req.lag = resizeDoubleToInt16(UVState.control.lag);
     req.depth = resizeDoubleToInt16(UVState.control.depth);
     req.roll = resizeDoubleToInt16(UVState.control.roll);
     req.pitch = resizeDoubleToInt16(UVState.control.pitch);
     req.yaw = resizeDoubleToInt16(UVState.control.yaw);
+//    qDebug() << "fillStructure " << req.yaw;
 
     req.pJoyUnitCast =      static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pJoyUnitCast     );
     req.pSpeedDyn =         static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pSpeedDyn        );
@@ -313,6 +315,7 @@ void IServerData::parseMessage(QByteArray message, int message_type) {
 
 void IServerData::parseNormalMessage(QByteArray msg) {
     ResponseNormalMessage res;
+//    qDebug() << "parseNormalMessage ";
 
     uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size() - 2);
 
@@ -453,7 +456,7 @@ void IServerData::parseConfigMessage(QByteArray msg) {
 void IServerData::pullFromStructure(ResponseConfigMessage res) {
     UVMutex.lock();
     STABILIZATION_CONTOURS currentControlContour = UVState.currentControlContour;
-    qDebug() << "pullFromStructure ConfigMessage " << currentControlContour;
+//    qDebug () << "pullFromStructure currentControlContour " << currentControlContour << "inputSignal " << res.inputSignal << "res.joyUnitCasted" << res.joyUnitCasted;
 
     UVState.imu.roll = res.roll;
     UVState.imu.pitch = res.pitch;

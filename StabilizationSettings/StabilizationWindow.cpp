@@ -71,7 +71,9 @@ StabilizationWindow::StabilizationWindow(QWidget *parent) :
     emit ContourChanged();
 }
 void StabilizationWindow::updateStabilizationStateUi() {
-    StateControlContour[currentContour] = interface.getControlContourData(static_cast<unsigned int>(currentContour)).state;
+    StateControlContour[currentContour] = interface.getControlContourData(currentContour).state;
+
+//    qDebug() << "currentContour StateUi " << currentContour;
 
     ui->lineEdit_CS_inputSignal->setText(QString::number(StateControlContour[currentContour].inputSignal));
     ui->lineEdit_CS_speedSignal->setText(QString::number(StateControlContour[currentContour].speedSignal));
