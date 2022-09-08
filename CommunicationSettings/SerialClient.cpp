@@ -70,9 +70,9 @@ int SerialClient::exec() {
         if (messageType == MESSAGE_DIRECT) {
             changeThrusterToNext();
         }
-        if (messageType == MESSAGE_CONFIG) {
-            changeControlContourToNext();
-        }
+//        if (messageType == MESSAGE_CONFIG) {
+//            changeControlContourToNext();
+//        }
 
         msg = interface->generateMessage(messageType);
 
@@ -132,13 +132,13 @@ void SerialClient::changeThrusterToNext() {
     }
 }
 
-void SerialClient::changeControlContourToNext() {
-    for (int i = interface->getCurrentControlContour(); i < interface->getControlContourAmount(); i++) {
-        if (i == interface->getControlContourAmount() - 1) {
-            i = -1;
-        }
-
-        interface->changeCurrentControlContour(i + 1);
-        break;
-    }
-}
+//void SerialClient::changeControlContourToNext() {
+//    for (int i = interface->getCurrentControlContour(); i < interface->getControlContourAmount(); i++) {
+//        if (i == interface->getControlContourAmount() - 1) {
+//            i = -1;
+//        }
+//
+//        interface->changeCurrentControlContour(i + 1);
+//        break;
+//    }
+//}

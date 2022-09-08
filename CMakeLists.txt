@@ -66,11 +66,11 @@ endif()
 set(PROJECT_SOURCES
         main.cpp
         ControlSettings/ControlBase.cpp
-        ControlSettings/Control.cpp
+#        ControlSettings/Control.cpp
         ControlSettings/Joystick.cpp
         ControlSettings/Keyboard.cpp
-        ControlSettings/Mouse3d.cpp
-        ControlSettings/ControlWindow.cpp
+#        ControlSettings/Mouse3d.cpp
+#        ControlSettings/ControlWindow.cpp
         KX_Pult/configdata.cpp
         KX_Pult/kx_protocol.cpp
         KX_Pult/qkx_coeffs.cpp
@@ -96,11 +96,11 @@ set(PROJECT_SOURCES
         mainwindow.cpp
 
         ControlSettings/ControlBase.h
-        ControlSettings/Control.h
+#        ControlSettings/Control.h
         ControlSettings/Joystick.h
         ControlSettings/Keyboard.h
-        ControlSettings/Mouse3d.h
-        ControlSettings/ControlWindow.h
+#        ControlSettings/Mouse3d.h
+#        ControlSettings/ControlWindow.h
         KX_Pult/configdata.h
         KX_Pult/kx_protocol.h
         KX_Pult/qkx_coeffs.h
@@ -128,7 +128,7 @@ set(PROJECT_SOURCES
         PicFrame/picframe.ui
         ThrusterSettings/ThrusterWindow.ui
         ThrusterSettings/Thruster.ui
-        ControlSettings/ControlWindow.ui
+#        ControlSettings/ControlWindow.ui
         StabilizationSettings/StabilizationWindow.ui
         VehicleWizard/vehiclewizard.ui
         mainwindow.ui

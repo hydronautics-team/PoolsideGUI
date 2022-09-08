@@ -34,16 +34,7 @@ private:
         e_actionTypes action;
     };
 
-    /* Buttons processing table element structure */
-    struct control_buttons {
-        unsigned int button_id;
-        double setterValue;
-        e_actionTypes action;
-        int antagonist;
-    };
-
     const static control_axis axis_table[];
-    const static control_buttons buttons_table[];
 };
 
 #endif // JOYSTICK_H

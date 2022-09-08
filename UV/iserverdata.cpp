@@ -42,19 +42,25 @@ int IServerData::getThrusterAmount() {
     return thrusterAmount;
 }
 
-void IServerData::changeCurrentControlContour(unsigned int slot) {
-    if (slot < UVState.getControlContourAmount()) {
-        currentControlContour = slot;
-    } else {
-        std::string error = "Max thruster slot is: " +
-                            std::to_string(UVState.getControlContourAmount() - 1) +
-                            ", you are trying to change to:" +
-                            std::to_string(slot);
-        throw std::invalid_argument(error);
-    }
-}
+//void IServerData::changeCurrentControlContour(unsigned int slot) {
+//    if (slot < UVState.getControlContourAmount()) {
+//        currentControlContour = slot;
+//    } else {
+//        std::string error = "Max thruster slot is: " +
+//                            std::to_string(UVState.getControlContourAmount() - 1) +
+//                            ", you are trying to change to:" +
+//                            std::to_string(slot);
+//        throw std::invalid_argument(error);
+//    }
+//}
 
-int IServerData::getCurrentControlContour() {
+STABILIZATION_CONTOURS IServerData::getCurrentControlContour() {
+    STABILIZATION_CONTOURS currentControlContour;
+
+    UVMutex.lock();
+    currentControlContour = UVState.currentControlContour;
+    UVMutex.unlock();
+
     return currentControlContour;
 }
 
@@ -144,7 +150,7 @@ void IServerData::fillStructure(RequestNormalMessage &req) {
 
     req.stabilize_flags = 0;
 
-    qDebug() << "flashVmaSettings" << flashVmaSettings;
+//    qDebug() << "flashVmaSettings" << flashVmaSettings;
     set_bit(req.stabilize_flags, 6, flashVmaSettings);
     set_bit(req.stabilize_flags, 7, UVState.resetImu);
 
@@ -205,6 +211,8 @@ QByteArray IServerData::generateConfigMessage() {
 // TODO: deal with filling config message
 void IServerData::fillStructure(RequestConfigMessage &req) {
     UVMutex.lock();
+    STABILIZATION_CONTOURS currentControlContour = UVState.currentControlContour;
+    qDebug() << "fillStructure ConfigMessage " << currentControlContour;
 
     req.march = resizeDoubleToInt16(UVState.control.march);
     req.lag = resizeDoubleToInt16(UVState.control.lag);
@@ -212,8 +220,6 @@ void IServerData::fillStructure(RequestConfigMessage &req) {
     req.roll = resizeDoubleToInt16(UVState.control.roll);
     req.pitch = resizeDoubleToInt16(UVState.control.pitch);
     req.yaw = resizeDoubleToInt16(UVState.control.yaw);
-
-    req.contour = currentControlContour;
 
     req.pJoyUnitCast =      static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pJoyUnitCast     );
     req.pSpeedDyn =         static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.pSpeedDyn        );
@@ -234,6 +240,7 @@ void IServerData::fillStructure(RequestConfigMessage &req) {
     req.sOutSummatorMin =   static_cast<int8_t>(UVState.controlContour[currentControlContour].constant.sOutSummatorMin  );
 
     UVMutex.unlock();
+//    qDebug() << "req.pJoyUnitCast" << req.pJoyUnitCast;
 }
 
 QByteArray IServerData::generateDirectMessage() {
@@ -388,6 +395,10 @@ void IServerData::parseConfigMessage(QByteArray msg) {
     uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size() - 2);
 
     QDataStream stream(&msg, QIODevice::ReadOnly);
+    stream.setByteOrder(QDataStream::LittleEndian);
+    stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
+
+//    qDebug() << "msg.size()" << msg.size();
 
     stream >> res.code;
 
@@ -422,14 +433,18 @@ void IServerData::parseConfigMessage(QByteArray msg) {
 
     stream >> res.checksum;
 
-    if (res.checksum != checksum_calc) {
-        std::stringstream stream;
-        stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
-               std::ios::hex << checksum_calc << "] " <<
-               "Received: [" <<
-               std::ios::hex << res.checksum << "]";
-        throw std::invalid_argument(stream.str());
-    }
+//    qDebug() << "res.checksum" << res.checksum;
+//    qDebug() << "res.checksum" << res.checksum;
+//
+//    if (res.checksum != checksum_calc) {
+//        qDebug() << "Checksum is invalid";
+//        std::stringstream stream;
+//        stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
+//               std::ios::hex << checksum_calc << "] " <<
+//               "Received: [" <<
+//               std::ios::hex << res.checksum << "]";
+//        throw std::invalid_argument(stream.str());
+//    }
 
     pullFromStructure(res);
 }
@@ -437,6 +452,8 @@ void IServerData::parseConfigMessage(QByteArray msg) {
 // TODO finish responseconfigmessage structure pulling
 void IServerData::pullFromStructure(ResponseConfigMessage res) {
     UVMutex.lock();
+    STABILIZATION_CONTOURS currentControlContour = UVState.currentControlContour;
+    qDebug() << "pullFromStructure ConfigMessage " << currentControlContour;
 
     UVState.imu.roll = res.roll;
     UVState.imu.pitch = res.pitch;

@@ -18,14 +18,7 @@ const Keyboard::control_buttons Keyboard::buttons_table[] = {
         {sf::Keyboard::Q,        4,  -SETTER_VALUE, SET_YAW},
         {sf::Keyboard::LShift,   7, SETTER_VALUE,   SET_DEPTH},
         {sf::Keyboard::LControl, 6,  -SETTER_VALUE, SET_DEPTH},
-
-        {sf::Keyboard::R,        9,  30,            ROTATE_TILT_UP},
-        {sf::Keyboard::F,        8,  30,            ROTATE_TILT_DOWN},
-        {sf::Keyboard::Space,    11, 127,           CLENCH_GRAB},
-        {sf::Keyboard::C,        10, 127,           UNCLENCH_GRAB},
-        {sf::Keyboard::X,        13, 125,           ROTATE_GRAB_LEFT},
-        {sf::Keyboard::V,        12, 125,           ROTATE_GRAB_RIGHT},
-};
+        };
 
 void Keyboard::updateKeyboard() {
     QVector<unsigned int> ignore_press;

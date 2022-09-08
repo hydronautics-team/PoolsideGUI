@@ -14,14 +14,19 @@
 #include <QThread>
 #include <QTimer>
 
+#include "KX_Pult/kx_protocol.h"
+#include "KX_Pult/qkx_coeffs.h"
+
 #include "ui_mainwindow.h"
 
 #include "UV/iuserinterfacedata.h"
 #include "VehicleWizard/vehiclewizard.h"
 #include "CommunicationSettings/SerialClient.h"
 #include "CommunicationSettings/UdpClient.h"
-#include "ControlSettings/ControlWindow.h"
-#include "ControlSettings/Control.h"
+//#include "ControlSettings/ControlWindow.h"
+//#include "ControlSettings/Control.h"
+#include "ControlSettings/Joystick.h"
+#include "ControlSettings/Keyboard.h"
 #include "ThrusterSettings/ThrusterWindow.h"
 #include "StabilizationSettings/StabilizationWindow.h"
 
@@ -39,15 +44,17 @@ public:
     //import from old interface
     float depthLin = 9.9546;
     float depthOffset = 0;
-    Control controller;
+    Joystick *controller = nullptr;
 
 public slots:
     void reconnectROV();
-    void enableControllerChanged(Control::e_controllerType controllerType, bool enabel);
+//    void enableControllerChanged(Control::e_controllerType controllerType, bool enabel);
 
 private:
+    QTimer *updateControl_timer;
+
     StabilizationWindow stabilizationWindow;
-    ControlWindow controlWindow;
+//    ControlWindow controlWindow;
     ThrusterWindow thrusterWindow;
     VehicleWizard wizard;
     QString settingsFile;
@@ -68,7 +75,6 @@ private:
 
     // Interface for accessing UVState object
     IUserInterfaceData uv_interface;
-
 private slots:
     void updateVehiclesMenu();
 

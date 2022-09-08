@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 
+//double X[2000][2];
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setupUi(this);
     //start in full screen format
@@ -16,9 +18,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::fullScreenKey);
 
     // Controller Changed
-    controller.setDefoultEnabeling();
-    connect(&controlWindow, SIGNAL(controllersEnabelChanged(Control::e_controllerType, bool)),
-            this, SLOT(enableControllerChanged(Control::e_controllerType, bool)));
+//    controller.setDefoultEnabeling();
+//    connect(&controlWindow, SIGNAL(controllersEnabelChanged(Control::e_controllerType, bool)),
+//            this, SLOT(enableControllerChanged(Control::e_controllerType, bool)));
 
     // Connection Type Changed
     radioButton_ConnectionNormal->setChecked(true); // default Connection type
@@ -40,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(action_config_thrusters, SIGNAL(triggered()), &thrusterWindow, SLOT(show()));
     connect(action_config_coef, SIGNAL(triggered()), &stabilizationWindow, SLOT(show()));
 //    // Surface control unit
-    connect(action_config_controls, SIGNAL(triggered()), &controlWindow, SLOT(show()));
+//    connect(action_config_controls, SIGNAL(triggered()), &controlWindow, SLOT(show()));
 //    connect(action_config_view, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigView()));
 //    // Other settings
 //    connect(action_about_program, SIGNAL(triggered()), &settingsWindow, SLOT(showPageAboutProgram()));
@@ -58,8 +60,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     reconnectROV();
 
+    controller = new Joystick("Joystick", 10, 0);
+//    controller = new Ke("Joystick", 10, 0);
 //    udp_client = new UdpClient();
 //    udp_client->start();
+
+//    const QString ConfigFile = "protocols.conf";
+//    const QString XI = "xi";
+//    const QString KI = "ki";
+//    //передача K
+//    Qkx_coeffs* kProtocol = new Qkx_coeffs(ConfigFile, KI);
+//    //передача X
+//    x_protocol* xProtocol = new x_protocol(ConfigFile, XI, X);
 
     connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
     connect(pushButtonResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
@@ -70,6 +82,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     vehiclePic->setStyleSheet("background: transparent");
     vehiclePic->setRenderHint(QPainter::Antialiasing);
     vehiclePic->scene()->addPixmap(QPixmap(":/images/Cousteau_2A.png"))->setTransform(QTransform::fromScale(0.2, 0.2));
+
+    updateControl_timer = new QTimer(this);
+    connect(updateControl_timer, SIGNAL(timeout()), this, SLOT(updateUi()));
+    updateControl_timer->start(10);
 
     initializeDataUi();
     updateUi();
@@ -267,9 +283,9 @@ void MainWindow::reconnectcROVclick() {
     emit reconnectROV();
 }
 
-void MainWindow::enableControllerChanged(Control::e_controllerType controllerType, bool enabel) {
-    controller.setEnabel(controllerType, enabel);
-}
+//void MainWindow::enableControllerChanged(Control::e_controllerType controllerType, bool enabel) {
+//    controller.setEnabel(controllerType, enabel);
+//}
 
 void MainWindow::normalConnectionClick() {
     emit(ConnectionTypeChanged(MESSAGE_NORMAL));

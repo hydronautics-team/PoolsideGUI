@@ -31,17 +31,17 @@ public:
 
     int getCurrentThruster();
 
-    void changeCurrentControlContour(unsigned int slot);
+//    void changeCurrentControlContour(unsigned int slot);
     int getControlContourAmount();
 
-    int getCurrentControlContour();
+    STABILIZATION_CONTOURS getCurrentControlContour();
 
     void setFlashVmaSettings(bool FlashVmaSettings);
 
 private:
     QDataStream *port;
     unsigned int currentThruster = 0;
-    unsigned int currentControlContour = 0;
+//    unsigned int currentControlContour = 0;
     bool flashVmaSettings = false;
 
     /// Number of the thrusters in transfer protocol

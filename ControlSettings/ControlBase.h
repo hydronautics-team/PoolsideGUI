@@ -11,6 +11,9 @@ Q_OBJECT
 public:
     ControlBase(QString name, int update_time);
 
+signals:
+    void controlChanged();
+
 protected:
     QString device_name;
 
@@ -21,31 +24,16 @@ protected:
         SET_ROLL,
         SET_PITCH,
         SET_YAW,
-        SET_TILT,
-        CLENCH_GRAB,
-        UNCLENCH_GRAB,
-        ROTATE_GRAB_RIGHT,
-        ROTATE_GRAB_LEFT,
-        ROTATE_TILT_UP,
-        ROTATE_TILT_DOWN
     };
 
-    void sendAction(e_actionTypes type, double value);
+    void sendAction(e_actionTypes type, float value);
 
-    void setMarch(double value);
-    void setLag(double value);
-    void setDepth(double value);
-    void setRoll(double value);
-    void setPitch(double value);
-    void setYaw(double value);
-    void setTilt(double value);
-
-    void clenchGrab(double value);
-    void unclenchGrab(double value);
-    void rotateGrabRight(double value);
-    void rotateGrabLeft(double value);
-    void rotateTiltUp(double value);
-    void rotateTiltDown(double value);
+    void setMarch(float value);
+    void setLag(float value);
+    void setDepth(float value);
+    void setRoll(float value);
+    void setPitch(float value);
+    void setYaw(float value);
 
     double Sensitivity(double value, double deadZone, double maxValue);
     double Sensitivity(double value, double deadZone, double pointX, double pointY, double maxValue);

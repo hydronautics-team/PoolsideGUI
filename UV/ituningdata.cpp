@@ -78,6 +78,13 @@ UV_ControlContour ITuningData::getControlContourData(unsigned int slot) {
     return data;
 }
 
+void ITuningData::setCurrentControlContour(STABILIZATION_CONTOURS contour) {
+    UVMutex.lock();
+    UVState.currentControlContour = contour;
+    UVMutex.unlock();
+    qDebug() << "setCurrentControlContour to " << contour;
+}
+
 void ITuningData::setControlContourData(unsigned int slot, UV_ControlContour data) {
     if (slot < UVState.getControlContourAmount()) {
         UVMutex.lock();

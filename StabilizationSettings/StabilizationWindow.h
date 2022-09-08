@@ -14,6 +14,11 @@
 #include "UV/ituningdata.h"
 #include "Utilitis/json.h"
 
+#include "UV/ituningdata.h"
+
+#include "KX_Pult/kx_protocol.h"
+#include "KX_Pult/qkx_coeffs.h"
+
 using json = nlohmann::json;
 
 namespace Ui {
@@ -30,17 +35,8 @@ public:
 
     QString jsonName;
 
-    enum ContourName {
-        YAW = 0,
-        ROLL = 1,
-        PITCH = 2,
-        DEPTH = 3,
-        MARCH = 4,
-        LAG = 5
-    };
-
     int controlContour_amount;
-    ContourName currentContour;
+    STABILIZATION_CONTOURS currentContour;
     UV_StabilizationConstants *ConstantsControlContour;
     UV_StabilizationState *StateControlContour;
     std::ifstream file;
@@ -56,9 +52,12 @@ private:
     Ui::StabilizationWindow *ui;
     ITuningData interface;
 
+    x_protocol *X_Protocol;
+
 
 private slots:
     void updateStabilizationStateUi();
+    void updateVariables_KX();
     void saveToJsonFile();
     void ContourChanged();
     void ContourEdited();

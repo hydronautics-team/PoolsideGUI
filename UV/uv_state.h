@@ -65,6 +65,7 @@ public:
     UV_Thruster *thruster;
 
     // Stabilization Contours
+    STABILIZATION_CONTOURS currentControlContour;
     UV_ControlContour *controlContour;
 
     // Flags
