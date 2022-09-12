@@ -15,6 +15,8 @@ Q_OBJECT
 
 public:
     Keyboard(QString name, int update_time);
+//public slots:
+//    void setterValueChanged();
 
 private:
     QTimer *update_timer;

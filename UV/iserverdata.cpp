@@ -151,6 +151,10 @@ void IServerData::fillStructure(RequestNormalMessage &req) {
     req.stabilize_flags = 0;
 
 //    qDebug() << "flashVmaSettings" << flashVmaSettings;
+
+    set_bit(req.stabilize_flags, 0, UVState.stabDepth);
+    set_bit(req.stabilize_flags, 3, UVState.stabYaw);
+    qDebug() << "stabDepth" << UVState.stabDepth << "UVState.stabDepth" << UVState.stabYaw;
     set_bit(req.stabilize_flags, 6, flashVmaSettings);
     set_bit(req.stabilize_flags, 7, UVState.resetImu);
 

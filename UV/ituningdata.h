@@ -24,6 +24,9 @@ public:
     void setCurrentControlContour(STABILIZATION_CONTOURS contour);
     void setControlContourData(unsigned int slot, UV_ControlContour data);
     void setControlContourData(unsigned int slot, UV_StabilizationConstants data);
+
+    void setStabDepth(bool state);
+    void setStabYaw(bool state);
 };
 
 #endif // ITHRUSTERTUNINGDATA_H

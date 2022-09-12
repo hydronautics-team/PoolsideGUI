@@ -24,9 +24,10 @@ StabilizationWindow::StabilizationWindow(QWidget *parent) :
         file.close();
     } else {
         qDebug() << jsonName << " открыт";
-        file >> allStabilizationJson;
+        allStabilizationJson = json::parse(file);
         file.close();
     }
+//    ros_config = json::parse(std::ifstream("/configs/ros.json"));
     connect(ui->pushButton_CS_saveConfig, SIGNAL(released()), this, SLOT(saveToJsonFile()));
 
     // TODO:нужно что-то сделать с огромным количеством кода
@@ -77,6 +78,7 @@ void StabilizationWindow::updateStabilizationStateUi() {
 
     ui->lineEdit_CS_inputSignal->setText(QString::number(StateControlContour[currentContour].inputSignal));
     ui->lineEdit_CS_speedSignal->setText(QString::number(StateControlContour[currentContour].speedSignal));
+    ui->lineEdit_CS_speedFiltered->setText(QString::number(StateControlContour[currentContour].speedFiltered));
     ui->lineEdit_CS_posSignal->setText(QString::number(StateControlContour[currentContour].posSignal));
 
     ui->lineEdit_CS_joyUnitCasted->setText(QString::number(StateControlContour[currentContour].joyUnitCasted));
@@ -176,7 +178,13 @@ void StabilizationWindow::saveToJsonFile() {
 
 void StabilizationWindow::setUV_ControlContour(int number, json StabilizationJson) {
     // TODO:нужно что-то сделать с огромным количеством кода
-    ConstantsControlContour[number].pJoyUnitCast = StabilizationJson["pJoyUnitCast"];
+//    qDebug() << "setUV_ControlContour pThrustersMax" << StabilizationJson["pThrustersMax"].type_name();
+    auto v4 = StabilizationJson["pThrustersMax"].get<float>();
+    qDebug() << "setUV_ControlContour pThrustersMax" << v4;
+
+//    ConstantsControlContour[number].pJoyUnitCast = StabilizationJson.get<float>("pJoyUnitCast");
+//            StabilizationJson.get("pJoyUnitCast")
+//            ["pJoyUnitCast"];
     ConstantsControlContour[number].pSpeedDyn = StabilizationJson["pSpeedDyn"];
     ConstantsControlContour[number].pErrGain = StabilizationJson["pErrGain"];
 
@@ -191,7 +199,7 @@ void StabilizationWindow::setUV_ControlContour(int number, json StabilizationJso
     ConstantsControlContour[number].pid_iMin = StabilizationJson["pid_iMin"];
 
     ConstantsControlContour[number].pThrustersMin = StabilizationJson["pThrustersMin"];
-    ConstantsControlContour[number].pThrustersMax = StabilizationJson["pThrustersMax"];
+    ConstantsControlContour[number].pThrustersMax = v4;
     ConstantsControlContour[number].pThrustersCast = StabilizationJson["pThrustersCast"];
 
     ConstantsControlContour[number].thrustersFilterT = StabilizationJson["thrustersFilterT"];
@@ -199,6 +207,9 @@ void StabilizationWindow::setUV_ControlContour(int number, json StabilizationJso
 
     ConstantsControlContour[number].sOutSummatorMax = StabilizationJson["sOutSummatorMax"];
     ConstantsControlContour[number].sOutSummatorMin = StabilizationJson["sOutSummatorMin"];
+    qDebug() << "setUV_ControlContour sOutSummatorMin" << ConstantsControlContour[number].sOutSummatorMin;
+
+
 }
 
 

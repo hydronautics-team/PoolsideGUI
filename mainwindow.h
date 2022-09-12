@@ -44,7 +44,8 @@ public:
     //import from old interface
     float depthLin = 9.9546;
     float depthOffset = 0;
-    Joystick *controller = nullptr;
+//    Joystick *controller = nullptr;
+    Keyboard *controller = nullptr;
 
 public slots:
     void reconnectROV();
@@ -61,6 +62,7 @@ private:
     QSettings *settings;
     QString currentVehicle;
     QString currentConfiguration;
+    ITuningData tuneInterface;
 
     void updateVehicleConfigurationMenu();
     void checkFile(QString filename);
@@ -77,6 +79,8 @@ private:
     IUserInterfaceData uv_interface;
 private slots:
     void updateVehiclesMenu();
+    void stabilizeYawToggled(bool state);
+    void stabilizeDepthToggled(bool state);
 
     //import from old interface
     void updateVehicleUi();

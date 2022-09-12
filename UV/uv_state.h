@@ -70,6 +70,8 @@ public:
 
     // Flags
     bool resetImu;
+    bool stabYaw;
+    bool stabDepth;
 };
 
 #endif // UV_STATE_H

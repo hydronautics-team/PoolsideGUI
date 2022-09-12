@@ -112,3 +112,15 @@ void ITuningData::setControlContourData(unsigned int slot, UV_StabilizationConst
         throw std::invalid_argument(error);
     }
 }
+
+void ITuningData::setStabDepth(bool state) {
+    UVMutex.lock();
+    UVState.stabDepth = state;
+    UVMutex.unlock();
+}
+
+void ITuningData::setStabYaw(bool state) {
+    UVMutex.lock();
+    UVState.stabYaw = state;
+    UVMutex.unlock();
+}

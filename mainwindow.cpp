@@ -30,6 +30,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
+    connect(checkBoxStabilizeYaw, SIGNAL(toggled(bool)), this, SLOT(stabilizeYawToggled(bool)));
+    connect(checkBoxStabilizeDepth, SIGNAL(toggled(bool)), this, SLOT(stabilizeDepthToggled(bool)));
+
     // Menu:
     // Vehicle
     // New vehicle
@@ -60,7 +63,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     reconnectROV();
 
-    controller = new Joystick("Joystick", 10, 0);
+    controller = new Keyboard("Joystick", 10);
+//    controller = new Joystick("Joystick", 10, 0);
 //    controller = new Ke("Joystick", 10, 0);
 //    udp_client = new UdpClient();
 //    udp_client->start();
@@ -318,4 +322,12 @@ void MainWindow::ConnectionTypeChanged(e_MessageTypes connectionType) {
             break;
     }
     emit serial_client->changeSelectedConnectionType(connectionType);
+}
+
+void MainWindow::stabilizeYawToggled(bool state) {
+    tuneInterface.setStabYaw(state);
+}
+
+void MainWindow::stabilizeDepthToggled(bool state) {
+    tuneInterface.setStabDepth(state);
 }
