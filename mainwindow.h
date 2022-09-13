@@ -44,8 +44,8 @@ public:
     //import from old interface
     float depthLin = 9.9546;
     float depthOffset = 0;
-//    Joystick *controller = nullptr;
-    Keyboard *controller = nullptr;
+    Joystick *controller = nullptr;
+//    Keyboard *controller = nullptr;
 
 public slots:
     void reconnectROV();

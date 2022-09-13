@@ -1,7 +1,7 @@
 #include "Keyboard.h"
 
 #define SETTER_VALUE 45
-#define SETTER_VALUE_DEPTH -100
+#define SETTER_VALUE_DEPTH 100
 
 Keyboard::Keyboard(QString name, int update_time) :
         ControlBase(name, update_time) {

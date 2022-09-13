@@ -63,8 +63,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     reconnectROV();
 
-    controller = new Keyboard("Joystick", 10);
-//    controller = new Joystick("Joystick", 10, 0);
+//    controller = new Keyboard("Joystick", 10);
+    controller = new Joystick("Joystick", 10, 0);
 //    controller = new Ke("Joystick", 10, 0);
 //    udp_client = new UdpClient();
 //    udp_client->start();
