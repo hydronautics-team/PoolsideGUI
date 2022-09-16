@@ -72,6 +72,7 @@ public:
     bool resetImu;
     bool stabYaw;
     bool stabDepth;
+    bool stabPitch;
 };
 
 #endif // UV_STATE_H

@@ -124,3 +124,9 @@ void ITuningData::setStabYaw(bool state) {
     UVState.stabYaw = state;
     UVMutex.unlock();
 }
+
+void ITuningData::setStabPitch(bool state) {
+    UVMutex.lock();
+    UVState.stabPitch = state;
+    UVMutex.unlock();
+}

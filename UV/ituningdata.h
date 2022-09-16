@@ -27,6 +27,8 @@ public:
 
     void setStabDepth(bool state);
     void setStabYaw(bool state);
+
+    void setStabPitch(bool state);
 };
 
 #endif // ITHRUSTERTUNINGDATA_H

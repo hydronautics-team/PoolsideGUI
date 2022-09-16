@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     connect(checkBoxStabilizeYaw, SIGNAL(toggled(bool)), this, SLOT(stabilizeYawToggled(bool)));
     connect(checkBoxStabilizeDepth, SIGNAL(toggled(bool)), this, SLOT(stabilizeDepthToggled(bool)));
+    connect(checkBoxStabilizePitch, SIGNAL(toggled(bool)), this, SLOT(stabilizePitchToggled(bool)));
 
     // Menu:
     // Vehicle
@@ -264,6 +265,7 @@ void MainWindow::updateUi() {
     label_depth->setText(QString::number(control.depth, 'f', 2));
     label_yaw->setText(QString::number(control.yaw, 'f', 2));
     label_roll->setText(QString::number(control.roll, 'f', 2));
+    label_pitch->setText(QString::number(control.pitch, 'f', 2));
 
     label_grabber->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB), 'f', 2));
     label_grabber_rotation->setText(
@@ -330,4 +332,8 @@ void MainWindow::stabilizeYawToggled(bool state) {
 
 void MainWindow::stabilizeDepthToggled(bool state) {
     tuneInterface.setStabDepth(state);
+}
+
+void MainWindow::stabilizePitchToggled(bool state) {
+    tuneInterface.setStabPitch(state);
 }

@@ -81,6 +81,7 @@ private slots:
     void updateVehiclesMenu();
     void stabilizeYawToggled(bool state);
     void stabilizeDepthToggled(bool state);
+    void stabilizePitchToggled(bool state);
 
     //import from old interface
     void updateVehicleUi();

@@ -153,10 +153,11 @@ void IServerData::fillStructure(RequestNormalMessage &req) {
 //    qDebug() << "flashVmaSettings" << flashVmaSettings;
 
     set_bit(req.stabilize_flags, 0, UVState.stabDepth);
+    set_bit(req.stabilize_flags, 2, UVState.stabPitch);
     set_bit(req.stabilize_flags, 3, UVState.stabYaw);
-    qDebug() << "stabDepth" << UVState.stabDepth << "UVState.stabDepth" << UVState.stabYaw;
-    set_bit(req.stabilize_flags, 6, flashVmaSettings);
-    set_bit(req.stabilize_flags, 7, UVState.resetImu);
+    qDebug() << "stabDepth" << UVState.stabDepth << "stabYaw" << UVState.stabYaw << "stabPitch" << UVState.stabPitch;
+//    set_bit(req.stabilize_flags, 7, flashVmaSettings);
+//    set_bit(req.stabilize_flags, 6, UVState.resetImu);
 
     req.cameras = 0;
     req.pc_reset = 0;

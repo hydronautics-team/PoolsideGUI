@@ -933,6 +933,13 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Pitch</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
          <item>
@@ -967,6 +974,13 @@
            </item>
            <item>
             <widget class="QLabel" name="label_roll">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_pitch">
              <property name="text">
               <string>0</string>
              </property>
@@ -1008,13 +1022,6 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_10">
-             <property name="text">
-              <string>Pitch</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QLabel" name="label_11">
              <property name="text">
               <string>Yaw</string>
@@ -1025,6 +1032,13 @@
             <widget class="QLabel" name="label_12">
              <property name="text">
               <string>Depth</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>Pitch</string>
              </property>
             </widget>
            </item>
@@ -1040,13 +1054,6 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="sensorsPitchLabel">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QLabel" name="sensorsYawLabel">
              <property name="text">
               <string>0</string>
@@ -1055,6 +1062,13 @@
            </item>
            <item>
             <widget class="QLabel" name="sensorsDepthLabel">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="sensorsPitchLabel">
              <property name="text">
               <string>0</string>
              </property>

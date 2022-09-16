@@ -128,6 +128,7 @@ void StabilizationWindow::ContourChanged() {
 void StabilizationWindow::ContourEdited() {
     // TODO:нужно что-то сделать с огромным количеством кода
     ConstantsControlContour[currentContour].pJoyUnitCast = ui->doubleSpinBox_CS_pJoyUnitCast->value();
+    qDebug() << "pJoyUnitCast" << ConstantsControlContour[currentContour].pJoyUnitCast;
     ConstantsControlContour[currentContour].pSpeedDyn = ui->doubleSpinBox_CS_pSpeedDyn->value();
     ConstantsControlContour[currentContour].pErrGain = ui->doubleSpinBox_CS_pErrGain->value();
 
@@ -135,6 +136,8 @@ void StabilizationWindow::ContourEdited() {
     ConstantsControlContour[currentContour].posFilterK = ui->doubleSpinBox_CS_posFilterK->value();
     ConstantsControlContour[currentContour].speedFilterT = ui->doubleSpinBox_CS_speedFilterT->value();
     ConstantsControlContour[currentContour].speedFilterK = ui->doubleSpinBox_CS_speedFilterK->value();
+    qDebug() << "ConstantsControlContour[currentContour].speedFilterK" << ConstantsControlContour[currentContour].speedFilterK;
+
 
     ConstantsControlContour[currentContour].pid_pGain = ui->doubleSpinBox_CS_pid_pGain->value();
     ConstantsControlContour[currentContour].pid_iGain = ui->doubleSpinBox_CS_pid_iGain->value();
