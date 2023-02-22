@@ -6,9 +6,8 @@
 #include <QFinalState>
 #include <QCloseEvent>
 
-class VehicleWizard : public QWidget, private Ui::VehicleWizard
-{
-    Q_OBJECT
+class VehicleWizard : public QWidget, private Ui::VehicleWizard {
+Q_OBJECT
 
 signals:
     void nextPressed();

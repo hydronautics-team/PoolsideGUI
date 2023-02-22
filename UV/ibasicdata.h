@@ -8,10 +8,10 @@
 /** \brief Basic interface for accessing data in UV_state class
  *
  */
-class IBasicData
-{
+class IBasicData {
 public:
     IBasicData();
+
 
 protected:
     /// Static mutex variable

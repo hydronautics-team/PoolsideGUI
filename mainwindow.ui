@@ -722,6 +722,18 @@
          <string/>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="leftMargin">
+          <number>3</number>
+         </property>
+         <property name="topMargin">
+          <number>3</number>
+         </property>
+         <property name="rightMargin">
+          <number>3</number>
+         </property>
+         <property name="bottomMargin">
+          <number>3</number>
+         </property>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
@@ -815,6 +827,55 @@
        </widget>
       </item>
       <item>
+       <widget class="QGroupBox" name="groupBox_ConnectionType">
+        <property name="title">
+         <string>Connection Type</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <property name="leftMargin">
+          <number>3</number>
+         </property>
+         <property name="topMargin">
+          <number>3</number>
+         </property>
+         <property name="rightMargin">
+          <number>3</number>
+         </property>
+         <property name="bottomMargin">
+          <number>3</number>
+         </property>
+         <item row="0" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <item>
+            <widget class="QRadioButton" name="radioButton_ConnectionNormal">
+             <property name="text">
+              <string>Normal</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioButton_ConnectionConfig">
+             <property name="text">
+              <string>Config</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioButton_ConnectionDirect">
+             <property name="text">
+              <string>Direct</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <widget class="QGroupBox" name="groupBox_9">
         <property name="title">
          <string>Impact</string>
@@ -823,6 +884,18 @@
          <set>Qt::AlignCenter</set>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <property name="leftMargin">
+          <number>3</number>
+         </property>
+         <property name="topMargin">
+          <number>3</number>
+         </property>
+         <property name="rightMargin">
+          <number>3</number>
+         </property>
+         <property name="bottomMargin">
+          <number>3</number>
+         </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_7">
            <item>
@@ -857,6 +930,13 @@
             <widget class="QLabel" name="label_roll_static">
              <property name="text">
               <string>Roll</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Pitch</string>
              </property>
             </widget>
            </item>
@@ -899,6 +979,13 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QLabel" name="label_pitch">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
         </layout>
@@ -913,19 +1000,24 @@
          <set>Qt::AlignCenter</set>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <property name="leftMargin">
+          <number>3</number>
+         </property>
+         <property name="topMargin">
+          <number>3</number>
+         </property>
+         <property name="rightMargin">
+          <number>3</number>
+         </property>
+         <property name="bottomMargin">
+          <number>3</number>
+         </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
             <widget class="QLabel" name="label_9">
              <property name="text">
               <string>Roll</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_10">
-             <property name="text">
-              <string>Pitch</string>
              </property>
             </widget>
            </item>
@@ -943,19 +1035,19 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>Pitch</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
             <widget class="QLabel" name="sensorsRollLabel">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="sensorsPitchLabel">
              <property name="text">
               <string>0</string>
              </property>
@@ -975,6 +1067,13 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QLabel" name="sensorsPitchLabel">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
         </layout>
@@ -989,6 +1088,18 @@
          <set>Qt::AlignCenter</set>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <property name="leftMargin">
+          <number>3</number>
+         </property>
+         <property name="topMargin">
+          <number>3</number>
+         </property>
+         <property name="rightMargin">
+          <number>3</number>
+         </property>
+         <property name="bottomMargin">
+          <number>3</number>
+         </property>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>

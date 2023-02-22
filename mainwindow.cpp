@@ -1,27 +1,16 @@
 #include "mainwindow.h"
-#include <QDebug>
-#include <QFileInfo>
 
-#include "ui_settingswindow.h"
-
-#include "serial_client.h"
-#include "udp_client.h"
-
-#include <QShortcut>
-#include <QApplication>
-#include <QThread>
-#include <QTimer>
+//double X[2000][2];
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setupUi(this);
     //start in full screen format
-    QMainWindow::showFullScreen();
-    QMainWindow::menuBar()->setVisible(false);
+//    QMainWindow::showFullScreen();
+//    QMainWindow::menuBar()->setVisible(true);
 
     // update vehicle and all parameters
     connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
     connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehiclesMenu()));
-    connect(this, SIGNAL(updateVehicle()), &settingsWindow, SIGNAL(updateVehicle()));
 
     // Reading the key combination of turning the window to the full screen and back
     QShortcut *keyCtrlF = new QShortcut(this);
@@ -29,11 +18,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::fullScreenKey);
 
     // Controller Changed
-    controller = new Mouse3d("3dMouse", 5);
-    connect(&settingsWindow, SIGNAL(controllerChanged(unsigned int, QString)), this,
-            SLOT(changeController(unsigned int, QString)));
+//    controller.setDefoultEnabeling();
+//    connect(&controlWindow, SIGNAL(controllersEnabelChanged(Control::e_controllerType, bool)),
+//            this, SLOT(enableControllerChanged(Control::e_controllerType, bool)));
+
+    // Connection Type Changed
+    radioButton_ConnectionNormal->setChecked(true); // default Connection type
+    connect(radioButton_ConnectionNormal, SIGNAL(clicked()), this, SLOT(normalConnectionClick()));
+    connect(radioButton_ConnectionDirect, SIGNAL(clicked()), this, SLOT(directConnectionClick()));
+    connect(radioButton_ConnectionConfig, SIGNAL(clicked()), this, SLOT(configConnectionClick()));
 
     connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
+
+    connect(checkBoxStabilizeYaw, SIGNAL(toggled(bool)), this, SLOT(stabilizeYawToggled(bool)));
+    connect(checkBoxStabilizeDepth, SIGNAL(toggled(bool)), this, SLOT(stabilizeDepthToggled(bool)));
+    connect(checkBoxStabilizePitch, SIGNAL(toggled(bool)), this, SLOT(stabilizePitchToggled(bool)));
 
     // Menu:
     // Vehicle
@@ -42,17 +41,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // Choose vehicle and configuration
     connect(menu_choose_configuration, SIGNAL(triggered(QAction * )), this, SLOT(chooseConfiguration(QAction * )));
     connect(menu_choose_vehicle, SIGNAL(triggered(QAction * )), this, SLOT(chooseVehicle(QAction * )));
-    // Settings
-    connect(action_config_com, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigRS()));
-    connect(action_config_thrusters, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigThruster()));
-    connect(action_config_coef, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigCoef()));
-    // Surface control unit
-    connect(action_config_controls, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigControls()));
-    connect(action_config_view, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigView()));
-    // Other settings
-    connect(action_about_program, SIGNAL(triggered()), &settingsWindow, SLOT(showPageAboutProgram()));
-    connect(action_other_settings, SIGNAL(triggered()), &settingsWindow, SLOT(showPageOtherSettings()));
+//    // Settings
+//    connect(action_config_com, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigRS()));
+    connect(action_config_thrusters, SIGNAL(triggered()), &thrusterWindow, SLOT(show()));
+    connect(action_config_coef, SIGNAL(triggered()), &stabilizationWindow, SLOT(show()));
+//    // Surface control unit
+//    connect(action_config_controls, SIGNAL(triggered()), &controlWindow, SLOT(show()));
+//    connect(action_config_view, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigView()));
+//    // Other settings
+//    connect(action_about_program, SIGNAL(triggered()), &settingsWindow, SLOT(showPageAboutProgram()));
+//    connect(action_other_settings, SIGNAL(triggered()), &settingsWindow, SLOT(showPageOtherSettings()));
     connect(action_full_screen, &QAction::triggered, this, &MainWindow::fullScreenKey);
+
 
     settingsFile = QApplication::applicationDirPath() + "/settings.ini"; // path to settings file
     checkFile(settingsFile); // check file existance
@@ -64,11 +64,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 
     reconnectROV();
 
-    udp_client = new UDP_Client();
-    udp_client->start();
+//    controller = new Keyboard("Joystick", 10);
+    controller = new Joystick("Joystick", 10, 0);
+//    controller = new Ke("Joystick", 10, 0);
+//    udp_client = new UdpClient();
+//    udp_client->start();
 
-    connect(udp_client, SIGNAL(dataUpdated()), this, SLOT(updateData()));
-    connect(udp_client, SIGNAL(dataUpdated()), settingsWindow.pageVehicleSettings, SLOT(updateData()));
+//    const QString ConfigFile = "protocols.conf";
+//    const QString XI = "xi";
+//    const QString KI = "ki";
+//    //передача K
+//    Qkx_coeffs* kProtocol = new Qkx_coeffs(ConfigFile, KI);
+//    //передача X
+//    x_protocol* xProtocol = new x_protocol(ConfigFile, XI, X);
 
     connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
     connect(pushButtonResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
@@ -80,6 +88,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     vehiclePic->setRenderHint(QPainter::Antialiasing);
     vehiclePic->scene()->addPixmap(QPixmap(":/images/Cousteau_2A.png"))->setTransform(QTransform::fromScale(0.2, 0.2));
 
+    updateControl_timer = new QTimer(this);
+    connect(updateControl_timer, SIGNAL(timeout()), this, SLOT(updateUi()));
+    updateControl_timer->start(10);
+
     initializeDataUi();
     updateUi();
 }
@@ -88,14 +100,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 /*!
  * @brief Reconnect rov
  */
-void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew Serial_Client
+void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew SerialClient
 {
-    Serial_Client *serial_client = new Serial_Client();
+    if (radioButton_ConnectionNormal->isChecked() == true) {
+        serial_client = new SerialClient(MESSAGE_NORMAL);
+    }
+    if (radioButton_ConnectionDirect->isChecked() == true) {
+        serial_client = new SerialClient(MESSAGE_DIRECT);
+    }
+    if (radioButton_ConnectionConfig->isChecked() == true) {
+        serial_client = new SerialClient(MESSAGE_CONFIG);
+    }
     serial_client->start();
 
     connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));
-    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client,
-            SLOT(changeSelectedThruster(unsigned int)));
+//    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client,
+//            SLOT(changeSelectedThruster(unsigned int)));
 }
 
 void MainWindow::createVehicle() {
@@ -103,11 +123,6 @@ void MainWindow::createVehicle() {
     wizard.show();
 }
 
-
-/*!
- * @brief
- * @param action
- */
 void MainWindow::chooseVehicle(QAction *action) {
     currentVehicle = action->text();
     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
@@ -134,10 +149,9 @@ void MainWindow::fullScreenKey() {
     if (QMainWindow::windowState() == Qt::WindowFullScreen) {
         QMainWindow::showNormal();
         QMainWindow::menuBar()->setVisible(true);
-    }
-    else{
+    } else {
         QMainWindow::showFullScreen();
-        QMainWindow::menuBar()->setVisible(false);
+        QMainWindow::menuBar()->setVisible(true);
     }
 }
 
@@ -159,7 +173,7 @@ void MainWindow::updateVehiclesMenu() {
         settings->endGroup();
     }
     settings->sync();
-    qDebug() << currentVehicle;
+//    qDebug() << currentVehicle;
     updateVehicleConfigurationMenu();
 }
 
@@ -179,7 +193,7 @@ void MainWindow::updateVehicleConfigurationMenu() {
         }
     }
     settings->endGroup();
-    qDebug() << currentConfiguration;
+//    qDebug() << currentConfiguration;
 }
 
 void MainWindow::checkFile(QString filename) {
@@ -251,6 +265,7 @@ void MainWindow::updateUi() {
     label_depth->setText(QString::number(control.depth, 'f', 2));
     label_yaw->setText(QString::number(control.yaw, 'f', 2));
     label_roll->setText(QString::number(control.roll, 'f', 2));
+    label_pitch->setText(QString::number(control.pitch, 'f', 2));
 
     label_grabber->setText(QString::number(uv_interface.getDeviceVelocity(UV_Device::DEVICE_GRAB), 'f', 2));
     label_grabber_rotation->setText(
@@ -270,24 +285,55 @@ void MainWindow::clearResetImu() {
     interface.setResetImuValue(false);
 }
 
-void MainWindow::changeController(unsigned int current_device, QString name) //TODO: переделать под управляющий класс
-{
-    if (controller != nullptr) {
-        delete controller;
-    }
-    switch (current_device) {
-        case 0:
-            controller = new Mouse3d("3dMouse", 5);
-            break;
-        case 1:
-            controller = new Mouse3d("3dMouse", 5);
-            break;
-        case 2:
-            controller = new Joystick(name, 10, 0); //default id = 0;
-            break;
-    }
-}
-
 void MainWindow::reconnectcROVclick() {
     emit reconnectROV();
+}
+
+//void MainWindow::enableControllerChanged(Control::e_controllerType controllerType, bool enabel) {
+//    controller.setEnabel(controllerType, enabel);
+//}
+
+void MainWindow::normalConnectionClick() {
+    emit(ConnectionTypeChanged(MESSAGE_NORMAL));
+
+}
+
+void MainWindow::directConnectionClick() {
+    emit(ConnectionTypeChanged(MESSAGE_DIRECT));
+}
+
+void MainWindow::configConnectionClick() {
+    emit(ConnectionTypeChanged(MESSAGE_CONFIG));
+}
+
+void MainWindow::ConnectionTypeChanged(e_MessageTypes connectionType) {
+    switch (connectionType) {
+        case MESSAGE_NORMAL:
+            radioButton_ConnectionDirect->setChecked(false);
+            radioButton_ConnectionConfig->setChecked(false);
+            break;
+
+        case MESSAGE_CONFIG:
+            radioButton_ConnectionNormal->setChecked(false);
+            radioButton_ConnectionConfig->setChecked(false);
+            break;
+
+        case MESSAGE_DIRECT:
+            radioButton_ConnectionNormal->setChecked(false);
+            radioButton_ConnectionDirect->setChecked(false);
+            break;
+    }
+    emit serial_client->changeSelectedConnectionType(connectionType);
+}
+
+void MainWindow::stabilizeYawToggled(bool state) {
+    tuneInterface.setStabYaw(state);
+}
+
+void MainWindow::stabilizeDepthToggled(bool state) {
+    tuneInterface.setStabDepth(state);
+}
+
+void MainWindow::stabilizePitchToggled(bool state) {
+    tuneInterface.setStabPitch(state);
 }

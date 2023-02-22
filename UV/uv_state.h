@@ -3,12 +3,12 @@
 
 #include "stdint.h"
 
+#include <QDebug>
 #include "uv_device.h"
 #include "uv_thruster.h"
 #include "uv_controlcontour.h"
 
-struct ImuData
-{
+struct ImuData {
     ImuData();
 
     double roll;
@@ -20,8 +20,7 @@ struct ImuData
     double depth;
 };
 
-struct ControlData
-{
+struct ControlData {
     ControlData();
 
     double march;
@@ -32,17 +31,25 @@ struct ControlData
     double yaw;
 };
 
-class UV_State
-{
+class UV_State {
 public:
     UV_State();
+    ~UV_State();
 
     // TODO: Replace this with dynamic arrays (later)
     const static unsigned int devices_amount = 6;
-    const static unsigned int thrusters_amount = 8;
-    const static unsigned int control_counters_amount = 6;
 
-    // Control values
+    int thrusterAmount;
+
+    void setThrusterAmount(int thrusterAmount);
+    int getThrusterAmount();
+
+    int controlContourAmount;
+
+    void setControlContourAmount(int controlContourAmount);
+    int getControlContourAmount();
+
+    // ControlWindow values
     ControlData control;
 
     // IMU values
@@ -55,13 +62,17 @@ public:
     UV_Device device[devices_amount];
 
     // Thrusters
-    UV_Thruster thruster[thrusters_amount];
+    UV_Thruster *thruster;
 
     // Stabilization Contours
-    UV_ControlContour ControlContour[control_counters_amount];
+    STABILIZATION_CONTOURS currentControlContour;
+    UV_ControlContour *controlContour;
 
     // Flags
     bool resetImu;
+    bool stabYaw;
+    bool stabDepth;
+    bool stabPitch;
 };
 
 #endif // UV_STATE_H

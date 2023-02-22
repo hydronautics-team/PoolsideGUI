@@ -2,8 +2,7 @@
 
 #include <QTest>
 
-Serverdata_Test::Serverdata_Test(QObject *parent)
-{
+Serverdata_Test::Serverdata_Test(QObject *parent) {
     //ideal_message.append("\xAA\x00\x07\x00\x01\x00\x00\xC0\xC1\x00\x00\xC0\xC1\x7F\x7F&\x0B");
 
     ideal_message.append('\xAA');
@@ -25,8 +24,7 @@ Serverdata_Test::Serverdata_Test(QObject *parent)
     ideal_message.append('r');
 }
 
-void Serverdata_Test::directRequest()
-{
+void Serverdata_Test::directRequest() {
 // TODO do something with thruster selected
 
 //    UV_State state;

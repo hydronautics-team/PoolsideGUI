@@ -1,7 +1,6 @@
 #include "uv_state.h"
 
-ImuData::ImuData()
-{
+ImuData::ImuData() {
     roll = 0;
     pitch = 0;
     yaw = 0;
@@ -11,8 +10,7 @@ ImuData::ImuData()
     depth = 0;
 }
 
-ControlData::ControlData()
-{
+ControlData::ControlData() {
     march = 0;
     lag = 0;
     depth = 0;
@@ -21,8 +19,7 @@ ControlData::ControlData()
     yaw = 0;
 };
 
-UV_State::UV_State()
-{
+UV_State::UV_State() {
     device[UV_Device::DEVICE_LIGHT].name = "Light";
     device[UV_Device::DEVICE_LIGHT].slot = UV_Device::DEVICE_LIGHT;
 
@@ -42,4 +39,36 @@ UV_State::UV_State()
     device[UV_Device::DEVICE_TILT].slot = UV_Device::DEVICE_TILT;
 
     resetImu = false;
+}
+
+UV_State::~UV_State() {
+    if (thruster != nullptr){
+        delete[] thruster;
+    }
+}
+
+void UV_State::setThrusterAmount(int thrusterAmount) {
+    if (thruster != nullptr){
+        delete thruster;
+    }
+    thruster = new UV_Thruster[thrusterAmount];
+    this->thrusterAmount = thrusterAmount;
+    qDebug() << "setThrusterAmount " << thrusterAmount;
+}
+
+int UV_State::getThrusterAmount() {
+    return thrusterAmount;
+}
+
+void UV_State::setControlContourAmount(int controlContourAmount) {
+    if (controlContour != nullptr){
+        delete controlContour;
+    }
+    controlContour = new UV_ControlContour[controlContourAmount];
+    this->controlContourAmount = controlContourAmount;
+    qDebug() << "setControlContourAmount " << controlContourAmount;
+}
+
+int UV_State::getControlContourAmount() {
+    return controlContourAmount;
 }

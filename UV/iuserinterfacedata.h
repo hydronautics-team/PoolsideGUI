@@ -3,8 +3,7 @@
 
 #include "ibasicdata.h"
 
-class IUserInterfaceData : public IBasicData
-{
+class IUserInterfaceData : public IBasicData {
 public:
     IUserInterfaceData();
 

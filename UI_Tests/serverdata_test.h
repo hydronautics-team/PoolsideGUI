@@ -5,9 +5,8 @@
 
 #include "UV/iserverdata.h"
 
-class Serverdata_Test : public QObject
-{
-    Q_OBJECT
+class Serverdata_Test : public QObject {
+Q_OBJECT
 
 public:
     explicit Serverdata_Test(QObject *parent = 0);

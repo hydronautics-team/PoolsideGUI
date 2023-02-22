@@ -39,12 +39,10 @@ endif()
 
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
 
-
-
-include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow")
-include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/VehicleSettings")
-include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/ThrusterSettings")
-include_directories("${PROJECT_SOURCE_DIR}/SettingsWindow/CommunicationSettings")
+include_directories("ThrusterSettings")
+include_directories("CommunicationSettings")
+include_directories("ControlSettings")
+include_directories("StabilizationSettings")
 include_directories("${PROJECT_SOURCE_DIR}/VehicleWizard")
 include_directories("${PROJECT_SOURCE_DIR}/PicFrame")
 
@@ -59,7 +57,7 @@ endif()
 
 #HIDAPI
 if(WIN32)
-    add_subdirectory(hidapi)
+    add_subdirectory(Utilitis/hidapi)
 else()
     set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMakeModules;${CMAKE_MODULE_PATH}")
     include_directories(${HIDAPI_INCLUDE_DIR})
@@ -67,20 +65,19 @@ endif()
 
 set(PROJECT_SOURCES
         main.cpp
-        Drivers/controlbase.cpp
-        Drivers/joystick.cpp
-        Drivers/keyboard.cpp
-        Drivers/mouse_3d.cpp
+        ControlSettings/ControlBase.cpp
+#        ControlSettings/Control.cpp
+        ControlSettings/Joystick.cpp
+        ControlSettings/Keyboard.cpp
+#        ControlSettings/Mouse3d.cpp
+#        ControlSettings/ControlWindow.cpp
         KX_Pult/configdata.cpp
         KX_Pult/kx_protocol.cpp
         KX_Pult/qkx_coeffs.cpp
         KX_Pult/qpiconfig.cpp
         PicFrame/picframe.cpp
-        SettingsWindow/CommunicationSettings/communicationsettings.cpp
-        SettingsWindow/CommunicationSettings/serial_settings.cpp
-        SettingsWindow/CommunicationSettings/udp_settings.cpp
-        SettingsWindow/ThrusterSettings/thrustersettings.cpp
-        SettingsWindow/VehicleSettings/vehiclesettings.cpp
+        ThrusterSettings/ThrusterWindow.cpp
+        ThrusterSettings/Thruster.cpp
         UI_Tests/serverdata_test.cpp
         UV/icontroldata.cpp
         UV/ituningdata.cpp
@@ -92,23 +89,23 @@ set(PROJECT_SOURCES
         UV/iserverdata.cpp
         UV/uv_device.cpp
         UV/uv_state.cpp
+        CommunicationSettings/SerialClient.cpp
+        CommunicationSettings/UdpClient.cpp
+        CommunicationSettings/Connection.cpp
+        StabilizationSettings/StabilizationWindow.cpp
         mainwindow.cpp
-        SettingsWindow/settingswindow.cpp
-        serial_client.cpp
-        udp_client.cpp
-        Drivers/controlbase.h
-        Drivers/joystick.h
-        Drivers/keyboard.h
-        Drivers/mouse_3d.h
+
+        ControlSettings/ControlBase.h
+#        ControlSettings/Control.h
+        ControlSettings/Joystick.h
+        ControlSettings/Keyboard.h
+#        ControlSettings/Mouse3d.h
+#        ControlSettings/ControlWindow.h
         KX_Pult/configdata.h
         KX_Pult/kx_protocol.h
         KX_Pult/qkx_coeffs.h
         KX_Pult/qpiconfig.h
         PicFrame/picframe.h
-        SettingsWindow/CommunicationSettings/communicationsettings.h
-        SettingsWindow/CommunicationSettings/serial_settings.h
-        SettingsWindow/CommunicationSettings/udp_settings.h
-        SettingsWindow/VehicleSettings/vehiclesettings.h
         UI_Tests/serverdata_test.h
         UV/ibasicdata.h
         UV/icontroldata.h
@@ -118,22 +115,23 @@ set(PROJECT_SOURCES
         UV/uv_controlcontour.h
         UV/uv_device.h
         UV/uv_state.h
-        SettingsWindow/ThrusterSettings/thrustersettings.h
+        ThrusterSettings/ThrusterWindow.h
+        ThrusterSettings/Thruster.h
         UV/uv_thruster.h
         VehicleWizard/vehiclewizard.h
         mainwindow.h
-        SettingsWindow/settingswindow.h
-        serial_client.h
-        udp_client.h
+        CommunicationSettings/SerialClient.h
+        CommunicationSettings/UdpClient.h
+        CommunicationSettings/Connection.h
+        StabilizationSettings/StabilizationWindow.h
+
         PicFrame/picframe.ui
-        SettingsWindow/CommunicationSettings/communicationsettings.ui
-        SettingsWindow/CommunicationSettings/serial_settings.ui
-        SettingsWindow/CommunicationSettings/udp_settings.ui
-        SettingsWindow/ThrusterSettings/thrustersettings.ui
-        SettingsWindow/VehicleSettings/vehiclesettings.ui
+        ThrusterSettings/ThrusterWindow.ui
+        ThrusterSettings/Thruster.ui
+#        ControlSettings/ControlWindow.ui
+        StabilizationSettings/StabilizationWindow.ui
         VehicleWizard/vehiclewizard.ui
         mainwindow.ui
-        SettingsWindow/settingswindow.ui
         )
 
 set(QRC_FILES
@@ -141,10 +139,10 @@ set(QRC_FILES
         vehicles.qrc)
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS
-        SettingsWindow
-        SettingsWindow/VehicleSettings
-        SettingsWindow/ThrusterSettings
-        SettingsWindow/CommunicationSettings
+        StabilizationSettings
+        CommunicationSettings
+        ControlSettings
+        ThrusterSettings
         VehicleWizard
         PicFrame
         )
@@ -156,7 +154,7 @@ else()
 endif ()
 
 if(WIN32)
-    target_link_libraries(${PROJECT_NAME} hidapi)
+    target_link_libraries(${PROJECT_NAME} Utilitis/hidapi)
 else()
     target_link_libraries(${PROJECT_NAME} hidapi-libusb)
 endif()

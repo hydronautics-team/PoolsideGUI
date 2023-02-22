@@ -4,12 +4,13 @@
 #include <QString>
 
 
-class UV_Thruster
-{
+class UV_Thruster {
 public:
     UV_Thruster();
 
     QString name;
+
+    bool power = false;
 
     int id;
     int slot;

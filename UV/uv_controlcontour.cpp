@@ -1,7 +1,6 @@
 #include "uv_controlcontour.h"
 
-UV_ControlContour::UV_ControlContour()
-{
+UV_ControlContour::UV_ControlContour() {
     constant.pJoyUnitCast = 0;
     constant.pSpeedDyn = 0;
     constant.pErrGain = 0;
@@ -18,6 +17,7 @@ UV_ControlContour::UV_ControlContour()
 
     constant.pThrustersMin = 0;
     constant.pThrustersMax = 0;
+    constant.pThrustersCast = 0;
 
     constant.thrustersFilterT = 0;
     constant.thrustersFilterK = 0;
