@@ -47,7 +47,7 @@ public:
 //    Keyboard *controller = nullptr;
 
 public slots:
-    void reconnectROV();
+    // void reconnectROV();
 //    void enableControllerChanged(Control::e_controllerType controllerType, bool enabel);
 
 private:
@@ -69,36 +69,36 @@ private:
     UdpClient *udp_client;
 
     //import from old interface
-    void initializeDataUi();
-    int thrustersCount;
-    QList<QProgressBar *> thrusterBarGroup;
-    QGraphicsScene *scene;
+    // void initializeDataUi();
+    // int thrustersCount;
+    // QList<QProgressBar *> thrusterBarGroup;
+    // QGraphicsScene *scene;
 
     // Interface for accessing UVState object
     IUserInterfaceData uv_interface;
 private slots:
-    void updateVehiclesMenu();
+    // void updateVehiclesMenu();
     void stabilizeYawToggled(bool state);
     void stabilizeDepthToggled(bool state);
     void stabilizePitchToggled(bool state);
 
     //import from old interface
-    void updateVehicleUi();
+    // void updateVehicleUi();
     void updateUi();
 
     void resetImu();
     void clearResetImu();
 
     // menu actions
-    void createVehicle();
-    void chooseVehicle(QAction *action);
-    void chooseConfiguration(QAction *action);
+    // void createVehicle();
+    // void chooseVehicle(QAction *action);
+    // void chooseConfiguration(QAction *action);
 
     // full screen key combination
     void fullScreenKey();
 
     //Other buttons
-    void reconnectcROVclick();
+    // void reconnectcROVclick();
 
     void normalConnectionClick();
     void directConnectionClick();

@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(radioButton_ConnectionDirect, SIGNAL(clicked()), this, SLOT(directConnectionClick()));
     connect(radioButton_ConnectionConfig, SIGNAL(clicked()), this, SLOT(configConnectionClick()));
 
-    connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
+    // connect(pushButtonReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
     connect(checkBoxStabilizeYaw, SIGNAL(toggled(bool)), this, SLOT(stabilizeYawToggled(bool)));
     connect(checkBoxStabilizeDepth, SIGNAL(toggled(bool)), this, SLOT(stabilizeDepthToggled(bool)));
@@ -98,7 +98,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(updateControl_timer, SIGNAL(timeout()), this, SLOT(updateUi()));
     updateControl_timer->start(10);
 
-    initializeDataUi();
+    // initializeDataUi();
     updateUi();
 }
 
@@ -213,36 +213,36 @@ void MainWindow::checkFile(QString filename) {
     }
 }
 
-void MainWindow::updateVehicleUi() {
-    currentVehicle = settings->value("currentVehicle").toString();
-    thrustersCount = settings->value("vehicle/" + currentVehicle + "/thrusters/count").toInt();
-    //update bars
-            foreach (QProgressBar *bar, thrusterBarGroup) {
-            bar->hide();
-        }
-    for (int i = 0; i < thrustersCount; i++) {
-        thrusterBarGroup[i]->show();
-        thrusterBarGroup[i]->setFormat(
-                settings->value("vehicle/" + currentVehicle + "/thrusters/" + QString::number(i) + "/name").toString());
-    }
-    initializeDataUi();
-    updateUi();
-}
+// void MainWindow::updateVehicleUi() {
+//     currentVehicle = settings->value("currentVehicle").toString();
+//     thrustersCount = settings->value("vehicle/" + currentVehicle + "/thrusters/count").toInt();
+//     //update bars
+//             foreach (QProgressBar *bar, thrusterBarGroup) {
+//             bar->hide();
+//         }
+//     for (int i = 0; i < thrustersCount; i++) {
+//         thrusterBarGroup[i]->show();
+//         thrusterBarGroup[i]->setFormat(
+//                 settings->value("vehicle/" + currentVehicle + "/thrusters/" + QString::number(i) + "/name").toString());
+//     }
+//     // initializeDataUi();
+//     updateUi();
+// }
 
-void MainWindow::initializeDataUi() {
-            foreach (QProgressBar *bar, thrusterBarGroup) {
-            bar->setValue(0);
-        }
-    pitchBar->setValue(0);
-    depthBar->setValue(0);
-    depthLabel->setText("0");   // label under bar
-    pitchLabel->setText("0");   // label under bar
-    sensorsDepthLabel->setText("0");
-    sensorsPitchLabel->setText("0");
-    sensorsYawLabel->setText("0");
-    sensorsRollLabel->setText("0");
-    emit updateCompass(0);
-}
+// void MainWindow::initializeDataUi() {
+//             foreach (QProgressBar *bar, thrusterBarGroup) {
+//             bar->setValue(0);
+//         }
+//     pitchBar->setValue(0);
+//     depthBar->setValue(0);
+//     depthLabel->setText("0");   // label under bar
+//     pitchLabel->setText("0");   // label under bar
+//     sensorsDepthLabel->setText("0");
+//     sensorsPitchLabel->setText("0");
+//     sensorsYawLabel->setText("0");
+//     sensorsRollLabel->setText("0");
+//     emit updateCompass(0);
+// }
 
 void MainWindow::updateUi() {
     // Get data from UVState object
@@ -291,9 +291,9 @@ void MainWindow::clearResetImu() {
     interface.setResetImuValue(false);
 }
 
-void MainWindow::reconnectcROVclick() {
-    emit reconnectROV();
-}
+// void MainWindow::reconnectcROVclick() {
+//     emit reconnectROV();
+// }
 
 //void MainWindow::enableControllerChanged(Control::e_controllerType controllerType, bool enabel) {
 //    controller.setEnabel(controllerType, enabel);
