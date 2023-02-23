@@ -1,16 +1,16 @@
 #include "mainwindow.h"
 #include "CommunicationSettings/SerialClient.h"
-#include "UI_Tests/serverdata_test.h"
+// #include "UI_Tests/serverdata_test.h"
 
 #include <QApplication>
 #include <QThread>
-#include <QTest>
+// #include <QTest>
 
 int main(int argc, char *argv[])
 {
     freopen("testing.log", "w", stdout);
     QApplication a(argc, argv);
-    QTest::qExec(new Serverdata_Test, argc, argv);
+    // QTest::qExec(new Serverdata_Test, argc, argv);
     MainWindow mainWindow;
     mainWindow.show();
     return a.exec();

@@ -9,8 +9,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 //    QMainWindow::menuBar()->setVisible(true);
 
     // update vehicle and all parameters
-    connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
-    connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehiclesMenu()));
+    // connect(&wizard, SIGNAL(updateMainWindow()), this, SIGNAL(updateVehicle()));
+    // connect(this, SIGNAL(updateVehicle()), this, SLOT(updateVehiclesMenu()));
 
     // Reading the key combination of turning the window to the full screen and back
     QShortcut *keyCtrlF = new QShortcut(this);
@@ -37,14 +37,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     // Menu:
     // Vehicle
     // New vehicle
-    connect(action_create_vehicle, SIGNAL(triggered()), this, SLOT(createVehicle()));
-    // Choose vehicle and configuration
-    connect(menu_choose_configuration, SIGNAL(triggered(QAction * )), this, SLOT(chooseConfiguration(QAction * )));
-    connect(menu_choose_vehicle, SIGNAL(triggered(QAction * )), this, SLOT(chooseVehicle(QAction * )));
-//    // Settings
+    // connect(action_create_vehicle, SIGNAL(triggered()), this, SLOT(createVehicle()));
+//     // Choose vehicle and configuration
+//     connect(menu_choose_configuration, SIGNAL(triggered(QAction * )), this, SLOT(chooseConfiguration(QAction * )));
+//     connect(menu_choose_vehicle, SIGNAL(triggered(QAction * )), this, SLOT(chooseVehicle(QAction * )));
+// //    // Settings
 //    connect(action_config_com, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigRS()));
     connect(action_config_thrusters, SIGNAL(triggered()), &thrusterWindow, SLOT(show()));
     connect(action_config_coef, SIGNAL(triggered()), &stabilizationWindow, SLOT(show()));
+    
 //    // Surface control unit
 //    connect(action_config_controls, SIGNAL(triggered()), &controlWindow, SLOT(show()));
 //    connect(action_config_view, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigView()));
@@ -58,11 +59,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     checkFile(settingsFile); // check file existance
     settings = new QSettings(settingsFile, QSettings::IniFormat);
 
-    currentVehicle = settings->value("currentVehicle").toString();
-    currentConfiguration = settings->value("currentConfiguration").toString();
+    // currentVehicle = settings->value("currentVehicle").toString();
+    // currentConfiguration = settings->value("currentConfiguration").toString();
     emit updateVehicle();
 
-    reconnectROV();
+    // reconnectROV();
+        serial_client = new SerialClient(MESSAGE_CONFIG);
+    
+    serial_client->start();
+
+    connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));
 
 //    controller = new Keyboard("Joystick", 10);
     controller = new Joystick("Joystick", 10, 0);
@@ -97,53 +103,53 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
 }
 
 
-/*!
- * @brief Reconnect rov
- */
-void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew SerialClient
-{
-    if (radioButton_ConnectionNormal->isChecked() == true) {
-        serial_client = new SerialClient(MESSAGE_NORMAL);
-    }
-    if (radioButton_ConnectionDirect->isChecked() == true) {
-        serial_client = new SerialClient(MESSAGE_DIRECT);
-    }
-    if (radioButton_ConnectionConfig->isChecked() == true) {
-        serial_client = new SerialClient(MESSAGE_CONFIG);
-    }
-    serial_client->start();
+// /*!
+//  * @brief Reconnect rov
+//  */
+// void MainWindow::reconnectROV() // TODO: присутствует утечка пямяти при reconnectROV из-заnew SerialClient
+// {
+//     if (radioButton_ConnectionNormal->isChecked() == true) {
+//         serial_client = new SerialClient(MESSAGE_NORMAL);
+//     }
+//     if (radioButton_ConnectionDirect->isChecked() == true) {
+//         serial_client = new SerialClient(MESSAGE_DIRECT);
+//     }
+//     if (radioButton_ConnectionConfig->isChecked() == true) {
+//         serial_client = new SerialClient(MESSAGE_CONFIG);
+//     }
+//     serial_client->start();
 
-    connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));
-//    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client,
-//            SLOT(changeSelectedThruster(unsigned int)));
-}
+//     connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));
+// //    connect(settingsWindow.pageConfigThruster, SIGNAL(ThrusterChanged(unsigned int)), serial_client,
+// //            SLOT(changeSelectedThruster(unsigned int)));
+// }
 
-void MainWindow::createVehicle() {
-    wizard.startStateMachine();
-    wizard.show();
-}
+// void MainWindow::createVehicle() {
+//     wizard.startStateMachine();
+//     wizard.show();
+// }
 
-void MainWindow::chooseVehicle(QAction *action) {
-    currentVehicle = action->text();
-    settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
-    for (qsizetype i = 0; i < settings->childKeys().size(); i++) {
-        if (settings->value(settings->childKeys().at(i)).toBool()) {
-            currentConfiguration = settings->childKeys().at(i);
-            break;
-        }
-    }
-    settings->endGroup();
+// void MainWindow::chooseVehicle(QAction *action) {
+//     currentVehicle = action->text();
+//     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
+//     for (qsizetype i = 0; i < settings->childKeys().size(); i++) {
+//         if (settings->value(settings->childKeys().at(i)).toBool()) {
+//             currentConfiguration = settings->childKeys().at(i);
+//             break;
+//         }
+//     }
+//     settings->endGroup();
 
-    settings->setValue("currentVehicle", currentVehicle);
-    settings->setValue("currentConfiguration", currentConfiguration);
-    emit updateVehicle();
-}
+//     settings->setValue("currentVehicle", currentVehicle);
+//     settings->setValue("currentConfiguration", currentConfiguration);
+//     emit updateVehicle();
+// }
 
-void MainWindow::chooseConfiguration(QAction *action) {
-    currentConfiguration = action->text();
-    settings->setValue("currentConfiguration", currentConfiguration);
-    updateVehicleConfigurationMenu();
-}
+// void MainWindow::chooseConfiguration(QAction *action) {
+//     currentConfiguration = action->text();
+//     settings->setValue("currentConfiguration", currentConfiguration);
+//     updateVehicleConfigurationMenu();
+// }
 
 void MainWindow::fullScreenKey() {
     if (QMainWindow::windowState() == Qt::WindowFullScreen) {
@@ -155,46 +161,46 @@ void MainWindow::fullScreenKey() {
     }
 }
 
-void MainWindow::updateVehiclesMenu() {
-    if (!currentVehicle.isEmpty()) {
-        if (!menu_choose_vehicle->isEmpty())
-            menu_choose_vehicle->clear();
-        settings->beginGroup("vehicle");
-        for (auto &key: settings->childGroups()) {
-            auto *vehicle = new QAction(key);
-            if (key == currentVehicle) {
-                QFont f = vehicle->font();
-                f.setBold(true);
-                vehicle->setFont(f);
-                menu_choose_vehicle->addAction(vehicle);
-            } else
-                menu_choose_vehicle->addAction(vehicle);
-        }
-        settings->endGroup();
-    }
-    settings->sync();
-//    qDebug() << currentVehicle;
-    updateVehicleConfigurationMenu();
-}
+// void MainWindow::updateVehiclesMenu() {
+//     if (!currentVehicle.isEmpty()) {
+//         if (!menu_choose_vehicle->isEmpty())
+//             menu_choose_vehicle->clear();
+//         settings->beginGroup("vehicle");
+//         for (auto &key: settings->childGroups()) {
+//             auto *vehicle = new QAction(key);
+//             if (key == currentVehicle) {
+//                 QFont f = vehicle->font();
+//                 f.setBold(true);
+//                 vehicle->setFont(f);
+//                 menu_choose_vehicle->addAction(vehicle);
+//             } else
+//                 menu_choose_vehicle->addAction(vehicle);
+//         }
+//         settings->endGroup();
+//     }
+//     settings->sync();
+// //    qDebug() << currentVehicle;
+//     updateVehicleConfigurationMenu();
+// }
 
-void MainWindow::updateVehicleConfigurationMenu() {
-    menu_choose_configuration->clear();
-    settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
-    for (qsizetype i = 0; i < settings->childKeys().size(); i++) {
-        if (settings->value(settings->childKeys().at(i)).toBool()) {
-            QAction *configuration = new QAction(settings->childKeys().at(i));
-            if (settings->childKeys().at(i) == currentConfiguration) {
-                QFont f = configuration->font();
-                f.setBold(true);
-                configuration->setFont(f);
-                menu_choose_configuration->addAction(configuration);
-            } else
-                menu_choose_configuration->addAction(configuration);
-        }
-    }
-    settings->endGroup();
-//    qDebug() << currentConfiguration;
-}
+// void MainWindow::updateVehicleConfigurationMenu() {
+//     menu_choose_configuration->clear();
+//     settings->beginGroup("vehicle/" + currentVehicle + "/configuration");
+//     for (qsizetype i = 0; i < settings->childKeys().size(); i++) {
+//         if (settings->value(settings->childKeys().at(i)).toBool()) {
+//             QAction *configuration = new QAction(settings->childKeys().at(i));
+//             if (settings->childKeys().at(i) == currentConfiguration) {
+//                 QFont f = configuration->font();
+//                 f.setBold(true);
+//                 configuration->setFont(f);
+//                 menu_choose_configuration->addAction(configuration);
+//             } else
+//                 menu_choose_configuration->addAction(configuration);
+//         }
+//     }
+//     settings->endGroup();
+// //    qDebug() << currentConfiguration;
+// }
 
 void MainWindow::checkFile(QString filename) {
     QFile file(filename);

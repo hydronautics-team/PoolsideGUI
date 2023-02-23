@@ -20,9 +20,8 @@
 #include "ui_mainwindow.h"
 
 #include "UV/iuserinterfacedata.h"
-#include "VehicleWizard/vehiclewizard.h"
-#include "CommunicationSettings/SerialClient.h"
 #include "CommunicationSettings/UdpClient.h"
+#include "CommunicationSettings/SerialClient.h"
 //#include "ControlSettings/ControlWindow.h"
 //#include "ControlSettings/Control.h"
 #include "ControlSettings/Joystick.h"
@@ -57,7 +56,7 @@ private:
     StabilizationWindow stabilizationWindow;
 //    ControlWindow controlWindow;
     ThrusterWindow thrusterWindow;
-    VehicleWizard wizard;
+    // VehicleWizard wizard;
     QString settingsFile;
     QSettings *settings;
     QString currentVehicle;

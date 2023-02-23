@@ -131,14 +131,3 @@ void SerialClient::changeThrusterToNext() {
         break;
     }
 }
-
-//void SerialClient::changeControlContourToNext() {
-//    for (int i = interface->getCurrentControlContour(); i < interface->getControlContourAmount(); i++) {
-//        if (i == interface->getControlContourAmount() - 1) {
-//            i = -1;
-//        }
-//
-//        interface->changeCurrentControlContour(i + 1);
-//        break;
-//    }
-//}

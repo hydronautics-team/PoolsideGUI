@@ -41,3 +41,4 @@ CMakeLists.txt.user*
 
 build
 .vscode
+.editorconfig

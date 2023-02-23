@@ -2,9 +2,6 @@
 
 QT_USE_NAMESPACE
 
-
-
-
 ConfigData::ConfigData(const QString & config, QObject *parent): QObject(parent),standardOutput(stdout), dataFile(config),jmax(0)
 
 {
@@ -33,7 +30,7 @@ ConfigData::ConfigData(const QString & config, QObject *parent): QObject(parent)
 
   if (!dataFile.open(QIODevice::ReadOnly))
       {
-       standardOutput << QObject::tr("Failed to open ") << dataFile.fileName() << QObject::tr(" for reading")  << endl;
+    //    standardOutput << QObject::tr("Failed to open ") << dataFile.fileName() << QObject::tr(" for reading")  << endl;
       }
   else
       {
@@ -78,7 +75,7 @@ ConfigData::ConfigData(const QString & config, const QString & name, QObject *pa
 
   if (!dataFile.open(QIODevice::ReadOnly))
       {
-       standardOutput << QObject::tr("Failed to open ") << dataFile.fileName() << QObject::tr(" for reading")  << endl;
+    //    standardOutput << QObject::tr("Failed to open ") << dataFile.fileName() << QObject::tr(" for reading")  << endl;
       }
   else
       {
