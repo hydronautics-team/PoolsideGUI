@@ -485,7 +485,7 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_10">
          <item>
-          <widget class="QProgressBar" name="depthBar">
+          <widget class="QProgressBar" name="progressBar_Depth">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -496,7 +496,7 @@
             <number>10</number>
            </property>
            <property name="value">
-            <number>0</number>
+            <number>3</number>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -505,7 +505,7 @@
             <enum>Qt::Vertical</enum>
            </property>
            <property name="invertedAppearance">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="textDirection">
             <enum>QProgressBar::TopToBottom</enum>
@@ -516,7 +516,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="depthLabel">
+          <widget class="QLabel" name="label_BarDepth">
            <property name="text">
             <string>0</string>
            </property>
@@ -547,7 +547,7 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_11">
          <item>
-          <widget class="QProgressBar" name="pitchBar">
+          <widget class="QProgressBar" name="progressBar_Pitch">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -572,7 +572,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="pitchLabel">
+          <widget class="QLabel" name="label_BarPitch">
            <property name="text">
             <string>0</string>
            </property>
@@ -739,28 +739,28 @@
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_20">
              <item>
-              <widget class="QCheckBox" name="checkBoxStabilizeRoll">
+              <widget class="QCheckBox" name="checkBox_StabilizeRoll">
                <property name="text">
                 <string>Stabilize Roll</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBoxStabilizePitch">
+              <widget class="QCheckBox" name="checkBox_StabilizePitch">
                <property name="text">
                 <string>Stabilize Pitch</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBoxStabilizeYaw">
+              <widget class="QCheckBox" name="checkBox_StabilizeYaw">
                <property name="text">
                 <string>Stabilize Yaw</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBoxStabilizeDepth">
+              <widget class="QCheckBox" name="checkBox_StabilizeDepth">
                <property name="text">
                 <string>Stabilize Depth</string>
                </property>
@@ -771,23 +771,7 @@
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_21">
              <item>
-              <widget class="QPushButton" name="pushButtonJetsonOnOff">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Jetson ON</string>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButtonResetIMU">
+              <widget class="QPushButton" name="pushButton_ResetIMU">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
                  <horstretch>0</horstretch>
@@ -800,20 +784,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButtonStartQualification">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Start qualification</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButtonReconnectROV">
+              <widget class="QPushButton" name="pushButton_ReconnectROV">
                <property name="text">
                 <string>Reconnect ROV</string>
                </property>
@@ -945,130 +916,42 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_8">
            <item>
-            <widget class="QLabel" name="label_march">
+            <widget class="QLabel" name="label_ImpactMarch">
              <property name="text">
               <string>0</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_lag">
+            <widget class="QLabel" name="label_ImpactLag">
              <property name="text">
               <string>0</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_depth">
+            <widget class="QLabel" name="label_ImpactDepth">
              <property name="text">
               <string>0</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_yaw">
+            <widget class="QLabel" name="label_ImpactYaw">
              <property name="text">
               <string>0</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_roll">
+            <widget class="QLabel" name="label_ImpactRoll">
              <property name="text">
               <string>0</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_pitch">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QGroupBox" name="groupBox_6">
-        <property name="title">
-         <string>Telemetry</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_8">
-         <property name="leftMargin">
-          <number>3</number>
-         </property>
-         <property name="topMargin">
-          <number>3</number>
-         </property>
-         <property name="rightMargin">
-          <number>3</number>
-         </property>
-         <property name="bottomMargin">
-          <number>3</number>
-         </property>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <widget class="QLabel" name="label_9">
-             <property name="text">
-              <string>Roll</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_11">
-             <property name="text">
-              <string>Yaw</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_12">
-             <property name="text">
-              <string>Depth</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_10">
-             <property name="text">
-              <string>Pitch</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <item>
-            <widget class="QLabel" name="sensorsRollLabel">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="sensorsYawLabel">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="sensorsDepthLabel">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="sensorsPitchLabel">
+            <widget class="QLabel" name="label_ImpactPitch">
              <property name="text">
               <string>0</string>
              </property>
@@ -1126,7 +1009,7 @@
            <item>
             <widget class="QLabel" name="label_4">
              <property name="text">
-              <string>4</string>
+              <string>Dev</string>
              </property>
             </widget>
            </item>
@@ -1135,28 +1018,116 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
-            <widget class="QLabel" name="label_grabber">
+            <widget class="QLabel" name="label_DevicesGrabber">
              <property name="text">
               <string>0</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_grabber_rotation">
+            <widget class="QLabel" name="label_DevicesGrabberRotation">
              <property name="text">
               <string>0</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_tilt">
+            <widget class="QLabel" name="label_DevicesTilt">
              <property name="text">
               <string>0</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_8">
+            <widget class="QLabel" name="label_DevicesDev">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox_6">
+        <property name="title">
+         <string>Telemetry</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <property name="leftMargin">
+          <number>3</number>
+         </property>
+         <property name="topMargin">
+          <number>3</number>
+         </property>
+         <property name="rightMargin">
+          <number>3</number>
+         </property>
+         <property name="bottomMargin">
+          <number>3</number>
+         </property>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>Roll</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>Pitch</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_11">
+             <property name="text">
+              <string>Yaw</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_12">
+             <property name="text">
+              <string>Depth</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <item>
+            <widget class="QLabel" name="label_TelemetryRoll">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_TelemetryPitch">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_TelemetryYaw">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_TelemetryDepth">
              <property name="text">
               <string>0</string>
              </property>
@@ -1180,174 +1151,37 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuBarControlBox">
+   <widget class="QMenu" name="menuBar_Settings">
     <property name="title">
-     <string>Пульт</string>
+     <string>Настройка</string>
     </property>
-    <addaction name="action_config_controls"/>
-    <addaction name="separator"/>
-    <addaction name="action_config_view"/>
+    <addaction name="action_SettingsThruster"/>
+    <addaction name="action_SettingsControlSystem"/>
    </widget>
-   <widget class="QMenu" name="menuBarOther">
+   <widget class="QMenu" name="menuBar_Other">
     <property name="title">
      <string>Прочее</string>
     </property>
-    <addaction name="action_about_program"/>
     <addaction name="separator"/>
-    <addaction name="action_other_settings"/>
     <addaction name="separator"/>
-    <addaction name="action_full_screen"/>
+    <addaction name="action_OtherFullScreen"/>
    </widget>
-   <widget class="QMenu" name="menuBarVehicleName">
-    <property name="title">
-     <string>Аппарат</string>
-    </property>
-    <widget class="QMenu" name="menu_choose_configuration">
-     <property name="title">
-      <string>Конфигурация</string>
-     </property>
-    </widget>
-    <widget class="QMenu" name="menu_choose_vehicle">
-     <property name="title">
-      <string>Выбор аппарата</string>
-     </property>
-    </widget>
-    <addaction name="action_create_vehicle"/>
-    <addaction name="separator"/>
-    <addaction name="menu_choose_vehicle"/>
-    <addaction name="menu_choose_configuration"/>
-    <addaction name="separator"/>
-    <addaction name="action_config_thrusters"/>
-    <addaction name="action_config_coef"/>
-    <addaction name="action_config_com"/>
-   </widget>
-   <addaction name="menuBarVehicleName"/>
-   <addaction name="menuBarControlBox"/>
-   <addaction name="menuBarOther"/>
+   <addaction name="menuBar_Settings"/>
+   <addaction name="menuBar_Other"/>
   </widget>
-  <action name="action_config_RS">
+  <action name="action_SettingsThruster">
    <property name="text">
-    <string>RS485</string>
+    <string>ВМА</string>
    </property>
   </action>
-  <action name="action_config_thrusters">
+  <action name="action_SettingsControlSystem">
    <property name="text">
-    <string>Винтомоторы</string>
+    <string>СУ</string>
    </property>
   </action>
-  <action name="action_3">
+  <action name="action_OtherFullScreen">
    <property name="text">
-    <string>Управление</string>
-   </property>
-  </action>
-  <action name="action_4">
-   <property name="text">
-    <string>Управление</string>
-   </property>
-  </action>
-  <action name="action_5">
-   <property name="text">
-    <string>Оформление</string>
-   </property>
-  </action>
-  <action name="action_config_coef">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Стабилизация</string>
-   </property>
-  </action>
-  <action name="action_10">
-   <property name="text">
-    <string>Телеуправляемый</string>
-   </property>
-  </action>
-  <action name="action_11">
-   <property name="text">
-    <string>Автономный</string>
-   </property>
-  </action>
-  <action name="action_enable_ROV">
-   <property name="checkable">
-    <bool>false</bool>
-   </property>
-   <property name="checked">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Телеуправляемый</string>
-   </property>
-  </action>
-  <action name="action_enable_AUV">
-   <property name="checkable">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Автономный</string>
-   </property>
-  </action>
-  <action name="action_config_controls">
-   <property name="text">
-    <string>Управление</string>
-   </property>
-  </action>
-  <action name="action_config_view">
-   <property name="text">
-    <string>Вид</string>
-   </property>
-  </action>
-  <action name="action_about_program">
-   <property name="text">
-    <string>О программе</string>
-   </property>
-  </action>
-  <action name="action_enable_upyr">
-   <property name="text">
-    <string>УПЫРЬ</string>
-   </property>
-  </action>
-  <action name="action_enable_cousteau">
-   <property name="text">
-    <string>КУСТО III</string>
-   </property>
-  </action>
-  <action name="action_other_settings">
-   <property name="text">
-    <string>Настройки</string>
-   </property>
-  </action>
-  <action name="action_create_vehicle">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Новый аппарат</string>
-   </property>
-  </action>
-  <action name="actionSSH">
-   <property name="text">
-    <string>SSH</string>
-   </property>
-  </action>
-  <action name="action_config_SSH">
-   <property name="text">
-    <string>SSH</string>
-   </property>
-  </action>
-  <action name="actionsdf">
-   <property name="text">
-    <string>sdf</string>
-   </property>
-  </action>
-  <action name="action_config_com">
-   <property name="text">
-    <string>Связь</string>
-   </property>
-  </action>
-  <action name="action_full_screen">
-   <property name="text">
-    <string>Полноэкранный режим</string>
+    <string>Полноэкранный режим (Ctrl + F)</string>
    </property>
   </action>
  </widget>
