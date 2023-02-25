@@ -1,15 +1,6 @@
 #ifndef UV_STABILIZATION_H
 #define UV_STABILIZATION_H
 
-enum STABILIZATION_CONTOURS {
-    CONTOUR_DEPTH = 0,
-    CONTOUR_MARCH,
-    CONTOUR_LAG,
-    CONTOUR_YAW,
-    CONTOUR_ROLL,
-    CONTOUR_PITCH
-};
-
 struct UV_StabilizationConstants {
     float pJoyUnitCast;
     float pSpeedDyn;

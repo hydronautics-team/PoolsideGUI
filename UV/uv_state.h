@@ -8,6 +8,35 @@
 #include "uv_thruster.h"
 #include "uv_controlcontour.h"
 
+enum e_packageMode {
+    PACKAGE_NORMAL,
+    PACKAGE_CONFIG,
+    PACKAGE_DIRECT,
+};
+
+enum e_Countour {
+    CONTOUR_DEPTH,
+    CONTOUR_MARCH,
+    CONTOUR_LAG,
+    CONTOUR_YAW,
+    CONTOUR_ROLL,
+    CONTOUR_PITCH,
+};
+
+enum e_Connection {
+    CONNECTION_UDP,
+    CONNECTION_SERIAL,
+};
+
+enum e_Device {
+    DEVICE_GRAB,
+    DEVICE_GRAB_ROTATE,
+    DEVICE_TILT,
+    DEVICE_DEV1,
+    DEVICE_DEV2,
+    DEVICE_DEV3
+};
+
 struct ImuData {
     ImuData();
 
@@ -36,43 +65,32 @@ public:
     UV_State();
     ~UV_State();
 
-    // TODO: Replace this with dynamic arrays (later)
-    const static unsigned int devices_amount = 6;
-
     int thrusterAmount;
-
     void setThrusterAmount(int thrusterAmount);
     int getThrusterAmount();
 
     int controlContourAmount;
-
     void setControlContourAmount(int controlContourAmount);
     int getControlContourAmount();
 
-    // ControlWindow values
     ControlData control;
-
-    // IMU values
     ImuData imu;
 
-    // Auxiliar state values
-    double aux_inpressure;
+    UV_Device device[6];
+    UV_Thruster* thruster;
+    UV_ControlContour* controlContour;
 
-    // Devices
-    UV_Device device[devices_amount];
-
-    // Thrusters
-    UV_Thruster *thruster;
-
-    // Stabilization Contours
-    STABILIZATION_CONTOURS currentControlContour;
-    UV_ControlContour *controlContour;
+    e_Connection connectionMode;
+    e_packageMode packageMode;
 
     // Flags
-    bool resetImu;
+    bool stabRoll;
     bool stabYaw;
-    bool stabDepth;
     bool stabPitch;
+    bool stabDepth;
+
+    bool resetImu;
+    bool thrustersON;
 };
 
 #endif // UV_STATE_H

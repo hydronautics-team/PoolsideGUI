@@ -10,25 +10,7 @@ class UV_Device {
 public:
     UV_Device();
 
-    UV_Device(QString dev_name, unsigned int dev_id);
-
-    enum e_deviceSlots {
-        DEVICE_LIGHT = 0,
-        DEVICE_GRAB,
-        DEVICE_TILT,
-        DEVICE_GRAB_ROTATE,
-        DEVICE_DEV1,
-        DEVICE_DEV2
-    };
-
-    static unsigned int devices_number;
-
-    QString name;
-    unsigned int id;
-    unsigned int slot;
-
     double velocity;
-    double current;
 };
 
 #endif // UV_DEVICES_H
