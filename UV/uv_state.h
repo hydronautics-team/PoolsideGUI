@@ -52,12 +52,12 @@ struct ImuData {
 struct ControlData {
     ControlData();
 
-    double march;
-    double lag;
-    double depth;
-    double roll;
-    double pitch;
-    double yaw;
+    int16_t march;
+    int16_t lag;
+    int16_t depth;
+    int16_t roll;
+    int16_t pitch;
+    int16_t yaw;
 };
 
 class UV_State {
@@ -69,16 +69,14 @@ public:
     void setThrusterAmount(int thrusterAmount);
     int getThrusterAmount();
 
-    int controlContourAmount;
-    void setControlContourAmount(int controlContourAmount);
-    int getControlContourAmount();
-
     ControlData control;
     ImuData imu;
 
     UV_Device device[6];
     UV_Thruster* thruster;
-    UV_ControlContour* controlContour;
+    int currentThruster;
+    UV_ControlContour controlContour[6];
+    e_Countour currentControlContour;
 
     e_Connection connectionMode;
     e_packageMode packageMode;

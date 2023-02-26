@@ -5,6 +5,12 @@
 
 #include "ui_mainwindow.h"
 
+#include "UV/iuserinterfacedata.h"
+#include "CommunicationSettings/SerialClient.h"
+#include "CommunicationSettings/UdpClient.h"
+#include "ControlSettings/Joystick.h"
+#include "ControlSettings/Keyboard.h"
+
 class MainWindow: public QMainWindow, private Ui::MainWindow {
     Q_OBJECT
 

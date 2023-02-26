@@ -5,50 +5,29 @@
 #include <QByteArray>
 
 #include "ibasicdata.h"
-
-enum e_messageErrors {
-    MESSAGE_ERROR_ID_NOT_FOUND = 0
-};
-
-enum e_MessageTypes {
-    MESSAGE_NORMAL = 0,
-    MESSAGE_CONFIG,
-    MESSAGE_DIRECT
-};
+#include "uv_state.h"
 
 /** \brief Interface for accessing data in UV_State to form QByteArray messages
  *
  */
-class IServerData : public IBasicData {
+class IServerData: public IBasicData {
 public:
     IServerData();
 
-    QByteArray generateMessage(int message_type);
-    void parseMessage(QByteArray message, int message_type);
+    QByteArray generateMessage(e_packageMode packageMode);
+    void parseMessage(QByteArray message, e_packageMode packageMode);
 
-    void changeCurrentThruster(unsigned int slot);
+    void setCurrentThruster(int id);
     int getThrusterAmount();
-
     int getCurrentThruster();
 
-//    void changeCurrentControlContour(unsigned int slot);
-    int getControlContourAmount();
-
-    STABILIZATION_CONTOURS getCurrentControlContour();
-
-    void setFlashVmaSettings(bool FlashVmaSettings);
+    void setCurrentControlContour(e_Countour countour);
+    e_Countour getCurrentControlContour();
 
 private:
-    QDataStream *port;
-    unsigned int currentThruster = 0;
-//    unsigned int currentControlContour = 0;
-    bool flashVmaSettings = false;
-
-    /// Number of the thrusters in transfer protocol
-    static const uint8_t VmaAmount = 6;
-
-    /// Number of the devs in transfer protocol
-    static const uint8_t DevAmount = 6;
+    QDataStream* port;
+    int currentThruster = 0;
+    e_Countour currentControlContour = e_Countour(0);
 
     /** \brief Structure for storing and processing data from the STM32 normal request message protocol
      * Normal request message contains vehicle movement control data, devices control values and various flags
@@ -57,19 +36,15 @@ private:
     struct RequestNormalMessage {
         /// Type code for the normal message protocol
         const static uint8_t type = 0xA5;
-        uint8_t flags;
+        uint8_t flags; //stabilize_flags, thrusters_on, reset_imu
         int16_t march;
         int16_t lag;
         int16_t depth;
         int16_t roll;
         int16_t pitch;
         int16_t yaw;
-        int8_t dev[DevAmount];
-        int32_t lag_error;
-        uint8_t dev_flags;
-        uint8_t stabilize_flags;
-        uint8_t cameras;
-        uint8_t pc_reset;
+
+        int8_t dev[6];
         uint16_t checksum;
     };
 
@@ -81,23 +56,11 @@ private:
         float roll;
         float pitch;
         float yaw;
+        float depth;
 
         float rollSpeed;
         float pitchSpeed;
         float yawSpeed;
-
-        float depth;
-        float inpressure;
-
-        uint8_t dev_state;
-        int16_t leak_data;
-
-        uint16_t vma_current[VmaAmount];
-        uint16_t dev_current[DevAmount];
-
-        uint16_t vma_errors;
-        uint16_t dev_errors;
-        uint8_t pc_errors;
 
         uint16_t checksum;
     };
@@ -107,8 +70,9 @@ private:
      * Shore send requests and STM send responses
      */
     struct RequestConfigMessage {
-        /// Type code for the normal message protocol
+        /// Type code for the Config message protocol
         const static uint8_t type = 0x55;
+        uint8_t flags; //stabilize_flags, thrusters_on, reset_imu
 
         uint8_t contour;
 
@@ -150,19 +114,14 @@ private:
      * Shore send requests and STM send responses
      */
     struct ResponseConfigMessage {
-        uint8_t code;
-
         float roll;
         float pitch;
         float yaw;
-        float raw_yaw;
+        float depth;
 
         float rollSpeed;
         float pitchSpeed;
         float yawSpeed;
-
-        float pressure;
-        float in_pressure;
 
         float inputSignal;
         float speedSignal;
@@ -179,7 +138,6 @@ private:
         float posFiltered;
         float pid_iValue;
         float thrustersFiltered;
-
         float outputSignal;
 
         uint16_t checksum;
@@ -190,17 +148,17 @@ private:
      * Shore send requests and STM send responses
      */
     struct RequestDirectMessage {
-        /// Type code for the normal message protocol
+        /// Type code for the Direct message protocol
         const static uint8_t type = 0xAA;
 
-        uint8_t number;
         uint8_t id;
+        uint8_t slot;
 
         int8_t velocity;
 
         uint8_t reverse;
-        float kForward;
-        float kBackward;
+        int8_t kForward;
+        int8_t kBackward;
 
         int8_t sForward;
         int8_t sBackward;
@@ -213,9 +171,7 @@ private:
      * Shore send requests and STM send responses
      */
     struct ResponseDirectMessage {
-        uint8_t number;
-        uint8_t connection;
-        uint16_t current;
+        uint8_t id;
 
         uint16_t checksum;
     };
@@ -228,9 +184,9 @@ private:
     QByteArray generateConfigMessage();
     QByteArray generateDirectMessage();
 
-    void fillStructure(RequestNormalMessage &req);
-    void fillStructure(RequestConfigMessage &req);
-    void fillStructure(RequestDirectMessage &req);
+    void fillStructure(RequestNormalMessage& req);
+    void fillStructure(RequestConfigMessage& req);
+    void fillStructure(RequestDirectMessage& req);
 
     void pullFromStructure(ResponseNormalMessage res);
     void pullFromStructure(ResponseConfigMessage res);

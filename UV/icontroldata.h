@@ -2,6 +2,7 @@
 #define ICONTROLDATA_H
 
 #include "ibasicdata.h"
+#include "uv_state.h"
 
 class IControlData : public IBasicData {
 public:
@@ -15,7 +16,7 @@ public:
     void setRoll(double roll);
     void setPitch(double pitch);
     void setYaw(double yaw);
-    void setDeviceVelocity(int slot, double velocity);
+    void setDeviceVelocity(e_Device device, double velocity);
 };
 
 #endif // ICONTROLDATA_H

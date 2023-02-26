@@ -470,7 +470,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox_3">
+       <widget class="QGroupBox" name="groupBox_Depth">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -532,7 +532,7 @@
        <widget class="PicFrame" name="compassFrame" native="true"/>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox_5">
+       <widget class="QGroupBox" name="groupBox_Pitch">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -578,128 +578,6 @@
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QGroupBox" name="barGroupBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="title">
-         <string>Thrusters</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QProgressBar" name="thrusterBar0">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="thrusterBar1">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="thrusterBar2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="thrusterBar3">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="thrusterBar4">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="thrusterBar5">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="thrusterBar6">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="thrusterBar7">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="value">
-            <number>24</number>
            </property>
           </widget>
          </item>
@@ -784,11 +662,36 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_ReconnectROV">
+              <widget class="QCheckBox" name="checkBox_ThrustersON">
                <property name="text">
-                <string>Reconnect ROV</string>
+                <string>Thrusters ON</string>
                </property>
               </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_13">
+               <item>
+                <widget class="QRadioButton" name="radioButton_UDP">
+                 <property name="text">
+                  <string>UDP</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="radioButton_Serial">
+                 <property name="text">
+                  <string>Serial</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_ReconnectROV">
+                 <property name="text">
+                  <string>Reconnect ROV</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>
@@ -800,7 +703,7 @@
       <item>
        <widget class="QGroupBox" name="groupBox_ConnectionType">
         <property name="title">
-         <string>Connection Type</string>
+         <string>Package Mode</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -821,21 +724,21 @@
          <item row="0" column="0">
           <layout class="QVBoxLayout" name="verticalLayout_12">
            <item>
-            <widget class="QRadioButton" name="radioButton_ConnectionNormal">
+            <widget class="QRadioButton" name="radioButton_PackageNormal">
              <property name="text">
               <string>Normal</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioButton_ConnectionConfig">
+            <widget class="QRadioButton" name="radioButton_PackageConfig">
              <property name="text">
               <string>Config</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioButton_ConnectionDirect">
+            <widget class="QRadioButton" name="radioButton_PackageDirect">
              <property name="text">
               <string>Direct</string>
              </property>
@@ -995,7 +898,7 @@
            <item>
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>Grabber rotation</string>
+              <string>Grabber rot</string>
              </property>
             </widget>
            </item>

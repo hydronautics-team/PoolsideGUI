@@ -10,7 +10,7 @@ class UV_Device {
 public:
     UV_Device();
 
-    double velocity;
+    int8_t velocity;
 };
 
 #endif // UV_DEVICES_H

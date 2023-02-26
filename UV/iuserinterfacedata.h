@@ -2,19 +2,28 @@
 #define IUSERINTERFACEDATA_H
 
 #include "ibasicdata.h"
+#include "uv_state.h"
 
-class IUserInterfaceData : public IBasicData {
+class IUserInterfaceData: public IBasicData {
 public:
     IUserInterfaceData();
 
     ControlData getControlData();
     ImuData getImuData();
-    UV_Device getDeviceData(QString name);
-    UV_Thruster getThrusterData(QString name);
+    double getDeviceVelocity(e_Device device);
 
-    double getDeviceVelocity(int slot);
+    void setPackegeMode(e_packageMode value);
+    void setConnectionMode(e_Connection value);
 
-    void setResetImuValue(bool value);
+    void setStabRoll(bool value);
+    void setStabPitch(bool value);
+    void setStabYaw(bool value);
+    void setStabDepth(bool value);
+
+    void setResetImu(bool value);
+    void setThrustersON(bool value);
+    void setConnectionMode(e_Connection connectionMode);
+
 };
 
 #endif // IUSERINTERFACEDATA_H
