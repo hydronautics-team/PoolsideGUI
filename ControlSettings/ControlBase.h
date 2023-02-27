@@ -18,7 +18,7 @@ protected:
     QString device_name;
 
     enum e_actionTypes {
-        SET_MARCH = 0,
+        SET_MARCH,
         SET_LAG,
         SET_DEPTH,
         SET_ROLL,
