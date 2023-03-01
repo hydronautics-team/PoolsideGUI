@@ -57,13 +57,13 @@ class QPIConfig: public QFile
 public:
 	enum FileType {Config, XML};
 
-	QPIConfig(const QString & path, QIODevice::OpenMode mode, QPIConfig::FileType type);
-	QPIConfig(const QString & path, QIODevice::OpenMode mode = QIODevice::ReadWrite);
+	QPIConfig(const QString & path, QIODeviceBase::OpenMode mode, QPIConfig::FileType type);
+	QPIConfig(const QString & path, QIODeviceBase::OpenMode mode = QIODeviceBase::ReadWrite);
 	QPIConfig(const QString & path, QPIConfig::FileType type);
 	QPIConfig(QString * str, QPIConfig::FileType type = QPIConfig::Config);
 	~QPIConfig();
-	
-	void setFile(const QString & path, QIODevice::OpenMode mode = QIODevice::ReadWrite);
+
+	void setFile(const QString & path, QIODeviceBase::OpenMode mode = QIODeviceBase::ReadWrite);
 	void setString(QString * str);
 
 	class Entry;
@@ -140,7 +140,7 @@ public:
 		Entry & setValue(const QPoint & value) {setValue(QPoint2QString(value)); setType("p"); return *this;}
 		Entry & setValue(const QPointF & value) {setValue(QPointF2QString(value)); setType("v"); return *this;}
 		Entry & setValue(const QByteArray & value) {setValue(QByteArray2QString(value)); setType("s"); return *this;}
-		
+
 		Entry & getValue(const QString & vname, const QString & def = QString(), bool * exist = 0);
 		QPICONFIG_GET_VALUE
 
@@ -189,7 +189,7 @@ public:
 		QString delim;
 		int _line;
 	};
-	
+
 	Entry & getValue(const QString & vname, const QString & def = QString(), bool * exist = 0);
 	QPICONFIG_GET_VALUE
 
@@ -228,25 +228,25 @@ public:
 	QString getValue(uint number) {return entryByIndex(number)._value;}
 	QChar getType(uint number) {return entryByIndex(number)._type[0];}
 	QString getComment(uint number) {return entryByIndex(number)._comment;}
-	
+
 	QPIConfig::Entry & addEntry(const QString & name, const QString & value, const QString & type = "s", bool write = true, bool node = false);
 	void setName(uint number, const QString & name, bool write = true);
 	void setValue(uint number, const QString & value, bool write = true);
 	void setType(uint number, const QString & type, bool write = true);
 	void setComment(uint number, const QString & comment, bool write = true);
-	
+
 	void removeEntry(const QString & name, bool write = true);
 	void removeEntry(uint number, bool write = true);
-	
+
 	void clear();
 	void readAll();
 	void writeAll();
 	QString writeAllToString();
 	void readAllFromString(const QString & str);
-	
+
 	const QString & delimiter() const {return delim;}
 	void setDelimiter(const QString & d) {delim = d; setEntryDelim(&root, d); readAll();}
-	
+
 private:
 	QPIConfig(const QString & path, QStringList dirs);
 	void init();

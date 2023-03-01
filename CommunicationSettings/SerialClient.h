@@ -11,20 +11,20 @@ class SerialClient : public QThread {
 Q_OBJECT
 
 public:
-    SerialClient(e_MessageTypes connectionType);
+    SerialClient(e_packageMode connectionType);
     ~SerialClient();
 
     void run();
     int exec();
 
-    e_MessageTypes messageType;
+    e_packageMode messageType;
 
 signals:
     void error(QString err);
     void dataUpdated();
 
 public slots:
-    void changeSelectedConnectionType(e_MessageTypes connectionType);
+    void changeSelectedConnectionType(e_packageMode connectionType);
 
 private:
     QSerialPort *serialPort;

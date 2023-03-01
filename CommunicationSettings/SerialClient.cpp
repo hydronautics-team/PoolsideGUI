@@ -7,11 +7,11 @@
 
 const int MAX_COM_ID = 20;
 
-SerialClient::SerialClient(e_MessageTypes connectionType) {
+SerialClient::SerialClient(e_packageMode connectionType) {
     messageType = connectionType;
-//    qDebug() << connectionType;
-//    timeoutTimer = new QTimer();
-//    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
+    //    qDebug() << connectionType;
+    //    timeoutTimer = new QTimer();
+    //    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
 
     interface = new IServerData();
 }
@@ -30,7 +30,7 @@ bool SerialClient::portConnect(int port) {
 
     str.append(QString::number(port));
 
-    qDebug () << "COM_SERVER: Trying to open port " << str;
+    qDebug() << "COM_SERVER: Trying to open port " << str;
 
     serialPort = new QSerialPort(str);
     serialPort->setBaudRate(QSerialPort::BaudRate::Baud57600, QSerialPort::AllDirections);
@@ -39,11 +39,10 @@ bool SerialClient::portConnect(int port) {
     serialPort->setStopBits(QSerialPort::StopBits::OneStop);
     serialPort->setFlowControl(QSerialPort::FlowControl::NoFlowControl);
 
-    if (serialPort->open(QIODevice::ReadWrite)) {
+    if (serialPort->open(QIODeviceBase::ReadWrite)) {
         qDebug() << "COM_SERVER: port" << str << "successfully opened!";
     } else {
-//        qDebug() << " serial port openning error";
-//        qDebug() << serialPort->error();
+        qDebug() << serialPort->error();
         delete serialPort;
         return false;
     }
@@ -70,14 +69,14 @@ int SerialClient::exec() {
         if (messageType == MESSAGE_DIRECT) {
             changeThrusterToNext();
         }
-//        if (messageType == MESSAGE_CONFIG) {
-//            changeControlContourToNext();
-//        }
+        //        if (messageType == MESSAGE_CONFIG) {
+        //            changeControlContourToNext();
+        //        }
 
         msg = interface->generateMessage(messageType);
 
-//        qDebug() << "[SERIAL_CLIENT] Sending message type " << messageType << "||" << msg.size();
-//        qDebug() << msg;
+        //        qDebug() << "[SERIAL_CLIENT] Sending message type " << messageType << "||" << msg.size();
+        //        qDebug() << msg;
 
         serialPort->clear();
         serialPort->write(msg, msg.size());
@@ -92,22 +91,22 @@ int SerialClient::exec() {
             msg.clear();
             msg.push_back(serialPort->readAll());
 
-//            qDebug() << "[SERIAL_CLIENT] Message received. Bytes: " << msg.size();
+            //            qDebug() << "[SERIAL_CLIENT] Message received. Bytes: " << msg.size();
 
             bool exception_caught = false;
             try {
                 interface->parseMessage(msg, messageType);
             }
-            catch (const std::invalid_argument &error) {
-//                qDebug() << "[SERIAL_CLIENT] Parsing error: " << error.what();
+            catch (const std::invalid_argument& error) {
+                //                qDebug() << "[SERIAL_CLIENT] Parsing error: " << error.what();
                 exception_caught = true;
             }
             if (!exception_caught) {
                 //emit dataUpdated();
             }
         } else {
-//            qDebug() << "[SERIAL_CLIENT] Didn't receive answer for message " << messageType;
-//            qDebug() << "[SERIAL_CLIENT] Bytes available:" << bytesAvailiable;
+            //            qDebug() << "[SERIAL_CLIENT] Didn't receive answer for message " << messageType;
+            //            qDebug() << "[SERIAL_CLIENT] Bytes available:" << bytesAvailiable;
             serialPort->readAll();
         }
         emit dataUpdated();

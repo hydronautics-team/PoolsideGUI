@@ -28,7 +28,7 @@ ConfigData::ConfigData(const QString & config, QObject *parent): QObject(parent)
 
   list.clear();
 
-  if (!dataFile.open(QIODevice::ReadOnly))
+  if (!dataFile.open(QIODeviceBase::ReadOnly))
       {
     //    standardOutput << QObject::tr("Failed to open ") << dataFile.fileName() << QObject::tr(" for reading")  << endl;
       }
@@ -73,7 +73,7 @@ ConfigData::ConfigData(const QString & config, const QString & name, QObject *pa
 
   list.clear();
 
-  if (!dataFile.open(QIODevice::ReadOnly))
+  if (!dataFile.open(QIODeviceBase::ReadOnly))
       {
     //    standardOutput << QObject::tr("Failed to open ") << dataFile.fileName() << QObject::tr(" for reading")  << endl;
       }

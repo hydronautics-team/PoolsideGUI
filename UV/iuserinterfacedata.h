@@ -12,8 +12,8 @@ public:
     ImuData getImuData();
     double getDeviceVelocity(e_Device device);
 
-    void setPackegeMode(e_packageMode value);
-    void setConnectionMode(e_Connection value);
+    void setPackegeMode(e_packageMode packageMode);
+    void setConnectionMode(e_Connection connectionMode);
 
     void setStabRoll(bool value);
     void setStabPitch(bool value);
@@ -22,7 +22,6 @@ public:
 
     void setResetImu(bool value);
     void setThrustersON(bool value);
-    void setConnectionMode(e_Connection connectionMode);
 
 };
 

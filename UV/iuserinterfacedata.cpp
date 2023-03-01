@@ -35,9 +35,9 @@ double IUserInterfaceData::getDeviceVelocity(e_Device device) {
     return data;
 }
 
-void IUserInterfaceData::setPackegeMode(e_packageMode value) {
+void IUserInterfaceData::setPackegeMode(e_packageMode packageMode) {
     UVMutex.lock();
-    UVState.packageMode = value;
+    UVState.packageMode = packageMode;
     UVMutex.unlock();
 }
 
@@ -77,8 +77,8 @@ void IUserInterfaceData::setThrustersON(bool value) {
     UVMutex.unlock();
 }
 
-void IUserInterfaceData::setConnectionMode(e_Connection value) {
+void IUserInterfaceData::setConnectionMode(e_Connection connectionMode) {
     UVMutex.lock();
-    UVState.connectionMode = value;
+    UVState.connectionMode = connectionMode;
     UVMutex.unlock();
 }

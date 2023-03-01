@@ -21,7 +21,6 @@ public:
     int getThrusterAmount();
     int getCurrentThruster();
 
-    void setCurrentControlContour(e_Countour countour);
     e_Countour getCurrentControlContour();
 
 private:

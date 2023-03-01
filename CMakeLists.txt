@@ -7,11 +7,11 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt5 COMPONENTS Widgets SerialPort REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets SerialPort Network Test REQUIRED)
+find_package(QT NAMES Qt6 COMPONENTS REQUIRED Core Gui Widgets SerialPort Network)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Widgets SerialPort Network)
 
 include_directories("${PROJECT_SOURCE_DIR}/CommunicationSettings")
 include_directories("${PROJECT_SOURCE_DIR}/ControlSettings")
@@ -28,7 +28,6 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
 
-        CommunicationSettings/Connection.cpp
         CommunicationSettings/SerialClient.cpp
         CommunicationSettings/UdpClient.cpp
 
@@ -68,15 +67,13 @@ add_executable(${PROJECT_NAME}
         ${PROJECT_SOURCES}
 )
 
-
 target_link_libraries(${PROJECT_NAME} PRIVATE
         sfml-graphics sfml-window sfml-system
-        Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Widgets
-        Qt${QT_VERSION_MAJOR}::Network
         Qt${QT_VERSION_MAJOR}::SerialPort
+        Qt${QT_VERSION_MAJOR}::Network
 )
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS
