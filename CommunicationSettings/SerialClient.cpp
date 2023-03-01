@@ -77,20 +77,20 @@ int SerialClient::exec() {
             // qDebug() << "[SERIAL_CLIENT] Message received. Bytes: " << msg.size();
             bool exception_caught = false;
             try {
-                interface->parseMessage(msg, messageType);
+                interface->parseMessage(msg);
             }
             catch (const std::invalid_argument& error) {
                 // qDebug() << "[SERIAL_CLIENT] Parsing error: " << error.what();
                 exception_caught = true;
             }
             if (!exception_caught) {
-                emit dataUpdatedSerialClient();
+                // emit dataUpdatedSerialClient(); // TODO: попробовать вызывать dataUpdatedSerialClient() отсюда
             }
         } else {
             // qDebug() << "[SERIAL_CLIENT] Didn't receive answer for message " << messageType;
             // qDebug() << "[SERIAL_CLIENT] Bytes available:" << bytesAvailiable;
             serialPort->readAll();
         }
-        emit dataUpdated();
+        emit dataUpdatedSerialClient();
     }
 }

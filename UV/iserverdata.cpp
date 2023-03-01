@@ -11,24 +11,6 @@ void set_bit(uint8_t& byte, uint8_t bit, bool state);
 
 IServerData::IServerData()
     : IBasicData() {
-    currentThruster = 0;
-    currentControlContour = e_Countour(0);
-}
-
-void IServerData::setCurrentThruster(int id) {
-    if (id < UVState.getThrusterAmount()) {
-        currentThruster = id;
-    } else {
-        std::string error = "Max thruster slot is: " +
-            std::to_string(UVState.getThrusterAmount() - 1) +
-            ", you are trying to change to:" +
-            std::to_string(id);
-        throw std::invalid_argument(error);
-    }
-}
-
-int IServerData::getCurrentThruster() {
-    return currentThruster;
 }
 
 int IServerData::getThrusterAmount() {
@@ -254,8 +236,8 @@ void IServerData::fillStructure(RequestDirectMessage& req) {
     UVMutex.unlock();
 }
 
-void IServerData::parseMessage(QByteArray message, e_packageMode packageMode) {
-    switch (packageMode) {
+void IServerData::parseMessage(QByteArray message) {
+    switch (getCurrentpackageMode()) {
     case PACKAGE_NORMAL:
         parseNormalMessage(message);
         break;
@@ -380,22 +362,22 @@ void IServerData::pullFromStructure(ResponseConfigMessage res) {
     UVState.imu.pitchSpeed = res.pitchSpeed;
     UVState.imu.yawSpeed = res.yawSpeed;
 
-    UVState.controlContour[currentControlContour].state.inputSignal = res.inputSignal;
-    UVState.controlContour[currentControlContour].state.speedSignal = res.speedSignal;
-    UVState.controlContour[currentControlContour].state.posSignal = res.posSignal;
+    UVState.controlContour[UVState.currentControlContour].state.inputSignal = res.inputSignal;
+    UVState.controlContour[UVState.currentControlContour].state.speedSignal = res.speedSignal;
+    UVState.controlContour[UVState.currentControlContour].state.posSignal = res.posSignal;
 
-    UVState.controlContour[currentControlContour].state.joyUnitCasted = res.joyUnitCasted;
-    UVState.controlContour[currentControlContour].state.joy_iValue = res.joy_iValue;
-    UVState.controlContour[currentControlContour].state.posError = res.posError;
-    UVState.controlContour[currentControlContour].state.speedError = res.speedError;
-    UVState.controlContour[currentControlContour].state.dynSummator = res.dynSummator;
-    UVState.controlContour[currentControlContour].state.pidValue = res.pidValue;
-    UVState.controlContour[currentControlContour].state.posErrorAmp = res.posErrorAmp;
-    UVState.controlContour[currentControlContour].state.speedFiltered = res.speedFiltered;
-    UVState.controlContour[currentControlContour].state.posFiltered = res.posFiltered;
-    UVState.controlContour[currentControlContour].state.pid_iValue = res.pid_iValue;
-    UVState.controlContour[currentControlContour].state.thrustersFiltered = res.thrustersFiltered;
-    UVState.controlContour[currentControlContour].state.outputSignal = res.outputSignal;
+    UVState.controlContour[UVState.currentControlContour].state.joyUnitCasted = res.joyUnitCasted;
+    UVState.controlContour[UVState.currentControlContour].state.joy_iValue = res.joy_iValue;
+    UVState.controlContour[UVState.currentControlContour].state.posError = res.posError;
+    UVState.controlContour[UVState.currentControlContour].state.speedError = res.speedError;
+    UVState.controlContour[UVState.currentControlContour].state.dynSummator = res.dynSummator;
+    UVState.controlContour[UVState.currentControlContour].state.pidValue = res.pidValue;
+    UVState.controlContour[UVState.currentControlContour].state.posErrorAmp = res.posErrorAmp;
+    UVState.controlContour[UVState.currentControlContour].state.speedFiltered = res.speedFiltered;
+    UVState.controlContour[UVState.currentControlContour].state.posFiltered = res.posFiltered;
+    UVState.controlContour[UVState.currentControlContour].state.pid_iValue = res.pid_iValue;
+    UVState.controlContour[UVState.currentControlContour].state.thrustersFiltered = res.thrustersFiltered;
+    UVState.controlContour[UVState.currentControlContour].state.outputSignal = res.outputSignal;
 
     UVMutex.unlock();
 }
@@ -427,7 +409,7 @@ void IServerData::pullFromStructure(ResponseDirectMessage res) {
     // nothing
 }
 
-/* CRC16-CCITT algorithm */currentThruster
+/* CRC16-CCITT algorithm */
 uint16_t getCheckSumm16b(char* pcBlock, int len) {
     uint16_t crc = 0xFFFF;
     //int crc_fix = reinterpret_cast<int*>(&crc);

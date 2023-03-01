@@ -14,8 +14,8 @@ class IServerData: public IBasicData {
 public:
     IServerData();
 
-    QByteArray generateMessage(e_packageMode packageMode);
-    void parseMessage(QByteArray message, e_packageMode packageMode);
+    QByteArray generateMessage();
+    void parseMessage(QByteArray message);
     e_packageMode getCurrentpackageMode();
 
     void setCurrentThruster(int id);
