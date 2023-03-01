@@ -66,6 +66,7 @@ public:
     ~UV_State();
 
     int thrusterAmount;
+    void setThrusterNext();
     void setThrusterAmount(int thrusterAmount);
     int getThrusterAmount();
 
@@ -78,8 +79,8 @@ public:
     UV_ControlContour controlContour[6];
     e_Countour currentControlContour;
 
-    e_Connection connectionMode;
-    e_packageMode packageMode;
+    e_Connection currentConnectionMode;
+    e_packageMode currentPackageMode;
 
     // Flags
     bool stabRoll;

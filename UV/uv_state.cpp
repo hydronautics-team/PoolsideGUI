@@ -22,10 +22,10 @@ ControlData::ControlData() {
 UV_State::UV_State() {
     resetImu = false;
 
-    stabRoll    = false;
-    stabYaw     = false;
-    stabPitch   = false;
-    stabDepth   = false;
+    stabRoll = false;
+    stabYaw = false;
+    stabPitch = false;
+    stabDepth = false;
 }
 
 UV_State::~UV_State() {
@@ -48,4 +48,12 @@ void UV_State::setThrusterAmount(int thrusterAmount) {
 
 int UV_State::getThrusterAmount() {
     return thrusterAmount;
+}
+
+void UV_State::setThrusterNext() {
+    if (currentThruster < thrusterAmount - 1) {
+        currentThruster++;
+    } else {
+        currentThruster = 0;
+    }
 }

@@ -18,8 +18,7 @@ IServerData::IServerData()
 void IServerData::setCurrentThruster(int id) {
     if (id < UVState.getThrusterAmount()) {
         currentThruster = id;
-    }
-    else {
+    } else {
         std::string error = "Max thruster slot is: " +
             std::to_string(UVState.getThrusterAmount() - 1) +
             ", you are trying to change to:" +
@@ -53,7 +52,7 @@ e_Countour IServerData::getCurrentControlContour() {
 QByteArray IServerData::generateMessage(e_packageMode packageMode) {
     QByteArray formed;
     formed.clear();
-    switch (packageMode) {
+    switch (getCurrentpackageMode()) {
     case PACKAGE_NORMAL:
         formed = generateNormalMessage();
         break;
@@ -65,6 +64,14 @@ QByteArray IServerData::generateMessage(e_packageMode packageMode) {
         break;
     }
     return formed;
+}
+
+e_packageMode IServerData::getCurrentpackageMode() {
+    e_packageMode currentPackageMode;
+    UVMutex.lock();
+    currentPackageMode = UVState.currentPackageMode;
+    UVMutex.unlock();
+    return currentPackageMode;
 }
 
 QByteArray IServerData::generateNormalMessage() {
@@ -226,23 +233,23 @@ QByteArray IServerData::generateDirectMessage() {
 
 void IServerData::fillStructure(RequestDirectMessage& req) {
     UVMutex.lock();
+    UVState.setThrusterNext();
 
-    req.id = currentThruster;
-    req.slot = UVState.thruster[currentThruster].slot;
+    req.id = UVState.currentThruster;
+    req.slot = UVState.thruster[UVState.currentThruster].slot;
 
-    if (UVState.thruster[currentThruster].power == false) {
+    if (UVState.thruster[UVState.currentThruster].power == false) {
         req.velocity = 0;
-    }
-    else {
-        req.velocity = UVState.thruster[currentThruster].velocity;
+    } else {
+        req.velocity = UVState.thruster[UVState.currentThruster].velocity;
     }
 
-    req.reverse = UVState.thruster[currentThruster].reverse;
-    req.kForward = UVState.thruster[currentThruster].kForward;
-    req.kBackward = UVState.thruster[currentThruster].kBackward;
+    req.reverse = UVState.thruster[UVState.currentThruster].reverse;
+    req.kForward = UVState.thruster[UVState.currentThruster].kForward;
+    req.kBackward = UVState.thruster[UVState.currentThruster].kBackward;
 
-    req.sForward = UVState.thruster[currentThruster].sForward;
-    req.sBackward = UVState.thruster[currentThruster].sBackward;
+    req.sForward = UVState.thruster[UVState.currentThruster].sForward;
+    req.sBackward = UVState.thruster[UVState.currentThruster].sBackward;
 
     UVMutex.unlock();
 }
@@ -420,7 +427,7 @@ void IServerData::pullFromStructure(ResponseDirectMessage res) {
     // nothing
 }
 
-/* CRC16-CCITT algorithm */
+/* CRC16-CCITT algorithm */currentThruster
 uint16_t getCheckSumm16b(char* pcBlock, int len) {
     uint16_t crc = 0xFFFF;
     //int crc_fix = reinterpret_cast<int*>(&crc);
@@ -439,8 +446,7 @@ void set_bit(uint8_t& byte, uint8_t bit, bool state) {
     uint8_t value = 1;
     if (state) {
         byte = byte | (value << bit);
-    }
-    else {
+    } else {
         byte = byte & ~(value << bit);
     }
 }

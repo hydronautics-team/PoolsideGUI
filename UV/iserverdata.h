@@ -16,6 +16,7 @@ public:
 
     QByteArray generateMessage(e_packageMode packageMode);
     void parseMessage(QByteArray message, e_packageMode packageMode);
+    e_packageMode getCurrentpackageMode();
 
     void setCurrentThruster(int id);
     int getThrusterAmount();
@@ -25,8 +26,6 @@ public:
 
 private:
     QDataStream* port;
-    int currentThruster = 0;
-    e_Countour currentControlContour = e_Countour(0);
 
     /** \brief Structure for storing and processing data from the STM32 normal request message protocol
      * Normal request message contains vehicle movement control data, devices control values and various flags

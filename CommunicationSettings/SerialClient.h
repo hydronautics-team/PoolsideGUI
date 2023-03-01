@@ -6,33 +6,28 @@
 #include <QTimer>
 
 #include "UV/iserverdata.h"
+#include "UV/uv_state.h"
 
-class SerialClient : public QThread {
-Q_OBJECT
+class SerialClient: public QThread {
+    Q_OBJECT
 
 public:
-    SerialClient(e_packageMode connectionType);
+    SerialClient();
     ~SerialClient();
 
     void run();
     int exec();
 
-    e_packageMode messageType;
+    e_packageMode packageMode = e_packageMode::PACKAGE_NORMAL;
 
 signals:
     void error(QString err);
-    void dataUpdated();
-
-public slots:
-    void changeSelectedConnectionType(e_packageMode connectionType);
+    void dataUpdatedSerialClient();
 
 private:
-    QSerialPort *serialPort;
-    QTimer *timeoutTimer;
-    IServerData *interface;
-
-    void changeThrusterToNext();
-    void changeControlContourToNext();
+    QSerialPort* serialPort;
+    QTimer* timeoutTimer;
+    IServerData* interface;
 
     bool portConnect(int port);
 };

@@ -7,17 +7,13 @@
 
 const int MAX_COM_ID = 20;
 
-SerialClient::SerialClient(e_packageMode connectionType) {
-    messageType = connectionType;
-    //    qDebug() << connectionType;
-    //    timeoutTimer = new QTimer();
-    //    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(timerTick()));
-
+SerialClient::SerialClient() {
     interface = new IServerData();
 }
 
 SerialClient::~SerialClient() {
     delete serialPort;
+    delete interface;
 }
 
 bool SerialClient::portConnect(int port) {
@@ -27,7 +23,6 @@ bool SerialClient::portConnect(int port) {
 #else
     str = "COM";
 #endif
-
     str.append(QString::number(port));
 
     qDebug() << "COM_SERVER: Trying to open port " << str;
@@ -66,67 +61,36 @@ void SerialClient::run() {
 int SerialClient::exec() {
     while (1) {
         QByteArray msg;
-        if (messageType == MESSAGE_DIRECT) {
-            changeThrusterToNext();
-        }
-        //        if (messageType == MESSAGE_CONFIG) {
-        //            changeControlContourToNext();
-        //        }
 
-        msg = interface->generateMessage(messageType);
-
-        //        qDebug() << "[SERIAL_CLIENT] Sending message type " << messageType << "||" << msg.size();
-        //        qDebug() << msg;
+        msg = interface->generateMessage();
 
         serialPort->clear();
         serialPort->write(msg, msg.size());
         serialPort->flush();
 
-        serialPort->waitForReadyRead(100); //из-за этой строчки у Гриши появляется
-        // ASSERT: "bytesTransferred == writeChunkBuffer.size()" in file qserialport_win.cpp, line 503
-        // !!!!!!!!!!!!!это было из-за включенного Bluethuse на ноуте!!!!!!!!!!!___________
+        serialPort->waitForReadyRead(100); // возможны проблемы с этой строчке при включенном bluetooth
 
         long long bytesAvailiable = serialPort->bytesAvailable();
         if (bytesAvailiable > 0) {
             msg.clear();
             msg.push_back(serialPort->readAll());
-
-            //            qDebug() << "[SERIAL_CLIENT] Message received. Bytes: " << msg.size();
-
+            // qDebug() << "[SERIAL_CLIENT] Message received. Bytes: " << msg.size();
             bool exception_caught = false;
             try {
                 interface->parseMessage(msg, messageType);
             }
             catch (const std::invalid_argument& error) {
-                //                qDebug() << "[SERIAL_CLIENT] Parsing error: " << error.what();
+                // qDebug() << "[SERIAL_CLIENT] Parsing error: " << error.what();
                 exception_caught = true;
             }
             if (!exception_caught) {
-                //emit dataUpdated();
+                emit dataUpdatedSerialClient();
             }
         } else {
-            //            qDebug() << "[SERIAL_CLIENT] Didn't receive answer for message " << messageType;
-            //            qDebug() << "[SERIAL_CLIENT] Bytes available:" << bytesAvailiable;
+            // qDebug() << "[SERIAL_CLIENT] Didn't receive answer for message " << messageType;
+            // qDebug() << "[SERIAL_CLIENT] Bytes available:" << bytesAvailiable;
             serialPort->readAll();
         }
         emit dataUpdated();
-    }
-}
-
-void SerialClient::changeSelectedConnectionType(e_MessageTypes connectionType) {
-    messageType = connectionType;
-    if (connectionType == MESSAGE_NORMAL) {
-        interface->setFlashVmaSettings(true);
-    }
-}
-
-void SerialClient::changeThrusterToNext() {
-    for (int i = interface->getCurrentThruster(); i < interface->getThrusterAmount(); i++) {
-        if (i == interface->getThrusterAmount() - 1) {
-            i = -1;
-        }
-
-        interface->changeCurrentThruster(i + 1);
-        break;
     }
 }
