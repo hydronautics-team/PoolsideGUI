@@ -3,38 +3,36 @@
 
 #include "ControlBase.h"
 #include "SFML/Window.hpp"
-#include <QVector>
-#include <QDebug>
 
-class Joystick : public ControlBase {
-Q_OBJECT
+class Joystick: public ControlBase {
+    Q_OBJECT
 
 public:
-    Joystick(QString name, int update_time, unsigned int joy_id);
-
-    int getID();
-
-    float marchTrim, yawTrim;
-    float marchYawTrim = -0.2;
-    bool ignoreAxis = false;
-    int ignoreAxisID = 6;
+    Joystick(int updateTimeMs);
 
 public slots:
 
     void updateDevice();
 
 private:
-    int id;
-    QTimer *update_timer;
+    int id = 0;
+    QTimer* update_timer;
 
-    /* Axis processing table element structure */
     struct control_axis {
         sf::Joystick::Axis axis;
-        double multiplier;
         e_actionTypes action;
+        float multiplier;
+    };
+
+    struct control_buttons {
+        unsigned int button_id;
+        unsigned int button_idReverse;
+        e_actionTypes action;
+        float setterValue;
     };
 
     const static control_axis axis_table[];
+    const static control_buttons buttons_table[];
 };
 
 #endif // JOYSTICK_H

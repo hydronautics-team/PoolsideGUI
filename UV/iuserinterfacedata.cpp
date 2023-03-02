@@ -37,7 +37,7 @@ double IUserInterfaceData::getDeviceVelocity(e_Device device) {
 
 void IUserInterfaceData::setPackegeMode(e_packageMode packageMode) {
     UVMutex.lock();
-    UVState.packageMode = packageMode;
+    UVState.currentPackageMode = packageMode;
     UVMutex.unlock();
 }
 
