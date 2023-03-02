@@ -21,6 +21,22 @@ int IServerData::getThrusterAmount() {
     return thrusterAmount;
 }
 
+QString IServerData::getUdpHostAddress() {
+    QString udpHostAddress;
+    UVMutex.lock();
+    udpHostAddress = UVState.udpHostAddress;
+    UVMutex.unlock();
+    return udpHostAddress;
+}
+
+quint16 IServerData::getUdpHostPort() {
+    quint16 udpHostPort;
+    UVMutex.lock();
+    udpHostPort = UVState.udpHostPort;
+    UVMutex.unlock();
+    return udpHostPort;
+}
+
 e_Countour IServerData::getCurrentControlContour() {
     e_Countour currentControlContour;
 
@@ -31,10 +47,10 @@ e_Countour IServerData::getCurrentControlContour() {
     return currentControlContour;
 }
 
-QByteArray IServerData::generateMessage(e_packageMode packageMode) {
+QByteArray IServerData::generateMessage() {
     QByteArray formed;
     formed.clear();
-    switch (getCurrentpackageMode()) {
+    switch (getCurrentPackageMode()) {
     case PACKAGE_NORMAL:
         formed = generateNormalMessage();
         break;
@@ -48,7 +64,7 @@ QByteArray IServerData::generateMessage(e_packageMode packageMode) {
     return formed;
 }
 
-e_packageMode IServerData::getCurrentpackageMode() {
+e_packageMode IServerData::getCurrentPackageMode() {
     e_packageMode currentPackageMode;
     UVMutex.lock();
     currentPackageMode = UVState.currentPackageMode;
@@ -237,7 +253,7 @@ void IServerData::fillStructure(RequestDirectMessage& req) {
 }
 
 void IServerData::parseMessage(QByteArray message) {
-    switch (getCurrentpackageMode()) {
+    switch (getCurrentPackageMode()) {
     case PACKAGE_NORMAL:
         parseNormalMessage(message);
         break;
@@ -248,9 +264,7 @@ void IServerData::parseMessage(QByteArray message) {
         parseDirectMessage(message);
         break;
     default:
-        std::stringstream stream;
-        stream << "Incorrect message type: [" << packageMode << "]";
-        throw std::invalid_argument(stream.str());
+        throw std::invalid_argument("invalid PackageMode");
     }
 }
 

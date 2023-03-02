@@ -4,6 +4,7 @@
 #include "stdint.h"
 
 #include <QDebug>
+#include <QUdpSocket>
 #include "uv_device.h"
 #include "uv_thruster.h"
 #include "uv_controlcontour.h"
@@ -65,7 +66,7 @@ public:
     UV_State();
     ~UV_State();
 
-    int thrusterAmount;
+    int udpHostAddressthrusterAmount;
     void setThrusterNext();
     void setThrusterAmount(int thrusterAmount);
     int getThrusterAmount();
@@ -76,11 +77,15 @@ public:
     UV_Device device[6];
     UV_Thruster* thruster;
     int currentThruster;
+    int thrusterAmount;
     UV_ControlContour controlContour[6];
     e_Countour currentControlContour;
 
     e_Connection currentConnectionMode;
     e_packageMode currentPackageMode;
+
+    QString udpHostAddress;
+    quint16 udpHostPort;
 
     // Flags
     bool stabRoll;

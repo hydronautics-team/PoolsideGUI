@@ -16,11 +16,11 @@ public:
 
     QByteArray generateMessage();
     void parseMessage(QByteArray message);
-    e_packageMode getCurrentpackageMode();
+    e_packageMode getCurrentPackageMode();
 
-    void setCurrentThruster(int id);
     int getThrusterAmount();
-    int getCurrentThruster();
+    QString getUdpHostAddress();
+    quint16 getUdpHostPort();
 
     e_Countour getCurrentControlContour();
 

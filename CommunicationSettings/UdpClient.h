@@ -3,13 +3,14 @@
 
 #include <QThread>
 #include <QUdpSocket>
+#include <QNetworkDatagram>
 #include <QTimer>
-#include <QString>
+#include <sstream>
 
 #include "UV/iserverdata.h"
 
-class UdpClient : public QThread {
-Q_OBJECT
+class UdpClient: public QThread {
+    Q_OBJECT
 
 public:
     UdpClient();
@@ -22,19 +23,13 @@ signals:
     void dataUpdated();
 
 private:
-    QUdpSocket *udpSocket;
-    IServerData *uv_interface;
-    QTimer *timeoutTimer;
-
-    int messageType;
-
-    QString udpHostAddress;
-    quint64 udpHostPort;
+    QUdpSocket* udpSocket;
+    IServerData* uv_interface;
+    QTimer* timeoutTimer;
 
     void connectToHost();
 
 private slots:
-
     void readPendingDatagrams();
 };
 

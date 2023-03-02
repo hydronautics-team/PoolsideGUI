@@ -79,6 +79,6 @@ void IUserInterfaceData::setThrustersON(bool value) {
 
 void IUserInterfaceData::setConnectionMode(e_Connection connectionMode) {
     UVMutex.lock();
-    UVState.connectionMode = connectionMode;
+    UVState.currentConnectionMode = connectionMode;
     UVMutex.unlock();
 }
