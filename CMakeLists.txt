@@ -13,8 +13,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 COMPONENTS REQUIRED Core Gui Widgets SerialPort Network)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Widgets SerialPort Network)
 
-include_directories("${PROJECT_SOURCE_DIR}/CommunicationSettings")
-include_directories("${PROJECT_SOURCE_DIR}/ControlSettings")
+include_directories("${PROJECT_SOURCE_DIR}/Communication")
+include_directories("${PROJECT_SOURCE_DIR}/Control")
 include_directories("${PROJECT_SOURCE_DIR}/KX_Pult")
 include_directories("${PROJECT_SOURCE_DIR}/PicFrame")
 include_directories("${PROJECT_SOURCE_DIR}/StabilizationSettings")
@@ -28,12 +28,12 @@ set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
 
-        CommunicationSettings/SerialClient.cpp
-        CommunicationSettings/UdpClient.cpp
+        Communication/SerialClient.cpp
+        Communication/UdpClient.cpp
 
-        ControlSettings/ControlBase.cpp
-        ControlSettings/Joystick.cpp
-        ControlSettings/Keyboard.cpp
+        Control/ControlBase.cpp
+        Control/Joystick.cpp
+        Control/Keyboard.cpp
 
         KX_Pult/configdata.cpp
         KX_Pult/kx_protocol.cpp
