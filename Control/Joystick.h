@@ -12,7 +12,7 @@ public:
 
 public slots:
 
-    void updateDevice();streamingstreaming
+    void updateDevice();
 
 private:
     int id = 0;

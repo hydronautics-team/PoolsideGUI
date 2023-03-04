@@ -160,12 +160,6 @@ QByteArray IServerData::generateConfigMessage() {
     stream << req.pThrustersMin;
     stream << req.pThrustersMax;
 
-    stream << req.thrustersFilterT;
-    stream << req.thrustersFilterK;
-
-    stream << req.sOutSummatorMax;
-    stream << req.sOutSummatorMin;
-
     uint16_t checksum = getCheckSumm16b(msg.data(), msg.size());
     stream << checksum;
 
@@ -196,10 +190,6 @@ void IServerData::fillStructure(RequestConfigMessage& req) {
     req.pid_iMin = UVState.controlContour[currentControlContour].constant.pid_iMin;
     req.pThrustersMin = UVState.controlContour[currentControlContour].constant.pThrustersMin;
     req.pThrustersMax = UVState.controlContour[currentControlContour].constant.pThrustersMax;
-    req.thrustersFilterT = UVState.controlContour[currentControlContour].constant.thrustersFilterT;
-    req.thrustersFilterK = UVState.controlContour[currentControlContour].constant.thrustersFilterK;
-    req.sOutSummatorMax = UVState.controlContour[currentControlContour].constant.sOutSummatorMax;
-    req.sOutSummatorMin = UVState.controlContour[currentControlContour].constant.sOutSummatorMin;
 
     UVMutex.unlock();
 }
@@ -303,14 +293,14 @@ void IServerData::parseNormalMessage(QByteArray msg) {
 void IServerData::pullFromStructure(ResponseNormalMessage res) {
     UVMutex.lock();
 
-    UVState.imu.roll = static_cast<double>(res.roll);
-    UVState.imu.pitch = static_cast<double>(res.pitch);
-    UVState.imu.yaw = static_cast<double>(res.yaw);
-    UVState.imu.depth = static_cast<double>(res.depth);
+    UVState.imu.roll = res.roll;
+    UVState.imu.pitch = res.pitch;
+    UVState.imu.yaw = res.yaw;
+    UVState.imu.depth = res.depth;
 
-    UVState.imu.rollSpeed = static_cast<double>(res.rollSpeed);
-    UVState.imu.pitchSpeed = static_cast<double>(res.pitchSpeed);
-    UVState.imu.yawSpeed = static_cast<double>(res.yawSpeed);
+    UVState.imu.rollSpeed = res.rollSpeed;
+    UVState.imu.pitchSpeed = res.pitchSpeed;
+    UVState.imu.yawSpeed = res.yawSpeed;
 
     UVMutex.unlock();
 }

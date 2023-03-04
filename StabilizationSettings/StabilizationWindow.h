@@ -3,21 +3,18 @@
 
 #include <QWidget>
 #include <QDebug>
-#include <string>
 #include <QTimer>
 
-
+#include <string>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 
-#include "UV/ituningdata.h"
 #include "Utilitis/json.h"
-
 #include "UV/ituningdata.h"
 
-#include "KX_Pult/kx_protocol.h"
-#include "KX_Pult/qkx_coeffs.h"
+// #include "KX_Pult/kx_protocol.h"
+// #include "KX_Pult/qkx_coeffs.h"
 
 using json = nlohmann::json;
 
@@ -25,43 +22,48 @@ namespace Ui {
     class StabilizationWindow;
 }
 
-class StabilizationWindow : public QWidget {
-Q_OBJECT
+class StabilizationWindow: public QWidget {
+    Q_OBJECT
 
 public:
-    explicit StabilizationWindow(QWidget *parent = nullptr);
+    explicit StabilizationWindow(QWidget* parent = nullptr);
 
-    ~StabilizationWindow();
+    // ~StabilizationWindow();
 
     QString jsonName;
 
-    int controlContour_amount;
-    STABILIZATION_CONTOURS currentContour;
-    UV_StabilizationConstants *ConstantsControlContour;
-    UV_StabilizationState *StateControlContour;
+    e_Countour currentContour;
+    UV_StabilizationConstants ConstantsControlContour[6];
+    UV_StabilizationState StateControlContour[6];
     std::ifstream file;
 
 private:
-    QTimer *updateStabilizationState;
     json allStabilizationJson;
 
     void createDefaultStabilizationJson();
-    void setUV_ControlContour(int number, json StabilizationJson);
+    void saveToJsonFile();
 
+    void getConstantsFromJson();
 
-    Ui::StabilizationWindow *ui;
+    Ui::StabilizationWindow* ui;
     ITuningData interface;
 
-    x_protocol *X_Protocol;
-
+    // x_protocol* X_Protocol;
 
 private slots:
-    void updateStabilizationStateUi();
-    void updateVariables_KX();
-    void saveToJsonFile();
-    void ContourChanged();
-    void ContourEdited();
+    // void updateVariables_KX();
 
+    void ContourChangedYaw();
+    void ContourChangedRoll();
+    void ContourChangedPitch();
+    void ContourChangedDepth();
+    void ContourChangedMarch();
+    void ContourChangedLag();
+
+    void FillUiConstants();
+    void FillUiStates();
+
+    void ContourEdited();
 };
 
 #endif // STABILIZATIONSETTINGS_H

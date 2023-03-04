@@ -3,7 +3,6 @@
 
 #include <QTimer>
 #include "UV/icontroldata.h"
-#include "qmath.h"
 
 class ControlBase: public QObject {
     Q_OBJECT

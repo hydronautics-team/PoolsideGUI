@@ -35,9 +35,6 @@ UV_State::~UV_State() {
     if (thruster != nullptr) {
         delete[] thruster;
     }
-    if (controlContour != nullptr) {
-        delete[] controlContour;
-    }
 }
 
 void UV_State::setThrusterAmount(int thrusterAmount) {

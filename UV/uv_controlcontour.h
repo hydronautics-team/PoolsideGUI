@@ -19,12 +19,6 @@ struct UV_StabilizationConstants {
     float pThrustersMin;
     float pThrustersMax;
     float pThrustersCast;
-
-    float thrustersFilterT;
-    float thrustersFilterK;
-
-    float sOutSummatorMax;
-    float sOutSummatorMin;
 };
 
 struct UV_StabilizationState {
@@ -33,8 +27,9 @@ struct UV_StabilizationState {
     float posSignal;
 
     float joyUnitCasted;
-    float joy_iValue;
     float posError;
+    float joy_pValue;
+    float joy_iValue;
     float speedError;
     float dynSummator;
     float pidValue;

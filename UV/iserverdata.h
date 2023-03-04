@@ -98,12 +98,6 @@ private:
         float pThrustersMin;
         float pThrustersMax;
 
-        float thrustersFilterT;
-        float thrustersFilterK;
-
-        float sOutSummatorMax;
-        float sOutSummatorMin;
-
         uint16_t checksum;
     };
 

@@ -33,7 +33,7 @@ set(PROJECT_SOURCES
 
         Control/ControlBase.cpp
         Control/Joystick.cpp
-        Control/Keyboard.cpp
+        # Control/Keyboard.cpp
 
         KX_Pult/configdata.cpp
         KX_Pult/kx_protocol.cpp
@@ -58,13 +58,9 @@ set(PROJECT_SOURCES
         UV/uv_thruster.cpp
 )
 
-set(QRC_FILES
-        images.qrc
-        vehicles.qrc
-)
-
 add_executable(${PROJECT_NAME}
         ${PROJECT_SOURCES}
+        images.qrc
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

@@ -41,13 +41,13 @@ enum e_Device {
 struct ImuData {
     ImuData();
 
-    double roll;
-    double pitch;
-    double yaw;
-    double rollSpeed;
-    double pitchSpeed;
-    double yawSpeed;
-    double depth;
+    float roll;
+    float pitch;
+    float yaw;
+    float rollSpeed;
+    float pitchSpeed;
+    float yawSpeed;
+    float depth;
 };
 
 struct ControlData {

@@ -19,12 +19,6 @@ UV_ControlContour::UV_ControlContour() {
     constant.pThrustersMax = 0;
     constant.pThrustersCast = 0;
 
-    constant.thrustersFilterT = 0;
-    constant.thrustersFilterK = 0;
-
-    constant.sOutSummatorMax = 0;
-    constant.sOutSummatorMin = 0;
-
     state.inputSignal = 0;
     state.speedSignal = 0;
     state.posSignal = 0;

@@ -70,9 +70,9 @@
      <colorrole role="Text">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
+        <red>61</red>
+        <green>56</green>
+        <blue>70</blue>
        </color>
       </brush>
      </colorrole>
@@ -216,9 +216,9 @@
      <colorrole role="Text">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
+        <red>61</red>
+        <green>56</green>
+        <blue>70</blue>
        </color>
       </brush>
      </colorrole>
@@ -460,12 +460,9 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QGraphicsView" name="vehiclePic">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>TextLabel</string>
         </property>
        </widget>
       </item>
