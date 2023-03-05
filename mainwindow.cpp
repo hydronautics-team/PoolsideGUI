@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     connect(radioButton_PackageDirect, SIGNAL(clicked()), this, SLOT(directPackageClick()));
     connect(radioButton_PackageConfig, SIGNAL(clicked()), this, SLOT(configPackageClick()));
 
-    connect(pushButton_ReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
+    // connect(pushButton_ReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
     connect(checkBox_StabilizeRoll, SIGNAL(toggled(bool)), this, SLOT(stabilizeRollToggled(bool)));
     connect(checkBox_StabilizePitch, SIGNAL(toggled(bool)), this, SLOT(stabilizePitchToggled(bool)));
@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     serial_client = new SerialClient();
     serial_client->start();
 
-    connect(serial_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));
+    connect(serial_client, SIGNAL(dataUpdatedSerialClient()), this, SLOT(updateUi()));
 
     controller = new Joystick(10);
 

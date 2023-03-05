@@ -30,28 +30,6 @@ public:
 
     // ~StabilizationWindow();
 
-
-private:
-    Ui::StabilizationWindow* ui;
-    ITuningData interface;
-
-    QString jsonName;
-    std::ifstream file;
-    json allStabilizationJson;
-
-    // x_protocol* X_Protocol;
-    e_Countour currentContour;
-    UV_StabilizationConstants ConstantsControlContour[6];
-    UV_StabilizationState StateControlContour[6];
-
-    void FillUiConstants();
-    void FillUiStates();
-
-    void createDefaultStabilizationJson();
-    void saveToFile();
-
-    void getConstantsFromJson();
-
 private slots:
     // void updateVariables_KX();
 
@@ -63,6 +41,27 @@ private slots:
     void ContourChangedLag();
 
     void ContourEdited();
+
+private:
+    Ui::StabilizationWindow* ui;
+    ITuningData interface;
+
+    QString jsonName;
+    json allStabilizationJson;
+
+    // x_protocol* X_Protocol;
+    e_Countour currentContour;
+    UV_StabilizationConstants ConstantsControlContour[6];
+    UV_StabilizationState StateControlContour[6];
+
+    void FillUiConstants();
+    void FillUiStates();
+
+    bool getJsonFromFile();
+    void getJsonFromConstants();
+    void getConstantsFromJson();
+    void createDefaultStabilizationJson();
+    void saveToFile();
 };
 
 #endif // STABILIZATIONSETTINGS_H
