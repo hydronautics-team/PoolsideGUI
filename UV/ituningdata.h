@@ -19,6 +19,7 @@ public:
 
     UV_StabilizationState getControlContourState(e_Countour countour);
     void setControlContourConstants(UV_StabilizationConstants constants);
+    void setControlContourConstants(UV_StabilizationConstants constants, e_Countour countour);
     void setCurrentControlContour(e_Countour contour);
 };
 

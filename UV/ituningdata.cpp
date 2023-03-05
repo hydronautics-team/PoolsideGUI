@@ -75,6 +75,12 @@ void ITuningData::setControlContourConstants(UV_StabilizationConstants constants
     UVMutex.unlock();
 }
 
+void ITuningData::setControlContourConstants(UV_StabilizationConstants constants, e_Countour countour) {
+    UVMutex.lock();
+    UVState.controlContour[countour].constant = constants;
+    UVMutex.unlock();
+}
+
 void ITuningData::setCurrentControlContour(e_Countour contour) {
     UVMutex.lock();
     UVState.currentControlContour = contour;
