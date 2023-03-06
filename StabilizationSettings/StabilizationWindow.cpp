@@ -21,23 +21,23 @@ StabilizationWindow::StabilizationWindow(QWidget* parent):
 
     connect(ui->pushButton_CS_saveConfig, SIGNAL(clicked()), this, SLOT(saveConfigClicked()));
 
-    connect(ui->doubleSpinBox_CS_pJoyUnitCast, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
-    connect(ui->doubleSpinBox_CS_pSpeedDyn, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
-    connect(ui->doubleSpinBox_CS_pErrGain, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_pJoyUnitCast, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_pSpeedDyn, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_pErrGain, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
 
-    connect(ui->doubleSpinBox_CS_posFilterT, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
-    connect(ui->doubleSpinBox_CS_posFilterK, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
-    connect(ui->doubleSpinBox_CS_speedFilterT, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
-    connect(ui->doubleSpinBox_CS_speedFilterK, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_posFilterT, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_posFilterK, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_speedFilterT, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_speedFilterK, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
 
-    connect(ui->doubleSpinBox_CS_pid_pGain, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
-    connect(ui->doubleSpinBox_CS_pid_iGain, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
-    connect(ui->doubleSpinBox_CS_pid_iMax, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
-    connect(ui->doubleSpinBox_CS_pid_iMin, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_pid_pGain, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_pid_iGain, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_pid_iMax, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_pid_iMin, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
 
-    connect(ui->doubleSpinBox_CS_pThrustersMin, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
-    connect(ui->doubleSpinBox_CS_pThrustersMax, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
-    connect(ui->doubleSpinBox_CS_pThrustersCast, SIGNAL(valueChanged(double)), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_pThrustersMin, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_pThrustersMax, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
+    connect(ui->doubleSpinBox_CS_pThrustersCast, SIGNAL(editingFinished()), this, SLOT(ContourEdited()));
 
     connect(ui->radioButton_CS_YawSelect, SIGNAL(clicked()), this, SLOT(ContourChangedYaw()));
     connect(ui->radioButton_CS_RollSelect, SIGNAL(clicked()), this, SLOT(ContourChangedRoll()));
@@ -136,7 +136,7 @@ void StabilizationWindow::FillUiConstants() {
     ui->doubleSpinBox_CS_pThrustersMin->setValue(ConstantsControlContour[currentContour].pThrustersMin);
     ui->doubleSpinBox_CS_pThrustersMax->setValue(ConstantsControlContour[currentContour].pThrustersMax);
     ui->doubleSpinBox_CS_pThrustersCast->setValue(ConstantsControlContour[currentContour].pThrustersCast);
-    qDebug() << "pJoyUnitCast" << ConstantsControlContour[currentContour].pJoyUnitCast;
+    qDebug() << "pThrustersCast" << ConstantsControlContour[currentContour].pThrustersCast;
 }
 
 void StabilizationWindow::FillUiStates() {
@@ -169,14 +169,17 @@ void StabilizationWindow::getJsonFromConstants() {
         allStabilizationJson[std::to_string(i) + "_pJoyUnitCast"] = ConstantsControlContour[i].pJoyUnitCast;
         allStabilizationJson[std::to_string(i) + "_pSpeedDyn"] = ConstantsControlContour[i].pSpeedDyn;
         allStabilizationJson[std::to_string(i) + "_pErrGain"] = ConstantsControlContour[i].pErrGain;
+
         allStabilizationJson[std::to_string(i) + "_posFilterT"] = ConstantsControlContour[i].posFilterT;
         allStabilizationJson[std::to_string(i) + "_posFilterK"] = ConstantsControlContour[i].posFilterK;
         allStabilizationJson[std::to_string(i) + "_speedFilterT"] = ConstantsControlContour[i].speedFilterT;
         allStabilizationJson[std::to_string(i) + "_speedFilterK"] = ConstantsControlContour[i].speedFilterK;
+
         allStabilizationJson[std::to_string(i) + "_pid_pGain"] = ConstantsControlContour[i].pid_pGain;
         allStabilizationJson[std::to_string(i) + "_pid_iGain"] = ConstantsControlContour[i].pid_iGain;
         allStabilizationJson[std::to_string(i) + "_pid_iMax"] = ConstantsControlContour[i].pid_iMax;
         allStabilizationJson[std::to_string(i) + "_pid_iMin"] = ConstantsControlContour[i].pid_iMin;
+        
         allStabilizationJson[std::to_string(i) + "_pThrustersMin"] = ConstantsControlContour[i].pThrustersMin;
         allStabilizationJson[std::to_string(i) + "_pThrustersMax"] = ConstantsControlContour[i].pThrustersMax;
         allStabilizationJson[std::to_string(i) + "_pThrustersCast"] = ConstantsControlContour[i].pThrustersCast;
