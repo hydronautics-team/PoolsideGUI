@@ -9,6 +9,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <filesystem>
 
 #include "Utilitis/json.h"
 #include "UV/ituningdata.h"
@@ -41,6 +42,7 @@ private slots:
     void ContourChangedLag();
 
     void ContourEdited();
+    void saveConfigClicked();
 
 private:
     Ui::StabilizationWindow* ui;
@@ -57,7 +59,7 @@ private:
     void FillUiConstants();
     void FillUiStates();
 
-    bool getJsonFromFile();
+    void getJsonFromFile();
     void getJsonFromConstants();
     void getConstantsFromJson();
     void createDefaultStabilizationJson();
