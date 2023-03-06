@@ -28,7 +28,6 @@ struct UV_StabilizationState {
 
     float joyUnitCasted;
     float posError;
-    float joy_pValue;
     float joy_iValue;
     float speedError;
     float dynSummator;
@@ -37,8 +36,7 @@ struct UV_StabilizationState {
     float speedFiltered;
     float posFiltered;
     float pid_iValue;
-    float thrustersFiltered;
-
+    float pid_pValue;
     float outputSignal;
 };
 

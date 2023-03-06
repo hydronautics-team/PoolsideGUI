@@ -327,8 +327,8 @@ void IServerData::parseConfigMessage(QByteArray msg) {
     stream >> res.posSignal;
 
     stream >> res.joyUnitCasted;
-    stream >> res.joy_iValue;
     stream >> res.posError;
+    stream >> res.joy_iValue;
     stream >> res.speedError;
     stream >> res.dynSummator;
     stream >> res.pidValue;
@@ -336,7 +336,7 @@ void IServerData::parseConfigMessage(QByteArray msg) {
     stream >> res.speedFiltered;
     stream >> res.posFiltered;
     stream >> res.pid_iValue;
-    stream >> res.thrustersFiltered;
+    stream >> res.pid_pValue;
     stream >> res.outputSignal;
 
     stream >> res.checksum;
@@ -371,8 +371,8 @@ void IServerData::pullFromStructure(ResponseConfigMessage res) {
     UVState.controlContour[UVState.currentControlContour].state.posSignal = res.posSignal;
 
     UVState.controlContour[UVState.currentControlContour].state.joyUnitCasted = res.joyUnitCasted;
-    UVState.controlContour[UVState.currentControlContour].state.joy_iValue = res.joy_iValue;
     UVState.controlContour[UVState.currentControlContour].state.posError = res.posError;
+    UVState.controlContour[UVState.currentControlContour].state.joy_iValue = res.joy_iValue;
     UVState.controlContour[UVState.currentControlContour].state.speedError = res.speedError;
     UVState.controlContour[UVState.currentControlContour].state.dynSummator = res.dynSummator;
     UVState.controlContour[UVState.currentControlContour].state.pidValue = res.pidValue;
@@ -380,7 +380,7 @@ void IServerData::pullFromStructure(ResponseConfigMessage res) {
     UVState.controlContour[UVState.currentControlContour].state.speedFiltered = res.speedFiltered;
     UVState.controlContour[UVState.currentControlContour].state.posFiltered = res.posFiltered;
     UVState.controlContour[UVState.currentControlContour].state.pid_iValue = res.pid_iValue;
-    UVState.controlContour[UVState.currentControlContour].state.thrustersFiltered = res.thrustersFiltered;
+    UVState.controlContour[UVState.currentControlContour].state.pid_pValue = res.pid_pValue;
     UVState.controlContour[UVState.currentControlContour].state.outputSignal = res.outputSignal;
 
     UVMutex.unlock();

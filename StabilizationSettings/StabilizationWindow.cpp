@@ -136,7 +136,6 @@ void StabilizationWindow::FillUiConstants() {
     ui->doubleSpinBox_CS_pThrustersMin->setValue(ConstantsControlContour[currentContour].pThrustersMin);
     ui->doubleSpinBox_CS_pThrustersMax->setValue(ConstantsControlContour[currentContour].pThrustersMax);
     ui->doubleSpinBox_CS_pThrustersCast->setValue(ConstantsControlContour[currentContour].pThrustersCast);
-    qDebug() << "pThrustersCast" << ConstantsControlContour[currentContour].pThrustersCast;
 }
 
 void StabilizationWindow::FillUiStates() {
@@ -149,12 +148,16 @@ void StabilizationWindow::FillUiStates() {
     ui->lineEdit_CS_joyUnitCasted->setText(QString::number(StateControlContour[currentContour].joyUnitCasted));
     ui->lineEdit_CS_posError->setText(QString::number(StateControlContour[currentContour].posError));
     ui->lineEdit_CS_joy_iValue->setText(QString::number(StateControlContour[currentContour].joy_iValue));
-    ui->lineEdit_CS_pid_iValue->setText(QString::number(StateControlContour[currentContour].pid_iValue));
     ui->lineEdit_CS_speedError->setText(QString::number(StateControlContour[currentContour].speedError));
     ui->lineEdit_CS_dynSummator->setText(QString::number(StateControlContour[currentContour].dynSummator));
     ui->lineEdit_CS_pidValue->setText(QString::number(StateControlContour[currentContour].pidValue));
-    ui->lineEdit_CS_posFiltered->setText(QString::number(StateControlContour[currentContour].posFiltered));
+    ui->lineEdit_CS_posErrorAmp->setText(QString::number(StateControlContour[currentContour].posErrorAmp));
     ui->lineEdit_CS_speedFiltered->setText(QString::number(StateControlContour[currentContour].speedFiltered));
+    ui->lineEdit_CS_posFiltered->setText(QString::number(StateControlContour[currentContour].posFiltered));
+    ui->lineEdit_CS_pid_iValue->setText(QString::number(StateControlContour[currentContour].pid_iValue));
+    ui->lineEdit_CS_pid_pValue->setText(QString::number(StateControlContour[currentContour].pid_pValue));
+    ui->lineEdit_CS_outputSignal->setText(QString::number(StateControlContour[currentContour].outputSignal));
+
     // updateVariables_KX();
 }
 
@@ -179,7 +182,7 @@ void StabilizationWindow::getJsonFromConstants() {
         allStabilizationJson[std::to_string(i) + "_pid_iGain"] = ConstantsControlContour[i].pid_iGain;
         allStabilizationJson[std::to_string(i) + "_pid_iMax"] = ConstantsControlContour[i].pid_iMax;
         allStabilizationJson[std::to_string(i) + "_pid_iMin"] = ConstantsControlContour[i].pid_iMin;
-        
+
         allStabilizationJson[std::to_string(i) + "_pThrustersMin"] = ConstantsControlContour[i].pThrustersMin;
         allStabilizationJson[std::to_string(i) + "_pThrustersMax"] = ConstantsControlContour[i].pThrustersMax;
         allStabilizationJson[std::to_string(i) + "_pThrustersCast"] = ConstantsControlContour[i].pThrustersCast;
@@ -188,22 +191,22 @@ void StabilizationWindow::getJsonFromConstants() {
 
 void StabilizationWindow::getConstantsFromJson() {
     for (int i = CONTOUR_DEPTH; i < CONTOUR_PITCH + 1; i++) {
-        ConstantsControlContour[i].pJoyUnitCast =   allStabilizationJson[std::to_string(i) + "_pJoyUnitCast"];
-        ConstantsControlContour[i].pSpeedDyn =      allStabilizationJson[std::to_string(i) + "_pSpeedDyn"];
-        ConstantsControlContour[i].pErrGain =       allStabilizationJson[std::to_string(i) + "_pErrGain"];
+        ConstantsControlContour[i].pJoyUnitCast = allStabilizationJson[std::to_string(i) + "_pJoyUnitCast"];
+        ConstantsControlContour[i].pSpeedDyn = allStabilizationJson[std::to_string(i) + "_pSpeedDyn"];
+        ConstantsControlContour[i].pErrGain = allStabilizationJson[std::to_string(i) + "_pErrGain"];
 
-        ConstantsControlContour[i].posFilterT =     allStabilizationJson[std::to_string(i) + "_posFilterT"];
-        ConstantsControlContour[i].posFilterK =     allStabilizationJson[std::to_string(i) + "_posFilterK"];
-        ConstantsControlContour[i].speedFilterT =   allStabilizationJson[std::to_string(i) + "_speedFilterT"];
-        ConstantsControlContour[i].speedFilterK =   allStabilizationJson[std::to_string(i) + "_speedFilterK"];
+        ConstantsControlContour[i].posFilterT = allStabilizationJson[std::to_string(i) + "_posFilterT"];
+        ConstantsControlContour[i].posFilterK = allStabilizationJson[std::to_string(i) + "_posFilterK"];
+        ConstantsControlContour[i].speedFilterT = allStabilizationJson[std::to_string(i) + "_speedFilterT"];
+        ConstantsControlContour[i].speedFilterK = allStabilizationJson[std::to_string(i) + "_speedFilterK"];
 
-        ConstantsControlContour[i].pid_pGain =      allStabilizationJson[std::to_string(i) + "_pid_pGain"];
-        ConstantsControlContour[i].pid_iGain =      allStabilizationJson[std::to_string(i) + "_pid_iGain"];
-        ConstantsControlContour[i].pid_iMax =       allStabilizationJson[std::to_string(i) + "_pid_iMax"];
-        ConstantsControlContour[i].pid_iMin =       allStabilizationJson[std::to_string(i) + "_pid_iMin"];
+        ConstantsControlContour[i].pid_pGain = allStabilizationJson[std::to_string(i) + "_pid_pGain"];
+        ConstantsControlContour[i].pid_iGain = allStabilizationJson[std::to_string(i) + "_pid_iGain"];
+        ConstantsControlContour[i].pid_iMax = allStabilizationJson[std::to_string(i) + "_pid_iMax"];
+        ConstantsControlContour[i].pid_iMin = allStabilizationJson[std::to_string(i) + "_pid_iMin"];
 
-        ConstantsControlContour[i].pThrustersMin =  allStabilizationJson[std::to_string(i) + "_pThrustersMin"];
-        ConstantsControlContour[i].pThrustersMax =  allStabilizationJson[std::to_string(i) + "_pThrustersMax"];
+        ConstantsControlContour[i].pThrustersMin = allStabilizationJson[std::to_string(i) + "_pThrustersMin"];
+        ConstantsControlContour[i].pThrustersMax = allStabilizationJson[std::to_string(i) + "_pThrustersMax"];
         ConstantsControlContour[i].pThrustersCast = allStabilizationJson[std::to_string(i) + "_pThrustersCast"];
         interface.setControlContourConstants(ConstantsControlContour[i], static_cast<e_Countour>(i));
     };
@@ -228,7 +231,6 @@ void StabilizationWindow::createDefaultStabilizationJson() {
         allStabilizationJson[std::to_string(i) + "_pThrustersMin"] = 1;
         allStabilizationJson[std::to_string(i) + "_pThrustersMax"] = 1;
         allStabilizationJson[std::to_string(i) + "_pThrustersCast"] = 1;
-        // qDebug() << allStabilizationJson[std::to_string(i) + "pJoyUnitCast"].get<int>();
 
     }
 
@@ -242,29 +244,19 @@ void StabilizationWindow::saveToFile() {
 }
 
 // void StabilizationWindow::updateVariables_KX() {
-//     // Secure updating UVState structure
-//     UV_ControlContour data = interface.getControlContourData(currentContour);
-
-//     X[0][0] = static_cast<double>(data.state.inputSignal);
-//     X[1][0] = static_cast<double>(data.state.speedSignal);
-//     X[2][0] = static_cast<double>(data.state.posSignal);
-
-//     //X[3][0] = static_cast<double>(data.state.oldSpeed);
-//     //X[4][0] = static_cast<double>(data.state.oldPos);
-
-//     X[5][0] = static_cast<double>(data.state.joyUnitCasted);
-//     X[6][0] = static_cast<double>(data.state.joy_iValue);
-//     X[7][0] = static_cast<double>(data.state.posError);
-//     X[8][0] = static_cast<double>(data.state.speedError);
-//     X[9][0] = static_cast<double>(data.state.dynSummator);
-//     X[10][0] = static_cast<double>(data.state.pidValue);
-//     X[11][0] = static_cast<double>(data.state.posErrorAmp);
-//     X[12][0] = static_cast<double>(data.state.speedFiltered);
-//     X[13][0] = static_cast<double>(data.state.posFiltered);
-
-//     X[14][0] = static_cast<double>(data.state.pid_iValue);
-//     //X[15][0] = static_cast<double>(server->imu_raw_yaw);
-
-//     X[16][0] = static_cast<double>(data.state.thrustersFiltered);
-//     X[17][0] = static_cast<double>(data.state.outputSignal);
+//     X[0][0]  = static_cast<double>(StateControlContour[currentContour].inputSignal);
+//     X[1][0]  = static_cast<double>(StateControlContour[currentContour].speedSignal);
+//     X[2][0]  = static_cast<double>(StateControlContour[currentContour].posSignal);
+//     X[5][0]  = static_cast<double>(StateControlContour[currentContour].joyUnitCasted)
+//     X[6][0]  = static_cast<double>(StateControlContour[currentContour].posError)
+//     X[7][0]  = static_cast<double>(StateControlContour[currentContour].joy_iValue)
+//     X[8][0]  = static_cast<double>(StateControlContour[currentContour].speedError)
+//     X[9][0]  = static_cast<double>(StateControlContour[currentContour].dynSummator)
+//     X[10][0] = static_cast<double>(StateControlContour[currentContour].pidValue)
+//     X[11][0] = static_cast<double>(StateControlContour[currentContour].posErrorAmp)
+//     X[12][0] = static_cast<double>(StateControlContour[currentContour].speedFiltered)
+//     X[13][0] = static_cast<double>(StateControlContour[currentContour].posFiltered)
+//     X[14][0] = static_cast<double>(StateControlContour[currentContour].pid_iValue)
+//     X[15][0] = static_cast<double>(StateControlContour[currentContour].pid_pValue)
+//     X[16][0] = static_cast<double>(StateControlContour[currentContour].outputSignal)
 // }

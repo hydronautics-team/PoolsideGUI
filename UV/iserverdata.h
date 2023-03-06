@@ -120,8 +120,8 @@ private:
         float posSignal;
 
         float joyUnitCasted;
-        float joy_iValue;
         float posError;
+        float joy_iValue;
         float speedError;
         float dynSummator;
         float pidValue;
@@ -129,7 +129,7 @@ private:
         float speedFiltered;
         float posFiltered;
         float pid_iValue;
-        float thrustersFiltered;
+        float pid_pValue;
         float outputSignal;
 
         uint16_t checksum;
