@@ -48,6 +48,8 @@ private:
     SerialClient* serial_client;
 
     IUserInterfaceData uv_interface;
+
+    QTimer* update_timer;
 private slots:
     // void updateVehiclesMenu();
     void stabilizeRollToggled(bool state);

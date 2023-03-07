@@ -277,15 +277,15 @@ void IServerData::parseNormalMessage(QByteArray msg) {
 
     stream >> res.checksum;
 
-    if (res.checksum != checksum_calc) {
-        qDebug() << "Checksum NormalMessage is invalid";
-        std::stringstream stream;
-        stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
-            std::ios::hex << checksum_calc << "] " <<
-            "Received: [" <<
-            std::ios::hex << res.checksum << "]";
-        throw std::invalid_argument(stream.str());
-    }
+    // if (res.checksum != checksum_calc) {
+    //     qDebug() << "Checksum NormalMessage is invalid";
+    //     std::stringstream stream;
+    //     stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
+    //         std::ios::hex << checksum_calc << "] " <<
+    //         "Received: [" <<
+    //         std::ios::hex << res.checksum << "]";
+    //     throw std::invalid_argument(stream.str());
+    // }
 
     pullFromStructure(res);
 }

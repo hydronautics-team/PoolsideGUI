@@ -52,9 +52,15 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     serial_client = new SerialClient();
     serial_client->start();
 
+    QTimer *update_timer = new QTimer(this);
+    connect(update_timer, SIGNAL(timeout()), this, SLOT(updateUi()));
+    update_timer->start(10);
+
     connect(serial_client, SIGNAL(dataUpdatedSerialClient()), this, SLOT(updateUi()));
 
     controller = new Joystick(10);
+
+
 
     //    const QString ConfigFile = "protocols.conf";
     //    const QString XI = "xi";

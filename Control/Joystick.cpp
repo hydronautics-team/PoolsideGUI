@@ -21,6 +21,7 @@ Joystick::Joystick(int updateTimeMs): ControlBase("Joystick") {
 
 void Joystick::updateDevice() {
     sf::Joystick::update();
+    // qDebug() << "updateDevice";
 
     for (unsigned int i = 0; i < sizeof(axis_table) / sizeof(axis_table[0]); i++) {
         sendAction(axis_table[i].action,
