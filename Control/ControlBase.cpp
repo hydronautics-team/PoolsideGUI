@@ -30,6 +30,10 @@ void ControlBase::sendAction(e_actionTypes type, float value) {
     case SET_YAW:
         setYaw(value);
         break;
+
+    case TILT:
+        setTilt(static_cast<int8_t>(value));
+        break;
     }
 }
 
@@ -41,10 +45,6 @@ void ControlBase::sendAction(e_actionTypes type, int8_t value) {
 
     case GRAB_ROTATE:
         setGrabRotate(value);
-        break;
-
-    case TILT:
-        setTilt(value);
         break;
     }
 }

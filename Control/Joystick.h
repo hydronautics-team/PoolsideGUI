@@ -28,7 +28,7 @@ private:
         unsigned int button_id;
         unsigned int button_idReverse;
         e_actionTypes action;
-        float setterValue;
+        int8_t setterValue;
     };
 
     const static control_axis axis_table[];

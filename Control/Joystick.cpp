@@ -5,7 +5,7 @@ const Joystick::control_axis Joystick::axis_table[] = {
         {sf::Joystick::Y,       SET_MARCH,  320},
         {sf::Joystick::X,       SET_LAG,    320},
         {sf::Joystick::Z,       SET_DEPTH,  320},
-        {sf::Joystick::PovY,    TILT,       2},
+        {sf::Joystick::PovY,    TILT,       1.27},
 };
 
 const Joystick::control_buttons Joystick::buttons_table[] = {
@@ -30,16 +30,16 @@ void Joystick::updateDevice() {
     for (unsigned int i = 0; i < sizeof(buttons_table) / sizeof(buttons_table[0]); i++) {
         if (sf::Joystick::isButtonPressed(id, buttons_table[i].button_id) and
             sf::Joystick::isButtonPressed(id, buttons_table[i].button_idReverse)) {
-            sendAction(buttons_table[i].action, float(0));
+            sendAction(buttons_table[i].action, static_cast<int8_t>(0));
             continue;
         } else if (sf::Joystick::isButtonPressed(id, buttons_table[i].button_id)) {
             sendAction(buttons_table[i].action, buttons_table[i].setterValue);
             continue;
         } else if (sf::Joystick::isButtonPressed(id, buttons_table[i].button_idReverse)) {
-            sendAction(buttons_table[i].action, -buttons_table[i].setterValue);
+            sendAction(buttons_table[i].action, static_cast<int8_t>(-buttons_table[i].setterValue));
             continue;
         } else {
-            sendAction(buttons_table[i].action, float(0));
+            sendAction(buttons_table[i].action, static_cast<int8_t>(0));
             continue;
         }
     }

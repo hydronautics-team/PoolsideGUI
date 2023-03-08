@@ -43,9 +43,9 @@ private:
     StabilizationWindow stabilizationWindow;
     ThrusterWindow thrusterWindow;
 
-    void updateVehicleConfigurationMenu();
-    void checkFile(QString filename);
     SerialClient* serial_client;
+
+    QTimer* update_timer;
 
     IUserInterfaceData uv_interface;
 private slots:

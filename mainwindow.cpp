@@ -52,7 +52,12 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     serial_client = new SerialClient();
     serial_client->start();
 
+    // connect(serial_client, SIGNAL(dataUpdatedSerialClient()), this, SLOT(updateUi()));
     connect(serial_client, SIGNAL(dataUpdatedSerialClient()), this, SLOT(updateUi()));
+
+    QTimer *update_timer = new QTimer(this);
+    connect(update_timer, SIGNAL(timeout()), this, SLOT(updateUi()));
+    update_timer->start(10);
 
     controller = new Joystick(10);
 
@@ -67,6 +72,8 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
     connect(pushButton_ResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
     connect(pushButton_ResetIMU, SIGNAL(released()), this, SLOT(clearResetImu()));
+
+
 
     //load image
     // vehiclePic->setScene(new QGraphicsScene(vehiclePic));
@@ -123,7 +130,6 @@ void MainWindow::updateUi() {
     label_DevicesDev->setText(QString::number(uv_interface.getDeviceVelocity(DEVICE_DEV1)));
 }
 
-
 void MainWindow::resetImu() {
     uv_interface.setResetImu(true);
 }
@@ -132,21 +138,11 @@ void MainWindow::clearResetImu() {
     uv_interface.setResetImu(false);
 }
 
-// void MainWindow::reconnectcROVclick() {
-//     emit reconnectROV();
-// }
-
-//void MainWindow::enableControllerChanged(Control::e_controllerType controllerType, bool enabel) {
-//    controller.setEnabel(controllerType, enabel);
-//}
-
 void MainWindow::normalPackageClick() {
         radioButton_PackageDirect->setChecked(false);
         radioButton_PackageConfig->setChecked(false);
     uv_interface.setPackegeMode(PACKAGE_NORMAL);
-
 }
-
 
 void MainWindow::configPackageClick() {
         radioButton_PackageNormal->setChecked(false);
