@@ -10,14 +10,10 @@ UdpClient::UdpClient() {
 }
 
 UdpClient::~UdpClient() {
-    // udpSocket->close();
-    // delete udpSocket;
-    // delete uv_interface;
-    // delete timeoutTimer;
-    // QThread::wait(5000);
-    // delete udpSocket;
-    // delete uv_interface;
-    // delete timeoutTimer;
+    udpSocket->close();
+    delete udpSocket;
+    delete uv_interface;
+    delete timeoutTimer;
 }
 
 void UdpClient::run() {
@@ -57,7 +53,7 @@ void UdpClient::readPendingDatagrams() {
         }
         if (!exception_caught) {
             // qDebug() << "[UDP_CLIENT] Message parced " << messageType << "||" << msg.size();
-            emit dataUpdatedUdpClient();
+            emit dataUpdated();
         }
     }
 }

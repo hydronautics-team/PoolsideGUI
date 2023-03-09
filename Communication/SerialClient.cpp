@@ -12,10 +12,8 @@ SerialClient::SerialClient() {
 }
 
 SerialClient::~SerialClient() {
-    // serialPort->close();
-    // free(serialPort);
-    // delete serialPort;
-    // delete interface;
+    delete serialPort;
+    delete interface;
 }
 
 bool SerialClient::portConnect(int port) {

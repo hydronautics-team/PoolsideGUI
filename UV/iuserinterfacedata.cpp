@@ -82,11 +82,3 @@ void IUserInterfaceData::setConnectionMode(e_Connection connectionMode) {
     UVState.currentConnectionMode = connectionMode;
     UVMutex.unlock();
 }
-
-e_Connection IUserInterfaceData::getConnectionMode() {
-    e_Connection connectionMode;
-    UVMutex.lock();
-    connectionMode = UVState.currentConnectionMode;
-    UVMutex.unlock();
-    return connectionMode;
-}

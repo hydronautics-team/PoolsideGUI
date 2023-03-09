@@ -14,7 +14,6 @@ public:
 
     void setPackegeMode(e_packageMode packageMode);
     void setConnectionMode(e_Connection connectionMode);
-    e_Connection getConnectionMode();
 
     void setStabRoll(bool value);
     void setStabPitch(bool value);
