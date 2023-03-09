@@ -23,6 +23,7 @@
 
 #include "UV/iuserinterfacedata.h"
 #include "Communication/SerialClient.h"
+#include "Communication/UdpClient.h"
 #include "Control/Joystick.h"
 #include "Control/Gamepad.h"
 #include "ThrusterSettings/ThrusterWindow.h"
@@ -45,13 +46,13 @@ private:
     StabilizationWindow stabilizationWindow;
     ThrusterWindow thrusterWindow;
 
-    SerialClient* serial_client;
+    SerialClient* serial_client = nullptr;
+    UdpClient* udp_client = nullptr;
 
     QTimer* update_timer;
 
     IUserInterfaceData uv_interface;
 private slots:
-    // void updateVehiclesMenu();
     void stabilizeRollToggled(bool state);
     void stabilizePitchToggled(bool state);
     void stabilizeYawToggled(bool state);
@@ -66,16 +67,11 @@ private slots:
     void resetImu();
     void clearResetImu();
 
-    // menu actions
-    // void createVehicle();
-    // void chooseVehicle(QAction *action);
-    // void chooseConfiguration(QAction *action);
-
-    // full screen key combination
     void fullScreenKey();
 
-    //Other buttons
     // void reconnectcROVclick();
+    // void connectSerialClick();
+    // void connectUDPClick();
 
 
     // void ConnectionTypeChanged(e_MessageTypes connectionType);

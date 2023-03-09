@@ -20,7 +20,7 @@ public:
     int exec();
 
 signals:
-    void dataUpdated();
+    void dataUpdatedUdpClient();
 
 private:
     QUdpSocket* udpSocket;
