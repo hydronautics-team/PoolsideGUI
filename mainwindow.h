@@ -24,6 +24,7 @@
 #include "UV/iuserinterfacedata.h"
 #include "Communication/SerialClient.h"
 #include "Control/Joystick.h"
+#include "Control/Gamepad.h"
 #include "ThrusterSettings/ThrusterWindow.h"
 #include "StabilizationSettings/StabilizationWindow.h"
 
@@ -38,7 +39,8 @@ public:
     explicit MainWindow(QWidget* parent = nullptr);
 
 private:
-    Joystick* controller = nullptr;
+    Joystick* joystick = nullptr;
+    Gamepad* gamepad = nullptr;
 
     StabilizationWindow stabilizationWindow;
     ThrusterWindow thrusterWindow;

@@ -59,7 +59,8 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     connect(update_timer, SIGNAL(timeout()), this, SLOT(updateUi()));
     update_timer->start(10);
 
-    controller = new Joystick(10);
+    // controller = new Joystick(10);
+    gamepad = new Gamepad(10);
 
     //    const QString ConfigFile = "protocols.conf";
     //    const QString XI = "xi";

@@ -33,6 +33,7 @@ set(PROJECT_SOURCES
 
         Control/ControlBase.cpp
         Control/Joystick.cpp
+        Control/Gamepad.cpp
         # Control/Keyboard.cpp
 
         KX_Pult/configdata.cpp
