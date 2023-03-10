@@ -4,55 +4,33 @@
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     setupUi(this);
-    //start in full screen format
-//    QMainWindow::showFullScreen();
-//    QMainWindow::menuBar()->setVisible(true);
 
-    // Reading the key combination of turning the window to the full screen and back
+    // Full screen and back
     QShortcut* keyCtrlF = new QShortcut(this);
     keyCtrlF->setKey(Qt::CTRL | Qt::Key_F);
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::fullScreenKey);
 
+    // Menu:
+    connect(action_SettingsThruster, SIGNAL(triggered()), &thrusterWindow, SLOT(show()));
+    connect(action_SettingsControlSystem, SIGNAL(triggered()), &stabilizationWindow, SLOT(show()));
+
     // Package Type Changed
-    radioButton_PackageNormal->setChecked(true); // default Connection type
     connect(radioButton_PackageNormal, SIGNAL(clicked()), this, SLOT(normalPackageClick()));
     connect(radioButton_PackageDirect, SIGNAL(clicked()), this, SLOT(directPackageClick()));
     connect(radioButton_PackageConfig, SIGNAL(clicked()), this, SLOT(configPackageClick()));
-
-    // connect(pushButton_ReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
+    radioButton_PackageNormal->setChecked(true); // default Connection type
 
     connect(checkBox_StabilizeRoll, SIGNAL(toggled(bool)), this, SLOT(stabilizeRollToggled(bool)));
     connect(checkBox_StabilizePitch, SIGNAL(toggled(bool)), this, SLOT(stabilizePitchToggled(bool)));
     connect(checkBox_StabilizeYaw, SIGNAL(toggled(bool)), this, SLOT(stabilizeYawToggled(bool)));
     connect(checkBox_StabilizeDepth, SIGNAL(toggled(bool)), this, SLOT(stabilizeDepthToggled(bool)));
 
-    // Menu:
-    // Vehicle
-    // New vehicle
-    // connect(action_create_vehicle, SIGNAL(triggered()), this, SLOT(createVehicle()));
-//     // Choose vehicle and configuration
-//     connect(menu_choose_configuration, SIGNAL(triggered(QAction * )), this, SLOT(chooseConfiguration(QAction * )));
-//     connect(menu_choose_vehicle, SIGNAL(triggered(QAction * )), this, SLOT(chooseVehicle(QAction * )));
-// //    // Settings
-//    connect(action_config_com, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigRS()));
-    connect(action_SettingsThruster, SIGNAL(triggered()), &thrusterWindow, SLOT(show()));
-    connect(action_SettingsControlSystem, SIGNAL(triggered()), &stabilizationWindow, SLOT(show()));
+    connect(radioButton_Serial, SIGNAL(clicked()), this, SLOT(connectSerialClick()));
+    connect(radioButton_UDP, SIGNAL(clicked()), this, SLOT(connectUDPClick()));
+    connect(pushButton_ReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
-    //    // Surface control unit
-    //    connect(action_config_controls, SIGNAL(triggered()), &controlWindow, SLOT(show()));
-    //    connect(action_config_view, SIGNAL(triggered()), &settingsWindow, SLOT(showPageConfigView()));
-    //    // Other settings
-    //    connect(action_about_program, SIGNAL(triggered()), &settingsWindow, SLOT(showPageAboutProgram()));
-    //    connect(action_other_settings, SIGNAL(triggered()), &settingsWindow, SLOT(showPageOtherSettings()));
-    // connect(action_OtherFullScreen, &QAction::triggered, this, &MainWindow::fullScreenKey);
-
-
-
-
+    uv_interface.setConnectionMode(e_Connection::CONNECTION_SERIAL);
     serial_client = new SerialClient();
-    serial_client->start();
-
-    // connect(serial_client, SIGNAL(dataUpdatedSerialClient()), this, SLOT(updateUi()));
     connect(serial_client, SIGNAL(dataUpdatedSerialClient()), this, SLOT(updateUi()));
 
     QTimer *update_timer = new QTimer(this);
@@ -62,6 +40,13 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     // controller = new Joystick(10);
     gamepad = new Gamepad(10);
 
+    connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
+    connect(pushButton_ResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
+    connect(pushButton_ResetIMU, SIGNAL(released()), this, SLOT(clearResetImu()));
+
+    QPixmap pic(":/images/Cousteau3.png");
+    label_6->setPixmap(pic.scaled(450, 300));
+
     //    const QString ConfigFile = "protocols.conf";
     //    const QString XI = "xi";
     //    const QString KI = "ki";
@@ -69,21 +54,6 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     //    Qkx_coeffs* kProtocol = new Qkx_coeffs(ConfigFile, KI);
     //    //передача X
     //    x_protocol* xProtocol = new x_protocol(ConfigFile, XI, X);
-
-    connect(this, SIGNAL(updateCompass(double)), compassFrame, SLOT(setYaw(double)));
-    connect(pushButton_ResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
-    connect(pushButton_ResetIMU, SIGNAL(released()), this, SLOT(clearResetImu()));
-
-
-
-    //load image
-    // vehiclePic->setScene(new QGraphicsScene(vehiclePic));
-    // vehiclePic->setStyleSheet("background: transparent");
-    // vehiclePic->setRenderHint(QPainter::Antialiasing);
-    // vehiclePic->scene()->addPixmap(QPixmap(":/images/Cousteau_2A.png"));
-    QPixmap pic(":/images/Cousteau3.png");
-label_6->setPixmap(pic.scaled(450, 300));
-
 
     updateUi();
 }
