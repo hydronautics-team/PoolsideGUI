@@ -3,10 +3,10 @@
 const Gamepad::control_axis Gamepad::axis_table[] = {
         {sf::Joystick::V,       SET_MARCH,  320},
         {sf::Joystick::X,       SET_LAG,    320},
-        {sf::Joystick::U,       SET_YAW,    1},
+        {sf::Joystick::U,       SET_YAW,    320},
         {sf::Joystick::PovY,    TILT,       1.27},
-        {sf::Joystick::R,       SET_DEPTH,  1},
-        {sf::Joystick::Z,       SET_DEPTH,  1},
+        {sf::Joystick::R,       SET_DEPTH,  160},
+        {sf::Joystick::Z,       SET_DEPTH,  160},
 };
 
 const Gamepad::control_buttons Gamepad::buttons_table[] = {

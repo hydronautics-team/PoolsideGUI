@@ -84,12 +84,12 @@ public:
     e_Connection currentConnectionMode;
     e_packageMode currentPackageMode;
 
-    QString udpHostAddress;
-    quint16 udpHostPort;
+    QString udpHostAddress = "192.168.31.100";
+    quint16 udpHostPort = 7756;
 
     // Flags
     bool stabRoll;
-    bool stabYaw;
+    bool stabYaw; 
     bool stabPitch;
     bool stabDepth;
 

@@ -23,6 +23,7 @@
 
 #include "UV/iuserinterfacedata.h"
 #include "Communication/SerialClient.h"
+#include "Communication/UdpClient.h"
 #include "Control/Joystick.h"
 #include "Control/Gamepad.h"
 #include "ThrusterSettings/ThrusterWindow.h"
@@ -46,6 +47,7 @@ private:
     ThrusterWindow thrusterWindow;
 
     SerialClient* serial_client;
+    UdpClient* udp_client;
 
     QTimer* update_timer;
 

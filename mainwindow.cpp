@@ -25,13 +25,17 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     connect(checkBox_StabilizeYaw, SIGNAL(toggled(bool)), this, SLOT(stabilizeYawToggled(bool)));
     connect(checkBox_StabilizeDepth, SIGNAL(toggled(bool)), this, SLOT(stabilizeDepthToggled(bool)));
 
-    connect(radioButton_Serial, SIGNAL(clicked()), this, SLOT(connectSerialClick()));
-    connect(radioButton_UDP, SIGNAL(clicked()), this, SLOT(connectUDPClick()));
-    connect(pushButton_ReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
+    // connect(radioButton_Serial, SIGNAL(clicked()), this, SLOT(connectSerialClick()));
+    // connect(radioButton_UDP, SIGNAL(clicked()), this, SLOT(connectUDPClick()));
+    // connect(pushButton_ReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
 
-    uv_interface.setConnectionMode(e_Connection::CONNECTION_SERIAL);
-    serial_client = new SerialClient();
-    connect(serial_client, SIGNAL(dataUpdatedSerialClient()), this, SLOT(updateUi()));
+    // uv_interface.setConnectionMode(e_Connection::CONNECTION_SERIAL);
+    // serial_client = new SerialClient();
+    // connect(serial_client, SIGNAL(dataUpdatedSerialClient()), this, SLOT(updateUi()));
+
+    uv_interface.setConnectionMode(e_Connection::CONNECTION_UDP);
+    udp_client = new UdpClient();
+    connect(udp_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));
 
     QTimer *update_timer = new QTimer(this);
     connect(update_timer, SIGNAL(timeout()), this, SLOT(updateUi()));

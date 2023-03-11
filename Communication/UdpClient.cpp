@@ -4,7 +4,7 @@ UdpClient::UdpClient() {
     uv_interface = new IServerData();
 
     udpSocket = new QUdpSocket(this);
-    udpSocket->bind(QHostAddress::LocalHost, 7755);
+    udpSocket->bind(QHostAddress("192.168.31.50"), 7755);
 
     connect(udpSocket, &QUdpSocket::readyRead, this, &UdpClient::readPendingDatagrams);
 }
