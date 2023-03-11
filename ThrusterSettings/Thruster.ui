@@ -670,16 +670,16 @@
       </widget>
      </item>
      <item row="3" column="2">
-      <widget class="QSpinBox" name="SpinBox_ThrusterId">
+      <widget class="QSpinBox" name="SpinBox_ThrusterAdress">
        <property name="maximum">
         <number>7</number>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLabel" name="label_ThrusterId">
+      <widget class="QLabel" name="label_ThrusterAdress">
        <property name="text">
-        <string>Id</string>
+        <string>adress</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

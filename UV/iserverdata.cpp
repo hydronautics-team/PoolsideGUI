@@ -206,7 +206,7 @@ QByteArray IServerData::generateDirectMessage() {
 
     stream << req.type;
     stream << req.id;
-    stream << req.slot;
+    stream << req.adress;
     stream << req.velocity;
     stream << req.reverse;
     stream << req.kForward;
@@ -224,7 +224,7 @@ void IServerData::fillStructure(RequestDirectMessage& req) {
     UVState.setThrusterNext();
 
     req.id = UVState.currentThruster;
-    req.slot = UVState.thruster[UVState.currentThruster].slot;
+    req.adress = UVState.thruster[UVState.currentThruster].adress;
 
     if (UVState.thruster[UVState.currentThruster].power == false) {
         req.velocity = 0;

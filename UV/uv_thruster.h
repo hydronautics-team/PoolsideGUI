@@ -13,7 +13,7 @@ public:
     bool power = false;
 
     int id;
-    int slot;
+    int adress;
 
     double velocity;
 

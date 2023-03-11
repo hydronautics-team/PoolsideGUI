@@ -4,7 +4,7 @@ UV_Thruster::UV_Thruster() {
     name = "THRUSTER";
 
     id = 0;
-    slot = 0;
+    adress = 0;
 
     velocity = 0;
 

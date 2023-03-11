@@ -144,7 +144,7 @@ private:
         const static uint8_t type = 0xAA;
 
         uint8_t id;
-        uint8_t slot;
+        uint8_t adress;
 
         int8_t velocity;
 
