@@ -84,8 +84,10 @@ public:
     e_Connection currentConnectionMode;
     e_packageMode currentPackageMode;
 
-    QString udpHostAddress = "192.168.31.100";
-    quint16 udpHostPort = 7756;
+    QString udpHostAddress = "127.0.0.1";
+    quint16 udpHostPort = 5000;
+    QString udpRemoteAddress = "127.0.0.1";
+    quint16 udpRemotePort = 5001;
 
     // Flags
     bool stabRoll;

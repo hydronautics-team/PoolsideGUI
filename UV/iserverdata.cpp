@@ -37,6 +37,22 @@ quint16 IServerData::getUdpHostPort() {
     return udpHostPort;
 }
 
+QString IServerData::getUdpRemoteAddress() {
+    QString udpRemoteAddress;
+    UVMutex.lock();
+    udpRemoteAddress = UVState.udpRemoteAddress;
+    UVMutex.unlock();
+    return udpRemoteAddress;
+}
+
+quint16 IServerData::getUdpRemotePort() {
+    quint16 udpRemotePort;
+    UVMutex.lock();
+    udpRemotePort = UVState.udpRemotePort;
+    UVMutex.unlock();
+    return udpRemotePort;
+}
+
 e_Countour IServerData::getCurrentControlContour() {
     e_Countour currentControlContour;
 

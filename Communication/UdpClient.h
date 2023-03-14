@@ -17,17 +17,18 @@ public:
     ~UdpClient();
 
     void run();
-    int exec();
+    int send_loop();
 
 signals:
     void dataUpdated();
 
 private:
-    QUdpSocket* udpSocket;
+    QUdpSocket* receiveSocket;
+    QUdpSocket* sendSocket;
     IServerData* uv_interface;
     QTimer* timeoutTimer;
 
-    void connectToHost();
+    void connectSend();
 
 private slots:
     void readPendingDatagrams();

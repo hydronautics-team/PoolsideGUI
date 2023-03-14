@@ -21,6 +21,8 @@ public:
     int getThrusterAmount();
     QString getUdpHostAddress();
     quint16 getUdpHostPort();
+    QString getUdpRemoteAddress();
+    quint16 getUdpRemotePort();
 
     e_Countour getCurrentControlContour();
 

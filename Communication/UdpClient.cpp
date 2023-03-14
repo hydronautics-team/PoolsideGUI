@@ -3,62 +3,69 @@
 UdpClient::UdpClient() {
     uv_interface = new IServerData();
 
-    udpSocket = new QUdpSocket(this);
-    udpSocket->bind(QHostAddress("192.168.31.50"), 7755);
+    receiveSocket = new QUdpSocket(this);
+    sendSocket = new QUdpSocket(this);
 
-    connect(udpSocket, &QUdpSocket::readyRead, this, &UdpClient::readPendingDatagrams);
+    receiveSocket->bind(QHostAddress(uv_interface->getUdpRemoteAddress()), uv_interface->getUdpRemotePort());
+    connect(receiveSocket, &QUdpSocket::readyRead, this, &UdpClient::readPendingDatagrams);
+    qDebug() << "[UDP_CLIENT] Listening to "  << uv_interface->getUdpRemoteAddress() << ":" << uv_interface->getUdpRemotePort();
+    
+    run();
 }
 
 UdpClient::~UdpClient() {
-    udpSocket->close();
-    delete udpSocket;
+    receiveSocket->close();
+    sendSocket->close();
+    delete receiveSocket;
+    delete sendSocket;
     delete uv_interface;
     delete timeoutTimer;
 }
 
 void UdpClient::run() {
     try {
-        connectToHost();
+        connectSend();
     }
     catch (const std::invalid_argument& error) {
         qDebug() << "[UDP_CLIENT_ERROR] " << error.what();
     }
-    exec();
+    send_loop();
 }
 
-int UdpClient::exec() {
+int UdpClient::send_loop() {
     while (1) {
         QByteArray msg;
         msg = uv_interface->generateMessage();
-        // qDebug() << "[UDP_CLIENT] Sending message type " << messageType << "||" << msg.size();
+        qDebug() << "[UDP_CLIENT] Sending message size "  << "||" << msg.size();
 
         QNetworkDatagram datagram;
         datagram.setData(msg);
-        udpSocket->writeDatagram(datagram);
-        msleep(100);
+        sendSocket->writeDatagram(datagram);
+        msleep(1000);
     }
 }
 
 void UdpClient::readPendingDatagrams() {
-    while (udpSocket->hasPendingDatagrams()) {
-        QNetworkDatagram datagram = udpSocket->receiveDatagram();
+    qDebug() << "[UDP_CLIENT] Good";
+    while (receiveSocket->hasPendingDatagrams()) {
+        QNetworkDatagram datagram = receiveSocket->receiveDatagram();
         QByteArray msg = datagram.data();
         bool exception_caught = false;
         try {
             uv_interface->parseMessage(msg);
         }
         catch (const std::invalid_argument& error) {
-            // qDebug() << "[UDP_CLIENT_ERROR] " << error.what();
+             qDebug() << "[UDP_CLIENT_ERROR] " << error.what();
             exception_caught = true;
         }
         if (!exception_caught) {
-            // qDebug() << "[UDP_CLIENT] Message parced " << messageType << "||" << msg.size();
+             qDebug() << "[UDP_CLIENT] Message parced "  << msg.size();
             emit dataUpdated();
         }
     }
 }
 
-void UdpClient::connectToHost() {
+void UdpClient::connectSend() {
     QHostAddress udpQHostAddress;
     if (!udpQHostAddress.setAddress(uv_interface->getUdpHostAddress())) {
         std::stringstream errorStream;
@@ -68,9 +75,11 @@ void UdpClient::connectToHost() {
         return;
     }
 
-    udpSocket->connectToHost(udpQHostAddress, uv_interface->getUdpHostPort());
+    sendSocket->connectToHost(udpQHostAddress, uv_interface->getUdpHostPort());
+    qDebug() << "[UDP_CLIENT] Send socket connected to "  << uv_interface->getUdpHostAddress() << ":" << uv_interface->getUdpHostPort();
 
-    if (!udpSocket->waitForConnected(1000)) {
+    if (!sendSocket->waitForConnected(1)) {
         throw std::invalid_argument("Can't connect to host, connection timeout");
     }
+    qDebug() << "[UDP_CLIENT] Connected";
 }

@@ -20,9 +20,6 @@ ControlData::ControlData() {
 };
 
 UV_State::UV_State() {
-    udpHostAddress = "127.0.0.1";
-    udpHostPort = 7755;
-
     resetImu = false;
 
     stabRoll = false;
