@@ -15,7 +15,7 @@ public:
     int id;
     int adress;
 
-    double velocity;
+    int8_t velocity;
 
     bool reverse;
     int8_t kForward;
