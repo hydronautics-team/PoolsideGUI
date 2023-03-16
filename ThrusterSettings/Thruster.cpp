@@ -9,7 +9,7 @@ Thruster::Thruster(QWidget *parent) :
 
     //change parameters
     connect(ui->CheckBox_ThrusterPower, SIGNAL(stateChanged(int)), this, SLOT(powerCheckBoxChanged(int)));
-    connect(ui->SpinBox_ThrusterId, SIGNAL(valueChanged(int)), this, SLOT(idChanged(int)));
+    connect(ui->SpinBox_ThrusterId, SIGNAL(valueChanged(int)), this, SLOT(slotChanged(int)));
     connect(ui->SpinBox_ThrusterSetSpeed, SIGNAL(valueChanged(int)), this, SLOT(speedChanged(int)));
     connect(ui->DoubleSpinBox_SetForwardK, SIGNAL(valueChanged(double)), this, SLOT(forwardKChanged(double)));
     connect(ui->DoubleSpinBox_SetBackwardK, SIGNAL(valueChanged(double)), this, SLOT(backwardKChanged(double)));
@@ -87,14 +87,14 @@ void Thruster::powerCheckBoxChanged(int power) {
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
 
-void Thruster::idChanged(int id) {
+void Thruster::slotChanged(int id) {
     ui->SpinBox_ThrusterSetSpeed->setValue(0); // обнулям, чтобы не крутились не нужные движки
     ThisThruster.velocity = 0;
     emit parametorsChanged(ThrusterJson, ThisThruster);
 
     if (autoSave == true) ThrusterJson["id"] = id;
 
-    ThisThruster.id = id;
+    ThisThruster.slot = id;
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
 

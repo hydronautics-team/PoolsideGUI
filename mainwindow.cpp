@@ -80,9 +80,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     // vehiclePic->setRenderHint(QPainter::Antialiasing);
     // vehiclePic->scene()->addPixmap(QPixmap(":/images/Cousteau_2A.png"));
     QPixmap pic(":/images/Cousteau3.png");
-label_6->setPixmap(pic.scaled(450, 300));
-
-
+    label_6->setPixmap(pic.scaled(450, 300));
     updateUi();
 }
 

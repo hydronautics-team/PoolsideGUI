@@ -50,7 +50,7 @@ public slots:
 private slots:
     void powerCheckBoxChanged(int power);
 
-    void idChanged(int id);
+    void slotChanged(int slot);
     void speedChanged(int speed);
     void forwardKChanged(double forwardK);
     void backwardKChanged(double backwardK);

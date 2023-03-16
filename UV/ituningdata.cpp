@@ -18,7 +18,7 @@ int ITuningData::getThrusterAmount() {
 }
 
 void ITuningData::setThrusterData(int slot, UV_Thruster data) {
-    if (slot < UVState.getThrusterAmount()) {
+    if (slot < UVState.getThrusterAmount() ) {
         UVMutex.lock();
         UVState.thruster[slot] = data;
         UVMutex.unlock();
