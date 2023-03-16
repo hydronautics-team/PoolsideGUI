@@ -23,7 +23,8 @@ signals:
     void dataUpdated();
 
 private:
-    QUdpSocket* udpSocket;
+    QUdpSocket* senderSocket;
+    QUdpSocket* receiverSocket;
     IServerData* uv_interface;
     QTimer* timeoutTimer;
 

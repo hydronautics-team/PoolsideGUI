@@ -266,6 +266,7 @@ void IServerData::parseNormalMessage(QByteArray msg) {
     stream.setByteOrder(QDataStream::LittleEndian);
     stream.setFloatingPointPrecision(QDataStream::SinglePrecision);
 
+
     stream >> res.roll;
     stream >> res.pitch;
     stream >> res.yaw;
@@ -277,15 +278,15 @@ void IServerData::parseNormalMessage(QByteArray msg) {
 
     stream >> res.checksum;
 
-    if (res.checksum != checksum_calc) {
-        qDebug() << "Checksum NormalMessage is invalid";
-        std::stringstream stream;
-        stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
-            std::ios::hex << checksum_calc << "] " <<
-            "Received: [" <<
-            std::ios::hex << res.checksum << "]";
-        throw std::invalid_argument(stream.str());
-    }
+    // if (res.checksum != checksum_calc) {
+    //     qDebug() << "Checksum NormalMessage is invalid";
+    //     std::stringstream stream;
+    //     stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
+    //         std::ios::hex << checksum_calc << "] " <<
+    //         "Received: [" <<
+    //         std::ios::hex << res.checksum << "]";
+    //     throw std::invalid_argument(stream.str());
+    // }
 
     pullFromStructure(res);
 }
@@ -297,6 +298,13 @@ void IServerData::pullFromStructure(ResponseNormalMessage res) {
     UVState.imu.pitch = res.pitch;
     UVState.imu.yaw = res.yaw;
     UVState.imu.depth = res.depth;
+    // qDebug() << "res.roll" <<res.roll;
+    // qDebug() << "res.pitch" <<res.pitch;
+    // qDebug() << "res.pitch" <<res.yaw;
+    // qDebug() << "res.pitch" <<res.depth;
+    // qDebug() << "res.pitch" <<res.rollSpeed;
+    // qDebug() << "res.pitch" <<res.pitchSpeed;
+    // qDebug() << "res.pitch" <<res.yawSpeed;
 
     UVState.imu.rollSpeed = res.rollSpeed;
     UVState.imu.pitchSpeed = res.pitchSpeed;

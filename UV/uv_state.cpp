@@ -20,8 +20,8 @@ ControlData::ControlData() {
 };
 
 UV_State::UV_State() {
-    udpHostAddress = "127.0.0.1";
-    udpHostPort = 7755;
+    udpHostAddress = "192.168.31.100";
+    udpHostPort = 5000;
 
     resetImu = false;
 
