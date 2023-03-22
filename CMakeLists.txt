@@ -10,8 +10,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 COMPONENTS REQUIRED Core Gui Widgets SerialPort Network)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Widgets SerialPort Network)
+find_package(QT NAMES Qt6 COMPONENTS REQUIRED Core Gui Widgets SerialPort Network Multimedia MultimediaWidgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Widgets SerialPort Network Multimedia MultimediaWidgets)
 
 include_directories("${PROJECT_SOURCE_DIR}/Communication")
 include_directories("${PROJECT_SOURCE_DIR}/Control")
@@ -66,12 +66,19 @@ add_executable(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
         sfml-graphics sfml-window sfml-system
+        gstreamer-1.0
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::SerialPort
         Qt${QT_VERSION_MAJOR}::Network
+        Qt${QT_VERSION_MAJOR}::Multimedia
+        Qt${QT_VERSION_MAJOR}::MultimediaWidgets
 )
+
+# target_link_libraries(${PROJECT_NAME} PUBLIC
+#         lglib-2.0
+# )
 
 set(CMAKE_AUTOUIC_SEARCH_PATHS
         PicFrame

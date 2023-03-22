@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     udp_client = new UdpClient();
     connect(udp_client, SIGNAL(dataUpdated()), this, SLOT(updateUi()));
 
-    QTimer *update_timer = new QTimer(this);
+    QTimer* update_timer = new QTimer(this);
     connect(update_timer, SIGNAL(timeout()), this, SLOT(updateUi()));
     update_timer->start(10);
 
@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     connect(pushButton_ResetIMU, SIGNAL(released()), this, SLOT(clearResetImu()));
 
     QPixmap pic(":/images/Cousteau3.png");
-    label_6->setPixmap(pic.scaled(450, 300));
+    label_gstreamer->setPixmap(pic.scaled(450, 300));
 
     //    const QString ConfigFile = "protocols.conf";
     //    const QString XI = "xi";
@@ -60,6 +60,21 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     //    x_protocol* xProtocol = new x_protocol(ConfigFile, XI, X);
 
     updateUi();
+
+// GstElement *pipeline_2= gst_parse_launch("udpsrc  port=8900 ! application/x-rtp, encoding-name=JPEG,payload=96 ! rtpjpegdepay ! jpegdec ! videoconvert ! autovideosink name=mySink", NULL);
+
+// GstElement *sink = gst_bin_get_by_name((GstBin*)pipeline_2,"mySink");
+
+// QWidget *window = new QWidget();
+// window->setWindowTitle("udpsrc video stream");
+// window->resize(700, 700);
+
+// WId xwinid = window->winId();
+// gst_video_overlay_set_window_handle (GST_VIDEO_OVERLAY (sink), (guintptr)xwinid);
+
+// window->show();
+// GstStateChangeReturn sret = gst_element_set_state (pipeline_2, GST_STATE_PLAYING);
+
 }
 
 void MainWindow::fullScreenKey() {
@@ -114,20 +129,20 @@ void MainWindow::clearResetImu() {
 }
 
 void MainWindow::normalPackageClick() {
-        radioButton_PackageDirect->setChecked(false);
-        radioButton_PackageConfig->setChecked(false);
+    radioButton_PackageDirect->setChecked(false);
+    radioButton_PackageConfig->setChecked(false);
     uv_interface.setPackegeMode(PACKAGE_NORMAL);
 }
 
 void MainWindow::configPackageClick() {
-        radioButton_PackageNormal->setChecked(false);
-        radioButton_PackageDirect->setChecked(false);
+    radioButton_PackageNormal->setChecked(false);
+    radioButton_PackageDirect->setChecked(false);
     uv_interface.setPackegeMode(PACKAGE_CONFIG);
 }
 
 void MainWindow::directPackageClick() {
-        radioButton_PackageNormal->setChecked(false);
-        radioButton_PackageConfig->setChecked(false);
+    radioButton_PackageNormal->setChecked(false);
+    radioButton_PackageConfig->setChecked(false);
     uv_interface.setPackegeMode(PACKAGE_DIRECT);
 }
 

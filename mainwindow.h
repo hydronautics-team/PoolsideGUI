@@ -14,6 +14,9 @@
 #include <QThread>
 #include <QTimer>
 #include <QPixmap>
+#include <QMediaPlayer>
+#include <QVideoWidget>
+// #include <gstreamer-1.0/gst/gst.h>
 
 
 #include "KX_Pult/kx_protocol.h"
@@ -52,6 +55,9 @@ private:
     QTimer* update_timer;
 
     IUserInterfaceData uv_interface;
+
+    QMediaPlayer* player;
+    QVideoWidget* videoWidget;
 private slots:
     // void updateVehiclesMenu();
     void stabilizeRollToggled(bool state);
