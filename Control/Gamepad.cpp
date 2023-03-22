@@ -4,6 +4,7 @@ const Gamepad::control_axis Gamepad::axis_table[] = {
         {sf::Joystick::V,       SET_MARCH,  -320},
         {sf::Joystick::X,       SET_LAG,    -320},
         {sf::Joystick::U,       SET_YAW,    80},
+        {sf::Joystick::Y,       SET_PITCH,  80},
         {sf::Joystick::PovY,    TILT,       1.27},
         {sf::Joystick::R,       SET_DEPTH,  160},
         {sf::Joystick::Z,       SET_DEPTH,  160},
@@ -29,8 +30,8 @@ void Gamepad::updateDevice() {
     }
 
     sendAction(SET_DEPTH,
-        (sf::Joystick::getAxisPosition(id, axis_table[4].axis) * axis_table[4].multiplier) -
-        (sf::Joystick::getAxisPosition(id, axis_table[5].axis) * axis_table[5].multiplier));
+        (sf::Joystick::getAxisPosition(id, axis_table[5].axis) * axis_table[5].multiplier) -
+        (sf::Joystick::getAxisPosition(id, axis_table[6].axis) * axis_table[6].multiplier));
 
     for (unsigned int i = 0; i < sizeof(buttons_table) / sizeof(buttons_table[0]); i++) {
         if (sf::Joystick::isButtonPressed(id, buttons_table[i].button_id) and
