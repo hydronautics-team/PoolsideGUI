@@ -14,17 +14,6 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     connect(action_SettingsThruster, SIGNAL(triggered()), &thrusterWindow, SLOT(show()));
     connect(action_SettingsControlSystem, SIGNAL(triggered()), &stabilizationWindow, SLOT(show()));
 
-    // Package Type Changed
-    connect(radioButton_PackageNormal, SIGNAL(clicked()), this, SLOT(normalPackageClick()));
-    connect(radioButton_PackageDirect, SIGNAL(clicked()), this, SLOT(directPackageClick()));
-    connect(radioButton_PackageConfig, SIGNAL(clicked()), this, SLOT(configPackageClick()));
-    radioButton_PackageNormal->setChecked(true); // default Connection type
-
-    connect(checkBox_StabilizeRoll, SIGNAL(toggled(bool)), this, SLOT(stabilizeRollToggled(bool)));
-    connect(checkBox_StabilizePitch, SIGNAL(toggled(bool)), this, SLOT(stabilizePitchToggled(bool)));
-    connect(checkBox_StabilizeYaw, SIGNAL(toggled(bool)), this, SLOT(stabilizeYawToggled(bool)));
-    connect(checkBox_StabilizeDepth, SIGNAL(toggled(bool)), this, SLOT(stabilizeDepthToggled(bool)));
-
     // connect(radioButton_Serial, SIGNAL(clicked()), this, SLOT(connectSerialClick()));
     // connect(radioButton_UDP, SIGNAL(clicked()), this, SLOT(connectUDPClick()));
     // connect(pushButton_ReconnectROV, SIGNAL(clicked()), this, SLOT(reconnectcROVclick()));
@@ -48,9 +37,6 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     connect(pushButton_ResetIMU, SIGNAL(pressed()), this, SLOT(resetImu()));
     connect(pushButton_ResetIMU, SIGNAL(released()), this, SLOT(clearResetImu()));
 
-    QPixmap pic(":/images/Cousteau3.png");
-    label_gstreamer->setPixmap(pic.scaled(450, 300));
-
     //    const QString ConfigFile = "protocols.conf";
     //    const QString XI = "xi";
     //    const QString KI = "ki";
@@ -60,21 +46,6 @@ MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
     //    x_protocol* xProtocol = new x_protocol(ConfigFile, XI, X);
 
     updateUi();
-
-// GstElement *pipeline_2= gst_parse_launch("udpsrc  port=8900 ! application/x-rtp, encoding-name=JPEG,payload=96 ! rtpjpegdepay ! jpegdec ! videoconvert ! autovideosink name=mySink", NULL);
-
-// GstElement *sink = gst_bin_get_by_name((GstBin*)pipeline_2,"mySink");
-
-// QWidget *window = new QWidget();
-// window->setWindowTitle("udpsrc video stream");
-// window->resize(700, 700);
-
-// WId xwinid = window->winId();
-// gst_video_overlay_set_window_handle (GST_VIDEO_OVERLAY (sink), (guintptr)xwinid);
-
-// window->show();
-// GstStateChangeReturn sret = gst_element_set_state (pipeline_2, GST_STATE_PLAYING);
-
 }
 
 void MainWindow::fullScreenKey() {
@@ -91,7 +62,17 @@ void MainWindow::updateUi() {
     // Get data from UVState object
     ImuData sensors = uv_interface.getImuData();
 
+sensors.yaw = sensors.yaw/2;
     // Update user interface
+    prev_yaw = label_TelemetryYaw->text().toDouble();
+
+
+    if (prev_yaw > 150 and prev_yaw < 180 and sensors.yaw < 30) yaw_plus180 = true;
+    if (prev_yaw > 330 and sensors.yaw < 30) yaw_plus180 = false;
+
+    if (prev_yaw < 30 and sensors.yaw > 150) yaw_plus180 = true;
+    if (prev_yaw > 180 and prev_yaw < 210 and sensors.yaw > 150) yaw_plus180 = false;
+
     progressBar_Depth->setValue(static_cast<int>(sensors.depth));
     progressBar_Pitch->setValue(static_cast<int>(sensors.pitch));
 
@@ -100,11 +81,11 @@ void MainWindow::updateUi() {
 
     label_TelemetryRoll->setText(QString::number(sensors.roll, 'f', 2));
     label_TelemetryPitch->setText(QString::number(sensors.pitch, 'f', 2));
-    label_TelemetryYaw->setText(QString::number(sensors.yaw, 'f', 2));
+    label_TelemetryYaw->setText(QString::number(sensors.yaw + (180 * yaw_plus180), 'f', 2));
     label_TelemetryDepth->setText(QString::number(sensors.depth, 'f', 2));
 
     // Update drawing of a compass
-    emit updateCompass(sensors.yaw);
+    emit updateCompass(sensors.yaw + (180 * yaw_plus180));
 
     ControlData control = uv_interface.getControlData();
     label_ImpactMarch->setText(QString::number(control.march, 'f', 2));
@@ -128,36 +109,3 @@ void MainWindow::clearResetImu() {
     uv_interface.setResetImu(false);
 }
 
-void MainWindow::normalPackageClick() {
-    radioButton_PackageDirect->setChecked(false);
-    radioButton_PackageConfig->setChecked(false);
-    uv_interface.setPackegeMode(PACKAGE_NORMAL);
-}
-
-void MainWindow::configPackageClick() {
-    radioButton_PackageNormal->setChecked(false);
-    radioButton_PackageDirect->setChecked(false);
-    uv_interface.setPackegeMode(PACKAGE_CONFIG);
-}
-
-void MainWindow::directPackageClick() {
-    radioButton_PackageNormal->setChecked(false);
-    radioButton_PackageConfig->setChecked(false);
-    uv_interface.setPackegeMode(PACKAGE_DIRECT);
-}
-
-void MainWindow::stabilizeRollToggled(bool state) {
-    uv_interface.setStabRoll(state);
-}
-
-void MainWindow::stabilizePitchToggled(bool state) {
-    uv_interface.setStabPitch(state);
-}
-
-void MainWindow::stabilizeYawToggled(bool state) {
-    uv_interface.setStabYaw(state);
-}
-
-void MainWindow::stabilizeDepthToggled(bool state) {
-    uv_interface.setStabDepth(state);
-}

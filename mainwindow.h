@@ -14,10 +14,6 @@
 #include <QThread>
 #include <QTimer>
 #include <QPixmap>
-#include <QMediaPlayer>
-#include <QVideoWidget>
-// #include <gstreamer-1.0/gst/gst.h>
-
 
 #include "KX_Pult/kx_protocol.h"
 #include "KX_Pult/qkx_coeffs.h"
@@ -56,28 +52,14 @@ private:
 
     IUserInterfaceData uv_interface;
 
-    QMediaPlayer* player;
-    QVideoWidget* videoWidget;
+    bool yaw_plus180;
+    double prev_yaw;
+
 private slots:
-    // void updateVehiclesMenu();
-    void stabilizeRollToggled(bool state);
-    void stabilizePitchToggled(bool state);
-    void stabilizeYawToggled(bool state);
-    void stabilizeDepthToggled(bool state);
-
-    void normalPackageClick();
-    void configPackageClick();
-    void directPackageClick();
-
     void updateUi();
 
     void resetImu();
     void clearResetImu();
-
-    // menu actions
-    // void createVehicle();
-    // void chooseVehicle(QAction *action);
-    // void chooseConfiguration(QAction *action);
 
     // full screen key combination
     void fullScreenKey();
@@ -85,8 +67,6 @@ private slots:
     //Other buttons
     // void reconnectcROVclick();
 
-
-    // void ConnectionTypeChanged(e_MessageTypes connectionType);
 
 };
 
