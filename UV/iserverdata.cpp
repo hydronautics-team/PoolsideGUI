@@ -323,7 +323,7 @@ void IServerData::pullFromStructure(ResponseNormalMessage res) {
 
 void IServerData::parseConfigMessage(QByteArray msg) {
     ResponseConfigMessage res;
-    uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size() - 2);
+    uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size());
 
     QDataStream stream(&msg, QIODeviceBase::ReadOnly);
     stream.setByteOrder(QDataStream::LittleEndian);
@@ -431,12 +431,14 @@ void IServerData::pullFromStructure(ResponseDirectMessage res) {
 
 /* CRC16-CCITT algorithm */
 uint16_t getCheckSumm16b(char* pcBlock, int len) {
+    if (len <= 2) return 0; //проверяем длину сообщения
+    len -= 2; //уменьшаем размер на два элемента, так как 2 последних элемента не должны высчитываться в коде
     uint16_t crc = 0xFFFF;
     //int crc_fix = reinterpret_cast<int*>(&crc);
     uint8_t i;
 
     while (len--) {
-        crc ^= *pcBlock++ << 8;
+        crc ^= *(pcBlock++) << 8;
 
         for (i = 0; i < 8; i++)
             crc = crc & 0x8000 ? (crc << 1) ^ 0x1021 : crc << 1;
