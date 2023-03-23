@@ -87,9 +87,11 @@ public:
     QString udpHostAddress = "192.168.31.100";
     quint16 udpHostPort = 7756;
 
+    float integratedDepth;
+
     // Flags
     bool stabRoll;
-    bool stabYaw; 
+    bool stabYaw;
     bool stabPitch;
     bool stabDepth;
 

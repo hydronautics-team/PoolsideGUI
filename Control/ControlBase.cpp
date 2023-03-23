@@ -46,6 +46,10 @@ void ControlBase::sendAction(e_actionTypes type, int8_t value) {
     case GRAB_ROTATE:
         setGrabRotate(value);
         break;
+
+    case DEPTH_SENSOR:
+        setDepthSensor(value);
+        break;
     }
 }
 
@@ -83,5 +87,9 @@ void ControlBase::setGrabRotate(int8_t value) {
 
 void ControlBase::setTilt(int8_t value) {
     interface.setDeviceVelocity(e_Device::DEVICE_TILT, value);
+}
+
+void ControlBase::setDepthSensor(int8_t value) {
+    interface.setDepthIntegration(value);
 }
 

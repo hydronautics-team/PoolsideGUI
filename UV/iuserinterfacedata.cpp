@@ -35,6 +35,16 @@ double IUserInterfaceData::getDeviceVelocity(e_Device device) {
     return data;
 }
 
+float IUserInterfaceData::getIntegratedDepth() {
+    float data;
+
+    UVMutex.lock();
+    data = UVState.integratedDepth;
+    UVMutex.unlock();
+
+    return data;
+}
+
 void IUserInterfaceData::setPackegeMode(e_packageMode packageMode) {
     UVMutex.lock();
     UVState.currentPackageMode = packageMode;

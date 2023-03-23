@@ -17,6 +17,8 @@ public:
     void setPitch(double pitch);
     void setYaw(double yaw);
     void setDeviceVelocity(e_Device device, double velocity);
+
+    void setDepthIntegration(float value);
 };
 
 #endif // ICONTROLDATA_H

@@ -572,7 +572,7 @@
             </sizepolicy>
            </property>
            <property name="maximum">
-            <number>10</number>
+            <number>1000</number>
            </property>
            <property name="value">
             <number>3</number>

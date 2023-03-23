@@ -11,6 +11,7 @@ public:
     ControlData getControlData();
     ImuData getImuData();
     double getDeviceVelocity(e_Device device);
+    float getIntegratedDepth();
 
     void setPackegeMode(e_packageMode packageMode);
     void setConnectionMode(e_Connection connectionMode);

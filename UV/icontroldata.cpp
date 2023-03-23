@@ -1,7 +1,7 @@
 #include "icontroldata.h"
 
-IControlData::IControlData() :
-        IBasicData() {
+IControlData::IControlData():
+    IBasicData() {
 
 }
 
@@ -50,5 +50,11 @@ void IControlData::setYaw(double yaw) {
 void IControlData::setDeviceVelocity(e_Device device, double velocity) {
     UVMutex.lock();
     UVState.device[device].velocity = velocity;
+    UVMutex.unlock();
+}
+
+void IControlData::setDepthIntegration(float value) {
+    UVMutex.lock();
+    UVState.integratedDepth += (value / 150);
     UVMutex.unlock();
 }

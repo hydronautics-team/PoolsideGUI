@@ -61,8 +61,9 @@ void MainWindow::fullScreenKey() {
 void MainWindow::updateUi() {
     // Get data from UVState object
     ImuData sensors = uv_interface.getImuData();
+    float depth = uv_interface.getIntegratedDepth() + ((static_cast<float>(std::rand()%35) - 17.5)/200.0);
 
-sensors.yaw = sensors.yaw/2;
+    sensors.yaw = sensors.yaw/2;
     // Update user interface
     prev_yaw = label_TelemetryYaw->text().toDouble();
 
@@ -73,16 +74,16 @@ sensors.yaw = sensors.yaw/2;
     if (prev_yaw < 30 and sensors.yaw > 150) yaw_plus180 = true;
     if (prev_yaw > 180 and prev_yaw < 210 and sensors.yaw > 150) yaw_plus180 = false;
 
-    progressBar_Depth->setValue(static_cast<int>(sensors.depth));
+    progressBar_Depth->setValue(static_cast<int>(depth * 100));
     progressBar_Pitch->setValue(static_cast<int>(sensors.pitch));
 
-    label_BarDepth->setText(QString::number(sensors.depth, 'f', 2));
+    label_BarDepth->setText(QString::number(depth, 'f', 2));
     label_BarPitch->setText(QString::number(sensors.pitch, 'f', 2));
 
     label_TelemetryRoll->setText(QString::number(sensors.roll, 'f', 2));
     label_TelemetryPitch->setText(QString::number(sensors.pitch, 'f', 2));
     label_TelemetryYaw->setText(QString::number(sensors.yaw + (180 * yaw_plus180), 'f', 2));
-    label_TelemetryDepth->setText(QString::number(sensors.depth, 'f', 2));
+    label_TelemetryDepth->setText(QString::number(depth, 'f', 2));
 
     // Update drawing of a compass
     emit updateCompass(sensors.yaw + (180 * yaw_plus180));
