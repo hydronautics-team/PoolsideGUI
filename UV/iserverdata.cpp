@@ -109,13 +109,23 @@ void IServerData::fillStructure(RequestNormalMessage& req) {
     set_bit(req.flags, 4, UVState.resetImu);
     set_bit(req.flags, 5, UVState.thrustersON);
 
-    req.march = UVState.control.march;
-    req.lag = UVState.control.lag;
-    req.depth = UVState.control.depth;
-    req.roll = UVState.control.roll;
-    req.pitch = UVState.control.pitch;
-    req.yaw = UVState.control.yaw;
-
+    if (UVState.thrustersON) {
+        req.march = UVState.control.march;
+        req.lag = UVState.control.lag;
+        req.depth = UVState.control.depth;
+        req.roll = UVState.control.roll;
+        req.pitch = UVState.control.pitch;
+        req.yaw = UVState.control.yaw;
+    } else {
+        req.march = 0;
+        req.lag = 0;
+        req.depth = 0;
+        req.roll = 0;
+        req.pitch = 0;
+        req.yaw = 0;
+    }
+    qDebug() << "req.march" << req.march;
+    
     for (int i = 0; i < 6; i++) {
         req.dev[i] = UVState.device[i].velocity;
     }

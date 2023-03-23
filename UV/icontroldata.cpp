@@ -58,3 +58,13 @@ void IControlData::setDepthIntegration(float value) {
     UVState.integratedDepth += (value / 150);
     UVMutex.unlock();
 }
+
+void IControlData::setThrustersON(int thrustersON) {
+    UVMutex.lock();
+    if (thrustersON < 0) {
+        UVState.thrustersON = false;
+    } else {
+        UVState.thrustersON = true;
+    }
+    UVMutex.unlock();
+}

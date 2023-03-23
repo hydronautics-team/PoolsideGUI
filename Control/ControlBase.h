@@ -23,7 +23,8 @@ protected:
         GRAB,
         GRAB_ROTATE,
         TILT,
-        DEPTH_SENSOR
+        DEPTH_SENSOR,
+        THRUSTERS_ON
     };
 
     void sendAction(e_actionTypes type, float value);
@@ -40,6 +41,7 @@ protected:
     void setGrabRotate(int8_t value);
     void setTilt(int8_t value);
     void setDepthSensor(int8_t value);
+    void setThrustersON(int8_t value);
 
 private:
     IControlData interface;

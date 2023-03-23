@@ -24,6 +24,7 @@ UV_State::UV_State() {
     udpHostPort = 5000;
 
     integratedDepth = 0;
+    thrustersON = true;
 
     resetImu = false;
 

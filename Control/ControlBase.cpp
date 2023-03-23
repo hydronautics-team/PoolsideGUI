@@ -50,6 +50,10 @@ void ControlBase::sendAction(e_actionTypes type, int8_t value) {
     case DEPTH_SENSOR:
         setDepthSensor(value);
         break;
+
+    case THRUSTERS_ON:
+        setThrustersON(value);
+        break;
     }
 }
 
@@ -93,3 +97,9 @@ void ControlBase::setDepthSensor(int8_t value) {
     interface.setDepthIntegration(value);
 }
 
+void ControlBase::setThrustersON(int8_t value) {
+    if (value != 0) {
+        interface.setThrustersON(value);
+    }
+    // qDebug() << " setThrustersON " << value;
+}

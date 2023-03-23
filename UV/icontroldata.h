@@ -19,6 +19,7 @@ public:
     void setDeviceVelocity(e_Device device, double velocity);
 
     void setDepthIntegration(float value);
+    void setThrustersON (int thrustersON);
 };
 
 #endif // ICONTROLDATA_H

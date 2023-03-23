@@ -11,9 +11,10 @@ const Gamepad::control_axis Gamepad::axis_table[] = {
 };
 
 const Gamepad::control_buttons Gamepad::buttons_table[] = {
-        {0, 3, GRAB,        127},
-        {2, 1, GRAB_ROTATE, 127},
-        {5, 4, DEPTH_SENSOR,1},
+        {0,     3,  GRAB,           127},
+        {2,     1,  THRUSTERS_ON,   127},
+        {5,     4,  DEPTH_SENSOR,   -1},
+        // {11,    10, THRUSTERS_ON,   1},
 };
 
 Gamepad::Gamepad(int updateTimeMs): ControlBase("Gamepad") {
@@ -41,9 +42,16 @@ void Gamepad::updateDevice() {
             continue;
         } else if (sf::Joystick::isButtonPressed(id, buttons_table[i].button_id)) {
             sendAction(buttons_table[i].action, buttons_table[i].setterValue);
+            if (i == 3) {
+                qDebug() << "buttons_table[i].button_id 3 " << buttons_table[i].button_id;
+            }
             continue;
         } else if (sf::Joystick::isButtonPressed(id, buttons_table[i].button_idReverse)) {
             sendAction(buttons_table[i].action, static_cast<int8_t>(-buttons_table[i].setterValue));
+            if (i == 3) {
+                qDebug() << "buttons_table[i].button_idReverse 3 " << buttons_table[i].button_id;
+            }
+
             continue;
         } else {
             sendAction(buttons_table[i].action, static_cast<int8_t>(0));
