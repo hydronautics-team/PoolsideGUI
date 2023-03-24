@@ -62,6 +62,7 @@ void MainWindow::updateUi() {
     // Get data from UVState object
     ImuData sensors = uv_interface.getImuData();
     float depth = uv_interface.getIntegratedDepth() + ((static_cast<float>(std::rand()%35) - 17.5)/200.0);
+    float yaw = uv_interface.getIntegratedYaw() + ((static_cast<float>(std::rand()%35) - 17.5)/5.0);
 
     sensors.yaw = sensors.yaw/2;
     // Update user interface
@@ -80,13 +81,15 @@ void MainWindow::updateUi() {
     label_BarDepth->setText(QString::number(depth, 'f', 2));
     label_BarPitch->setText(QString::number(sensors.pitch, 'f', 2));
 
-    label_TelemetryRoll->setText(QString::number(sensors.roll, 'f', 2));
-    label_TelemetryPitch->setText(QString::number(sensors.pitch, 'f', 2));
-    label_TelemetryYaw->setText(QString::number(sensors.yaw + (180 * yaw_plus180), 'f', 2));
+    // label_TelemetryRoll->setText(QString::number(sensors.roll, 'f', 2));
+    // label_TelemetryPitch->setText(QString::number(sensors.pitch, 'f', 2));
+    label_TelemetryYaw->setText(QString::number(yaw, 'f', 2));
+    // label_TelemetryYaw->setText(QString::number(sensors.yaw + (180 * yaw_plus180), 'f', 2));
     label_TelemetryDepth->setText(QString::number(depth, 'f', 2));
 
     // Update drawing of a compass
-    emit updateCompass(sensors.yaw + (180 * yaw_plus180));
+    emit updateCompass(yaw);
+    // emit updateCompass(sensors.yaw + (180 * yaw_plus180));
 
     ControlData control = uv_interface.getControlData();
     label_ImpactMarch->setText(QString::number(control.march, 'f', 2));

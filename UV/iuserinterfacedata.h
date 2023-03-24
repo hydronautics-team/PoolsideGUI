@@ -12,6 +12,7 @@ public:
     ImuData getImuData();
     double getDeviceVelocity(e_Device device);
     float getIntegratedDepth();
+    float getIntegratedYaw();
 
     void setPackegeMode(e_packageMode packageMode);
     void setConnectionMode(e_Connection connectionMode);

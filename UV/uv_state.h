@@ -88,6 +88,7 @@ public:
     quint16 udpHostPort = 7756;
 
     float integratedDepth;
+    float integratedYaw;
 
     // Flags
     bool stabRoll;

@@ -1,19 +1,19 @@
 #include "Gamepad.h"
 
 const Gamepad::control_axis Gamepad::axis_table[] = {
-        {sf::Joystick::V,       SET_MARCH,  -320},
-        {sf::Joystick::X,       SET_LAG,    -320},
+        {sf::Joystick::V,       SET_MARCH,  -300},
+        {sf::Joystick::X,       SET_LAG,    -150},
         {sf::Joystick::U,       SET_YAW,    80},
         {sf::Joystick::Y,       SET_PITCH,  120},
         {sf::Joystick::PovY,    TILT,       1.27},
-        {sf::Joystick::R,       SET_DEPTH,  160},
-        {sf::Joystick::Z,       SET_DEPTH,  160},
+        {sf::Joystick::R,       SET_DEPTH,  120},
+        {sf::Joystick::Z,       SET_DEPTH,  120},
 };
 
 const Gamepad::control_buttons Gamepad::buttons_table[] = {
-        {0,     3,  GRAB,           127},
+        {0,     3,  GRAB,           -127},
         {2,     1,  THRUSTERS_ON,   127},
-        {5,     4,  DEPTH_SENSOR,   -1},
+        {5,     4,  DEPTH_SENSOR,   1},
         // {11,    10, THRUSTERS_ON,   1},
 };
 

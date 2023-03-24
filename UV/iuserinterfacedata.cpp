@@ -45,6 +45,16 @@ float IUserInterfaceData::getIntegratedDepth() {
     return data;
 }
 
+float IUserInterfaceData::getIntegratedYaw() {
+    float data;
+
+    UVMutex.lock();
+    data = UVState.integratedYaw;
+    UVMutex.unlock();
+
+    return data;
+}
+
 void IUserInterfaceData::setPackegeMode(e_packageMode packageMode) {
     UVMutex.lock();
     UVState.currentPackageMode = packageMode;

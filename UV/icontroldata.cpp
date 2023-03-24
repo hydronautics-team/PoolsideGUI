@@ -44,6 +44,7 @@ void IControlData::setPitch(double pitch) {
 void IControlData::setYaw(double yaw) {
     UVMutex.lock();
     UVState.control.yaw = yaw;
+    UVState.integratedYaw += yaw/10000;
     UVMutex.unlock();
 }
 
@@ -55,7 +56,12 @@ void IControlData::setDeviceVelocity(e_Device device, double velocity) {
 
 void IControlData::setDepthIntegration(float value) {
     UVMutex.lock();
-    UVState.integratedDepth += (value / 150);
+    if (UVState.integratedDepth < 3.86) {
+            UVState.integratedDepth += (value / 150);
+    } else {
+        UVState.integratedDepth = 3.86;
+    }
+
     UVMutex.unlock();
 }
 

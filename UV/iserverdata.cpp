@@ -124,8 +124,8 @@ void IServerData::fillStructure(RequestNormalMessage& req) {
         req.pitch = 0;
         req.yaw = 0;
     }
-    qDebug() << "req.march" << req.march;
-    
+    // qDebug() << "req.march" << req.march;
+
     for (int i = 0; i < 6; i++) {
         req.dev[i] = UVState.device[i].velocity;
     }

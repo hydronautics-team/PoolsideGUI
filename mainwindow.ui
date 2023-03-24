@@ -915,20 +915,6 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QLabel" name="label_9">
-             <property name="text">
-              <string>Roll</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_10">
-             <property name="text">
-              <string>Pitch</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QLabel" name="label_11">
              <property name="text">
               <string>Yaw</string>
@@ -946,20 +932,6 @@
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_6">
-           <item>
-            <widget class="QLabel" name="label_TelemetryRoll">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_TelemetryPitch">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
            <item>
             <widget class="QLabel" name="label_TelemetryYaw">
              <property name="text">
