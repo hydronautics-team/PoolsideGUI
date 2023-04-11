@@ -15,6 +15,8 @@
 #include <QTimer>
 #include <QPixmap>
 
+	#include <QRandomGenerator>
+
 
 #include "KX_Pult/kx_protocol.h"
 #include "KX_Pult/qkx_coeffs.h"

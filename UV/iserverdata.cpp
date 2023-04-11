@@ -4,16 +4,18 @@
 #include <string>
 #include <sstream>
 
-uint16_t getCheckSumm16b(char* pcBlock, int len);
-uint8_t isCheckSumm16bCorrect(char* pcBlock, int len);
+uint16_t getCheckSumm16b(char *pcBlock, int len);
+uint8_t isCheckSumm16bCorrect(char *pcBlock, int len);
 
-void set_bit(uint8_t& byte, uint8_t bit, bool state);
+void set_bit(uint8_t &byte, uint8_t bit, bool state);
 
 IServerData::IServerData()
-    : IBasicData() {
+    : IBasicData()
+{
 }
 
-int IServerData::getThrusterAmount() {
+int IServerData::getThrusterAmount()
+{
     int thrusterAmount;
     UVMutex.lock();
     thrusterAmount = UVState.getThrusterAmount();
@@ -21,7 +23,8 @@ int IServerData::getThrusterAmount() {
     return thrusterAmount;
 }
 
-QString IServerData::getUdpHostAddress() {
+QString IServerData::getUdpHostAddress()
+{
     QString udpHostAddress;
     UVMutex.lock();
     udpHostAddress = UVState.udpHostAddress;
@@ -29,7 +32,8 @@ QString IServerData::getUdpHostAddress() {
     return udpHostAddress;
 }
 
-quint16 IServerData::getUdpHostPort() {
+quint16 IServerData::getUdpHostPort()
+{
     quint16 udpHostPort;
     UVMutex.lock();
     udpHostPort = UVState.udpHostPort;
@@ -37,7 +41,8 @@ quint16 IServerData::getUdpHostPort() {
     return udpHostPort;
 }
 
-e_Countour IServerData::getCurrentControlContour() {
+e_Countour IServerData::getCurrentControlContour()
+{
     e_Countour currentControlContour;
 
     UVMutex.lock();
@@ -47,10 +52,12 @@ e_Countour IServerData::getCurrentControlContour() {
     return currentControlContour;
 }
 
-QByteArray IServerData::generateMessage() {
+QByteArray IServerData::generateMessage()
+{
     QByteArray formed;
     formed.clear();
-    switch (getCurrentPackageMode()) {
+    switch (getCurrentPackageMode())
+    {
     case PACKAGE_NORMAL:
         formed = generateNormalMessage();
         break;
@@ -64,7 +71,8 @@ QByteArray IServerData::generateMessage() {
     return formed;
 }
 
-e_packageMode IServerData::getCurrentPackageMode() {
+e_packageMode IServerData::getCurrentPackageMode()
+{
     e_packageMode currentPackageMode;
     UVMutex.lock();
     currentPackageMode = UVState.currentPackageMode;
@@ -72,7 +80,8 @@ e_packageMode IServerData::getCurrentPackageMode() {
     return currentPackageMode;
 }
 
-QByteArray IServerData::generateNormalMessage() {
+QByteArray IServerData::generateNormalMessage()
+{
     QByteArray msg;
     msg.clear();
     QDataStream stream(&msg, QIODeviceBase::Append);
@@ -90,7 +99,8 @@ QByteArray IServerData::generateNormalMessage() {
     stream << req.roll;
     stream << req.pitch;
     stream << req.yaw;
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 6; i++)
+    {
         stream << req.dev[i];
     }
 
@@ -99,7 +109,8 @@ QByteArray IServerData::generateNormalMessage() {
     return msg;
 }
 
-void IServerData::fillStructure(RequestNormalMessage& req) {
+void IServerData::fillStructure(RequestNormalMessage &req)
+{
     UVMutex.lock();
 
     set_bit(req.flags, 0, UVState.stabRoll);
@@ -116,14 +127,16 @@ void IServerData::fillStructure(RequestNormalMessage& req) {
     req.pitch = UVState.control.pitch;
     req.yaw = UVState.control.yaw;
 
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 6; i++)
+    {
         req.dev[i] = UVState.device[i].velocity;
     }
 
     UVMutex.unlock();
 }
 
-QByteArray IServerData::generateConfigMessage() {
+QByteArray IServerData::generateConfigMessage()
+{
     QByteArray msg;
     msg.clear();
     QDataStream stream(&msg, QIODeviceBase::Append);
@@ -166,7 +179,8 @@ QByteArray IServerData::generateConfigMessage() {
     return msg;
 }
 
-void IServerData::fillStructure(RequestConfigMessage& req) {
+void IServerData::fillStructure(RequestConfigMessage &req)
+{
     UVMutex.lock();
     e_Countour currentControlContour = UVState.currentControlContour;
 
@@ -194,7 +208,8 @@ void IServerData::fillStructure(RequestConfigMessage& req) {
     UVMutex.unlock();
 }
 
-QByteArray IServerData::generateDirectMessage() {
+QByteArray IServerData::generateDirectMessage()
+{
     QByteArray msg;
     msg.clear();
     QDataStream stream(&msg, QIODeviceBase::Append);
@@ -219,16 +234,20 @@ QByteArray IServerData::generateDirectMessage() {
     return msg;
 }
 
-void IServerData::fillStructure(RequestDirectMessage& req) {
+void IServerData::fillStructure(RequestDirectMessage &req)
+{
     UVMutex.lock();
     UVState.setThrusterNext();
 
     req.id = UVState.currentThruster;
     req.slot = UVState.thruster[UVState.currentThruster].slot;
 
-    if (UVState.thruster[UVState.currentThruster].power == false) {
+    if (UVState.thruster[UVState.currentThruster].power == false)
+    {
         req.velocity = 0;
-    } else {
+    }
+    else
+    {
         req.velocity = UVState.thruster[UVState.currentThruster].velocity;
     }
 
@@ -242,8 +261,10 @@ void IServerData::fillStructure(RequestDirectMessage& req) {
     UVMutex.unlock();
 }
 
-void IServerData::parseMessage(QByteArray message) {
-    switch (getCurrentPackageMode()) {
+void IServerData::parseMessage(QByteArray message)
+{
+    switch (getCurrentPackageMode())
+    {
     case PACKAGE_NORMAL:
         parseNormalMessage(message);
         break;
@@ -258,7 +279,8 @@ void IServerData::parseMessage(QByteArray message) {
     }
 }
 
-void IServerData::parseNormalMessage(QByteArray msg) {
+void IServerData::parseNormalMessage(QByteArray msg)
+{
     ResponseNormalMessage res;
     uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size() - 2);
 
@@ -290,7 +312,8 @@ void IServerData::parseNormalMessage(QByteArray msg) {
     pullFromStructure(res);
 }
 
-void IServerData::pullFromStructure(ResponseNormalMessage res) {
+void IServerData::pullFromStructure(ResponseNormalMessage res)
+{
     UVMutex.lock();
 
     UVState.imu.roll = res.roll;
@@ -305,7 +328,8 @@ void IServerData::pullFromStructure(ResponseNormalMessage res) {
     UVMutex.unlock();
 }
 
-void IServerData::parseConfigMessage(QByteArray msg) {
+void IServerData::parseConfigMessage(QByteArray msg)
+{
     ResponseConfigMessage res;
     uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size() - 2);
 
@@ -341,20 +365,20 @@ void IServerData::parseConfigMessage(QByteArray msg) {
 
     stream >> res.checksum;
 
-    if (res.checksum != checksum_calc) {
+    if (res.checksum != checksum_calc)
+    {
         qDebug() << "Checksum ConfigMessage is invalid";
         std::stringstream stream;
-        stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
-            std::ios::hex << checksum_calc << "] " <<
-            "Received: [" <<
-            std::ios::hex << res.checksum << "]";
+        stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" << std::ios::hex << checksum_calc << "] "
+               << "Received: [" << std::ios::hex << res.checksum << "]";
         throw std::invalid_argument(stream.str());
     }
 
     pullFromStructure(res);
 }
 
-void IServerData::pullFromStructure(ResponseConfigMessage res) {
+void IServerData::pullFromStructure(ResponseConfigMessage res)
+{
     UVMutex.lock();
 
     UVState.imu.roll = res.roll;
@@ -386,7 +410,8 @@ void IServerData::pullFromStructure(ResponseConfigMessage res) {
     UVMutex.unlock();
 }
 
-void IServerData::parseDirectMessage(QByteArray msg) {
+void IServerData::parseDirectMessage(QByteArray msg)
+{
     ResponseDirectMessage res;
 
     uint16_t checksum_calc = getCheckSumm16b(msg.data(), msg.size() - 2);
@@ -397,29 +422,34 @@ void IServerData::parseDirectMessage(QByteArray msg) {
 
     stream >> res.checksum;
 
-    if (res.checksum != checksum_calc) {
+    if (res.checksum != checksum_calc)
+    {
         std::stringstream stream;
-        stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" <<
-            std::ios::hex << checksum_calc << "] " <<
-            "Received: [" <<
-            std::ios::hex << res.checksum << "]";
+        stream << "[ISERVERDATA] Checksum is invalid. Calculated: [" << std::ios::hex << checksum_calc << "] "
+               << "Received: [" << std::ios::hex << res.checksum << "]";
         throw std::invalid_argument(stream.str());
     }
 
     pullFromStructure(res);
 }
 
-void IServerData::pullFromStructure(ResponseDirectMessage res) {
+void IServerData::pullFromStructure(ResponseDirectMessage res)
+{
     // nothing
 }
 
 /* CRC16-CCITT algorithm */
-uint16_t getCheckSumm16b(char* pcBlock, int len) {
+uint16_t getCheckSumm16b(char *pcBlock, int len)
+{
     uint16_t crc = 0xFFFF;
-    //int crc_fix = reinterpret_cast<int*>(&crc);
+    if (len <= 0)
+        return 0; // проверяем длину сообщения
+
+    // int crc_fix = reinterpret_cast<int*>(&crc);
     uint8_t i;
 
-    while (len--) {
+    while (len--)
+    {
         crc ^= *pcBlock++ << 8;
 
         for (i = 0; i < 8; i++)
@@ -428,11 +458,15 @@ uint16_t getCheckSumm16b(char* pcBlock, int len) {
     return crc;
 }
 
-void set_bit(uint8_t& byte, uint8_t bit, bool state) {
+void set_bit(uint8_t &byte, uint8_t bit, bool state)
+{
     uint8_t value = 1;
-    if (state) {
+    if (state)
+    {
         byte = byte | (value << bit);
-    } else {
+    }
+    else
+    {
         byte = byte & ~(value << bit);
     }
 }

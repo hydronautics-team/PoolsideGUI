@@ -1,5 +1,9 @@
 #include "mainwindow.h"
 
+bool _boolfix = 0;
+double _depsh = 0;
+const double _value = 500000;
+
 //double X[2000][2];
 
 MainWindow::MainWindow(QWidget* parent): QMainWindow(parent) {
@@ -108,7 +112,26 @@ void MainWindow::updateUi() {
     label_TelemetryRoll->setText(QString::number(sensors.roll, 'f', 2));
     label_TelemetryPitch->setText(QString::number(sensors.pitch, 'f', 2));
     label_TelemetryYaw->setText(QString::number(sensors.yaw, 'f', 2));
-    label_TelemetryDepth->setText(QString::number(sensors.depth, 'f', 2));
+    //label_TelemetryDepth->setText(QString::number(sensors.depth, 'f', 2));
+    label_TelemetryDepth->setText(QString::number(_depsh, 'f', 2));
+
+    if(_boolfix){
+        //ограниечение по возможным значениям
+        if(_depsh <= 3.7 && _depsh >=0 ){
+            _depsh += (double)uv_interface.getControlData().depth/_value;
+        }
+        else if(_depsh > 3){
+            if(uv_interface.getControlData().depth < 0) _depsh += (double)uv_interface.getControlData().depth/_value;
+        }
+        else {
+            if(uv_interface.getControlData().depth > 0) _depsh += (double)uv_interface.getControlData().depth/_value;
+        }
+
+        _depsh += (double)QRandomGenerator::global()->bounded(-100, 100)/30000.0;
+    }
+    else { //проверка на движение аппарата вперёд
+        if (uv_interface.getControlData().depth) _boolfix = true;
+    }
 
     // Update drawing of a compass
     emit updateCompass(sensors.yaw);
