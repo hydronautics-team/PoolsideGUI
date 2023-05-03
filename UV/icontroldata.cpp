@@ -47,12 +47,8 @@ void IControlData::setYaw(double yaw) {
     UVMutex.unlock();
 }
 
-void IControlData::setDeviceVelocity(int slot, double velocity) {
-    if (static_cast<unsigned int>(slot) >= sizeof(UVState.device) / sizeof(UVState.device[0])) {
-        return;
-    }
-
+void IControlData::setDeviceVelocity(e_Device device, double velocity) {
     UVMutex.lock();
-    UVState.device[slot].velocity = velocity;
+    UVState.device[device].velocity = velocity;
     UVMutex.unlock();
 }

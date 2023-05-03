@@ -238,7 +238,7 @@ bool QPIConfig::Entry::entryExists(const Entry * e, const QString & name) const 
 }
 
 
-QPIConfig::QPIConfig(const QString & path, QIODevice::OpenMode mode, QPIConfig::FileType type_): QFile(path) {
+QPIConfig::QPIConfig(const QString & path, QIODeviceBase::OpenMode mode, QPIConfig::FileType type_): QFile(path) {
 	init();
 	type = type_;
 	open(mode);
@@ -247,7 +247,7 @@ QPIConfig::QPIConfig(const QString & path, QIODevice::OpenMode mode, QPIConfig::
 }
 
 
-QPIConfig::QPIConfig(const QString & path, QIODevice::OpenMode mode): QFile(path) {
+QPIConfig::QPIConfig(const QString & path, QIODeviceBase::OpenMode mode): QFile(path) {
 	init();
 	type = Config;
 	open(mode);
@@ -259,7 +259,7 @@ QPIConfig::QPIConfig(const QString & path, QIODevice::OpenMode mode): QFile(path
 QPIConfig::QPIConfig(const QString & path, QPIConfig::FileType type_): QFile(path) {
 	init();
 	type = type_;
-	open(QIODevice::ReadWrite);
+	open(QIODeviceBase::ReadWrite);
 	//stream.setDevice(this);
 	parse();
 }
@@ -279,7 +279,7 @@ QPIConfig::QPIConfig(const QString & path, QStringList dirs) {
 	type = Config;
 	internal = true;
 	dev = new QFile(path);
-	dev->open(QIODevice::ReadOnly);
+	dev->open(QIODeviceBase::ReadOnly);
 	incdirs = dirs;
 	incdirs << QFileInfo(path).absoluteDir().path();
 	QString cp = path;
@@ -289,7 +289,7 @@ QPIConfig::QPIConfig(const QString & path, QStringList dirs) {
 		if (cp.endsWith("/") || cp.endsWith("\\")) cp.chop(1);
 		cp += "/" + path;
 		dev->setFileName(cp);
-		dev->open(QIODevice::ReadOnly);
+		dev->open(QIODeviceBase::ReadOnly);
 		dirs.pop_back();
 	}
 	if (!dev->isOpen()) {
@@ -299,7 +299,7 @@ QPIConfig::QPIConfig(const QString & path, QStringList dirs) {
 	}
 	dev->close();
 	setFileName(cp);
-	open(QIODevice::ReadOnly);
+	open(QIODeviceBase::ReadOnly);
 	parse();
 }
 
@@ -326,7 +326,7 @@ void QPIConfig::init() {
 }
 
 
-void QPIConfig::setFile(const QString & path, QIODevice::OpenMode mode) {
+void QPIConfig::setFile(const QString & path, QIODeviceBase::OpenMode mode) {
 	buffer = 0;
 	setFileName(path);
 	if (open(mode))

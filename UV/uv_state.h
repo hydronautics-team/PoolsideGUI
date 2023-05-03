@@ -4,31 +4,61 @@
 #include "stdint.h"
 
 #include <QDebug>
+#include <QUdpSocket>
 #include "uv_device.h"
 #include "uv_thruster.h"
 #include "uv_controlcontour.h"
 
+enum e_packageMode {
+    PACKAGE_NORMAL,
+    PACKAGE_CONFIG,
+    PACKAGE_DIRECT,
+};
+
+enum e_Countour {
+    CONTOUR_DEPTH,
+    CONTOUR_MARCH,
+    CONTOUR_LAG,
+    CONTOUR_YAW,
+    CONTOUR_ROLL,
+    CONTOUR_PITCH,
+};
+
+enum e_Connection {
+    CONNECTION_UDP,
+    CONNECTION_SERIAL,
+};
+
+enum e_Device {
+    DEVICE_GRAB,
+    DEVICE_GRAB_ROTATE,
+    DEVICE_TILT,
+    DEVICE_DEV1,
+    DEVICE_DEV2,
+    DEVICE_DEV3
+};
+
 struct ImuData {
     ImuData();
 
-    double roll;
-    double pitch;
-    double yaw;
-    double rollSpeed;
-    double pitchSpeed;
-    double yawSpeed;
-    double depth;
+    float roll;
+    float pitch;
+    float yaw;
+    float rollSpeed;
+    float pitchSpeed;
+    float yawSpeed;
+    float depth;
 };
 
 struct ControlData {
     ControlData();
 
-    double march;
-    double lag;
-    double depth;
-    double roll;
-    double pitch;
-    double yaw;
+    int16_t march;
+    int16_t lag;
+    int16_t depth;
+    int16_t roll;
+    int16_t pitch;
+    int16_t yaw;
 };
 
 class UV_State {
@@ -36,43 +66,35 @@ public:
     UV_State();
     ~UV_State();
 
-    // TODO: Replace this with dynamic arrays (later)
-    const static unsigned int devices_amount = 6;
-
-    int thrusterAmount;
-
+    int udpHostAddressthrusterAmount;
+    void setThrusterNext();
     void setThrusterAmount(int thrusterAmount);
     int getThrusterAmount();
 
-    int controlContourAmount;
-
-    void setControlContourAmount(int controlContourAmount);
-    int getControlContourAmount();
-
-    // ControlWindow values
     ControlData control;
-
-    // IMU values
     ImuData imu;
 
-    // Auxiliar state values
-    double aux_inpressure;
+    UV_Device device[6];
+    UV_Thruster* thruster;
+    int currentThruster;
+    int thrusterAmount;
+    UV_ControlContour controlContour[6];
+    e_Countour currentControlContour;
 
-    // Devices
-    UV_Device device[devices_amount];
+    e_Connection currentConnectionMode;
+    e_packageMode currentPackageMode;
 
-    // Thrusters
-    UV_Thruster *thruster;
-
-    // Stabilization Contours
-    STABILIZATION_CONTOURS currentControlContour;
-    UV_ControlContour *controlContour;
+    QString udpHostAddress = "192.168.31.100";
+    quint16 udpHostPort = 7756;
 
     // Flags
-    bool resetImu;
-    bool stabYaw;
-    bool stabDepth;
+    bool stabRoll;
+    bool stabYaw; 
     bool stabPitch;
+    bool stabDepth;
+
+    bool resetImu;
+    bool thrustersON;
 };
 
 #endif // UV_STATE_H

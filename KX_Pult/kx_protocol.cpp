@@ -19,7 +19,7 @@ x_protocol::~x_protocol()
 }
   x_protocol::x_protocol(const QString & config, const QString & name, double (*_x)[2],  QObject *parent) : QObject(parent)    //(char *in_ip, int in_port, int out_port, float (*_x)[2], int _x_count, QObject *parent) : QObject(parent)
 {
-    QPIConfig conf(config, QIODevice::ReadOnly);
+    QPIConfig conf(config, QIODeviceBase::ReadOnly);
     QPIConfig::Entry & e(conf.getValue(name));
 
     ip_Pult = QHostAddress(e.getValue("sender.ip").value());

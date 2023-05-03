@@ -1,6 +1,0 @@
-[submodule "hidapi"]
-	path = hidapi
-	url = https://github.com/libusb/hidapi.git
-[submodule "sfml/SFML"]
-	path = sfml/SFML
-	url = https://github.com/SFML/SFML.git

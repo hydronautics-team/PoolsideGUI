@@ -3,29 +3,17 @@ Cross-platform GUI software for surface control unit
 
 Documentation is here: https://github.com/hidronautics/PoolsideGUI_docs
 
-## Requirements: 
+## Requirements:
  - Ubuntu 20.04 and greater
- - Qt 5.12 and greater (except versions 6.0 and 6.1)
- - HIDAPI lib (https://github.com/libusb/hidapi)
+ - Qt 6.4.2
  - SFML lib
-
-## Install and run on UNIX:
-
-```
-./install_dependencies.sh
-```
-
-Install binary path $source_dir/install/bin/PoolsideGUI
-
-**If you want to recompile project, run:**
-
-```
-./compile_PoolsideGUI.sh
-```
+ ```
+ sudo apt-get install libsfml-dev
+ ```
 
 ## Development in Clion
 
-Press **Ctrl+Alt+S** to open **Settings**. 
+Press **Ctrl+Alt+S** to open **Settings**.
 
 Go to **Build, Execution, Deployment**, then to **CMake**
 
@@ -35,8 +23,12 @@ Add to **CMake options**:
 -DCMAKE_PREFIX_PATH=PATH_TO_YOUR_QT_INSTALLATION/QT_VERSION/COMPILER/lib/cmake
 ```
 
-Then go to **Run->Edit Configurations** and add to **Environmental variables**:
+## Development in VS Code
 
+- Instal **C/C++ Extension Pack** (https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools-extension-pack)
+- Add to *.vscode/settings.json*
 ```
-LD_LIBRARY_PATH=PATH_TO_YOUR_QT_INSTALLATION/QT_VERSION/COMPILER/lib
+    "cmake.configureArgs": [
+        "-DCMAKE_PREFIX_PATH=/home/*username*/Qt/6.4.2/gcc_64/lib/cmake"
+    ],
 ```

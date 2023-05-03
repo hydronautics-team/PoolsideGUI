@@ -13,18 +13,16 @@ public:
     bool power = false;
 
     int id;
-    int slot;
+    int adress;
+
+    int8_t velocity;
 
     bool reverse;
-
-    double kForward;
-    double kBackward;
+    int8_t kForward;
+    int8_t kBackward;
 
     int8_t sForward;
     int8_t sBackward;
-
-    double velocity;
-    double current;
 };
 
 #endif // UV_THRUSTERS_H

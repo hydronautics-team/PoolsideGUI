@@ -4,13 +4,14 @@ UV_Thruster::UV_Thruster() {
     name = "THRUSTER";
 
     id = 0;
-    slot = 0;
-
-    kForward = 1;
-    kBackward = 1;
-    sForward = 100;
-    sBackward = 100;
+    adress = 0;
 
     velocity = 0;
-    current = 0;
+
+    reverse = false;
+    kForward = 1;
+    kBackward = 1;
+
+    sForward = 100;
+    sBackward = 100;
 }

@@ -40,17 +40,17 @@ private:
 signals:
     void speedSpinBoxChange(int);
     void parametorsChanged(json json, UV_Thruster thruster);
-    void powerChanged(int slot, bool power);
+    void powerChanged(int id, bool power);
 
 public slots:
-    void setThruster(int number, json ThrusterJson);
+    void setThruster(json ThrusterJson);
     void setAutoSave(int autoSave);
     void save(bool click);
 
 private slots:
     void powerCheckBoxChanged(int power);
 
-    void idChanged(int id);
+    void adressChanged(int id);
     void speedChanged(int speed);
     void forwardKChanged(double forwardK);
     void backwardKChanged(double backwardK);

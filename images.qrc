@@ -1,6 +1,7 @@
 <RCC>
-    <qresource prefix="/images"/>
     <qresource prefix="/">
+        <file>images/ControlSystem.png</file>
         <file>images/ControlSystem.jpg</file>
+        <file>images/Cousteau3.png</file>
     </qresource>
 </RCC>

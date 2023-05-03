@@ -1,9 +1,7 @@
 #include "iuserinterfacedata.h"
 
-#include <stdexcept>
-
 IUserInterfaceData::IUserInterfaceData()
-        : IBasicData() {
+    : IBasicData() {
 
 }
 
@@ -27,55 +25,60 @@ ImuData IUserInterfaceData::getImuData() {
     return data;
 }
 
-UV_Device IUserInterfaceData::getDeviceData(QString name) {
-    UV_Device data;
-    UVMutex.lock();
-
-    for (unsigned int i = 0; i < UVState.devices_amount; i++) {
-        if (name == UVState.device[i].name) {
-            data = UVState.device[i];
-        } else {
-            std::string error = "There is no UV_device with the name: " + name.toStdString();
-            throw std::invalid_argument(error);
-        }
-    }
-
-    UVMutex.unlock();
-    return data;
-}
-
-UV_Thruster IUserInterfaceData::getThrusterData(QString name) {
-    UV_Thruster data;
-    UVMutex.lock();
-
-    for (unsigned int i = 0; i < UVState.devices_amount; i++) {
-        if (name == UVState.thruster[i].name) {
-            data = UVState.thruster[i];
-        } else {
-            std::string error = "There is no UV_device with the name: " + name.toStdString();
-            throw std::invalid_argument("There is no UV_device by this name");
-        }
-    }
-
-    UVMutex.unlock();
-    return data;
-}
-
-double IUserInterfaceData::getDeviceVelocity(int slot) {
-    if (static_cast<unsigned int>(slot) >= sizeof(UVState.device) / sizeof(UVState.device[0])) {
-        return 0;
-    }
-    double data = 0;
+double IUserInterfaceData::getDeviceVelocity(e_Device device) {
+    double data;
 
     UVMutex.lock();
-    data = UVState.device[slot].velocity;
+    data = UVState.device[device].velocity;
     UVMutex.unlock();
 
     return data;
 }
 
-void IUserInterfaceData::setResetImuValue(bool value) {
+void IUserInterfaceData::setPackegeMode(e_packageMode packageMode) {
+    UVMutex.lock();
+    UVState.currentPackageMode = packageMode;
+    UVMutex.unlock();
+}
+
+void IUserInterfaceData::setStabRoll(bool value) {
+    UVMutex.lock();
+    UVState.stabRoll = value;
+    UVMutex.unlock();
+}
+
+void IUserInterfaceData::setStabPitch(bool value) {
+    UVMutex.lock();
+    UVState.stabPitch = value;
+    UVMutex.unlock();
+}
+
+void IUserInterfaceData::setStabYaw(bool value) {
+    UVMutex.lock();
+    UVState.stabYaw = value;
+    UVMutex.unlock();
+}
+
+void IUserInterfaceData::setStabDepth(bool value) {
+    UVMutex.lock();
+    UVState.stabDepth = value;
+    UVMutex.unlock();
+}
+
+void IUserInterfaceData::setResetImu(bool value) {
     UVMutex.lock();
     UVState.resetImu = value;
+    UVMutex.unlock();
+}
+
+void IUserInterfaceData::setThrustersON(bool value) {
+    UVMutex.lock();
+    UVState.thrustersON = value;
+    UVMutex.unlock();
+}
+
+void IUserInterfaceData::setConnectionMode(e_Connection connectionMode) {
+    UVMutex.lock();
+    UVState.currentConnectionMode = connectionMode;
     UVMutex.unlock();
 }

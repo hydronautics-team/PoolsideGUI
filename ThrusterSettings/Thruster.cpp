@@ -9,14 +9,12 @@ Thruster::Thruster(QWidget *parent) :
 
     //change parameters
     connect(ui->CheckBox_ThrusterPower, SIGNAL(stateChanged(int)), this, SLOT(powerCheckBoxChanged(int)));
-    connect(ui->SpinBox_ThrusterId, SIGNAL(valueChanged(int)), this, SLOT(idChanged(int)));
+    connect(ui->SpinBox_ThrusterAdress, SIGNAL(valueChanged(int)), this, SLOT(adressChanged(int)));
     connect(ui->SpinBox_ThrusterSetSpeed, SIGNAL(valueChanged(int)), this, SLOT(speedChanged(int)));
     connect(ui->DoubleSpinBox_SetForwardK, SIGNAL(valueChanged(double)), this, SLOT(forwardKChanged(double)));
     connect(ui->DoubleSpinBox_SetBackwardK, SIGNAL(valueChanged(double)), this, SLOT(backwardKChanged(double)));
-    connect(ui->SpinBox_ThrusterSetForwardSaturation, SIGNAL(valueChanged(int)), this,
-            SLOT(forwardSaturationChanged(int)));
-    connect(ui->SpinBox_ThrusterSetBackwardSaturation, SIGNAL(valueChanged(int)), this,
-            SLOT(backwardSaturationChanged(int)));
+    connect(ui->SpinBox_ThrusterSetForwardSaturation, SIGNAL(valueChanged(int)), this, SLOT(forwardSaturationChanged(int)));
+    connect(ui->SpinBox_ThrusterSetBackwardSaturation, SIGNAL(valueChanged(int)), this, SLOT(backwardSaturationChanged(int)));
     connect(ui->CheckBox_ThrusterReverse, SIGNAL(stateChanged(int)), this, SLOT(reverseChanged(int)));
 
     //speed
@@ -34,8 +32,7 @@ UV_Thruster Thruster::getUV_Thruster() {
     return ThisThruster;
 }
 
-void Thruster::setThruster(int number, json ThrusterJson) {
-    this->ThisThruster.slot = number;
+void Thruster::setThruster(json ThrusterJson) {
     this->ThrusterJson = ThrusterJson;
     emit setUV_Thruster();
     emit setUi();
@@ -67,9 +64,9 @@ void Thruster::setUV_Thruster() {
 }
 
 void Thruster::setUi() {
-    ui->SpinBox_ThrusterId->setEnabled(!power);
+    ui->SpinBox_ThrusterAdress->setEnabled(!power);
     ui->Label_ThrusterName->setText(QString::fromStdString(ThrusterJson["name"]));
-    ui->SpinBox_ThrusterId->setValue(ThrusterJson["id"]);
+    ui->SpinBox_ThrusterAdress->setValue(ThrusterJson["adress"]);
     ui->DoubleSpinBox_SetForwardK->setValue(ThrusterJson["kForward"]);
     ui->DoubleSpinBox_SetBackwardK->setValue(ThrusterJson["kBackward"]);
     ui->SpinBox_ThrusterSetForwardSaturation->setValue(ThrusterJson["forward_saturation"]);
@@ -83,18 +80,13 @@ void Thruster::setUi() {
 
 void Thruster::powerCheckBoxChanged(int power) {
     ThisThruster.power = power;
-    ui->SpinBox_ThrusterId->setEnabled(!power);
+    ui->SpinBox_ThrusterAdress->setEnabled(!power);
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
 
-void Thruster::idChanged(int id) {
-    ui->SpinBox_ThrusterSetSpeed->setValue(0); // обнулям, чтобы не крутились не нужные движки
-    ThisThruster.velocity = 0;
-    emit parametorsChanged(ThrusterJson, ThisThruster);
-
-    if (autoSave == true) ThrusterJson["id"] = id;
-
-    ThisThruster.id = id;
+void Thruster::adressChanged(int adress) {
+    if (autoSave == true) ThrusterJson["adress"] = adress;
+    ThisThruster.adress = adress;
     emit parametorsChanged(ThrusterJson, ThisThruster);
 }
 

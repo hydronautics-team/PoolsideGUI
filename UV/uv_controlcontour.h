@@ -1,15 +1,6 @@
 #ifndef UV_STABILIZATION_H
 #define UV_STABILIZATION_H
 
-enum STABILIZATION_CONTOURS {
-    CONTOUR_DEPTH = 0,
-    CONTOUR_MARCH,
-    CONTOUR_LAG,
-    CONTOUR_YAW,
-    CONTOUR_ROLL,
-    CONTOUR_PITCH
-};
-
 struct UV_StabilizationConstants {
     float pJoyUnitCast;
     float pSpeedDyn;
@@ -28,12 +19,6 @@ struct UV_StabilizationConstants {
     float pThrustersMin;
     float pThrustersMax;
     float pThrustersCast;
-
-    float thrustersFilterT;
-    float thrustersFilterK;
-
-    float sOutSummatorMax;
-    float sOutSummatorMin;
 };
 
 struct UV_StabilizationState {
@@ -42,8 +27,8 @@ struct UV_StabilizationState {
     float posSignal;
 
     float joyUnitCasted;
-    float joy_iValue;
     float posError;
+    float joy_iValue;
     float speedError;
     float dynSummator;
     float pidValue;
@@ -51,8 +36,7 @@ struct UV_StabilizationState {
     float speedFiltered;
     float posFiltered;
     float pid_iValue;
-    float thrustersFiltered;
-
+    float pid_pValue;
     float outputSignal;
 };
 

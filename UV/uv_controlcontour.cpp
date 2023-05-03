@@ -19,19 +19,13 @@ UV_ControlContour::UV_ControlContour() {
     constant.pThrustersMax = 0;
     constant.pThrustersCast = 0;
 
-    constant.thrustersFilterT = 0;
-    constant.thrustersFilterK = 0;
-
-    constant.sOutSummatorMax = 0;
-    constant.sOutSummatorMin = 0;
-
     state.inputSignal = 0;
     state.speedSignal = 0;
     state.posSignal = 0;
 
     state.joyUnitCasted = 0;
-    state.joy_iValue = 0;
     state.posError = 0;
+    state.joy_iValue = 0;
     state.speedError = 0;
     state.dynSummator = 0;
     state.pidValue = 0;
@@ -39,7 +33,6 @@ UV_ControlContour::UV_ControlContour() {
     state.speedFiltered = 0;
     state.posFiltered = 0;
     state.pid_iValue = 0;
-    state.thrustersFiltered = 0;
-
+    state.pid_pValue = 0;
     state.outputSignal = 0;
 }
